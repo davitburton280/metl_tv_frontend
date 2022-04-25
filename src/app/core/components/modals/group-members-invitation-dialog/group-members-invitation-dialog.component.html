@@ -1,0 +1,72 @@
+<div id="dialog-header">
+    <h3>Invite contacts to this group</h3>
+    <div>
+        <img src="assets/img/x.svg" alt="close-dialog" class="close-box" (click)="closeDialog()">
+    </div>
+</div>
+<form [formGroup]="contactsInviteForm">
+    <div id="group-members-wrap">
+        <div id="suggested-contacts">
+            <div id="contact-search-wrap">
+                <input placeholder="Find a contact">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <ul formArrayName="contacts">
+                <li *ngFor="let control of contactCtrls.controls;let i = index" [formGroupName]="i"
+                    [class.processed-contact]="isProcessedContact(control.value.status)">
+                    <div class="details">
+                        <label [for]="'contact_'+control.value.i">
+                            <div class="avatar-wrap">
+                                <img class="avatar"
+                                     [src]="control.value.avatar|getImgPath: 'user_avatars'">
+                            </div>
+                            <div>
+                                <p class="contact-full-name">{{control.value.first_name + ' ' + control.value.last_name}}</p>
+                                <p class="contact-status"
+                                   *ngIf="control.value.status !== 'not joined'">{{control.value.status}}</p>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="state">
+                        <label>
+                            <input type="hidden" formControlName="id">
+                            <input type="hidden" formControlName="name">
+                            <input type="checkbox" formControlName="checked"
+                                   [id]="'contact_'+control.value.id"
+                                   (change)="selectContact($event,control)"
+                                   [disableControl]="{condition:isProcessedContact(control.value.status ),control: getCheckBoxControl(control)}"
+                            >
+                            <span></span>
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div id="selected-contacts">
+            <p id="selected-contacts-count" *ngIf="selectedContacts.length as length">
+                {{length + ' ' + (length === 1 ? 'contact' : 'contacts')}}  selected
+            </p>
+            <ul formArrayName="contacts">
+                <li *ngFor="let control of checkedContactCtrls;let i = index" [formGroupName]="i">
+                    <div class="details">
+                        <label [for]="control.value.id+'_'+i">
+                            <img class="avatar" [src]="control.value.avatar|getImgPath: 'user_avatars'">
+                            <span>{{control.value.first_name + ' ' + control.value.last_name}}</span>
+                        </label>
+                    </div>
+                    <div class="state">
+                        <button id="remove-from-selected-contacts-btn">
+                            <i class="fas fa-times" (click)="removeContactFromSelected(control)"></i>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</form>
+<div id="dialog-actions">
+    <button id="close-dialog" (click)="closeDialog()">Cancel</button>
+    <button id="send-invites" (click)="sendInvitationsToContacts()">Send invites</button>
+</div>

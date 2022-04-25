@@ -1,0 +1,38 @@
+#group-form {
+    display: flex;
+    margin-bottom: 10px;
+
+    input {
+        padding: 5px;
+        margin-left: 25px;
+
+        &::placeholder {
+            font-size: 14px;
+            color: #C9C9C9;
+            font-family: "Muli-Light";
+        }
+    }
+
+    button {
+        //@include regularButton;
+        //width: 68px;
+        //padding: 0;
+    }
+
+
+}
+
+.create-group-chat {
+    padding: 0 15px;
+    margin: 4px 0 16px;
+    background: transparent;
+    color: #18B587;
+    font-size: 16px;
+    font-family: "Muli-Bold";
+
+    img {
+        width: 20px;
+        margin-right: 2px;
+    }
+}
+

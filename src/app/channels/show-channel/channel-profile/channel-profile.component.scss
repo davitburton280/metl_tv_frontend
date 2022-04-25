@@ -1,0 +1,103 @@
+@import 'variables';
+@import 'mixins';
+
+.sub-bell {
+    color: $red;
+    margin-right: 16px;
+}
+
+.subscribe-btn, .users-connected-btn {
+    @include regularButton;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 52px;
+    margin-left: 10px;
+    margin-top: -17px;
+}
+
+#add-photo-btn {
+    position: absolute;
+    left: 9px;
+    top: 10px;
+    cursor: pointer;
+}
+
+
+.cover-image-container {
+    position: relative;
+
+    .remove-cover-btn {
+        position: absolute;
+        right: 0;
+
+        mat-icon {
+            background-color: $black;
+            color: $white;
+            border-radius: 20px;
+            font-size: 16px;
+        }
+    }
+}
+
+
+label[for="cover-image-input"] {
+    width: 100%;
+}
+
+#edit-channel, #save-channel-details {
+    background: #18B587;
+    border-radius: 0;
+    color: #fff;
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+}
+
+#cancel-changes {
+    display: flex;
+    align-items: center;
+    background: #C9C9C9;
+    border-radius: 0;
+    color: #fff;
+    padding: 8px 24px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.avatar-container {
+    position: relative;
+
+    label {
+        margin-bottom: 0;
+    }
+
+    .remove-avatar-btn {
+        width: 13px;
+        height: 13px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        //background-color: #000000;
+        color: #000000;
+        font-size: 16px;
+        cursor: pointer;
+    }
+}
+
+.subscribed {
+    background-color: #b3b3b3 !important;
+}
+
+#channel-name-avatar, #connection-status-buttons {
+    display: flex;
+    align-items: center;
+}

@@ -1,0 +1,143 @@
+@import 'variables';
+@import 'mixins';
+@import 'page-tabs';
+
+#group-cover-image {
+    img {
+        height: 300px;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.details-row {
+    display: flex;
+    align-items: center;
+
+    &:first-of-type {
+        margin-top: 20px;
+
+        #group-name {
+            font-size: 16px;
+            font-family: "Muli-Bold", sans-serif;
+            text-transform: capitalize;
+            margin-bottom: 4px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+    }
+
+    &:last-of-type {
+        margin-top: 2px;
+
+        #privacy-type {
+            display: flex;
+            align-items: center;
+            color: #545454;
+            font-size: 14px;
+            font-family: "Muli-Light", sans-serif;
+
+            span {
+                margin-left: 10px;
+                text-transform: capitalize;
+            }
+        }
+
+        #members-count {
+            margin-left: 20px;
+
+            strong {
+                font-size: 14px;
+            }
+        }
+    }
+
+}
+
+
+#group-actions {
+    display: flex;
+    padding-top: 20px;
+
+    button {
+        @include regularButton;
+    }
+
+    #joined-group-btn {
+        background-color: $light-gray;
+        justify-content: space-between;
+    }
+
+    #invite-to-group-btn {
+        margin-left: 25px;
+    }
+
+    #waiting-for-confirmation-btn {
+        @include regularButton;
+        width: 210px;
+        background-color: $light_gray;
+        padding: 0;
+        margin-right: 16px;
+    }
+
+
+}
+
+#unfollow-group, #leave-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+@media only screen and (max-width: 407px) {
+    #privacy-type {
+        font-size: 13px!important;
+    }
+
+    #members-count {
+        margin-left: 10px !important;
+
+
+        strong {
+            font-size: 13px !important
+        }
+    }
+    #invite-to-group-btn {
+        margin-left: 10px !important;
+    }
+}
+
+@media only screen and (min-width: 420px) and (max-width: 530px) {
+    #joined-group-btn{
+        width: 80px !important;
+        padding: 15px 8px !important;
+    }
+
+    #invite-to-group-btn{
+        padding: 15px 8px  !important;
+        width: 80px !important;
+        margin-left: 7px !important
+    }
+
+    #members-count{
+        margin-left: 5px !important;
+    }
+    #privacy-type span{
+        margin-left: 5px !important;
+    }
+}
+
+
+@media only screen  and (max-width: 420px) {
+ .row{
+     flex-direction: column;
+ }
+}
+

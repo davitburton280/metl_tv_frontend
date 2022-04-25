@@ -1,0 +1,30 @@
+<div *ngIf="!session" id="join">
+  <div id="join-dialog">
+    <h1>Join a video session</h1>
+    <form class="form-group" [formGroup]="joinSessionForm">
+      <p>
+        <label>Participant</label>
+        <input class="form-control" id="userName" formControlName="mySessionId" required>
+      </p>
+      <p>
+        <label>Session</label>
+        <input class="form-control" id="sessionId" formControlName="myUserName" required>
+      </p>
+      <p class="text-center">
+        <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="joinSession()">Join!</button>
+      </p>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="session" id="session">
+  <opv-session
+      #ovSessionComponent
+      [sessionName]="mySessionId"
+      [user]="myUserName"
+      [tokens]="tokens"
+      (sessionCreated)="handlerSessionCreatedEvent($event)"
+      (publisherCreated)="handlerPublisherCreatedEvent($event)"
+      (error)="handlerErrorEvent($event)">
+  </opv-session>
+</div>

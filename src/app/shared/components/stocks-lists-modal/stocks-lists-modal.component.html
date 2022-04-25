@@ -1,0 +1,96 @@
+<section id="stocks-lists-modal">
+    <div class="user-stocks">
+        <div class="top-wrap">
+            <div class="leftAndRight">
+                <div class="left-group">
+                    <h2>My Watchlist</h2>
+                </div>
+
+                <div class="right-group">
+                    <div class="close-modal-btn">
+                        <i class="fas fa-times" (click)="closeModal()"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="center-group">
+                <!--                <div class="spinner-container" *ngIf="stocksLoading.status==='loading'">-->
+                <!--                    <mat-spinner [diameter]="25"></mat-spinner>-->
+                <!--                    <span>{{stocksLoading.text}}...</span>-->
+                <!--                </div>-->
+            </div>
+
+
+        </div>
+
+        <div class="user-stocks-list">
+            <!--            <div class="paginator">-->
+            <!--                <ng-container *ngIf="userStocks.length > 12">-->
+            <!--                    <mat-paginator (page)="handle($event)"-->
+            <!--                                   #paginator-->
+            <!--                                   [length]="userStocks.length" [pageIndex]="pageIndex"-->
+            <!--                                   [pageSize]="pageSize" [hidePageSize]="true"-->
+            <!--                                   [pageSizeOptions]="[2,5,10,25,100]">-->
+            <!--                    </mat-paginator>-->
+            <!--                </ng-container>-->
+            <!--            </div>-->
+            <app-stock-tiles [stocks]="userStocks" *ngIf="userStocks.length > 0" [dragDropDisabled]="true"
+                             [userStocks]="getUpdatedStockDetails(userStocks)"
+                             (updatedStocksList)="updateFollowedStocks($event)"></app-stock-tiles>
+            <p *ngIf="userStocks?.length===0 && loader.stocksLoading.status!=='loading'">
+                No user stocks of selected type is found
+            </p>
+        </div>
+    </div>
+
+
+    <div class="all-stocks">
+        <div class="top-wrap">
+            <div class="center-group justify-content-between mr-3">
+                <h2 class="mr-3">Tilez</h2>
+                <app-search-stocks-form class="inputTopWrapPart" [hidden]="loader.stocksLoading.status==='loading' && !searched"
+                                        [returnSearchText]="true"
+                                        [transparentForm]="true"
+                                        (search)="getSearchResults($event)"></app-search-stocks-form>
+                <div class="spinner-container" *ngIf="loader.stocksLoading.status==='loading'">
+                    <mat-spinner [diameter]="25"></mat-spinner>
+                    <span>{{loader.stocksLoading.text}}...</span>
+                </div>
+            </div>
+
+            <div class="right-group belowOne justify-content-center justify-content-xl-end">
+                <div class="stock-type-selector" *ngIf="loader.stocksLoading.status==='finished'">
+                    <select class="selectClass" (change)="stockTypeChanged($event)">
+                        <option *ngFor="let type of stockTypes" [selected]="type.value === selectedStockType?.value"
+                                [value]="type.value">{{type.name}}</option>
+                    </select>
+                </div>
+                <div class="paginator">
+                    <ng-container *ngIf="loader.stocksLoading.status==='finished'">
+                        <mat-paginator *ngIf="stocks.length > 0" (page)="handle($event)"
+                                       #paginator
+                                       [length]="stocks.length" [pageIndex]="pageIndex"
+                                       [pageSize]="pageSize" [hidePageSize]="true"
+                                       [pageSizeOptions]="[2,5,10,25,100]">
+                        </mat-paginator>
+                    </ng-container>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="all-stocks-list">
+            <app-stock-tiles [stocks]="filteredStocks" *ngIf="filteredStocks.length > 0" [dragDropDisabled]="true"
+                             [userStocks]="getUpdatedStockDetails(userStocks)" [allStocksList]="true"
+                             [followingAllowed]="true" (updatedStocksList)="updateFollowedStocks($event)"
+                             [type]="selectedStockType"></app-stock-tiles>
+            <p *ngIf="filteredStocks?.length===0 && loader.stocksLoading.status!=='loading'">
+                No stocks of selected type is found</p>
+        </div>
+
+
+    </div>
+
+</section>
+

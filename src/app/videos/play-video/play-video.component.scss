@@ -1,0 +1,114 @@
+@import "variables";
+//@import "plyr-custom";
+
+.saved {
+    i, p {
+        color: #18B587 !important;
+    }
+}
+
+#add-tags {
+    background-color: $metl-green;
+    color: $white;
+    //padding: 5px;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    padding: 8px 24px;
+}
+
+.tag {
+    cursor: pointer;
+}
+
+.details-row {
+    display: flex;
+    align-items: center;
+
+    .dot {
+        margin: 0 10px;
+        color: #818181;
+    }
+}
+
+.channel-block {
+    cursor: pointer;
+    border-top: 0.5px solid #C9C9C9;
+    border-bottom: 0.5px solid #C9C9C9;
+    padding: 12px 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.ads-block-right {
+    padding-top: 50px;
+}
+
+.tags-container {
+    .editable-details {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .video-title {
+
+    }
+
+}
+
+
+.main-tags {
+    display: flex;
+    margin-bottom: 16px;
+    margin-top: 24px;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .main-tags-text {
+        display: flex;
+        flex-wrap: wrap;
+        flex: 1;
+        margin-right: 24px;
+        align-items: center;
+    }
+
+    p {
+        color: #0035C6;
+        font-size: 16px;
+        font-family: "Muli-Bold", sans-serif;
+        margin-right: 16px;
+        margin-bottom: 8px;
+    }
+
+    .main-tags-like {
+        display: flex;
+        color: #545454;
+    }
+
+    .main-tags-share {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        p {
+            margin-left: 5px;
+            color: #545454;
+            font-size: 12px;
+            font-family: "Muli-Light", sans-serif;
+            margin-bottom: 0 !important;
+
+        }
+    }
+
+    .liked {
+        color: #18B587 !important;
+    }
+
+    .disliked {
+        color: $red !important;
+    }
+
+}
+
+.comments-block {
+}

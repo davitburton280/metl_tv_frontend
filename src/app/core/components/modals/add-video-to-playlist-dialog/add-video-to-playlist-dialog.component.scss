@@ -1,0 +1,104 @@
+.add-video-playlist-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 550px;
+    padding: 32px;
+    width: 100%;
+    max-width: 890px;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    position: absolute;
+    background: #fff;
+    z-index: 1001;
+
+    .content-wrap {
+        h1.title {
+            font-size: 32px;
+            color: #545454;
+            font-family: "Muli-Bold";
+        }
+
+        .content {
+            margin-top: 24px;
+
+
+            .tab-list {
+                ul {
+                    display: flex;
+
+                    li {
+                        color: #FFFFFF !important;
+                        font-size: 12px;
+                        box-shadow: 0 0 6px #0000000F;
+                        font-family: "Muli-Bold";
+
+                        .nav-link {
+                            min-width: 126px;
+                            padding: 6px 26px;
+                            background: transparent;
+                            color: #545454;
+                            text-align: center;
+                            transition: all 0.2s ease;
+                            white-space: nowrap;
+
+                            &:hover, &.active {
+                                background: #F53C6F;
+                                color: #ffffff;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            .tab-items {
+                margin-top: 24px;
+                overflow: auto;
+                max-height: 323px;
+
+                /* width */
+                &::-webkit-scrollbar {
+                    width: 5px;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background: #E3E3E3;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background: #CBCBCB;
+                }
+
+                &::-webkit-scrollbar-thumb:hover {
+                    background: #555;
+                }
+            }
+        }
+    }
+
+    .btn-wrap {
+        margin-top: 40px;
+        display: flex;
+        justify-content: flex-end;
+
+        .btn {
+            margin-left: 24px;
+            background: #18B587;
+            color: #FFFFFF;
+            font-size: 16px;
+            border-radius: 0;
+            padding: 8px 24px;
+            line-height: initial;
+
+            &.cancel {
+                background: #C9C9C9;
+            }
+        }
+    }
+
+    .add-videos:disabled {
+        background-color: #8BDAC3 !important;
+    }
+}

@@ -1,0 +1,51 @@
+#verify-email {
+  color: #545454;
+  font-family: "Muli-Regular";
+}
+
+#verify-email h1 {
+  font-size: 32px;
+  margin-top: 40px;
+}
+
+#verify-email h3 {
+  font-size: 24px;
+  margin-top: 16px;
+}
+
+#verify-email p {
+  margin-top: 16px;
+}
+
+#verify-email input {
+  width: 437px;
+  height: 51px;
+  -webkit-box-shadow: 0 0 6px #F53C6F24;
+          box-shadow: 0 0 6px #F53C6F24;
+  border: 0.5px solid #F53C6F;
+  padding-left: 32px;
+}
+
+#verify-email #resend-code {
+  font: normal normal normal 16px/20px Muli;
+  color: #18B587;
+  margin-top: 16px;
+  margin-bottom: 0;
+  font-family: "Muli-Regular";
+}
+
+#verify-email button {
+  width: 437px;
+  height: 51px;
+  background: #F53C6F 0 0 no-repeat padding-box;
+  -webkit-box-shadow: 0 0 6px #006DCC2E;
+          box-shadow: 0 0 6px #006DCC2E;
+  color: #FFFFFF;
+  margin-top: 21px;
+}
+
+#verify-email #thanks {
+  text-align: center;
+  padding-top: 116px;
+}
+/*# sourceMappingURL=verify-email.component.css.map */

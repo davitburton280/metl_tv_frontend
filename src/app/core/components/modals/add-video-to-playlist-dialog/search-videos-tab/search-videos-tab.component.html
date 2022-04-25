@@ -1,0 +1,47 @@
+<div class="tab1">
+    <div class="input-wrap">
+        <app-search-videos-form (search)="searchVideos($event)"></app-search-videos-form>
+    </div>
+    <ng-container *ngIf="searchedVideos.length > 0">
+        <div class="video-item" [class.selected]="checkIfVideoSelected(video.id)"
+             [class.added]="getSelectedVideos.checkIfVideoAddedToPlaylist(video, playlist)"
+             *ngFor="let video of searchedVideos; trackBy:trackByElement" (click)="selectVideo(video)">
+            <div class="video-container">
+                <div class="img">
+                    <span class="added-placeholder"></span>
+                    <img class="thumbnail" [src]="video.thumbnail|getImgPath">
+                    <span class="duration">{{video.duration}}</span>
+                </div>
+
+                <div class="details">
+                    <div class="title">
+                        <h4 class="">{{video.name}}</h4>
+                    </div>
+                    <div class="shortened-details">
+                        <span class="channel-name">{{video.channel.name}}</span>
+                        <span class="dot">&middot;</span>
+                        <span class="watchers-count">
+                            {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
+                        </span>
+                        <span class="dot">&middot;</span>
+                        <span class="upload-time">{{video.created_at|dateFromNow}}</span>
+                    </div>
+
+                    <div class="desc-tags">
+                        <p class="shortened-description">{{video.description}}</p>
+                        <div class="tags">
+                            <ul>
+                                <li *ngFor="let tag of video?.tags" (click)="getVideosByTag(tag.name)">
+                                    <span>{{tag.name}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <div class="no-results-found" *ngIf="searchedVideos.length === 0 && searched">
+        <span>No search results found</span>
+    </div>
+</div>

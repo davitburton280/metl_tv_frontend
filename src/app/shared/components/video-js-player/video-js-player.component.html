@@ -1,0 +1,15 @@
+<div class="container" *ngIf="videoUrl">
+    <div class="loading-spinner" *ngIf="videoInit==='pending'">
+        <mat-spinner [diameter]="15"></mat-spinner>
+        <span style="margin-left:10px">Loading video</span>
+    </div>
+    <div [hidden]="videoInit!=='finished'">
+        <video id="player" class="video-js" controls preload="auto" autoplay data-setup='{}'>
+            <source [src]="videoUrl" type="video/mp4">
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser that
+                <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+        </video>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+@import 'mixins';
+@import 'page-tabs';
+
+#profile-cover-image {
+    margin-bottom: 20px;
+
+    img {
+        height: 300px;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+#details-block {
+    display: flex;
+    align-items: center;
+}
+
+#profile-actions-block {
+    display: flex;
+    align-items: center;
+}
+
+#user-full-name {
+    display: block;
+}
+
+.connections-count {
+    margin-top: 4px;
+    color: #545454;
+    font-size: 14px;
+    font-family: "Muli-Light", sans-serif;
+}
+
+
+.details-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#edit-profile {
+    @include regularButton;
+    width: 170px;
+    @media (max-width: 425px){
+        max-width: 170px !important;
+        width: 100% !important;
+        padding: 15px 15px;
+        white-space: nowrap;
+        @media (max-width: 390px){
+            padding: 15px 8px;
+        }
+    }
+}
+
+#user-details {
+    width: 98%;
+    margin: auto;
+}
+
+
+.users-connected-btn {
+    @include regularButton;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.toggle-chat-box-btn {
+    @include regularButton;
+}
+
+.add-friend-btn {
+    @include regularButton;
+    background-color: $red;
+    padding: 0;
+    margin-right: 16px;
+}
+
+.waiting-for-confirmation-btn {
+    @include regularButton;
+    width: 210px;
+    background-color: $light_gray;
+    padding: 0;
+    margin-right: 16px;
+}

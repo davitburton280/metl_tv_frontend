@@ -1,0 +1,17 @@
+<input id="url-input" placeholder="Paste the url here" (paste)="getUrl($event)" (change)="checkUrl($event)">
+<div *ngIf="isValidUrl" class="video-container">
+    <iframe width="560" height="315" [src]="safeUrl" *ngIf="safeUrl && isYoutubeVideo(url)" title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+
+
+</div>
+
+<div class="video-container">
+    <iframe width="560" height="500" [src]="safeUrl" *ngIf="safeUrl && !isYoutubeVideo(url)"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+</div>

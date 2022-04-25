@@ -1,0 +1,24 @@
+@import 'variables';
+
+.subscriptions-text {
+    margin-bottom: 24px;
+    color: $red;
+    font-size: 18px;
+    font-family: "Muli-Bold";
+}
+
+.channel-name {
+    cursor: pointer;
+}
+
+
+
+
+
+@media (max-width: 991px) {
+    .see-more {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+}
+

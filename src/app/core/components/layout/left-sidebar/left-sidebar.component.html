@@ -1,0 +1,22 @@
+<div class="closeBtn" (click)="closeSidenav.emit($event)">
+    <i class="fa fa-window-close"></i>
+</div>
+<div class="logo-container">
+    <img class="header-left-logo navbar-brand" src="assets/img/logo.png" (click)="changePage('/')">
+</div>
+<div id="left-sidebar" [class.disabled]="router.url === '/users/video/publish'">
+    <div id="left-menu">
+        <app-section-links (closeSidenav)="closeSidenav.emit($event)" [authUser]="authUser"></app-section-links>
+    </div>
+
+    <ng-container *ngIf="auth.loggedIn()">
+        <div id="channel-subscriptions">
+            <app-channel-subscriptions [authUser]="authUser"></app-channel-subscriptions>
+        </div>
+
+        <div id="stock-lists">
+            <app-stocks-lists-portable [authUser]="authUser"></app-stocks-lists-portable>
+        </div>
+    </ng-container>
+</div>
+

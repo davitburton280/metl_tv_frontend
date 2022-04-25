@@ -1,0 +1,113 @@
+@import 'variables';
+@import 'mixins';
+
+.top {
+    display: flex;
+    justify-content: space-between;
+
+    p {
+        color: $red;
+        font-family: "Muli", sans-serif, bold;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .view-more-notifications {
+        color: $metl-green;
+    }
+}
+
+
+.notification {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 0;
+    flex-wrap: wrap;
+
+    &.unread {
+        background-color: #8cc5b440;
+    }
+
+    .left {
+        width: 97%;
+        display: flex;
+        padding-left: 5px;
+        cursor: pointer;
+
+        .avatar {
+            width: 55px !important;
+            height: 55px !important;
+        }
+
+        .notification-text {
+            font-family: Roboto, "Helvetica Neue", sans-serif;
+        }
+    }
+
+    .right {
+        display: flex;
+
+        .notification-body {
+            .date {
+                margin: 10px 0;
+                padding: 0;
+            }
+        }
+
+
+    }
+
+    .additional-actions {
+        display: flex;
+        align-items: center;
+
+        .connection-actions {
+            display: flex;
+            width: 300px;
+            justify-content: space-around;
+            margin-left: 50px;
+
+            button {
+                @include regularButton;
+            }
+
+            .decline-connection-btn {
+                background-color: $red;
+            }
+        }
+
+        .group-join-actions {
+            button {
+                background: $metl-green;
+            }
+        }
+    }
+}
+
+.view-more-notifications {
+    cursor: pointer;
+    text-align: center;
+}
+
+@media screen and (max-width: 456px) {
+    .avatar-container {
+
+        #profile-image {
+            width: 60px !important;
+            height: 60px !important;
+            margin-top: 5px;
+        }
+    }
+}
+
+.sidebar-notifications {
+    .avatar-container {
+
+        #profile-image {
+            width: 60px !important;
+            height: 60px !important;
+            margin-top: 5px;
+        }
+    }
+}

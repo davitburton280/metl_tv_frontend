@@ -1,0 +1,4 @@
+<app-post-form-placeholder [selectedGroup]="selectedGroup"></app-post-form-placeholder>
+<app-post-item *ngFor="let post of groupPosts$|async; trackBy: trackByElement"
+               [post]="post" [group]="selectedGroup" [accessedFromGroup]="true">
+</app-post-item>

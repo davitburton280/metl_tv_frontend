@@ -1,0 +1,91 @@
+<app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
+<div class="ads-block">
+    <div class="ads-block-left">
+        <ng-container *ngIf="videoData">
+            <div class="videoWrap">
+                <app-video-js-player [videoData]="videoData"
+                                     [videoUrl]="apiUrl + 'uploads/videos/' + videoData.filename">
+                </app-video-js-player>
+                <!--<app-video-regular-player [videoData]="videoData"></app-video-regular-player>-->
+                <!--<app-vjs-player [videoData]="videoData" [options]="videoJSPlayerOptions"></app-vjs-player>-->
+            </div>
+
+            <div class="main-tags">
+                <div class="main-tags-text">
+                    <span *ngIf="videoData.tags?.length === 0">No tags defined for this video</span>
+                    <ng-container *ngIf="videoData.tags?.length > 0">
+                        <p *ngFor="let tag of videoData.tags" class="tag" (click)="openVideoByTag(tag.name)">
+                            #{{tag.name}}</p>
+                    </ng-container>
+                </div>
+
+                <div class="main-tags-like">
+                    <div class="main-tags-share" (click)="updateLikes(videoData, 'like')">
+                        <i class="fas fa-thumbs-up" [class.liked]="userVideoConnection?.liked"></i>
+                        <p>{{videoData.likes}}</p>
+                    </div>
+                    <div class="main-tags-share" (click)="updateLikes(videoData, 'dislike')">
+                        <i class="fas fa-thumbs-down"
+                           [class.disliked]="userVideoConnection?.disliked"></i>
+                        <p>{{videoData.dislikes}}</p>
+                    </div>
+                    <div class="main-tags-share" (click)="openSocialShareModal()">
+                        <i class="fas fa-share-alt"></i>
+                        <p>Share</p>
+                    </div>
+                    <div class="main-tags-share" (click)="saveVideo(videoData)"
+                         [class.saved]="userVideoConnection?.saved === 'saved'">
+                        <i class="fas fa-plus-square"></i>
+                        <p>{{userVideoConnection?.saved === 'saved' ? 'Saved' : 'Save'}}</p>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="tags-container">
+                <div class="editable-details" *ngIf="!showTagsForm">
+                    <p class="video-title">{{videoData?.name}}</p>
+                    <button id="add-tags"
+                            *ngIf="auth.loggedIn() && !showTagsForm && authUser?.id === videoData.author_id"
+                            (click)="showTagsForm = !showTagsForm">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit details</span>
+                    </button>
+                </div>
+                <app-video-details-form [videoData]="videoData" *ngIf="showTagsForm"
+                                        (formReady)="saveVideoDetails($event)"></app-video-details-form>
+            </div>
+            <div class="details-row">
+                <span class="views-count">{{videoData?.views + ' view' + (videoData?.views === 1 ? '' : 's')}}</span>
+                <span class="dot">&middot;</span>
+                <span class="date">{{videoData.created_at|dateFromNow}}</span>
+            </div>
+            <div class="channel-block"
+                 [routerLink]="'/channels/'+videoData.users_vids[0].username"  *ngIf="videoData?.channel">
+                <img alt="avatar" class="avatar" [src]="videoData.channel.avatar|getImgPath:'avatars'">
+                <div>
+                    <p class="channel-name">{{videoData.channel.name}}</p>
+                    <p class="subscribers-count">{{buildSubscribersCountText(videoData)}}</p>
+                </div>
+            </div>
+            <div class="right-side">
+                <app-video-suggestions *ngIf="isSmallScreen"></app-video-suggestions>
+            </div>
+            <div class="comments-block">
+                <app-video-comments-form *ngIf="auth.loggedIn()" (added)="commentAdded($event)" [videoData]="videoData"
+                                         class="w-100"></app-video-comments-form>
+                <mat-spinner [diameter]="15"
+                             [hidden]="!auth.loggedIn() || commentsLoading === 'finished'"></mat-spinner>
+                <app-video-comments-list [videoData]="videoData"
+                                         [videoComments]="videoComments"></app-video-comments-list>
+            </div>
+        </ng-container>
+    </div>
+    <div class="ads-block-right">
+        <app-chat-box *ngIf="videoData" [messages]="videoData.messages"></app-chat-box>
+        <app-video-suggestions *ngIf="!isSmallScreen"></app-video-suggestions>
+    </div>
+</div>
+
+
+

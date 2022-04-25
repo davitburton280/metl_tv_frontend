@@ -1,0 +1,171 @@
+@import 'variables';
+
+.session-container {
+    height: 100vh;
+}
+
+#img-div {
+    text-align: center;
+
+    img {
+        height: 200px;
+    }
+}
+
+.join-session-btn {
+    background-color: #18B587;
+    width: 25%;
+    margin-top: 33px;
+    border: none;
+}
+
+#video-chat-container {
+    display: flex;
+
+    .video-container {
+        flex: 1;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .chat-container {
+        flex: 0.5;
+        display: flex;
+    }
+
+    app-video-js-record {
+        flex: 1;
+
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        padding: 30% 0;
+    }
+}
+
+
+#streaming-not-started-yet {
+    width: 500px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Muli-Light";
+    background: #EFEFEF;
+}
+
+.stream-container {
+    overflow: hidden;
+}
+
+.stream-errors {
+    display: flex;
+}
+
+.reload {
+    text-decoration: underline;
+    color: $black;
+}
+
+#video-stream-container {
+    height: 100vh;
+}
+
+#video-info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    #video-info {
+        h3 {
+            font-family: "Muli-Bold", sans-serif;
+            margin-top: 10px;
+        }
+    }
+
+    #video-info-actions {
+        display: flex;
+
+        #participants-count {
+            display: flex;
+            align-items: center;
+            color: #545454;
+            font-size: 12px;
+
+            span {
+                font-family: "Muli-Light", sans-serif;
+            }
+        }
+
+        #share-wrap {
+            margin-left: 10px;
+        }
+    }
+}
+
+#channel-info {
+    border-top: 0.5px solid #C9C9C9;
+    border-bottom: 0.5px solid #C9C9C9;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    margin-top: 12px;
+    padding: 12px 0;
+
+    #channel-name {
+        font-family: "Muli-Bold", sans-serif;
+        color: #545454;
+        font-size: 16px;
+        margin-bottom: 4px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+}
+
+#share-wrap {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: #545454;
+
+    p {
+        margin-left: 5px;
+        color: #545454;
+        font-size: 12px;
+        font-family: "Muli-Light", sans-serif;
+        margin-bottom: 0 !important;
+    }
+}
+
+.left {
+    flex: 1;
+}
+
+#video-tags-list {
+    display: flex;
+
+    .tag {
+        color: #0035C6;
+        font-size: 16px;
+        font-family: "Muli-Bold", sans-serif;
+        margin-right: 16px
+    }
+}
+
+.live-now {
+    width: 52px;
+    height: 20px;
+    position: static;
+}
+
+.details-row {
+    display: flex;
+    align-items: center;
+
+    .dot {
+        margin: 0 10px;
+    }
+}

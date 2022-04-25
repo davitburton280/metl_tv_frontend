@@ -1,0 +1,55 @@
+<div class="post-item" *ngIf="post">
+    <div class="posted">
+        <p>
+            Posted by <span [routerLink]="'/users/'+post.post_author.username"
+                            class="author-username">{{post.post_author.username}}</span>
+            <ng-container *ngIf="!accessedFromGroup && post.post_group as group">
+                <i class="fas fa-arrow-right group-pointer"></i>
+                <span class="post-group-name" [routerLink]="'/groups/'+group.custom_name+'/about'">{{group.name}}</span>
+            </ng-container>
+        </p>
+        <p>{{post.created_at| dateFromNow}}</p>
+    </div>
+
+    <div class="info">
+        <div class="left-wrap">
+            <div class="voting-container">
+                <button class="vote-up-btn" [class.active]="isPostVotedByAuthUser(1)" (click)="voteForPost(1, post)" [disabled]="">
+                    <span class="material-icons">forward</span>
+                </button>
+                <div class="vote-count">{{post.votes}}</div>
+                <button class="vote-down-btn" [class.active]="isPostVotedByAuthUser(-1)" (click)="voteForPost(-1, post)">
+                    <span class="material-icons">forward</span>
+                </button>
+            </div>
+        </div>
+        <div class="right-wrap">
+            <p [innerHTML]="post.description"></p>
+
+            <img class="post-cover" [routerLink]="'/posts/'+post.id" [src]="post.cover_img|getImgPath: 'post_covers'">
+
+            <div class="post-menu">
+                <div class="menu">
+                        <a href=""><span class="material-icons">chat_bubble</span>Comments</a>
+                        <a (click)="openSocialShareModal()"><span class="material-icons">share</span>Share</a>
+                </div>
+                <div class="dotes">
+
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <i class="material-icons">more_vert</i>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                        </button>
+                        <button mat-menu-item>
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

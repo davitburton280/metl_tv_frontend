@@ -1,0 +1,12 @@
+<form [formGroup]="groupForm" id="group-form" [hidden]="!showGroupChatForm">
+    <input formControlName="name" placeholder="Group name">
+    <button mat-icon-button (click)="addGroup()">
+        <mat-icon>done</mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleForm(false)">
+        <mat-icon>close</mat-icon>
+    </button>
+</form>
+<button class="create-group-chat" [hidden]="showGroupChatForm" (click)="toggleForm(true)">
+    <img src="assets/img/noun_create.png" alt="show-group-form-btn"> Create new group
+</button>

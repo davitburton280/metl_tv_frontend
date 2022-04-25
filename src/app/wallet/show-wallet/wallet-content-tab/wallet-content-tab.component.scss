@@ -1,0 +1,55 @@
+@import "variables";
+
+::ng-deep .mat-table {
+    thead {
+        .mat-header-row {
+            background-color: #e9ecef;
+            height: 46px;
+
+            .mat-header-cell {
+                .table-item {
+                    height: 46px;
+                    font: normal normal 600 14px/20px "Muli-Bold";
+                    color: #495057;
+                    text-transform: capitalize;
+                }
+
+                &:first-child {
+                    .table-item {
+                        color: #f53c6f;
+                        position: relative;
+                    }
+                    .mat-sort-header-arrow{
+                        //color: $red;
+                    }
+                }
+
+                &:last-child {
+                    .table-item {
+                        color: #f53c6f;
+                    }
+                }
+            }
+        }
+    }
+
+    .table-item {
+        height: 46px;
+        font: normal normal 300 14px/20px "Muli-Light";
+        color: #000000;
+        display: flex;
+        align-items: center;
+    }
+}
+
+#external-accounts {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-left: auto;
+    div[role='button'] {
+        white-space: nowrap;
+        margin: 5px;
+    }
+}
+

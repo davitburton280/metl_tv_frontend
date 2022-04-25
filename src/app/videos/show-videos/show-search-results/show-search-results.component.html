@@ -1,0 +1,54 @@
+<div id="search-results-container">
+    <ng-container *ngFor="let channel of channelsVideos">
+        <div class="channel-item">
+            <div class="thumbnail">
+                <img class="newAvatar" [src]="channel.avatar|getImgPath:'avatars'"
+                     (click)="openChannelPage(channel.user?.username)">
+            </div>
+            <div class="info">
+                <div class="infoPart">
+                    <p class="channel-name" (click)="openChannelPage(channel?.user?.username)">
+                        {{channel.name}}
+                    </p>
+                    <div class="shortened-details">
+                        <p class="video-count video-countStyle">
+                            {{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}
+                        </p>
+                    </div>
+                    <p [innerHTML]="getDesc(channel.description)"></p>
+                </div>
+                <button class="btn subscribe-to-channel-btn" *ngIf="channel?.user?.username !== authUser?.username"
+                        [class.subscribed]="checkIfSubscribed(channel)"
+                        (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Subscribed' : 'Subscribe'}}
+                </button>
+            </div>
+        </div>
+        <div class="video-container" *ngFor="let video of channel.videos">
+            <div class="thumbnail">
+                <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, channel.user.username)">
+                <span class="duration">{{video.duration}}</span>
+            </div>
+            <div class="details">
+                <h4 class="title">{{video.name}}</h4>
+                <div class="shortened-details">
+                    <span class="channel-name" [routerLink]="'/channels/'+channel.user.username">{{channel.name}}</span>
+                    <span class="dot">&middot;</span>
+                    <span class="watchers-count">
+                    {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
+                </span>
+                    <span class="dot">&middot;</span>
+                    <span class="upload-time">{{video.created_at | dateFromNow}}</span>
+                </div>
+                <p class="shortened-description" [innerHTML]="video.description">
+                </p>
+                <div class="tags">
+                    <ul>
+                        <li *ngFor="let tag of video?.tags">
+                            <span>{{tag.name}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

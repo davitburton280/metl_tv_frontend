@@ -1,0 +1,36 @@
+.session-container {
+  height: 100vh;
+}
+
+#img-div {
+  text-align: center;
+}
+
+#img-div img {
+  height: 200px;
+}
+
+.join-session-btn {
+  background-color: #18B587;
+  width: 25%;
+  margin-top: 33px;
+  border: none;
+}
+
+#video-chat-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+
+#video-chat-container app-video-js-record {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-top: 44%;
+}
+/*# sourceMappingURL=video.component.css.map */

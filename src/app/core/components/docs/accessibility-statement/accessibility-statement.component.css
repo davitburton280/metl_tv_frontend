@@ -1,0 +1,38 @@
+.accessibility-statement h1 {
+  color: #18B587;
+  font-size: 32px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.accessibility-statement .text {
+  margin: 24px 0 60px;
+}
+
+.accessibility-statement .text P {
+  color: #545454;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.accessibility-statement .text P.bold {
+  font-weight: 600;
+}
+
+.accessibility-statement .text P.list::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: #18B587;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+/*# sourceMappingURL=accessibility-statement.component.css.map */

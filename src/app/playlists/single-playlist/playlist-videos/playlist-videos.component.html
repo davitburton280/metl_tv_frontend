@@ -1,0 +1,77 @@
+<div class="playlist" cdkDropList>
+    <div class="playlist-item" cdkDrag [cdkDragPreviewClass]="'video-container'"
+         (cdkDragDropped)="dragDropped($event, video)"
+         *ngFor="let video of playlist.videos; trackBy:trackByElement">
+        <div class="video-container">
+            <div class="img">
+                <img [src]="video.thumbnail|getImgPath"
+                     (click)="openPlaylistPage(video, playlist)">
+                <div class="update-privacy" (click)="updatePrivacy(video, video.privacy.name)"
+                     [ngClass]="video.privacy.name !== 'Public'  ? 'red':'green'">
+                    <mat-icon>visibility_{{video.privacy.name !== 'Public' ? 'off' : 'on'}}</mat-icon>
+                </div>
+                <span class="duration">{{video.duration}}</span>
+            </div>
+
+            <div class="details">
+                <div class="title">
+                    <h4 class="">{{video.name}}</h4>
+                    <div class="dotes">
+                        <button mat-icon-button [matMenuTriggerFor]="menu"
+                                aria-label="Example icon-button with a menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="addToAnotherPlaylist(video)">
+                                <mat-icon>playlist_add</mat-icon>
+                                <span>Add to another playlist</span>
+                            </button>
+                            <!--                                        <button mat-menu-item>-->
+                            <!--                                            <mat-icon>vertical_align_top</mat-icon>-->
+                            <!--                                            <span>Move to top</span>-->
+                            <!--                                        </button>-->
+                            <!--                                        <button mat-menu-item>-->
+                            <!--                                            <mat-icon>vertical_align_bottom</mat-icon>-->
+                            <!--                                            <span>Move to bottom</span>-->
+                            <!--                                        </button>-->
+                            <button mat-menu-item
+                                    (click)="changePlaylistThumbnail(playlist.id, video.thumbnail)">
+                                <mat-icon>insert_photo</mat-icon>
+                                <span>Set as playlist thumbnail</span>
+                            </button>
+                            <button mat-menu-item (click)="updatePrivacy(video, video.privacy.name)">
+                                <mat-icon>visibility_{{video.privacy.name !== 'Public' ? 'on' : 'off'}}</mat-icon>
+                                <span>Make {{video.privacy.name !== 'Private' ? 'private' : 'public'}}</span>
+                            </button>
+                            <button mat-menu-item (click)="removeVideoFromPlaylist(playlist.id, video.id)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Remove from playlist</span>
+                            </button>
+
+                        </mat-menu>
+                    </div>
+                </div>
+                <div class="shortened-details">
+                    <span class="channel-name">{{video.channel.name}}</span>
+                    <span class="dot">&middot;</span>
+                    <span class="watchers-count">
+                        {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
+                    </span>
+                    <span class="dot">&middot;</span>
+                    <span class="upload-time">{{video.created_at|dateFromNow}}</span>
+                </div>
+                <div class="video-details-2nd-row">
+                    <p class="shortened-description">{{video.description}}</p>
+                    <div class="tags">
+                        <ul>
+                            <li *ngFor="let tag of video?.tags" (click)="getVideosByTag(tag.name)">
+                                <span>{{tag.name}}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

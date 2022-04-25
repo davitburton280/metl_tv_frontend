@@ -1,0 +1,79 @@
+@import 'variables';
+@import 'mixins';
+
+
+ul {
+    margin-top: 20px;
+
+    &.bordered {
+        border-right: 1px solid $light_gray;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+
+    }
+}
+
+#member-requests {
+    button {
+        @include regularButton;
+    }
+
+    .ignore-request {
+        background-color: $light-gray;
+        margin-left: 10px;
+        width: 80px !important;
+    }
+
+    .confirm-request {
+        //margin-left: 30px;
+        margin-left: 5px;
+        width: 80px !important;
+    }
+}
+
+.avatarName{
+    white-space: nowrap;
+}
+
+.avatar{
+    width: 100% !important;
+}
+
+.avatarDiv{
+    width: 42px !important;
+    height: 42px;
+    border-radius: 50%;
+    margin-right: 8px
+}
+
+.confirmIgnoreBtns{
+    display: flex;
+}
+
+.requestPartDiv{
+    display: flex;
+    align-items: center;
+}
+
+@media only screen  and (max-width: 1200px) {
+    .pending {
+        justify-content: space-between;
+    }
+}
+@media only screen  and (max-width: 499px) {
+    .pending {
+        flex-direction: column;
+        align-items: start !important;
+        justify-content: start;
+    }
+
+    .confirmIgnoreBtns {
+        margin-top: 10px;
+    }
+}
+
+

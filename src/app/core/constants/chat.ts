@@ -1,0 +1,1 @@
+export const ALLOWED_GROUP_MEMBERS_COUNT_ON_TOP = 5;

@@ -1,0 +1,25 @@
+<div class="add-playlist-modal">
+    <form [formGroup]="addPlaylistForm">
+        <input type="text" placeholder="Playlist Name" formControlName="name">
+        <span class="error" *ngIf="nameCtrl.hasError('required') && isSubmitted">Playlist name is required</span>
+
+        <textarea id="playlist-description" cols="30" rows="10" formControlName="description"
+                  placeholder="Playlist Description"></textarea>
+        <span class="error" *ngIf="descCtrl.hasError('required') && isSubmitted">Playlist description is required</span>
+
+        <div class="select">
+            <select id="visibility" formControlName="privacy">
+                <option [value]="''">Visibility</option>
+                <option [value]="0">Public</option>
+                <option [value]="1">Private</option>
+            </select>
+        </div>
+        <span class="error" *ngIf="privacyCtrl.hasError('required') && isSubmitted">Playlist privacy is required</span>
+
+        <div class="btn-wrap">
+            <button class="btn cancel" (click)="cancel()">Cancel</button>
+            <button class="btn create" (click)="createPlaylist()">Create</button>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,124 @@
+@import 'variables';
+@import 'mixins';
+@import 'page-tabs';
+
+.search-stocks-component{
+    width: 100%;
+}
+.profile-block {
+    label {
+        width: 100%;
+    }
+}
+.child-inp-auto{
+    background: #0D1B3E;
+}
+
+.child-inp input {
+
+
+    //search-wrapper{
+    //    input {
+    //        width: 100% !important;
+    //        @media only screen and (min-width: 768px) {
+    //            font-size: 15px !important;
+    //        }
+    //        @media only screen and (max-width: 767px) {
+    //            font-size: 11px !important;
+    //            margin-right: 4px !important;
+    //            padding: 6px 28px 6px 6px !important;
+    //        }
+    //        @media only screen and (max-width: 374px) {
+    //            font-size: 10px !important;
+    //            margin-right: 2px !important;
+    //            padding: 4px 13px 4px 4px !important;
+    //        }
+    //    }
+    //}
+
+}
+
+.search-wrapper {
+    //display: flex;
+    ////max-width: min-content;
+    //align-items: center;
+    //max-width: 287px;
+    width: 50%;
+    @media (max-width: 660px){
+        width: 80%;
+    }
+    @media (max-width: 424px){
+        width: 93%;
+    }
+
+    .toggle-filters-btn {
+        display: flex;
+        //margin-right: 20px;
+        padding-top: 4px;
+        height: 31px;
+
+
+        .filter-toggle-btn {
+            background-color: unset;
+            height: 23px;
+        }
+    }
+    .left-side {
+        display: grid;
+        //max-width: 287px;
+        width: 100%;
+        grid-template-columns: max-content minmax(auto, 300px);
+        grid-gap: 20px;
+        margin-bottom: 20px;
+    }
+    .right-side {
+        //display: flex;
+        //max-width: 287px;
+        //width: 100%;
+        display: grid;
+        //max-width: 287px;
+        width: 100%;
+        grid-template-columns: max-content minmax(auto, 300px);
+        grid-gap: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+
+#search-videos-form {
+    display: flex;
+
+    .filters-active {
+        background-color: $metl-green !important;
+        color: $white;
+    }
+}
+
+
+.open-add-stock-modal {
+    display: flex;
+    align-items: center;
+    height: 31px;
+    //margin-right: 20px;
+    @media only screen and (max-width: 374px) {
+        margin-right: 5px !important;
+    }
+
+    button {
+        background-color: unset;
+        height: 23px
+    }
+}
+
+#channel-tabs-list {
+    width: 100%;
+    @media (max-width: 991px) {
+        max-width: 624px;
+        width: 100%;
+    }
+}
+
+
+
+
+

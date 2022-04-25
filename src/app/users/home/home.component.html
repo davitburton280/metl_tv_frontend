@@ -1,0 +1,10 @@
+<!--<app-categories></app-categories>-->
+<!--<app-stock-profile></app-stock-profile>-->
+<app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
+<!--<app-video-carousel-holder [videos]="videos"></app-video-carousel-holder>-->
+<!--<app-video-carousel-holder [videos]="videos" [title]="'Trending Streams'"></app-video-carousel-holder>-->
+<!--<app-video-carousel-holder [videos]="videos" [title]="'Trending CLIPZ'"></app-video-carousel-holder>-->
+
+<app-videos-list-holder [videos]="videos"></app-videos-list-holder>
+<app-videos-list-holder [videos]="videos" [title]="'Trending Streams'"></app-videos-list-holder>
+<app-videos-list-holder [videos]="videos" [title]="'Trending CLIPZ'"></app-videos-list-holder>

@@ -1,0 +1,127 @@
+.start-live-video-page {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 810px;
+    margin: 160px auto 0;
+    padding: 144px 0 80px 280px;
+    background-size: contain;
+    background-position: left top;
+    background-repeat: no-repeat;
+    background-image: url("/assets/img/live-video.png");
+
+    .text {
+        max-width: 532px;
+    }
+
+    h1 {
+        font-size: 24px;
+        color: #18B587;
+    }
+
+    p {
+        margin-top: 16px;
+        margin-bottom: 0;
+        font-size: 16px;
+        color: #545454;
+    }
+
+    .loader {
+        display: flex;
+        padding: 10px;
+        align-items: center;
+        justify-content: center;
+
+        strong {
+            margin-left: 10px;
+            color: #18B587;
+        }
+    }
+    
+    .refresh{
+        cursor: pointer;
+    }
+
+    .item-wrap {
+        margin-top: 16px;
+
+        .item {
+            margin-bottom: 8px;
+
+            &.d-flex {
+                > div {
+                    margin-right: 40px;
+                }
+            }
+
+            .title {
+                display: flex;
+                justify-content: space-between;
+                color: #18B587;
+                font-size: 14px;
+                margin-bottom: 2px;
+
+                .edit {
+                    font-size: 16px;
+                    color: #545454;
+                    cursor: pointer;
+
+                    span {
+                        font-size: 20px;
+                        margin-left: 4px;
+                    }
+                }
+            }
+
+            .info {
+                display: flex;
+                align-items: center;
+
+                &.border {
+                    border: 0 !important;
+
+                    span:not(.material-icons) {
+                        border-bottom: 0.5px solid #DCDCDC;
+                    }
+                }
+
+                span:not(.material-icons) {
+                    flex: 1;
+                }
+
+                .material-icons {
+                    margin-right: 8px;
+                }
+
+                > span {
+                    color: #545454;
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+
+                .material-icons {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+
+    .btn {
+        margin-top: 24px;
+        padding: 8px 32px 8px 32px;
+        display: flex;
+        align-items: center;
+        background: #F53C6F;
+        font-size: 16px;
+        color: #ffffff;
+        border-radius: 0;
+        transition: 0.3s ease-in-out;
+
+        span {
+            margin-right: 8px;
+        }
+    }
+
+    .error-msg {
+        display: flex;
+    }
+}

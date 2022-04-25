@@ -1,0 +1,29 @@
+<app-show-cards></app-show-cards>
+<div class="bg-light wallet-content">
+    <h3 class="mb-4 title">Wallet <img src="assets/img/wallet-main-page-icon.svg" alt="" width="30" height="25">
+    </h3>
+    <div>
+        <ng-container *ngIf="userCards?.length > 0">
+        <mat-tab-group [disableRipple]="true" #tabGroup [selectedIndex]="selectedTabIndex" [@.disabled]="true"
+                       (selectedTabChange)="tabChange($event)" >
+            <mat-tab label="Wallet">
+                <app-wallet-content-tab [userCards]="userCards" [authUser]="authUser" [accountTransfers]="transfers"
+                                        *ngIf="transfersLoaded" (changeTab)="getDefaultExtAccount($event)"></app-wallet-content-tab>
+            </mat-tab>
+            <mat-tab label="Payments Purchase History">
+                <app-payments-purchase-history-tab [userCards]="userCards"></app-payments-purchase-history-tab>
+            </mat-tab>
+            <mat-tab label="Payments Received History">
+                <app-payments-received-history-tab [userCards]="userCards" [accountTransfers]="transfers"
+                                                   *ngIf="transfersLoaded"
+                                                   [authUser]="authUser"></app-payments-received-history-tab>
+            </mat-tab>
+            <mat-tab label="Metl Coins Payout Schedule">
+                <app-metl-coins-payout-schedule-tab [userCards]="userCards"></app-metl-coins-payout-schedule-tab>
+            </mat-tab>
+        </mat-tab-group>
+        </ng-container>
+        <!--            &lt;!&ndash; Modal &ndash;&gt;-->
+        <!--            <button type="button" class="btn btn-primary complete-purchase" (click)="openModal()">Complete purchase</button>-->
+    </div>
+</div>

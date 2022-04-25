@@ -1,0 +1,96 @@
+.save-to-playlists-popup {
+    h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #545454;
+    }
+
+    .btn {
+        padding: 6px 24px;
+        background: #18B587;
+        border-radius: 0;
+        font-size: 16px;
+        color: #ffffff
+    }
+
+    input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+    }
+
+    .save-to-playlists-form {
+        padding-bottom: 32px;
+        border-bottom: 1px solid #C9C9C9;
+    }
+
+    form {
+        ul {
+            margin: 0;
+
+            .playlist {
+                padding: 26px 0 0;
+                color: #545454;
+                font-weight: 600;
+
+                &:last-child {
+                    border: 0;
+                }
+
+                label {
+                    margin: 0 14px;
+                }
+            }
+        }
+
+        .save-playlists {
+            margin-top: 24px;
+        }
+    }
+
+    .new-playlist {
+        margin-top: 24px;
+
+        h2 {
+            display: flex;
+            align-items: center;
+
+            i {
+                font-size: 16px;
+                margin-right: 12px;
+            }
+        }
+
+        .input {
+            margin-top: 24px;
+
+            input {
+                width: 100%;
+                padding: 14px 24px;
+                background: #F4F4F4;
+                color: #545454;
+                border: 0;
+                outline: none;
+                resize: none;
+            }
+        }
+
+        .select {
+            margin-top: 24px;
+
+            select {
+                width: 100%;
+                padding: 14px 24px;
+                background: #F4F4F4;
+                color: #545454;
+                border: 0;
+                outline: none;
+                resize: none;
+            }
+        }
+
+        .btn {
+            margin-top: 24px;
+        }
+    }
+}
+

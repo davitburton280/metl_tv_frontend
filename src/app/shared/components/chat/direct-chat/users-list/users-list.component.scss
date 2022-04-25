@@ -1,0 +1,140 @@
+@import '~assets/styles/general-chat-wrap';
+@import '~assets/styles/chat-users-groups-container';
+@import 'variables';
+
+.user-last-msg {
+    width: 98%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.right {
+    i {
+        cursor: pointer;
+    }
+}
+
+.left-group {
+    display: flex;
+    width: 94%;
+}
+
+.seen-circle {
+    background-color: $red !important;
+    color: $white;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.more-btn {
+    button {
+        background-color: transparent;
+    }
+}
+
+.top-actions {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 20px;
+
+    .show-actions {
+        background-color: #C9C9C9;
+        padding: 5px;
+        border-radius: 35px;
+        width: 30px;
+        height: 30px;
+        color: white;
+        margin-bottom: 10px;
+
+        &:hover {
+            background-color: $metl-green;;
+        }
+    }
+
+    #back-to-active-users {
+        padding-left: 10px;
+
+        button {
+            display: flex;
+            align-items: center;
+            background-color: unset;
+            border: none;
+
+            span {
+                margin-left: 5px;
+            }
+        }
+    }
+}
+
+
+.user-avatar {
+    position: relative;
+
+    .avatar {
+        width: 48px !important;
+        height: 48px;
+    }
+
+    .status {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 14px;
+        top: 35px;
+        right: 0;
+        padding: 0;
+        line-height: 0;
+
+        &.offline {
+            background-color: gray;
+        }
+
+        &.online {
+            background-color: $metl-green;
+        }
+    }
+}
+
+.latest-message {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+}
+
+.latest-msg-date {
+    margin-left: 10px !important;
+    display: flex !important;
+    white-space: nowrap !important;
+    margin-top: 3px !important;
+    @media screen and (max-width: 374px) {
+        font-size: 8px !important;
+        margin-left: 6px !important;
+    }
+}
+
+
+.more-actions-btn {
+    width: 20px !important;
+}
+
+.blocked {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+
+    img {
+        opacity: 0.5;
+    }
+}
+
+.sidebar-mode {
+    .people-groups-container {
+        max-width: 360px;
+    }
+}
+
+.responsive-list {
+    max-width: 100%;
+}

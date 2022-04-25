@@ -1,0 +1,120 @@
+.purchase-bits {
+  width: 249px;
+  height: 360px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  -webkit-box-shadow: 0px 0px 10px #00000029;
+          box-shadow: 0px 0px 10px #00000029;
+  padding: 16px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.purchase-text {
+  color: #545454;
+  font-size: 12px;
+  font-family: "Muli-Bold";
+  margin-bottom: 4px;
+}
+
+.purchase-text-2 {
+  color: #545454;
+  font-size: 10px;
+  font-family: "Muli-Light";
+  margin-bottom: 4px;
+}
+
+.purchase-text-3 {
+  color: #18B587;
+  font-size: 10px;
+  font-family: "Muli-Bold";
+  margin-left: 8px;
+}
+
+.purchase-text-4 {
+  color: #18B587;
+  font-size: 10px;
+  font-family: "Muli-Bold";
+  margin-bottom: 8px;
+}
+
+.purchase-text-5 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 142px;
+  height: 28px;
+  font-size: 12px;
+  font-family: "Muli-Light";
+  color: white !important;
+  margin-bottom: 8px;
+  background: #F53C6F;
+}
+
+.bits-block {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.bits-block-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 0.5px solid #E6E6E6;
+  margin-bottom: 10px;
+}
+
+.bits-text-1 {
+  color: #545454;
+  font-size: 10px;
+  font-family: "Muli-Light";
+  width: 55px;
+}
+
+.bits-text-2 {
+  color: #545454;
+  font-size: 10px;
+  font-family: "Muli-Light";
+  width: 65px;
+}
+
+.bits-text-3 {
+  width: 46px;
+  height: 17px;
+  background: #18B587 0% 0% no-repeat padding-box;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #18B587;
+  color: white !important;
+  font-size: 10px;
+  font-family: "Muli-Light";
+}
+/*# sourceMappingURL=purchase-bits.component.css.map */

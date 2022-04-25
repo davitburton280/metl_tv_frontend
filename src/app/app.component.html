@@ -1,0 +1,43 @@
+<mat-sidenav-container>
+    <mat-sidenav [mode]="getSidenavMode(sidenav)" #sidenav
+                 id="sidenav" [opened]="!router.url.includes('auth')">
+        <app-left-sidebar (closeSidenav)="closeSidenav($event, sidenav)"></app-left-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="ml-0 ml-md-0">
+        <app-navbar (search)="getSearch($event)" *ngIf="!router.url.includes('auth')"
+                    (closeLeftSidenav)="sidenav.toggle()"
+                    (closeRightSidenav)="toggleRightSidenav($event,rightSidenav)"></app-navbar>
+        <!--        <app-navbar (toggleSide)="sidenav.toggle()"></app-navbar>-->
+
+        <!--        <mat-spinner [diameter]="30" *ngIf="loader.dataLoading"></mat-spinner>-->
+
+        <section class="body-content" [class.full-width]="router.url.includes('auth')">
+            <div class="body-content-left" *ngIf="isLeftSidebarShown()">
+                <div class="position-relative">
+                    <div class="close-left-menu">&times;</div>
+                    <app-left-sidebar></app-left-sidebar>
+                </div>
+            </div>
+            <div class="body-content-right"
+                 [ngClass]="{'full-width': checkIfPolicyPage() || router.url.includes('auth')}">
+                <div class="position-relative">
+                    <router-outlet></router-outlet>
+                </div>
+                <div class="bottom-chat-box">
+                    <app-chat-bottom-box *ngIf="usersMessagesStore.showBottomChatBox"
+                                         [channelUser]="usersMessagesStore.selectedUserMessages">
+                    </app-chat-bottom-box>
+                    <app-chat-bottom-box *ngIf="groupChatStore.showBottomChatBox" [chatBoxType]="'group'"
+                                         [selectedGroup]="groupChatStore.selectedGroupMessages"></app-chat-bottom-box>
+                </div>
+            </div>
+        </section>
+    </mat-sidenav-content>
+
+    <mat-sidenav [mode]="'side'" #rightSidenav position="end" id="right-sidenav"
+                 [opened]="isRightSidebarShown()">
+        <app-right-sidebar [shownItems]="rightSidenavFor"
+                           (closeSidenav)="closeSidenav($event, rightSidenav)"></app-right-sidebar>
+    </mat-sidenav>
+</mat-sidenav-container>

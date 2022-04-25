@@ -1,0 +1,71 @@
+<section class="login-content">
+    <div class="login-content-left">
+        <img class="login-logo" src="assets/img/metltvlogo.svg" (click)="router.navigate(['/'])">
+        <div class="login-abs">
+            <a class="register-btn" (click)="router.navigate(['auth/login'])">Login</a>
+            <a class="login-btn bg-white">Sign Up</a>
+        </div>
+    </div>
+    <div class="login-content-right">
+        <div class="login-block">
+            <p class="login-title">Sign Up</p>
+            <form [formGroup]="registerForm">
+                <input class="login-input" placeholder="First Name" formControlName="first_name">
+                <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
+                <span class="error" *ngIf="isSubmitted && firstName.hasError('patternInvalid')">
+                    First name should contain only alphabetical characters
+                </span>
+
+                <input class="login-input" placeholder="Last Name" formControlName="last_name">
+                <span class="error" *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
+                <span class="error" *ngIf="isSubmitted && lastName.hasError('patternInvalid')">
+                    Last name should contain only alphabetical characters
+                </span>
+
+
+                <input class="login-input" placeholder="User name" formControlName="username">
+                <span class="error" *ngIf="isSubmitted && username.hasError('required')">User name is required</span>
+                <span class="error" *ngIf="isSubmitted && username.hasError('patternInvalid')">
+                    Please write alphabetical characters before numbers for username
+                </span>
+
+<!--                <div class="register-block birthday-block">-->
+<!--                    <input type="text" (bsValueChange)="dateChanged($event)" formControlName="birthday"-->
+<!--                           class="login-input"-->
+<!--                           placeholder="Birthday" [bsConfig]="{maxDate:maxDate, showWeekNumbers: false}"-->
+<!--                           [maxDate]="maxDate"-->
+<!--                           bsDatepicker>-->
+<!--                </div>-->
+
+                <input class="login-input" placeholder="Email" formControlName="email">
+                <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>
+                <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">
+                    E-mail is <strong>invalid</strong>
+                </span>
+
+
+                <input class="login-input" placeholder="Password" type="password" formControlName="password">
+                <span class="error" *ngIf="isSubmitted && pass.hasError('required')">Password is required</span>
+                <span class="error" *ngIf="pass.hasError('patternInvalid')">
+                   Password should not contain spaces
+                </span>
+                <span class="error" *ngIf="pass.hasError('maxlength')||pass.hasError('minlength')">
+                   Password should be between 6-15 characters
+                </span>
+                <input class="login-input" placeholder="Reenter Password" type="password"
+                       formControlName="confirm_password">
+                <span class="error" *ngIf="confirmPass.hasError('notMatch')">Passwords don't match</span>
+                <span class="error"
+                      *ngIf="isSubmitted && confirmPass.hasError('required')">Please confirm the password</span>
+
+                <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
+
+                <div class="actions">
+                    <a class="register-submit" (click)="openModal()">Sign Up</a>
+                    <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,52 @@
+<ng-container *ngIf="!isBlockedUser"
+              [ngTemplateOutlet]="itemTemplate"
+              [ngTemplateOutletContext]="{uMessages: selectedUserMessages}">
+</ng-container>
+
+<ng-template let-uMessages="uMessages" #itemTemplate>
+    <div class="chat" [class.embed]="embedMode" [hidden]="(mobileHelper.isChatUsersListSize() && !uMessages)">
+
+        <div class="chat-about" *ngIf="uMessages && !embedMode" [class.blocked]="isContactBlocked(uMessages)">
+            <div class="left">
+                <button mat-icon-button *ngIf="mobileHelper.isChatUsersListSize()" (click)="backToUsers()">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <div class="img">
+                    <img alt="user-avatar" class="avatar" [src]="uMessages.avatar|getImgPath: 'user_avatars'">
+                </div>
+                <div class="name" *ngIf="uMessages.first_name">{{uMessages.first_name + ' ' + uMessages.last_name}}</div>
+            </div>
+        </div>
+
+        <ul class="chat-history" id="direct-messages" #directMessagesList>
+            <ng-container
+                *ngFor="let msg of uMessages?.direct_messages|groupBy:'created_at';
+                trackBy:sHelper.identifyDateKey">
+                <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
+
+                <ng-container *ngFor="let m of msg.value;trackBy:identifyMessage">
+                    <li class="message-container" [ngClass]="sHelper.getMessageClass(m.from_id)">
+                        <div class="message-date">
+                            <p class="date">{{m.created_at | date: 'HH:mm' }}</p>
+                        </div>
+                        <div class="message" [innerHTML]="m.message"></div>
+                        <div class="seen" *ngIf="isSeenByOtherUser(m)">
+                            <img class="seen-avatar"
+                                 [matTooltip]="sHelper.getSeenTooltip(selectedUserMessages, m)"
+                                 [src]="uMessages.avatar|getImgPath: 'user_avatars'">
+                        </div>
+                    </li>
+                </ng-container>
+            </ng-container>
+        </ul>
+
+        <div class="chat-form" [class.disabled]="isContactBlocked(uMessages)">
+            <small class="text-center font-italic d-block">{{typingText}}</small>
+            <app-chat-form [embed]="embedMode" (seen)="setSeen($event)" (typing)="setTyping($event)"
+                           (sent)="sendMessage($event)">
+            </app-chat-form>
+        </div>
+    </div>
+</ng-template>
+
+

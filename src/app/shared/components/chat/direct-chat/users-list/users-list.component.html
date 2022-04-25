@@ -1,0 +1,87 @@
+<div class="people-groups-container" [class.sidebar-mode]="sidebarMode"
+     [class.responsive-list]="mobileHelper.isChatUsersListSize()">
+    <div id="people-list" class="list-wrap">
+        <div class="top-actions" *ngIf="!sidebarMode">
+            <div id="back-to-active-users">
+                <button *ngIf="showBlockedUsers" (click)="toggleBlockedUsers(false)">
+                    <mat-icon>arrow_backward</mat-icon>
+                    <span>Active contacts</span>
+                </button>
+            </div>
+            <div class="three-dot-actions" *ngIf="ifContactsListActionsShown()">
+                <button [matMenuTriggerFor]="menu" class="show-actions">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item [class.active]="!showBlockedUsers" (click)="toggleBlockedUsers(false)">
+                        <i class="fas fa-users"></i>
+                        Active users
+                    </button>
+                    <button mat-menu-item [class.active]="showBlockedUsers" (click)="toggleBlockedUsers(true)">
+                        <i class="fa fa-users-slash"></i>
+                        Blocked users
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+        <ul class="list align-items-center">
+            <li *ngFor="let userMessages of filteredUsersMessages" [class.blocked]="ifContactBlocked(userMessages)"
+                [class.active]="selectedUserMessages?.id === userMessages.id">
+
+                <ng-container
+                    [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{user: userMessages, lastMsg: getUserLastMessage(userMessages?.direct_messages)}">
+                </ng-container>
+
+                <ng-template #itemTemplate let-user="user" let-lastMsg="lastMsg">
+                    <div class="d-flex user-last-msg align-items-center justify-content-between">
+                        <div class="left-group" (click)="selectUserMessages(userMessages, lastMsg)">
+
+                            <div class="img user-avatar">
+                                <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
+                                <div class="status"
+                                     [ngClass]="getUserCurrentStatus(user.username) ? 'online':'offline'"></div>
+                            </div>
+                            <div class="text">
+                                <div class="name">{{user.first_name + ' ' + user.last_name}}</div>
+                                <div class="d-flex align-items-center" *ngIf="lastMsg">
+                                    <div>
+                                        <span class="latest-message">{{lastMsg.message|fixLineBreaks}}</span>
+                                    </div>
+                                    <div>
+                                            <span class="ml-4 latest-msg-date">
+                                                {{lastMsg.created_at | dateFromNow}}
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ml-auto more-btn">
+                            <ng-container *ngIf="ifMoreActionsShown(lastMsg, user)">
+                                <button mat-icon-button class="more-actions-btn" [matMenuTriggerFor]="menu"
+                                        [disableRipple]="true">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item *ngIf="ifUnreadShown(lastMsg, user) "
+                                            (click)="unreadLastMessages(user)">
+                                        Unread
+                                    </button>
+                                    <button mat-menu-item *ngIf="!showBlockedUsers" (click)="blockUser(user)">
+                                        Block
+                                    </button>
+                                </mat-menu>
+                            </ng-container>
+                            <ng-container *ngIf="ifLastMessageUnseen(lastMsg) && getUnseenMessagesCount(userMessages)">
+                                <button class="seen-circle">
+                                    <strong>{{getUnseenMessagesCount(userMessages)}}</strong>
+                                </button>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+        </ul>
+    </div>
+</div>

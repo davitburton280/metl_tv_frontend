@@ -1,0 +1,54 @@
+form {
+    mat-form-field {
+        width: 100% !important;
+    }
+
+    textarea {
+        overflow: hidden;
+        resize: none;
+    }
+
+    .btn.enter {
+        padding:10px 20px;
+        background-color: #18B587;
+        margin-left: 15px;
+        color: white;
+        text-transform: uppercase;
+        min-width: 120px;
+        cursor: pointer;
+    }
+
+    .btn.text-btn {
+        outline: none;
+        color: #777;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding:10px 20px;
+        min-width: 120px;
+        cursor: pointer;
+    }
+}
+@media  (max-width: 1054px) and (min-width: 992px){
+    .buttonsPart{
+        flex-direction: column !important;
+    }
+    .replyBtn{
+        margin-left: 0 !important;
+        margin-top: 10px;
+    }
+}
+@media (max-width: 530px){
+    .buttonsPart{
+        flex-direction: column !important;
+    }
+    .replyBtn{
+        margin-left: 0 !important;
+        margin-top: 10px;
+    }
+}
+.buttonsPart{
+
+}
+
+
+

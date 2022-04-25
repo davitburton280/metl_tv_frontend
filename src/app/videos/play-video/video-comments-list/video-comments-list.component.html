@@ -1,0 +1,57 @@
+<div class="comments-container" [hidden]="videoComments.length === 0">
+    <ng-container *ngFor="let c of videoComments">
+        <div class="comment d-flex mt-4" *ngIf="isCommentShown(c)">
+            <div class="left-group" [class.w-100]="editComment">
+                <app-single-comment [comment]="c" [videoData]="videoData" [showReplyForm]="showReplyForm"
+                                    [showReplies]="showReplies" [selectedComment]="selectedComment"
+                                    class="w-100" [reply]="true" (likeDislikeComment)="likeDislikeComment($event)"
+                                    (commentAdded)="commentAdded($event)" (toggleReplies)="toggleReplies($event)"
+                                    (selectComment)="selectComment($event, true)"></app-single-comment>
+                <div class="replies" [hidden]="!isReplyShown(c)">
+                    <ng-container *ngFor="let reply of c.replies">
+                        <div class="d-flex reply mt-4" *ngIf="reply.id!==selectedReply?.id || !editReply">
+                            <div class="left-group">
+                                <app-single-comment [comment]="reply" [videoData]="videoData"
+                                                    [showReplyForm]="showReplyToReplyForm"
+                                                    [showReplies]="showReplies"
+                                                    [selectedComment]="selectedComment"
+                                                    [selectedReply]="selectedReply" [reply2Reply]="true"
+                                                    (likeDislikeComment)="likeDislikeComment($event)"
+                                                    (commentAdded)="commentAdded($event)" class="w-100"
+                                                    (selectComment)="replyToReply(c, reply)"></app-single-comment>
+                            </div>
+                            <div class="right-group">
+                                <app-comment-actions [comment]="reply"
+                                                     *ngIf="isMyComment(reply) && !editReply"
+                                                     (remove)="removeComment($event)"
+                                                     (commentSelected)="selectComment($event, false,true)">
+                                </app-comment-actions>
+                            </div>
+
+                        </div>
+
+                        <app-video-comments-form [editComment]="true" [selectedComment]="selectedReply"
+                                                 class="w-100" [isReplyComment]="true" [parentComment]="c"
+                                                 *ngIf="editReply && reply.id===selectedReply.id"
+                                                 (updated)="getUpdatedComments($event)"
+                                                 (cancelled)="editReply = false"
+                                                 [videoData]="videoData">
+                        </app-video-comments-form>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="right-group">
+                <app-comment-actions [comment]="c" *ngIf="isMyComment(c) && !editComment"
+                                     (remove)="removeComment($event)"
+                                     (commentSelected)="selectComment($event)">
+                </app-comment-actions>
+            </div>
+        </div>
+        <app-video-comments-form [editComment]="true" [selectedComment]="selectedComment"
+                                 class="edit-comment-form w-100"
+                                 *ngIf="editComment && c.id===selectedComment.id"
+                                 (updated)="getUpdatedComments($event)" (cancelled)="editComment = false"
+                                 [videoData]="videoData">
+        </app-video-comments-form>
+    </ng-container>
+</div>

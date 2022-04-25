@@ -1,0 +1,5 @@
+<ul class="nav nav-tabs" *ngIf="activeTab">
+    <li class="nav-item" *ngFor="let tab of tabsList;trackBy:trackByElement" (click)="changeTab(tab)">
+        <a class="nav-link" [class.active]="activeTab.value===tab.value">{{tab.name}}</a>
+    </li>
+</ul>

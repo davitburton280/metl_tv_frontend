@@ -1,0 +1,22 @@
+@import 'mixins';
+
+.video-item {
+    @include videoItem;
+}
+
+.input-wrap {
+    @include inputWrap;
+    margin-bottom: 20px;
+}
+.tags {
+    //margin-top: 10px;
+
+    li {
+        display: inline-block;
+        margin-right: 5px;
+
+        span {
+            @include tagItem;
+        }
+    }
+}

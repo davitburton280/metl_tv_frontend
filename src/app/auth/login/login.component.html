@@ -1,0 +1,33 @@
+<section class="login-content">
+    <div class="login-content-left">
+        <img class="login-logo" (click)="router.navigate(['/'])" src="assets/img/metltvlogo.svg">
+        <div class="login-abs">
+            <a class="login-btn bg-white">Login</a>
+            <a class="register-btn" (click)="router.navigate(['auth/register'])">Sign Up</a>
+        </div>
+    </div>
+    <div class="login-content-right">
+        <div class="login-block">
+            <p class="login-title">Login</p>
+            <form [formGroup]="loginForm">
+
+                <!-- E-mail field -->
+                <input class="login-input" placeholder="Email" formControlName="email">
+                <span class="error" *ngIf="email.hasError('required') && isSubmitted">
+          E-mail is <strong>required</strong>
+        </span>
+                <span class="error" *ngIf="email.hasError('patternInvalid')">
+          E-mail is <strong>invalid</strong>
+        </span>
+
+                <!-- Password field -->
+                <input class="login-input" placeholder="Password" type="password" formControlName="password">
+                <span class="error" *ngIf="pass.hasError('required') && isSubmitted">
+          Password is <strong>required</strong>
+        </span>
+                <p class="forgot-password" (click)="router.navigate(['auth/forgot-password'])">Forgot password?</p>
+                <a class="login-submit" (click)="login()">Login</a>
+            </form>
+        </div>
+    </div>
+</section>

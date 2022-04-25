@@ -1,0 +1,65 @@
+@import 'variables';
+@import 'page-tabs';
+
+.group-members-wrap {
+    text-align: center;
+
+    .group-name {
+        text-transform: capitalize;
+        color: $metl-green;
+    }
+
+    .members-form {
+        display: flex;
+        margin: 20px;
+        padding: 0 20px;
+    }
+
+    .members {
+        width: 90%;
+        padding: 10px;
+        margin: 20px auto;
+        //border: 1px solid #c3c3c3;
+    }
+}
+
+app-members-add-form {
+    max-width: 380px;
+    width: 100%;
+}
+
+#member-tabs-list {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.members {
+    height: 300px;
+
+    li {
+        display: flex;
+        max-width: 492px;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        .details {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            font-family: "Muli-Bold", sans-serif;
+
+            label {
+                width: 100%;
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+}
+
+
+.more-actions-btn {
+    background-color: transparent;
+}

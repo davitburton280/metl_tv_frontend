@@ -1,0 +1,14 @@
+.complete-purchase {
+    font-family: 'Muli-Light', sans-serif;
+    font-size: 14px;
+    margin-top: 20px;
+}
+::ng-deep .mat-tab-labels {
+    .mat-tab-label-active {
+        color: black;
+        opacity: 1;
+        .mat-tab-label-content {
+            font: normal normal 600 16px/24px "Muli-Bold";
+        }
+    }
+}

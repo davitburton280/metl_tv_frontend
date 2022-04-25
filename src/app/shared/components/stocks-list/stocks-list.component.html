@@ -1,0 +1,83 @@
+<div id="stocks-list-holder" *ngIf="passedStocks?.length > 0">
+    <div class="stocks-list" cdkDropList>
+        <div class="stocks-top-actions">
+            <div class="search-stocks">
+                <div class="watchlist-search" *ngIf="editStocksList && searching">
+                    <app-search-stocks-form [autocomplete]="true" [formWidth]="73" [whiteForm]="true"
+                                            [returnFoundStock]="true"
+                                            (search)="getAutocompleteResults($event)"></app-search-stocks-form>
+                </div>
+
+                <div class="sort-types-dropdown dropdown" *ngIf="sorting">
+                    <div class="dropdown-toggle" id="dropdown-menu-btn" [matMenuTriggerFor]="menu1"
+                         *ngIf="!editStocksList">
+                        Sort by <strong class="order-type">{{selectedSortType?.name}}</strong>
+                        <i class="fas fa-sort-down"></i>
+                    </div>
+                    <div class="dropdown-menu">
+
+                        <mat-menu #menu1="matMenu">
+                            <a mat-menu-item *ngFor="let sortType of stocksSortTypes;trackBy: trackByElement"
+                               [class.red]="selectedSortType?.name === sortType.name"
+                               (click)="sortStocks(sortType)">{{sortType.name}}</a>
+                        </mat-menu>
+
+                    </div>
+                    <div class="spinner-container">
+                        <!--                        <mat-spinner *ngIf="loader.stocksLoading.status === 'loading'"-->
+                        <!--                                     [diameter]="15"></mat-spinner>-->
+                    </div>
+                </div>
+            </div>
+            <div class="context-actions" *ngIf="searching">
+                <mat-icon [matMenuTriggerFor]="menu" *ngIf="!editStocksList">more_horiz</mat-icon>
+                <mat-icon *ngIf="editStocksList" (click)="editStocksList = !editStocksList">done</mat-icon>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editStocksList = !editStocksList">
+                        Edit Watchlist
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+
+        <ng-container *ngFor="let stock of onlyFirst10Stocks(passedStocks);trackBy: trackByElement">
+            <div class="stock-item" cdkDrag (cdkDragDropped)="dragDropped($event)"
+                 [cdkDragDisabled]="selectedSortType?.value!=='custom'">
+                <div class="remove-stock" *ngIf="editStocksList" (click)="updateFollowedStocksList(stock)">
+                    <i class="fas fa-trash"></i>
+                </div>
+                <div class="stock-details" (click)="openStockProfile(stock.symbol)">
+                    <div class="stock-name-symbol">
+                        <p class="stock-symbol">{{stock.symbol.replace('^', '')}}</p>
+                        <p class="stock-name">{{stock.name}}</p>
+                    </div>
+
+
+                    <ng-container
+                        [ngTemplateOutlet]="itemTemplate"
+                        [ngTemplateOutletContext]="{details: getPercentageDetails(stock)}">
+                    </ng-container>
+
+                    <ng-template let-d="details" #itemTemplate>
+                        <div class="indices-small-chart-container">
+                            <ngx-charts-line-chart [scheme]="getColorScheme(stock)"
+                                                   *ngIf="stock.hasOwnProperty('series')"
+                                                   [animations]="false"
+                                                   [results]="[stock]" [autoScale]="true"
+                                                   [view]="stockChartSettings.view"
+                                                   [tooltipDisabled]="stockChartSettings.tooltipDisabled"
+                                                   [timeline]="true">
+                            </ngx-charts-line-chart>
+                        </div>
+                        <div class="stock-price-change">
+                            <p class="stock-price">{{stock.price?.toFixed(2)}}</p>
+                            <p [ngClass]="d?.class" class="stock-change-details">
+                                {{stock.change?.toFixed(2)}}({{d?.value?.toFixed(2)}}%)</p>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+</div>

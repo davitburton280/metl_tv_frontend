@@ -1,0 +1,37 @@
+<form [formGroup]="groupChatDetailsForm" [class.modal-mode]="modalMode">
+    <div class="member-add">
+        <mat-form-field>
+            <mat-chip-list #tagList aria-label="Fruit selection" formControlName="member_ids">
+                <mat-chip *ngFor="let member of inputGroupMembers"
+                          (removed)="removeInputMember(member)">
+                    {{member.first_name + ' ' + member.last_name}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+
+                <input type="text" #chipsInput
+                       placeholder="Member name from your contacts"
+                       matInput
+                       maxlength="10"
+                       [formControl]="memberCtrl"
+                       [matChipInputFor]="tagList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       [matAutocomplete]="auto">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete"
+                              (optionSelected)="autoCompleteMemberSelected($event)">
+
+                <!--                            <mat-optgroup *ngFor="let contact of userContacts" [label]="group.name">-->
+                <mat-option *ngFor="let contact of filteredContacts" [value]="contact">
+                    {{contact.first_name + ' ' + contact.last_name}}
+                </mat-option>
+                <!--                            </mat-optgroup>-->
+
+
+            </mat-autocomplete>
+
+            <mat-hint align="end">Please press 'Enter' after the name</mat-hint>
+
+        </mat-form-field>
+        <button (click)="inviteMembers()">Add</button>
+    </div>
+</form>

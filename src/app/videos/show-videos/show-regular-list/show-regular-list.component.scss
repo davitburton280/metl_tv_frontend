@@ -1,0 +1,64 @@
+@import 'mixins';
+@import 'variables';
+
+#regular-video-list-container {
+    .shortened-description {
+        -webkit-line-clamp: 4;
+    }
+
+    .video-container {
+        //max-width: 400px !important;
+        //width: 100%;
+    }
+
+    .is-new-video {
+
+        .new {
+            background-color: #18B587;
+            color: white;
+            padding: 2px;
+
+        }
+
+        @media (max-width: 992px) {
+            margin-bottom: 10px;
+        }
+    }
+
+    .channel-name {
+        cursor: pointer;
+    }
+}
+
+.playlist-container {
+    display: flex;
+    margin-bottom: 30px;
+
+    .thumbnail {
+        position: relative;
+    }
+
+    .details {
+        padding-left: 32px;
+        max-width: 310px;
+    }
+
+    @media screen and (max-width: 1022px) {
+        flex-direction: column;
+        .thumbnail {
+            max-width: 432px;
+            width: 100%;
+        }
+        .details {
+            padding-left: 0;
+            margin-top: 8px;
+        }
+    }
+}
+
+@media screen and (min-width: 991px) {
+    .avatarClass {
+        display: none;
+    }
+}
+

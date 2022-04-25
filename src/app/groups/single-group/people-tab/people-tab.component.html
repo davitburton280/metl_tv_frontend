@@ -1,0 +1,11 @@
+<div class="tab-container">
+    <div id="all-members-wrap">
+        <app-admins-list [admins]="admins" [authUser]="authUser"
+                         [selectedGroup]="selectedGroup" [isOwnGroup]="isOwnGroup"></app-admins-list>
+        <app-group-members-list [members]="members" [authUser]="authUser"
+                                [selectedGroup]="selectedGroup" [isOwnGroup]="isOwnGroup"></app-group-members-list>
+        <app-member-requests-list *ngIf="isOwnGroup" [authUser]="authUser" [selectedGroup]="selectedGroup"
+                                  [requestedMembers]="requestedMembers"></app-member-requests-list>
+    </div>
+</div>
+

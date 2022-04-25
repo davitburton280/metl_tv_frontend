@@ -1,0 +1,8 @@
+<div appNavigateToFixedGroupUrl [name]="group.name" class="groupMessageDiv">
+    <div class="img-wrap">
+        <img class="groupMessageImg" [src]="group.avatar|getImgPath:'group_avatars'">
+    </div>
+    <div class="group-name-wrap">
+        <strong>{{group.name}}</strong>
+    </div>
+</div>

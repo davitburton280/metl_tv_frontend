@@ -1,0 +1,63 @@
+.text-list h1 {
+  color: #18B587;
+  font-size: 32px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.text-list .text {
+  margin: 24px 0 60px;
+}
+
+.text-list .text P {
+  color: #545454;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.text-list .text P.bold {
+  font-weight: 600;
+}
+
+.text-list .text P.green {
+  color: #18B587;
+}
+
+.text-list .text P.list::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: #18B587;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.text-list .text P a {
+  margin: 0px 6px;
+}
+
+.text-list .text a {
+  color: #545454;
+}
+
+.text-list .text a.red {
+  color: #F53C6F;
+  font-size: 16px;
+  display: block;
+  text-decoration: underline;
+  margin-bottom: 8px;
+}
+
+.text-list .text a i {
+  color: #18B587;
+  margin-right: 6px;
+}
+/*# sourceMappingURL=cookie-policy.component.css.map */

@@ -1,0 +1,78 @@
+<div class="chat-content" [class.opened]="showChatBox">
+    <ng-container *ngIf="videoRecordingState === 'started' || !openViduToken">
+        <button id="show-chat-box" *ngIf="!showChatBox"
+                (click)="showChatBox = !showChatBox">
+            <span>Show chat box</span>
+        </button>
+        <div class="chat-title" *ngIf="showChatBox">
+            <div class="dropdown">
+                <button id="hide-chat-box" matTooltip="Hide chat box" (click)="showChatBox = !showChatBox">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+                <!--                <div class="dropdown-toggle" id="dropdownChat" data-toggle="dropdown" aria-haspopup="true"-->
+                <!--                     aria-expanded="false">-->
+                <!--                    Chat-->
+                <!--                </div>-->
+                <!--                <div class="dropdown-menu" aria-labelledby="dropdownChat">-->
+                <!--                    <a class="dropdown-item" href="#">Action</a>-->
+                <!--                    <a class="dropdown-item" href="#">Another action</a>-->
+                <!--                    <a class="dropdown-item" href="#">Something else here</a>-->
+                <!--                </div>-->
+            </div>
+            <img src="assets/img/dotes.png">
+        </div>
+        <div class="chat-toggle-content" [hidden]="!showChatBox">
+            <div class="chat-information">
+                <div class="loader" *ngIf="loadingMessages">
+                    <mat-spinner [diameter]="30"></mat-spinner>
+                </div>
+                <ng-container *ngIf="!loadingMessages">
+                    <div class="chat-block" [routerLink]="'/channels/show'"
+                         [queryParams]="{username: message.from_user.username}"
+                         *ngFor="let message of messages">
+
+                        <ng-container *ngIf="message.from_user && message.from_channel">
+
+                            <img class="avatar" [class.selectable]="message.from_user.username!==this.authUser.username"
+                                 [class.selected]="selectedUsersToReply.includes(message.from_user.username) && userSelected"
+                                 [src]="message.from_channel?.avatar|getImgPath:'avatars'"
+                                 (click)="selectUserToReply(message)">
+                            <p class="chat-block-1 username">
+                                {{message.from_channel?.name + (message.from_user.username === authUser.username ? '(Me)' : '')}}
+                            </p>
+                        </ng-container>
+                        <p class="chat-block-2">{{message.message}}</p>
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="chat-footer" [class.shorter-footer]="!openViduToken">
+                <form [formGroup]="chatForm" [hidden]="!openViduToken">
+                    <input class="chat-input" formControlName="message" placeholder="Comment"
+                           (keyup.enter)="sendMessage($event)">
+                    <emoji-mart [custom]="customEmojis" (emojiClick)="addEmoji($event)"></emoji-mart>
+                </form>
+                <div class="chat-footer-smile" [hidden]="!openViduToken">
+                    <div class="nav-item dropdown">
+                        <a class="chat-by-bits nav-lin" data-toggle="dropdown">Buy Coins</a>
+                        <div class="dropdown-menu">
+                            <!--              <app-purchase-bits></app-purchase-bits>-->
+                        </div>
+                    </div>
+
+                    <div class="smile-block">
+                        <p class="smile">0/200</p>
+                        <i class="send fas fa-paper-plane"></i>
+                    </div>
+                </div>
+                <button class="hide-chat-box" *ngIf="!openViduToken" (click)="showChatBox = false">Hide chat box
+                </button>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="videoRecordingState === 'idle' && openViduToken">
+        <div id="chat-placeholder">
+            <span>When recording is started, the chat box will appear here</span>
+        </div>
+    </ng-container>
+</div>

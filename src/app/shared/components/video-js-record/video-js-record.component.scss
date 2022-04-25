@@ -1,0 +1,31 @@
+/* change player background color */
+.video-js video {
+    //background-color: #42f489;
+    background-color: #000000;
+}
+
+.video-container {
+    flex: 1;
+    display: flex;
+}
+
+#live-session-finished {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.messages-container {
+    text-align: center;
+}
+
+.back-to-channel-videos{
+    cursor: pointer;
+}

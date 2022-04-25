@@ -1,0 +1,27 @@
+<div class="subscriptions-container">
+    <ul *ngIf="userChannels">
+        <li *ngFor="let channel of userChannels.subscriptions;trackBy:trackByElement" class="channel-item">
+            <div class="left">
+
+                <div class="thumbnail">
+                    <!--                    <img class=src="assets/img/iconTV.png" alt="">-->
+                    <img class="channel-avatar" [src]="channel.avatar|getImgPath:'avatars'">
+                </div>
+                <div class="info">
+                    <p class="name" [routerLink]="'/channels/'+channel?.user?.username">{{channel.name}}</p>
+                    <div class="shortened-details">
+                        <p class="video-count">{{channel.videos.length + (channel.videos.length === 1 ? ' video' : ' videos')}}</p>
+                    </div>
+                    <!--                    <p>{{channel.description}}</p>-->
+                </div>
+            </div>
+            <div class="right">
+                <button class="subscribe-btn" *ngIf="channel?.user?.username !== authUser?.username"
+                        [class.subscribed]="checkIfSubscribed(channel)"
+                        (click)="subscribeToChannel(channel)">{{checkIfSubscribed(channel) ? 'Unsubscribe' : 'Subscribe'}}
+                </button>
+            </div>
+        </li>
+    </ul>
+</div>
+

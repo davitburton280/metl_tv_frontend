@@ -1,0 +1,39 @@
+<div class="d-flex comments_part_below">
+    <img class="avatar avatar-comments" [src]="comment?.user.avatar | getImgPath:'user_avatars'">
+    <div class="details">
+        <div class="d-flex align-items-center mb-2 detailsPart">
+            <div class="mr-3 user-name" [class.author.px-2]="isAuthor(comment)"
+                 (click)="openChannelPage(comment?.user?.username)">
+                {{getFullName(comment?.user)}} <i class="fas fa-check-circle ml-1" *ngIf="isAuthor(comment)"></i>
+            </div>
+            <div class="comment-date">{{comment.created_at | dateFromNow}}</div>
+        </div>
+
+        <div class="comment-text mb-2" [innerHTML]="comment.comment">
+        </div>
+        <div class="likes-reply">
+            <div class="comments-like mb-2">
+                <i class="fa fa-thumbs-up mr-1" (click)="likeDislikeCommentFn(comment)"
+                   [class.liked]="checkUserCommentConnection(comment)?.liked"></i>
+                <span class="likes-count"> {{getReactorsCount(comment.reactors, 'liked') }} </span>
+                <i class="fa fa-thumbs-down ml-3 mr-1" (click)="likeDislikeCommentFn(comment, false)"
+                   [class.disliked]="checkUserCommentConnection(comment)?.disliked"></i>
+                <span class="likes-count"> {{getReactorsCount(comment.reactors, 'disliked') }} </span>
+            </div>
+            <div class="reply-container">
+                <span class="reply" (click)="selectCommentFn(comment)">Reply</span>
+                <app-video-comments-form [videoData]="videoData" [reply]="reply"
+                                         *ngIf="showReplyForm && (comment.id===selectedComment?.id ||comment.id == selectedReply?.id)"
+                                         [selectedComment]="selectedComment" [reply2Reply]="reply2Reply"
+                                         [selectedReply]="selectedReply"
+                                         (added)="commentAddedFn($event)"
+                                         class="w-100"></app-video-comments-form>
+            </div>
+        </div>
+        <p class="replies-toggler mt-3" *ngIf="comment?.replies?.length > 0"
+           (click)="toggleRepliesFn(comment)">
+            <mat-icon>expand_{{showReplies && selectedComment === comment ? 'more' : 'less'}}</mat-icon>
+            <span>{{getRepliesTogglerText(comment)}}</span>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<form [formGroup]="videoCommentsForm" class="w-100">
+    <div class="d-flex mt-3 comment-input-container">
+        <img class="avatar" [src]="authUser.channel.avatar|getImgPath:'avatars'">
+        <input type="hidden" formControlName="comment">
+        <mat-form-field floatLabel="never">
+            <textarea matInput cdkTextareaAutosize [placeholder]="placeholderText" class="comment-input" #cEditable
+                      (focus)="inputFocused = true"
+                      formControlName="comment"></textarea>
+        </mat-form-field>
+    </div>
+    <div class="d-flex justify-content-end buttonsPart">
+        <div [hidden]="!inputFocused">
+            <button class="btn text-btn" type="button" (click)="onCancel()">Cancel</button>
+            <button (click)="saveComment()" type="button" [class.green-bg]="videoCommentsForm.valid"
+                    class="ml-3 px-2 btn enter replyBtn">{{reply ? 'Reply' : 'Comment'}}
+            </button>
+        </div>
+    </div>
+</form>

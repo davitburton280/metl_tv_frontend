@@ -1,0 +1,73 @@
+@import "src/assets/styles/variables";
+
+#external-accounts-container {
+    display: flex;
+    align-items: center;
+}
+
+.external-account{
+    cursor: pointer;
+}
+
+.bank {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+
+    .name {
+        font-weight: bold;
+    }
+
+    .numbers {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+    }
+
+
+    mat-icon {
+        color: $red;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+}
+
+.debit-card {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+
+    .brand {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .card-number {
+        font-size: 12px;
+    }
+
+    mat-icon {
+        color: $red;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        margin-left: 10px;
+    }
+
+
+}
+
+
+.bank {
+    margin-left: 20px;
+}
+
+mat-icon.set-as-default-account {
+    color: $metl-green !important;
+}
+
+
+
+

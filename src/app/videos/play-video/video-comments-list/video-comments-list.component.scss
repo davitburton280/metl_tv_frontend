@@ -1,0 +1,38 @@
+@import 'variables';
+
+.comments-container {
+    margin-top: 50px;
+
+    .comment {
+        & > .left-group {
+            flex-direction: column;
+        }
+
+        .replies {
+            margin-left: 40px;
+            margin-top: 20px;
+            @media (max-width: 500px){
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .comment, .reply {
+        display: flex;
+        justify-content: space-between;
+
+        .left-group {
+            display: flex;
+            width: 100%;
+        }
+
+        .right-group {
+
+        }
+    }
+}
+
+
+
+
+

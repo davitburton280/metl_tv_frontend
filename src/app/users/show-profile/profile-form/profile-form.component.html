@@ -1,0 +1,75 @@
+<form [formGroup]="profileForm" class="flex-wrap-reverse">
+    <div class="left-side pr-lg-2">
+
+
+        <input class="login-input" placeholder="First Name" formControlName="first_name">
+        <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
+        <span class="error" *ngIf="isSubmitted && firstName.hasError('patternInvalid')">
+                    First name should contain only alphabetical characters
+        </span>
+
+        <input class="login-input" placeholder="Last Name" formControlName="last_name">
+        <span class="error" *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
+        <span class="error" *ngIf="isSubmitted && lastName.hasError('patternInvalid')">
+                    Last name should contain only alphabetical characters
+        </span>
+        <input class="login-input" placeholder="User name" formControlName="username">
+        <span class="error" *ngIf="isSubmitted && username.hasError('required')">User name is required</span>
+        <span class="error" *ngIf="isSubmitted && username.hasError('patternInvalid')">
+                    Please write alphabetical characters before numbers for username
+        </span>
+
+        <!--        <div class="register-block birthday-block">-->
+        <!--            <input type="text" (bsValueChange)="dateChanged($event)" formControlName="birthday"-->
+        <!--                   class="login-input"-->
+        <!--                   placeholder="Birthday" [bsConfig]="{maxDate:maxDate, showWeekNumbers: false}"-->
+        <!--                   [maxDate]="maxDate"-->
+        <!--                   bsDatepicker>-->
+        <!--        </div>-->
+
+        <input class="login-input" placeholder="Email" formControlName="email">
+        <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>
+        <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">
+                    E-mail is <strong>invalid</strong>
+                </span>
+
+
+        <!--                <input class="login-input" placeholder="Password" type="password" formControlName="password">-->
+        <!--                <span class="error" *ngIf="isSubmitted && pass.hasError('required')">Password is required</span>-->
+        <!--                <span class="error" *ngIf="pass.hasError('patternInvalid')">-->
+        <!--                                   Password should not contain spaces-->
+        <!--                                </span>-->
+        <!--                <span class="error" *ngIf="pass.hasError('maxlength')||pass.hasError('minlength')">-->
+        <!--                                   Password should be between 6-15 characters-->
+        <!--                                </span>-->
+        <!--                <input class="login-input" placeholder="Reenter Password" type="password"-->
+        <!--                       formControlName="confirm_password">-->
+        <!--                <span class="error" *ngIf="confirmPass.hasError('notMatch')">Passwords don't match</span>-->
+        <!--                <span class="error"-->
+        <!--                      *ngIf="isSubmitted && confirmPass.hasError('required')">Please confirm the password</span>-->
+
+        <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
+        <div class="actions">
+            <a class="save-profile-changes" (click)="saveChanges()">Save changes</a>
+            <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
+        </div>
+    </div>
+    <div class="right-side mx-auto ml-xl-4 pl-lg-2">
+        <!-- User image or drop zone container-->
+        <div class="userImg">
+
+
+            <!-- Showing drop zone for non-authenticated users and for a users without a profile-form image -->
+            <dropzone [config]="dropzoneConfig" *ngIf="!profileImg" (removedFile)="removeImage()"
+                      id="dropzone" class="profileImgDropzone single" #dropzone (thumbnail)="onAddedFile($event)"
+                      [message]="'Click or drag an image to upload'">
+            </dropzone>
+
+            <div class="profile-img" *ngIf="profileImg"
+                 [style.background]="profileImg| getImgPath:'user_avatars':'background'"
+                 [ngStyle]="{'background-size':'cover'}">
+                <i class="fa fa-times remove-profile-img" (click)="removeImage()"></i>
+            </div>
+        </div>
+    </div>
+</form>

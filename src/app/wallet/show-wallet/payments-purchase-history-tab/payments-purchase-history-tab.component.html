@@ -1,0 +1,8 @@
+<hr>
+<div class="d-flex align-items-end justify-content-between">
+    <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
+</div>
+
+<app-mat-reusable-table [data]="purchases" [columns]="displayedColumns" [tab]="'purchases'">
+</app-mat-reusable-table>
+

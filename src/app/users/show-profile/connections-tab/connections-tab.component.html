@@ -1,0 +1,28 @@
+<div class="connections-container">
+    <ng-container *ngFor="let user of connections">
+        <div class="connection">
+            <div class="left">
+                <div class="img user-avatar">
+                    <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
+                </div>
+                <div class="text">
+                    <div class="name"
+                         [routerLink]="'/users/'+user.username">{{user.first_name + ' ' + user.last_name}}</div>
+                </div>
+            </div>
+            <div class="right">
+                <button [matMenuTriggerFor]="menu" class="show-actions">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+                <mat-menu #menu="matMenu">
+
+                    <button mat-menu-item [disableRipple]="true">
+                        <img class="iconDis" src="assets/img/iconDis.png" alt="">
+                        Disconnection
+                    </button>
+
+                </mat-menu>
+            </div>
+        </div>
+    </ng-container>
+</div>

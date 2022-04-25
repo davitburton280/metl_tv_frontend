@@ -1,0 +1,163 @@
+<form [formGroup]="startStreamingForm" id="start-streaming-form">
+    <div class="start-live-video">
+
+        <div id="video-name">
+            <input formControlName="name" placeholder="Video name">
+            <mat-error *ngIf="streamName.hasError('required') && isSubmitted">The stream name is required</mat-error>
+        </div>
+
+        <div id="video-tags">
+
+
+            <mat-form-field>
+                <mat-chip-list #tagList aria-label="Fruit selection" formControlName="tags">
+                    <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+                        {{tag.name}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+
+                    <input type="text" #chipsInput
+                           placeholder="Tags..."
+                           matInput
+                           maxlength="10"
+                           [matChipInputFor]="tagList"
+                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                           (matChipInputTokenEnd)="add($event)"
+                           [matAutocomplete]="auto">
+
+
+                </mat-chip-list>
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autoCompleteTagsSelected($event)">
+
+                    <mat-optgroup *ngFor="let group of savedTags" [label]="group.name">
+                        <mat-option *ngFor="let tag of group.values" [value]="tag">
+                            {{tag?.tag_details.name}}
+                        </mat-option>
+                    </mat-optgroup>
+
+
+
+                </mat-autocomplete>
+
+                <mat-hint align="end">Please press 'Enter' after the tag name and write not more than 3 tags</mat-hint>
+
+            </mat-form-field>
+            <mat-error *ngIf="tags.length ===0 && isSubmitted">Please provide some tags describing your live video
+            </mat-error>
+            <mat-error *ngIf="tags.length > 3 && isSubmitted">Only 3 tags please</mat-error>
+        </div>
+
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="autocompleteSelect($event)"
+                          *ngIf="savedTags.length > 0">
+
+            <mat-option>
+                OK
+                <!--                        {{tag.tag_details.name}}-->
+            </mat-option>
+        </mat-autocomplete>
+
+        <!--        <mat-form-field appearance="fill">-->
+        <!--            <mat-label>Number</mat-label>-->
+        <!--            <input type="text"-->
+        <!--                   placeholder="Pick one"-->
+        <!--                   aria-label="Number"-->
+        <!--                   matInput-->
+        <!--                   [formControl]="myControl"-->
+        <!--                   [matAutocomplete]="auto">-->
+        <!--            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">-->
+        <!--                <mat-option *ngFor="let tag of savedTags" [value]="tag">-->
+        <!--                    {{tag.tag_details.name}}-->
+        <!--                </mat-option>-->
+        <!--            </mat-autocomplete>-->
+        <!--        </mat-form-field>-->
+
+        <div id="video-categories">
+            <select formControlName="category_id">
+                <option selected disabled [value]="''">Category</option>
+                <option *ngFor="let category of videoCategories" [value]="category.id">{{category.name}}</option>
+            </select>
+            <mat-error *ngIf="streamCategory.hasError('required') && isSubmitted">
+                The stream category is required
+            </mat-error>
+        </div>
+
+        <div id="video-description">
+            <textarea formControlName="description" placeholder="Video description"></textarea>
+            <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">
+                The stream description is required
+            </mat-error>
+            <mat-error *ngIf="streamDesc.hasError('maxlength')">
+                Not more than 140 characters please
+            </mat-error>
+        </div>
+
+        <div id="privacy">
+            <mat-radio-group formControlName="privacy" (change)="changedPrivacy($event)">
+                <mat-radio-button *ngFor="let privacy of privacyTypes"
+                                  [value]="privacy.name">
+                    {{privacy.name}}
+                    <mat-icon>{{privacy.icon}}</mat-icon>
+                </mat-radio-button>
+            </mat-radio-group>
+            <!--            <mat-icon>{{selectedPrivacy?.icon}}</mat-icon>-->
+            <!--            <select formControlName="privacy" required (change)="changedPrivacy($event)">-->
+            <!--                <option [value]="''">Select privacy</option>-->
+            <!--                <option *ngFor="let privacy of privacyTypes" [value]="privacy.name">-->
+            <!--                    &lt;!&ndash;                                    <mat-icon>{{privacy.icon}}</mat-icon>&ndash;&gt;-->
+            <!--                    {{privacy.name}}-->
+            <!--                </option>-->
+            <!--            </select>-->
+        </div>
+
+        <!--        <div class="item">-->
+        <!--            <div class="info">-->
+        <!--                <mat-icon>{{selectedPrivacy?.icon}}</mat-icon>-->
+        <!--                <mat-form-field style="width:88%;">-->
+        <!--                    <mat-select formControlName="privacy" required-->
+        <!--                                (selectionChange)="changedPrivacy($event)">-->
+        <!--                        &lt;!&ndash;                                <mat-select-trigger>&ndash;&gt;-->
+        <!--                        &lt;!&ndash;                                    <div class="selected-privacy">&ndash;&gt;-->
+        <!--                        &lt;!&ndash;                                        <mat-icon>{{selectedPrivacy.icon}}</mat-icon>&ndash;&gt;-->
+        <!--                        &lt;!&ndash;                                        <span>{{selectedPrivacy.name}}</span>&ndash;&gt;-->
+        <!--                        &lt;!&ndash;                                    </div>&ndash;&gt;-->
+        <!--                        &lt;!&ndash;                                </mat-select-trigger>&ndash;&gt;-->
+        <!--                        <mat-option [value]="''">Select privacy</mat-option>-->
+        <!--                        <mat-option *ngFor="let privacy of privacyTypes" [value]="privacy.name">-->
+        <!--                            &lt;!&ndash;                                    <mat-icon>{{privacy.icon}}</mat-icon>&ndash;&gt;-->
+        <!--                            {{privacy.name}}-->
+        <!--                        </mat-option>-->
+        <!--                    </mat-select>-->
+        <!--                </mat-form-field>-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+        <div id="thumbnail">
+            <ng-container *ngIf="!thumbnailUploaded">
+                <label for="custom-thumbnail">
+                    <span class="material-icons">backup</span>
+                    Upload Thumbnail
+                </label>
+                <mat-spinner [diameter]="15" *ngIf="loader.fileProcessing"></mat-spinner>
+                <input type="file" id="custom-thumbnail" (change)="getThumbnailFile($event)">
+                <mat-error *ngIf="startStreamingForm.get('thumbnail').hasError('required') && isSubmitted">
+                    The thumbnail is required
+                </mat-error>
+            </ng-container>
+            <div *ngIf="thumbnailUploaded" id="uploaded-thumbnail-container">
+                <mat-icon (click)="removeUploadedThumbnail(thumbnailFile.name)" id="remove-thumbnail">clear
+                </mat-icon>
+                <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/thumbnails/'+thumbnailFile.name}}">
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-lg btn-success join-session-btn" type="button" (click)="submit()">
+                Start live video
+            </button>
+        </div>
+    </div>
+</form>
+
+
+
+

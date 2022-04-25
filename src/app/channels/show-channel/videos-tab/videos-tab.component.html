@@ -1,0 +1,2 @@
+<app-video-filters *ngIf="showFilters" (filter)="getFilteredVideos($event)"></app-video-filters>
+<app-videos-list-holder [videos]="channelUser.videos" [removable]="authUser.username === channelUser.username"></app-videos-list-holder>

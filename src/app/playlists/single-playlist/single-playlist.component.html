@@ -1,0 +1,14 @@
+<div class="single-playlist" *ngIf="playlist">
+    <h2>Edit Playlist</h2>
+
+    <div class="inner-wrap">
+        <div class="left">
+            <app-playlist-info-form [playlist]="playlist" (refreshPlaylist)="getPlaylistDetails()">
+            </app-playlist-info-form>
+        </div>
+
+        <div class="right">
+            <app-playlist-videos [playlist]="playlist" (refreshPlaylist)="getPlaylistDetails()"></app-playlist-videos>
+        </div>
+    </div>
+</div>

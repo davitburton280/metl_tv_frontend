@@ -1,0 +1,31 @@
+<ng-container *ngIf="authUser">
+    <app-user-tags></app-user-tags>
+    <div class="page-wrap" [class.responsive-chat-wrap]="mobileHelper.isChatUsersListSize()">
+        <div class="left-wrap"
+             [hidden]="mobileHelper.isChatUsersListSize() && !isRightWrapHidden()">
+            <div class="tab-wrap">
+                <button class="tab direct-tab" [matBadge]="newMessagesCountInDirect.toString()"
+                        matBadgePosition="before"
+                        [matBadgeHidden]="activeTab==='direct' || newMessagesCountInDirect===0 "
+                        [class.active]="activeTab=='direct'" (click)="changeTab('direct')">Chat
+                </button>
+                <button class="tab group-tab" [matBadge]="newMessagesCountInGroups.toString()"
+                        [matBadgeHidden]="activeTab==='group' || newMessagesCountInGroups===0 "
+                        [class.active]="activeTab==='group'"
+                        (click)="changeTab('group')">Group Chat
+                </button>
+            </div>
+            <div class="list-wrap">
+                <app-users-list [authUser]="authUser" *ngIf="activeTab==='direct'"></app-users-list>
+                <app-group-chat-left-side-holder [authUser]="authUser"
+                                                 *ngIf="activeTab=='group'"></app-group-chat-left-side-holder>
+            </div>
+        </div>
+
+        <div class="right-wrap" [hidden]="isRightWrapHidden()">
+            <app-direct-chat-messages [authUser]="authUser" *ngIf="activeTab==='direct'"></app-direct-chat-messages>
+            <app-group-chat-right-side-holder [authUser]="authUser"
+                                              *ngIf="activeTab=='group'"></app-group-chat-right-side-holder>
+        </div>
+    </div>
+</ng-container>

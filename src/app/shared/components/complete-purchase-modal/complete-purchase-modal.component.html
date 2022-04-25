@@ -1,0 +1,100 @@
+<div id="complete-purchase-modal">
+    <div class="" role="document">
+        <div class="modal-content modal-lg">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="CompletePurchaseLongTitle">Complete Purchase</h5>
+                <button type="button" class="close" (click)="closeModal({})">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div>
+                <div class="px-4">
+                    <div class="green-title mb-3">Purchase Summary</div>
+                    <div class="d-flex align-items-center border-bottom pb-3">
+                        <img src="assets/img/coin/gold.svg" alt="" width="16" height="16">
+                        <div class="d-flex flex-column ml-3">
+                            <span>{{purchase?.name}}</span>
+                            <span>One-time charge on {{currentDate| date: 'dd MMM, yyyy'}}.</span>
+                        </div>
+                        <div class="d-flex flex-column ml-auto">
+                            <span>Price</span>
+                            <span>${{(purchase?.unit_amount / 100).toFixed(2)}}</span>
+
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center py-2">
+                        <div class="d-flex flex-column ml-auto">
+                            <span>Tax</span>
+                            <span>Total</span>
+                        </div>
+                        <div class="d-flex flex-column ml-5">
+                            <span>-</span>
+                            <span>_</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="purchase-methods" [hidden]="reviewedPurchase">
+                    <div class="p-4">
+                        <div class="d-flex">
+                            <div class="black-title mr-5">Pay With Credit Card</div>
+                            <div>
+                                <img class="mr-2" src="assets/img/purchase-icons/visa-card.png" alt="">
+                                <img class="mr-2" src="assets/img/purchase-icons/master-card.png" alt="">
+                                <img class="mr-2" src="assets/img/purchase-icons/954912.png" alt="">
+                                <img class="mr-2" src="assets/img/purchase-icons/discover-credit-card-icon.png" alt="">
+                            </div>
+                        </div>
+                        <div id="user-cards-list mt-3">
+                            <form id="credit-card-form" [formGroup]="creditCardForm" class="w-50 mt-3">
+                                <select class="form-control" (change)="selectCard($event)">
+                                    <option *ngFor="let card of userCards">
+                                        {{card.name}}
+                                    </option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end p-5">
+                        <div role="button" class="btn-green" (click)="reviewPurchase()">Review Purchase</div>
+                    </div>
+                </div>
+                <div class="purchase-review" [hidden]="!reviewedPurchase">
+                    <div class="card p-4">
+                        <div class="details w-100">
+                            <div class="d-flex">
+                                <div class="card-front-part">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="bank-name label-text">{{selectedCard?.name}}</div>
+                                    </div>
+                                    <div class="card-number my-2">**** **** **** {{selectedCard?.number_part}} </div>
+                                    <div>
+                                        <p class="label-text">exp. date</p>
+                                        <p class="numbers">{{formatExpiryDate(selectedCard?.expiry_date)}}</p>
+                                    </div>
+                                    <div class="brand mt-2 d-flex w-100 justify-content-end">
+                                        <img
+                                            src="assets/img/purchase-icons/{{selectedCard?.brand.toLowerCase()}}-card.png"
+                                            class="brand-img mx-2">
+                                    </div>
+                                </div>
+                                <div class="expiration-date card-back-part">
+                                    <div class="cvc-part">
+                                        <p class="label-text">CVV2/CVC2</p>
+                                        <input class="numbers" type="password" maxlength="3" appOnlyNumber="true">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="actions d-flex my-3 align-items-center">
+                                <button (click)="reviewPurchase()" class="btn-light px-4 py-1 br-5 mr-3">Back</button>
+                                <button (click)="createPaymentIntent()" class="btn-red px-4 py-2 br-5 text-white">
+                                    Purchase
+                                </button>
+                                <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

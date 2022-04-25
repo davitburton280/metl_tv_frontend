@@ -1,0 +1,36 @@
+@import 'mixins';
+
+.member-add {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+
+    button {
+        @include regularButton;
+        width: 50px;
+
+    }
+
+    mat-form-field {
+        max-width: 210px;
+        width: 100%;
+    }
+}
+
+.modal-mode {
+    .member-add {
+        padding: 20px;
+    }
+}
+
+@media only screen  and (max-width: 420px) {
+    mat-form-field {
+        max-width: 130px !important
+    }
+    .member-add{
+        button {
+            width: 80px !important;
+        }
+    }
+}

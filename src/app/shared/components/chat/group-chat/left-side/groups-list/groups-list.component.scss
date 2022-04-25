@@ -1,0 +1,37 @@
+@import '~assets/styles/chat-users-groups-container';
+@import 'variables';
+
+.list-chat-group {
+    display: flex;
+
+    .left {
+        width: 90%;
+        display: flex;
+    }
+
+    .right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &.unconfirmed {
+        background-color: rgba(0, 0, 0, 0.3) !important;
+    }
+}
+
+.group-avatar {
+    width: 48px !important;
+    height: 48px;
+    border-radius: 10px;
+}
+
+.seen-circle {
+    font-family: Roboto, sans-serif;
+    background-color: $red !important;
+    color: $white;
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    font-size: 12px;
+}

@@ -1,0 +1,22 @@
+@import 'mixins';
+
+.choose-group {
+    select {
+        padding: 10px;
+        outline: none;
+        margin: 20px 0;
+        border: 1px solid #9D9D9D;
+    }
+}
+
+#add-post {
+    @include regularButton;
+}
+
+.action-btn-wrap {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+

@@ -1,0 +1,12 @@
+<div class="chat-top" [hidden]="isChatTopShown()">
+    <div class="chat-about" *ngIf="selectedGroup">
+        <button mat-icon-button *ngIf="mobileHelper.isChatUsersListSize()" (click)="backToUsers()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <app-group-avatar-handler [selectedGroup]="selectedGroup"
+                                  [authUser]="authUser"></app-group-avatar-handler>
+        <app-group-chat-members [selectedGroup]="selectedGroup" [authUser]="authUser"
+                                *ngIf="authUser"></app-group-chat-members>
+        <app-group-chat-actions [selectedGroup]="selectedGroup" [authUser]="authUser"></app-group-chat-actions>
+    </div>
+</div>

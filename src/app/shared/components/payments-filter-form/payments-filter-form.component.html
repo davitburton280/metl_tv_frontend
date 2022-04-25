@@ -1,0 +1,22 @@
+<form [formGroup]="paymentsFilterForm">
+    <div class="d-flex align-items-center flex-wrap" formGroupName="created">
+        <div class="mr-3 form-group m-0">
+            <mat-form-field appearance="fill">
+                <mat-label>Start</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="gte"
+                       (dateChange)="dateChanged($event,'gte')">
+                <mat-datepicker-toggle matSuffix [for]="picker1" [disableRipple]="true"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="mr-3 form-group m-0">
+            <mat-form-field appearance="fill">
+                <mat-label>End</mat-label>
+                <input matInput [matDatepicker]="picker2" formControlName="lte"
+                       (dateChange)="dateChanged($event,'lte')">
+                <mat-datepicker-toggle matSuffix [for]="picker2" [disableRipple]="true"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+</form>

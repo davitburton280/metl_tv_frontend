@@ -1,0 +1,59 @@
+.about-tab {
+    .info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        h2 {
+            margin: 0;
+            font-size: 16px;
+            color: #18B587;
+            font-family: "Muli-Bold";
+        }
+        .date {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            span {
+                font-size: 16px;
+                color: #545454;
+                font-family: "Muli-Bold";
+                @media screen and (max-width: 400px) {
+                    text-align: center;
+                }
+            }
+            .btn {
+                margin-left: 24px;
+                background: #18B587;
+                color: #FFFFFF;
+                padding: 4px 18px;
+                border-radius: 0;
+            }
+        }
+    }
+    .description {
+        margin-top: 24px;
+        padding: 24px;
+        background: #F4F4F4;
+        color: #545454;
+        font-size: 16px;
+    }
+
+    textarea {
+        width: 100%;
+        //height: 120px;
+        //border: none;
+    }
+
+    .save {
+        margin-top: 24px;
+        background: #C9C9C9;
+        color: #545454;
+        padding: 4px 18px;
+        border-radius: 0;
+
+        &.active {
+            background: #18B587;
+            color: #FFFFFF;
+        }
+    }
+}

@@ -1,0 +1,7 @@
+<hr>
+<div class="d-flex align-items-center">
+    <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
+</div>
+
+<app-mat-reusable-table [data]="accountTransfers" [columns]="displayedColumns" [tab]="'transfers'">
+</app-mat-reusable-table>

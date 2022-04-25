@@ -1,0 +1,38 @@
+<div class="stock-content">
+    <div class="major-indexes">
+        <h2>Major indexes</h2>
+        <div class="stocks-list-container">
+            <div class="spinner-container">
+                <mat-spinner [diameter]="25" *ngIf="dataLoading ==='loading'"></mat-spinner>
+            </div>
+            <app-stock-tiles [stocks]="indices" [dragDropDisabled]="true" *ngIf="indices?.length > 0"
+                             [followingAllowed]="false"
+                             [stockProfileAllowed]="true"></app-stock-tiles>
+        </div>
+    </div>
+    <div class="stock-tabs" *ngIf="selectedStock">
+
+        <ul class="nav nav-tabs">
+            <li [class.active]="activeTab==='summary'">
+                <a data-toggle="tab" (click)="changeTab('summary')">
+                    Summary</a></li>
+
+            <li [class.active]="activeTab==='historical'">
+                <a data-toggle="tab" (click)="changeTab('historical')">
+                    Historical data</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="summary">
+                <app-summary-tab [selectedStock]="selectedStock" [hidden]="activeTab!=='summary'"></app-summary-tab>
+            </div>
+            <div id="historical">
+                <app-historical-tab [selectedStock]="selectedStock"
+                                    [hidden]="activeTab!=='historical'"></app-historical-tab>
+            </div>
+        </div>
+    </div>
+    <mat-error *ngIf="!selectedStock && dataLoading==='finished'">Please select a tile to view its information
+    </mat-error>
+</div>

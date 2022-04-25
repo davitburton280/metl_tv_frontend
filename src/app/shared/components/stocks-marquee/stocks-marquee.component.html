@@ -1,0 +1,14 @@
+<ng-container *ngIf="stocks?.length > 0">
+
+    <marquee class="feeder-bar marquee" [class.video-feeder-bar]="videoStreaming" direction="left" height="40px"
+             (click)="openModal()"
+             *ngIf="stocks">
+        <div class="marquee-content">
+            <div class="home-black-item" *ngFor="let stock of stocks;trackBy: trackByElement">
+                <p class="black-text">{{stock.symbol}}</p>
+                <p class="black-percent"
+                   [ngClass]="getPercentageDetails(stock)?.color">{{getPercentageDetails(stock)?.value}}%</p>
+            </div>
+        </div>
+    </marquee>
+</ng-container>

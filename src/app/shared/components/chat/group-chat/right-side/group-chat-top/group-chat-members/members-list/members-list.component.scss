@@ -1,0 +1,143 @@
+@import 'variables';
+
+.members-list {
+    display: flex;
+    align-items: center;
+    @media only screen and (max-width: 374px) {
+        display: block;
+    }
+
+    ul {
+        display: flex;
+        //-webkit-line-clamp: 1;
+        //-webkit-box-orient: horizontal;
+        overflow: hidden;
+        @media only screen and (max-width: 374px) {
+            margin-bottom: 10px !important;
+        }
+    }
+
+    #show-more-members {
+        width: 20px;
+        margin-left: 20px;
+        background-color: transparent;
+    }
+}
+
+.group-member {
+    position: relative;
+    border-radius: 42px;
+    margin-left: 5px;
+
+
+    .status {
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border-radius: 14px;
+        top: 28px;
+        right: 0;
+        padding: 0;
+        line-height: 0;
+
+        &.offline {
+            background-color: gray;
+        }
+
+        &.online {
+            background-color: $metl-green;
+        }
+    }
+
+
+    &.pending {
+        background-color: rgba(0, 0, 0, 0.5);
+        height: 42px;
+
+        img {
+            opacity: 0.5;
+        }
+    }
+
+    mat-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin-left: auto;
+        margin-right: auto;
+        display: none;
+        cursor: pointer;
+    }
+
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+
+
+        mat-icon {
+            display: block;
+        }
+
+        img {
+            opacity: 0.5;
+        }
+    }
+
+
+    &:not(.modal-mode) {
+        width: 42px;
+    }
+
+    &.modal-mode {
+        display: flex;
+        align-items: center;
+        //max-width: 200px;
+        //width: 100%;
+        border: 1px solid #c3c3c3;
+        padding: 5px;
+
+        .avatar-status-wrap {
+            pointer-events: none;
+        }
+
+        .member-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: #545454;
+            margin-left: 15px;
+        }
+
+        .actions {
+            margin-left: 10px;
+
+            i {
+                color: $red;
+                cursor: pointer;
+            }
+        }
+
+        &.pending {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        &:hover {
+            background-color: $metl-green;
+
+            .member-name {
+                color: $white;
+            }
+
+            img {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+
+.avatar-status-wrap {
+    position: relative;
+    width: 42px;
+
+}

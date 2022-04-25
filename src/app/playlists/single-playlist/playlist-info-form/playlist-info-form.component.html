@@ -1,0 +1,39 @@
+<div class="playlist">
+    <img [src]="playlist.thumbnail|getImgPath">
+    <button class="btn play-all" *ngIf="playlist.videos?.length!==0" (click)="openPlaylistPage(playlist)">
+        <span class="material-icons">play_arrow</span>
+        Play All
+    </button>
+
+    <div class="info">
+        <ng-container *ngIf="!editMode">
+            <h3>
+                <span>{{playlist.name}}</span>
+                <span class="material-icons" (click)="editPlaylistInfo(playlist)">create</span>
+            </h3>
+            <p>{{playlist.description}}</p>
+            <h3>{{playlist.videos?.length}} videos</h3>
+            <h3 *ngIf="!editMode">Last updated on {{playlist.updated_at|date: 'd MMM, yyyy'}}</h3>
+            <div class="select" id="privacy-select">
+                <mat-icon>visibility_{{+playlist.privacy ? 'off' : 'on'}}</mat-icon>
+                <select (change)="updatePrivacy($event.target.value, playlist)">
+                    <option [value]="1" [selected]="playlist.privacy">Private</option>
+                    <option [value]="0" [selected]="!playlist.privacy">Public</option>
+                </select>
+            </div>
+        </ng-container>
+        <form [formGroup]="playlistInfoForm" id="playlist-info-form" *ngIf="editMode">
+            <input formControlName="name">
+            <span class="error" *ngIf="playlistInfoForm.get('name').hasError('required')">
+                Playlist name is required
+            </span>
+            <textarea formControlName="description"></textarea>
+            <button class="btn cancel" (click)="editMode=!editMode">Cancel</button>
+            <button class="btn save-playlist-changes" (click)="savePlaylistInfoChanges()">Save
+            </button>
+        </form>
+    </div>
+
+    <button class="btn back" (click)="backToPlaylists()">Back</button>
+    <button class="btn add-video" *ngIf="!editMode" (click)="openVideosModal()">Add Video</button>
+</div>

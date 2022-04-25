@@ -1,0 +1,59 @@
+<form [formGroup]="videoDetailsForm" id="tags-form">
+    <div class="left-group">
+
+        <div id="video-name">
+            <mat-form-field>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-error *ngIf="isSubmitted && videoDetailsForm.get('name').hasError('required')">
+                The video name is required
+            </mat-error>
+            <mat-error *ngIf="videoDetailsForm.get('name').hasError('maxlength')">
+                Not more than 12 characters please
+            </mat-error>
+        </div>
+    </div>
+    <div class="center-group">
+        <div class="image-container" *ngIf="videoData.thumbnail">
+            <img class="saved-thumbnail" [src]="apiUrl+ 'uploads/thumbnails/'+videoData.thumbnail">
+        </div>
+        <div class="actions-container">
+            <button id="change-thumbnail" *ngIf="videoData.thumbnail" (click)="removeThumbnail()">Change thumbnail
+            </button>
+            <dropzone [config]="dropzoneConfig" [hidden]="videoData.thumbnail" (removedFile)="removeImage()"
+                      id="video-thumbnail-dropzone" class="single" #dropzone (thumbnail)="onAddedFile($event)"
+                      [message]="'Click or drag an image to upload'">
+            </dropzone>
+            <input type="file" (change)="changeThumbnail($event)" [hidden]="true">
+        </div>
+    </div>
+    <div class="right-group video-tags-right-part">
+
+        <div id="video-tags">
+            <mat-form-field class="example-chip-list">
+                <mat-chip-list #tagList formControlName="tags">
+                    <mat-chip *ngFor="let tag of videoData.tags" (removed)="remove(tag)">
+                        {{tag.name}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                    <input placeholder="Tags..." #chipsInput
+                           [matChipInputFor]="tagList"
+                           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                           (matChipInputTokenEnd)="add($event)">
+                </mat-chip-list>
+                <mat-hint align="end">Please press 'Enter' after the tag name</mat-hint>
+
+            </mat-form-field>
+            <mat-error *ngIf="videoData.tags.length ===0 && isSubmitted">Please provide some tags describing your live
+                video
+            </mat-error>
+        </div>
+
+        <div class="actions actions-video">
+            <button id="save-tags" (click)="saveDetails()">
+                <mat-icon>checked</mat-icon>
+                <span>Save changes</span>
+            </button>
+        </div>
+    </div>
+</form>

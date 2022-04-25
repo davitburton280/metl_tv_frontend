@@ -1,0 +1,28 @@
+<div class="dialog-container">
+    <div class="close-btn-wrap">
+        <img src="assets/img/x.svg" alt="close-dialog" class="close-box" (click)="closeDialog()">
+    </div>
+    <div class="dialog-header">
+        <h3>Create a new group</h3>
+    </div>
+    <div id="admin-info">
+        <img class="avatar" [src]="authUser.avatar|getImgPath: 'user_avatars'">
+        <strong>{{authUser.first_name + ' ' + authUser.last_name}}</strong>
+    </div>
+    <form [formGroup]="groupForm">
+        <div class="field-row">
+            <label for="group-name-input">Group name</label>
+            <input id="group-name-input" formControlName="name">
+        </div>
+        <div class="field-row">
+            <label for="privacy-types">Choose privacy</label>
+            <select id="privacy-types" formControlName="privacy">
+                <option class="backOption" value="0">Public</option>
+                <option class="backOption" value="1">Private</option>
+            </select>
+        </div>
+        <div class="button-wrap">
+            <button (click)="submitForm()">Create</button>
+        </div>
+    </form>
+</div>

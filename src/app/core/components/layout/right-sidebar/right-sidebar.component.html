@@ -1,0 +1,14 @@
+<div [hidden]="shownItems!=='notifications'">
+    <app-notifications-list [shownInSidebar]="true" [notificationsCategory]="'new'"
+                            [authUser]="authUser"></app-notifications-list>
+    <!--    <app-notifications-list [shownInSidebar]="true" [notificationsCategory]="'early'"></app-notifications-list>-->
+</div>
+
+<ng-container *ngIf="shownItems==='messages'">
+    <h4 class="contacts-delimiter">Contacts</h4>
+    <app-users-list *ngIf="usersMessages" [authUser]="authUser" [sidebarMode]="true"
+                    (closeRightSidenav)="closeSidenav.emit(true)"></app-users-list>
+    <h4 class="groups-delimiter">Groups</h4>
+    <app-groups-list [authUser]="authUser" [sidebarMode]="true"
+                     (closeRightSidenav)="closeSidenav.emit(true)"></app-groups-list>
+</ng-container>

@@ -1,0 +1,17 @@
+<app-post-form-placeholder></app-post-form-placeholder>
+
+<ul class="categories">
+    <li><a class="active"><span class="material-icons">whatshot</span>Hot</a></li>
+    <li><a><span class="material-icons">new_releases</span>New</a></li>
+    <li><a><span class="material-icons">trending_up</span>Top</a></li>
+    <li><a><span class="material-icons">new_releases</span>Best of the week</a></li>
+</ul>
+
+<div class="search">
+    <input placeholder="Search" type="text">
+    <span class="material-icons">search</span>
+</div>
+
+<app-post-item *ngFor="let post of postsStore.allPosts$|async; trackBy: trackByElement" [post]="post"
+(vote)="vote($event)">
+</app-post-item>

@@ -1,0 +1,100 @@
+<mat-spinner [diameter]="100" class="session-loader" *ngIf="loader.dataLoading"></mat-spinner>
+<div id="video-stream-container" *ngIf="!loader.dataLoading">
+
+
+    <!-- Shown when session connected -->
+    <ng-container *ngIf="openViduToken">
+        <div id="video-chat-container">
+
+            <!-- Publisher video recording interface -->
+            <div class="left">
+                <div class="video-container">
+                    <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
+                                         [videoSettings]="videoSettings" [participants]="participants"
+                                         (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>
+                </div>
+                <div id="video-info-row">
+                    <div id="video-info">
+                        <ul id="video-tags-list">
+                            <li *ngFor="let tag of videoSettings.tags" class="tag">
+                                #{{tag.name}}
+                            </li>
+                        </ul>
+                        <h3>{{videoSettings.name}}</h3>
+                        <div class="details-row" *ngIf="videoId">
+                            <span class="watchers-count">{{participants.length}} watching now</span>
+                            <span class="dot">&middot;</span>
+                            <span class="date">{{savedVideoSettings.created_at|dateFromNow}}</span>
+                        </div>
+                        <span class="live-now" *ngIf="videoId">Live</span>
+
+                        <!--                        <p>-->
+                        <!--                            <span>{{participants.length}} users</span>-->
+                        <!--                        </p>-->
+                    </div>
+                    <div id="video-info-actions" *ngIf="videoId">
+                        <div id="participants-count">
+                            <i class="fa fa-users"></i>
+                            <span>{{participants.length}}</span>
+                        </div>
+                        <!--                        <ul>-->
+                        <!--                            <li *ngFor="let participant of participants">{{participant}}</li>-->
+                        <!--                        </ul>-->
+
+                        <div id="share-wrap" (click)="openSocialShareModal()">
+                            <i class="fas fa-share-alt"></i>
+                            <p>Share</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="channel-info">
+                    <div>
+                        <img class="avatar" id="channel-avatar"
+                             [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
+                    </div>
+                    <div>
+                        <p id="channel-name">{{channelUser.channel.name}}</p>
+                        <p class="subscribers-count">{{channelUser.channel.subscribers_count + ' subscriber' + (channelUser.channel.subscribers_count === 1 ? '' : 's')}} </p>
+                    </div>
+                </div>
+
+                <app-stocks-marquee [stocks]="userStocks" [videoStreaming]="true"></app-stocks-marquee>
+            </div>
+
+
+            <div class="chat-container">
+                <app-chat-box [openViduToken]="openViduToken" [messages]="messages" [session]="session"
+                              [videoId]="videoId" *ngIf="videoId"
+                              (sendMessage)="sendMessage($event)" [videoRecordingState]="recordingState"></app-chat-box>
+            </div>
+        </div>
+    </ng-container>
+    <div class="no-stored-session-data" *ngIf="!sessionData && !videoSettings">
+        <div class="d-flex flex-column justify-content-center align-items-center mx-auto py-5 mt-5">
+
+            <img src="assets/img/errorPage.svg" alt="no-stored-session-data-img" width="500" height="370">
+            <p class="text-center"><b>There is no session data defined.</b> <br> Please return to the <a
+                routerLink="/users/video/start-live-video">'Start
+                live video' page</a></p>
+        </div>
+    </div>
+    <div class="stream-errors" *ngIf="!openViduToken && sessionData && videoSettings">
+        <div class="d-flex flex-column justify-content-center align-items-center mx-auto py-5 mt-5">
+            <img src="assets/img/errorLoading.svg" alt="no-stored-session-data-img" width="150" height="200">
+            <p class="text-center"><b>There was a problem while loading streaming session.</b> <br>
+                <small>Please <a class="reload" (click)="reloadPage()">reload</a> the page or try again later.</small>
+            </p>
+        </div>
+        <div class="d-none">
+            <div class="d-flex flex-column justify-content-center align-items-center mx-auto py-5 mt-5">
+                <img src="assets/img/dataError.svg" alt="stream-errors-img" width="334" height="471">
+                <p class="text-center top"><b>There was a problem while loading streaming session.</b> <br>
+                    <small>Please <a class="reload" (click)="reloadPage()">reload</a> the page or try again
+                        later.</small>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+

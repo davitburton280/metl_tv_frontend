@@ -1,0 +1,91 @@
+<form [formGroup]="channelForm">
+    <div class="profile-block">
+        <div [hidden]="true" *ngIf="channelUser.username === authUser.username">
+            <input type="file" id="cover-image-input" (change)="coverChangeEvent($event)"/>
+            <input type="hidden" formControlName="cover">
+<!--            <ngx-photo-editor-->
+<!--                [imageChanedEvent]="coverChangedEvent"-->
+<!--                (imageCropped)="coverCropped($event)"-->
+<!--                [autoCrop]="false"-->
+<!--                [viewMode]="3"></ngx-photo-editor>-->
+        </div>
+
+        <div class="cover-image-container">
+            <label for="cover-image-input">
+                <img id="cover-image" [src]="channelUser.channel?.cover|getImgPath: 'covers'"
+                     (load)="detectImageChange()">
+            </label>
+            <button mat-icon-button type="button" class="remove-cover-btn" (click)="removeCover()"
+                    *ngIf="editMode && channelUser.channel.cover">
+                <mat-icon>clear</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="sub-block">
+        <div id="channel-name-avatar">
+            <div class="avatar-container">
+                <label for="profile-image-input">
+                    <img class="avatar" [ngStyle]="{opacity: editMode ? 0.5: 1}" id="profile-image"
+                         (load)="detectImageChange()"
+                         [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
+                    <mat-icon id="add-photo-btn" *ngIf="editMode && !channelUser.channel.avatar">add</mat-icon>
+                </label>
+                <mat-icon (click)="removeAvatar()" class="remove-avatar-btn"
+                          *ngIf="editMode && channelUser.channel.avatar">clear
+                </mat-icon>
+            </div>
+
+            <div [hidden]="true" *ngIf="this.channelUser.username === this.authUser.username">
+                <input type="file" id="profile-image-input" (change)="profileChangeEvent($event)"/>
+                <input type="hidden" formControlName="avatar">
+<!--                <ngx-photo-editor-->
+<!--                    [imageChanedEvent]="profileChangedEvent"-->
+<!--                    (imageCropped)="profileCropped($event)"-->
+<!--                    [aspectRatio]="4/3"-->
+<!--                    [viewMode]="1"-->
+<!--                    [resizeToWidth]="500"></ngx-photo-editor>-->
+
+            </div>
+            <div>
+                <p class="channel-name" id="channel-name" *ngIf="!editMode">{{channelUser.channel.name}}</p>
+                <mat-form-field *ngIf="editMode">
+                    <input matInput formControlName="name" id="channel-name-input"
+                           (keyup.enter)="$event.preventDefault()">
+                </mat-form-field>
+                <p class="subscribers-count">{{subscribersCount + ' subscriber' + (subscribersCount === 1 ? '' : 's')}} </p>
+            </div>
+
+        </div>
+        <div class="loader" *ngIf="changingImage">
+            <mat-spinner [diameter]="50"></mat-spinner>
+        </div>
+        <div id="connection-status-buttons"  *ngIf="channelUser.username !== authUser.username">
+            <!--            <i class="sub-bell fas fa-bell"></i>-->
+
+            <a class="subscribe-btn" *ngIf="!subscribedToChannel" (click)="subscribeToChannel(channelUser.channel)">
+                <mat-icon>favorite_border</mat-icon>
+                <span>Subscribe</span>
+            </a>
+            <a class="subscribe-btn subscribed" *ngIf="subscribedToChannel"
+               (click)="subscribeToChannel(channelUser.channel)">
+                <mat-icon>favorite</mat-icon>
+                <span>Subscribed</span>
+            </a>
+        </div>
+        <div class="d-flex align-items-center" *ngIf="channelUser.username === authUser.username">
+            <button class="btn" type="button" id="edit-channel" (click)="toggleEditMode()" *ngIf="!editMode">
+                <mat-icon>edit</mat-icon>
+                Edit channel
+            </button>
+            <button class="btn" type="button" id="cancel-changes" *ngIf="editMode" (click)="toggleEditMode()">
+                <mat-icon>cancel</mat-icon>
+                Cancel
+            </button>
+            <button class="btn" type="button" id="save-channel-details" *ngIf="editMode" (click)="saveChanges()">
+                <mat-icon>save</mat-icon>
+                Save changes
+            </button>
+        </div>
+    </div>
+</form>

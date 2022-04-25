@@ -1,0 +1,34 @@
+<div class="purchase-bits">
+    <p class="purchase-text">Purchase coins</p>
+    <p class="purchase-text-2 d-flex align-items-center">
+        You have<img src="assets/img/coin/gold.svg" alt="" width="12" height="12" class="ml-2">
+        <span class="purchase-text-3">{{totals?.purchased.toFixed(2) || 0}} coins</span>
+    </p>
+    <p class="purchase-text-4 mb-2 pb-2 border-bottom w-100 text-center">29% off for first-time coins buyers!</p>
+    <div class="mb-2">
+        <img src="assets/img/coin/gold.svg" alt="" width="20" height="20" class="mx-1">
+        <img src="assets/img/coin/silver.svg" alt="" width="20" height="20" class="mx-1">
+    </div>
+    <a class="purchase-text-5">Buy 300 coins for $3,00</a>
+    <p class="purchase-text-2">Prices are shown in USD</p>
+    <div class="bits-block">
+        <div class="bits-block-item" *ngFor="let product of bitProducts">
+            <div>
+                <p class="bits-text-1 mb-0">{{product.name}}</p>
+                <div>
+                    <!--                    <img src="assets/img/coin/{{coinImages[ind]}}.svg"-->
+                    <!--                         *ngFor="let coin of createArray(product.unit_amount/1000);let ind = index" alt="" width="16"-->
+                    <!--                         height="16" class="mr-1">-->
+                    <!--                    <img src="assets/img/coin/silver.svg" alt=""  width="16" height="16" class="mr-1">-->
+                    <!--                    <img src="assets/img/coin/pink.svg" alt=""  width="16" height="16" class="mr-1">-->
+                    <!--                    <img src="assets/img/coin/green.svg" alt=""  width="16" height="16" class="mr-1">-->
+                    <!--                    <img src="assets/img/coin/blue.svg" alt=""  width="16" height="16" class="mr-1">-->
+                </div>
+            </div>
+            <p class="bits-text-2">{{product?.metadata?.discount || 0}}% discount</p>
+            <a class="bits-text-3" (click)="openPurchaseModal(product)">
+                ${{getDiscountedPrice(product) }}
+            </a>
+        </div>
+    </div>
+</div>

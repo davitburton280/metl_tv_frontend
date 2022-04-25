@@ -1,0 +1,7 @@
+<video #videoElement controls muted id="live-video" width="640" height="480"></video>
+<!--<video #videoElement class="video-js" controls muted playsinline preload="none"></video>-->
+<div id="live-session-finished" *ngIf="recordingState === 'finished'">
+  <h2>Live video ended</h2>
+</div>
+
+<!--<app-vjs-player [options]="videoJSPlayerOptions" #videoElement></app-vjs-player>-->

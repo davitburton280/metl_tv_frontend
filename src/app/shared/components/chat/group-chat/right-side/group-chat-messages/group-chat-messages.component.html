@@ -1,0 +1,38 @@
+<div class="chat-history-form-container" [class.embed]="embedMode">
+    <ul class="chat-history" id="group-messages" #groupMessagesList
+        [hidden]="selectedGroupMessages?.length === 0">
+        <ng-container
+            *ngFor="let msg of getMessagesByDate(selectedGroupMessages?.group_messages);trackBy:sHelper.identifyDateKey">
+
+            <li class="data-list"><span>{{msg.key|getDateText}}</span></li>
+            <ng-container *ngFor="let m of msg.value;let ind = index">
+                <li class="message-container" [ngClass]="sHelper.getMessageClass(m.from_id)">
+                    <div class="message-date">
+                        <div class="avatar-wrapper">
+                            <div class="img">
+                                <img class="avatar" [src]="m.from_avatar|getImgPath: 'user_avatars'">
+                            </div>
+                            <div class="name">{{m.from_first_name + ' ' + m.from_last_name}}</div>
+                        </div>
+                        <div class="date">{{m.created_at | date: 'HH:mm' }}</div>
+                    </div>
+                    <div class="message" [innerHTML]="m.message"></div>
+                    <div class="seen">
+                        <ng-container *ngFor="let seen of m.seen">
+                            <img class="seen-avatar" *ngIf="authUser.id!==seen.seen_by.id"
+                                 [matTooltip]="sHelper.getSeenTooltip(seen.seen_by, seen)"
+                                 [src]="seen?.seen_by.avatar|getImgPath: 'user_avatars'">
+                        </ng-container>
+                    </div>
+                </li>
+            </ng-container>
+        </ng-container>
+    </ul>
+
+    <div class="chat-form">
+        <small class="text-center font-italic d-block">{{typingText.text}}</small>
+        <app-chat-form [embed]="embedMode" [chatType]="'group'" (seen)="setSeen($event)" (typing)="setTyping($event)"
+                       (sent)="sendMessage($event)">
+        </app-chat-form>
+    </div>
+</div>

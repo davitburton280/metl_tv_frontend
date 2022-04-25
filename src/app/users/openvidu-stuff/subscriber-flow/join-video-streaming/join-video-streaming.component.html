@@ -1,0 +1,78 @@
+<div id="video-chat-container" *ngIf="openViduToken && videoFound">
+
+    <mat-spinner [diameter]="100" class="session-loader" *ngIf="loader.dataLoading"></mat-spinner>
+
+    <!-- Streaming started -->
+    <ng-container *ngIf="streamCreated">
+        <div *ngFor="let sub of subscribers" class="stream-container col-md-6 col-xs-6">
+            <div class="video-container">
+                <app-user-video [streamManager]="sub" (click)="updateMainStreamManager(sub)"></app-user-video>
+            </div>
+
+            <ng-container *ngIf="streamCreated && openViduToken && videoFound">
+                <!--    <i class="fa fa-users"></i>{{participants.length}}-->
+                <!--    <ul>-->
+                <!--        <li *ngFor="let participant of participants">{{participant}}</li>-->
+                <!--    </ul>-->
+                <div id="video-info-row">
+                    <div id="video-info">
+                        <ul id="video-tags-list">
+                            <li *ngFor="let tag of videoSettings.tags" class="tag">
+                                #{{tag.name}}
+                            </li>
+                        </ul>
+                        <h3>{{videoSettings.name}}</h3>
+                        <div class="details-row" *ngIf="videoId">
+                            <span class="watchers-count">{{participants.length}} watching now</span>
+                            <span class="dot">&middot;</span>
+                            <span class="date">Started streaming {{videoSettings.created_at|dateFromNow}}</span>
+                        </div>
+                        <span class="live-now" *ngIf="videoId">Live</span>
+                        <!--                        <p>-->
+                        <!--                            <span>{{participants.length}} users</span>-->
+                        <!--                        </p>-->
+                    </div>
+                    <div id="video-info-actions">
+                        <div id="participants-count">
+                            <i class="fa fa-users"></i>
+                            <span>{{participants.length}}</span>
+                        </div>
+                        <!--                        <ul>-->
+                        <!--                            <li *ngFor="let participant of participants">{{participant}}</li>-->
+                        <!--                        </ul>-->
+
+                        <div id="share-wrap" (click)="openSocialShareModal()">
+                            <i class="fas fa-share-alt"></i>
+                            <p>Share</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="channel-info">
+                    <div>
+                        <img class="avatar" id="channel-avatar"
+                             [src]="channelInfo.avatar|getImgPath: 'avatars'">
+                    </div>
+                    <div>
+                        <p id="channel-name">{{channelInfo.name}}</p>
+                        <p class="subscribers-count">{{channelInfo.subscribers_count + ' subscriber' + (channelInfo.subscribers_count === 1 ? '' : 's')}} </p>
+                    </div>
+                </div>
+                <p *ngIf="streamDestroyed">Stream destroyed.</p>
+            </ng-container>
+        </div>
+        <app-chat-box *ngIf="videoId" [openViduToken]="openViduToken" [session]="session"
+                      [videoRecordingState]="recordingState" [messages]="messages"
+                      [videoId]="videoId" (sendMessage)="sendMessage($event)"></app-chat-box>
+    </ng-container>
+
+
+    <p *ngIf="!videoFound && !loader.dataLoading">Video streaming session is not found.</p>
+
+    <ng-container *ngIf="!openViduToken && !loader.dataLoading && videoFound">
+        <p>The session does not exist.</p>
+    </ng-container>
+    <ng-container *ngIf="!streamCreated && !loader.dataLoading && videoFound">
+        <p>There was a problem creating the video stream.</p>
+    </ng-container>
+</div>

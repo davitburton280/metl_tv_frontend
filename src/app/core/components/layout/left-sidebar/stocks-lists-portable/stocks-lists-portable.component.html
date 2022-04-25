@@ -1,0 +1,36 @@
+<ng-container *ngIf="auth.loggedIn() && !disallowedStocksPages">
+    <div class="stocks-watchlist" id="sidebar-watchlist">
+        <app-stocks-lists-tabs [defaultTab]="activeTab" [tabsList]="tabsList"
+                               (tabChanged)="getActiveTab($event)"></app-stocks-lists-tabs>
+
+        <div class="spinner-container">
+            <mat-spinner [diameter]="15" *ngIf="loader.stocksLoading.status==='loading'"></mat-spinner>
+        </div>
+
+        <div class="tabs-contents">
+            <div class="tab-content" id="watchlist-content" [hidden]="activeTab.value!=='watchlist'">
+                <app-stocks-list [stocks]="userStocks" *ngIf="userStocks?.length > 0"
+                                 (updatedStocksList)="updateFollowedLists($event)"
+                                 (updatedStocksPriority)="updateUserStocksPriority($event)"></app-stocks-list>
+
+                <p (click)="viewFullWatchlist()" class="see-more"
+                   *ngIf="(loader.stocksLoading.status!=='loading' && userStocks?.length > 0) else noStocks">
+                    See more
+                </p>
+                <ng-template #noStocks>
+                    <small class="error" [hidden]="loader.stocksLoading.status==='loading'">No stocks added to
+                        watchlist</small>
+                </ng-template>
+            </div>
+            <div class="tab-content" id="today-content" [hidden]="activeTab.value!=='today'">
+
+                <app-stocks-list [stocks]="indices" [sorting]="false" [searching]="false" *ngIf="indices?.length > 0"
+                                 (updatedStocksList)="updateFollowedLists($event)"
+                                 (updatedStocksPriority)="updateUserStocksPriority($event)"></app-stocks-list>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+<img class="ads" [hidden]="true" src="assets/img/ads.png">
+<img class="ads" [hidden]="true" src="assets/img/ads.png">

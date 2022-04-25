@@ -1,0 +1,41 @@
+<div id="user-cards-list">
+    <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
+    <ng-container *ngFor="let card of userCards;let ind = index">
+        <div class="card p-4 " [ngClass]="getBgClass(ind)" [class.darken]="showActions && selectedCard === card"
+
+             (mouseover)="toggleActions(card,true)"
+             (mouseleave)="toggleActions(card,false)">
+            <div class="card-tile text-center" *ngIf="card.is_primary">
+                <small class="text-white ">Primary</small>
+            </div>
+            <div class="details w-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="bank-name">{{card.name}}</div>
+                    <div class="brand">
+                        <img src="assets/img/cards/{{card.brand.toLowerCase()}}.svg" class="brand-img">
+                    </div>
+                </div>
+                <div class="card-number my-4">**** **** **** {{card.last4}} </div>
+                <div class="expiration-date ml-auto">
+                    <p>exp. date</p>
+                    <p class="numbers">{{formatExpiryDate(card.exp_month + '/' + card.exp_year)}}</p>
+                </div>
+            </div>
+            <div class="actions" *ngIf="showActions  && selectedCard === card">
+                <mat-icon (click)="makePrimary(card)" *ngIf="!card.is_primary && !makingPrimary">check</mat-icon>
+                <mat-spinner [diameter]="15" *ngIf="makingPrimary"></mat-spinner>
+                <mat-icon (click)="editCard(card)">settings</mat-icon>
+                <mat-icon (click)="removeCard(card)">delete</mat-icon>
+            </div>
+        </div>
+    </ng-container>
+    <div class="card add-card-bg" id="add-new-card"
+         [hidden]="loader.dataLoading||userCards?.length === maxCardsPerUser">
+        <div (click)="router.navigate(['/wallet/cards/add'])">
+            <img src="assets/img/cards/add.svg" alt="" width="18" height="18"> ADD CARD
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,24 @@
+<div class="right">
+    <button mat-icon-button [disableRipple]="true" (click)="toggleMembersForm()"
+            *ngIf="authUser.id === selectedGroup?.creator_id">
+        <i class="fas fa-user-plus"></i>
+    </button>
+    <div class="remove" (click)="removeGroup()" *ngIf="authUser.id === selectedGroup?.creator_id">
+        <a><i class="fas fa-trash"></i></a>
+    </div>
+
+    <div class="more-actions" *ngIf="authUser.id !== selectedGroup?.creator_id">
+
+        <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <mat-menu #menu="matMenu">
+            <!--        <button mat-menu-item (click)="showMembersInput = !showMembersInput">-->
+            <!--            Add members-->
+            <!--        </button>-->
+            <button mat-menu-item (click)="leaveGroup()">
+                Leave group
+            </button>
+        </mat-menu>
+    </div>
+</div>

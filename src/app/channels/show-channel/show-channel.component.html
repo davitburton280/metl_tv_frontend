@@ -1,0 +1,82 @@
+<mat-spinner [diameter]="15" *ngIf="loader.channelLoading.status==='loading'"></mat-spinner>
+<div class="profile-list">
+    <!--    <app-categories></app-categories>-->
+    <ng-container *ngIf="channelUser">
+        <app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
+        <app-channel-profile [channelUser]="channelUser" [authUser]="authUser"
+                             *ngIf="channelUser"></app-channel-profile>
+        <div class="stocks-watchlist pWatchlist">
+            <div class="profile-list user-profile-block">
+                <ul class="nav nav-tabs" id="channel-tabs-list" role="tablist">
+                    <li class="nav-item" *ngFor="let tab of allTabs;trackBy:trackByElement">
+                        <a class="nav-link" [class.active]="tab.link===activeTab.link"
+                           [routerLink]="'/channels/'+this.passedUsername+'/tab/'+tab.link"
+                           routerLinkActive="active" id="{{tab.link}}-tab"
+                           data-toggle="tab" role="tab"
+                           aria-controls="pWatch"
+                           aria-selected="true">{{tab.name}}</a>
+                    </li>
+                </ul>
+
+                <div class="loader-wrapper">
+                    <div class="spinner-container">
+                        <mat-spinner [diameter]="15"
+                                     *ngIf="loader.stocksLoading.status==='loading'&& activeTab.name==='watchlist'"></mat-spinner>
+                    </div>
+                </div>
+                <div class="search-wrapper">
+                    <div class="left-side" *ngIf="activeTab.name==='Videos'">
+                        <div class="toggle-filters-btn">
+                            <button class="filter-toggle-btn"
+                                    *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'" type="button"
+                                    [class.filters-active]="showFilters"
+                                    (click)="toggleFilters()">
+                                <mat-icon>tune</mat-icon>
+                            </button>
+                        </div>
+
+                        <app-search-videos-form class="child-inp search-video-channelPart"
+                                                (search)="searchVideos($event)"
+                                                *ngIf="activeTab.name!=='About' && activeTab.name!=='Watchlist'"></app-search-videos-form>
+
+                    </div>
+                    <div class="right-side" *ngIf="activeTab.name==='Watchlist'">
+
+                        <div class="open-add-stock-modal" *ngIf="activeTab.name==='Watchlist'" (click)="openModal()">
+                            <button type="button">
+                                <mat-icon>add_circle_outline</mat-icon>
+                            </button>
+                        </div>
+
+                        <div class="watchlist-search d-" *ngIf="activeTab.name!=='About'"
+                             [class.bordered]="userStocks?.length > 0">
+                            <app-search-stocks-form class="d-block search-stocks-component"
+                                                    *ngIf="activeTab.name==='Watchlist' && userStocks?.length > 0"
+                                                    [whiteForm]="true" [returnSearchText]="true"
+                                                    (search)="searchInUserStocks($event)">
+                            </app-search-stocks-form>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!--            <app-watchlist-tab *ngIf="activeTab.name === 'Watchlist'" [channelUser]="channelUser"></app-watchlist-tab>-->
+            <!--            <app-videos-tab *ngIf="activeTab.name === 'Videos'" [channelUser]="channelUser"-->
+            <!--                            [authUser]="authUser"></app-videos-tab>-->
+            <!--            <app-playlists-tab *ngIf="activeTab.name === 'Playlists'" [channelUser]="channelUser"-->
+            <!--                               [authUser]="authUser"></app-playlists-tab>-->
+            <!--            <app-about-tab *ngIf="activeTab.name === 'About'" [channelUser]="channelUser"></app-about-tab>-->
+            <!--            <app-people-tab *ngIf="activeTab.name === 'Contacts'" [channelUser]="channelUser" [authUser]="authUser"></app-people-tab>-->
+
+
+            <router-outlet (activate)="onOutletLoaded($event, routerOutlet)" #routerOutlet="outlet"></router-outlet>
+
+
+        </div>
+    </ng-container>
+    <div class="channel-not-found" *ngIf="!channelUser && loader.channelLoading.status==='finished'">
+        <p>Channel with such name is not found</p>
+    </div>
+</div>

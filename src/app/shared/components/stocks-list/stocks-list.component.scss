@@ -1,0 +1,119 @@
+@import 'variables';
+@import 'mixins';
+
+#stocks-list-holder {
+    .stocks-top-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+
+        .sort-types-dropdown {
+            display: flex;
+            align-items: center;
+
+            .spinner-container {
+                margin-left: 10px;
+            }
+        }
+
+        .search-stocks {
+            max-width: 178px;
+            width: 100%;
+        }
+
+        .context-actions {
+            z-index: 2;
+        }
+
+        mat-icon {
+            cursor: pointer;
+        }
+    }
+
+    .stocks-list {
+        .stock-item {
+            display: flex;
+            margin-bottom: 12px;
+            cursor: pointer;
+            position: relative;
+            height: 90px;
+
+            .indices-small-chart-container {
+                width: 70px;
+            }
+
+            .stock-info {
+                display: flex;
+                width: 100%;
+            }
+
+            .stock-details {
+                display: flex;
+
+                .stock-name-symbol {
+                    width: 76px;
+                    overflow: hidden;
+
+                    .stock-symbol {
+                        color: #777777;
+                        font-size: 14px;
+                        font-family: "Muli-Bold";
+                    }
+
+                    .stock-name {
+                        color: #777777;
+                        font-size: 12px;
+                        font-family: "Muli-Light";
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 4;
+                        -webkit-box-orient: vertical;
+                    }
+                }
+
+                .stock-price-change {
+                    .stock-price {
+                        color: #545454;
+                        font-size: 14px;
+                        font-family: "Muli-Bold";
+                    }
+
+                    .stock-change-details {
+                        font-size: 14px;
+                        font-family: "Muli-Bold";
+
+                        &.stock-green {
+                            color: #18B587;
+                        }
+
+                        &.stock-red {
+                            color: $red;
+                        }
+                    }
+
+                }
+            }
+
+            .remove-stock {
+                color: #f53c6f;
+                font-size: 10px;
+                position: absolute;
+                right: 0;
+            }
+        }
+    }
+}
+
+#dropdown-menu-btn {
+    cursor: pointer;
+    display: flex;
+}
+
+.fa-sort-down:before{
+    margin-left: 5px;
+}
+
+.order-type{
+    margin-left: 5px;
+}
+

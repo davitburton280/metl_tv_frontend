@@ -1,0 +1,45 @@
+<div class="group-members-wrap">
+    <h1>
+        <span class="group-name">{{selectedGroup.name}}</span> members
+    </h1>
+
+    <ul class="nav nav-tabs" id="member-tabs-list" role="tablist">
+        <li class="nav-item" *ngFor="let tab of ['All members','Admins'];">
+            <a class="nav-link" [class.active]="tab === activeTab" id="{{tab}}-tab"
+               (click)="changeActiveTab(tab)" data-toggle="tab" role="tab"
+               aria-controls="pWatch"
+               aria-selected="true">{{tab}}</a>
+        </li>
+    </ul>
+
+    <div class="members">
+        <ul>
+            <li *ngFor="let member of getOnlyJoinedMembers()">
+                <div class="details">
+                    <img class="avatar" [src]="member.avatar|getImgPath: 'user_avatars'">
+                    <span>{{member.first_name + ' ' + member.last_name}}</span>
+                </div>
+
+                <div class="actions">
+                    <button [matMenuTriggerFor]="menu" class="more-actions-btn">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+
+                    <mat-menu #menu="matMenu">
+
+                        <button mat-menu-item id="view-profile">
+                            <i class="fas fa-times-circle"></i>
+                            <span>View profile</span>
+                        </button>
+                        <button mat-menu-item id="make-admin">
+                            <i class="fas fa-times-circle"></i>
+                            <span>Make admin</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </li>
+        </ul>
+        <!--            <app-group-members-list [selectedGroup]="selectedGroup" [modalMode]="true"-->
+        <!--                              [authUser]="authUser"></app-group-members-list>-->
+    </div>
+</div>

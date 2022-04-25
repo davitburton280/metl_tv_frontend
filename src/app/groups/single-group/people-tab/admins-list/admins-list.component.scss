@@ -1,0 +1,39 @@
+@import 'variables';
+
+#admins {
+
+
+}
+
+ul {
+    margin-top: 20px;
+    padding-right: 20px;
+
+    &.bordered {
+        border-right: 1px solid $light_gray;
+    }
+
+    li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        justify-content: space-between;
+
+        .details {
+            display: flex;
+            align-items: center;
+
+            .full-name {
+                cursor: pointer;
+            }
+
+            .role {
+                font-family: "Muli-Light", sans-serif;
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+
+

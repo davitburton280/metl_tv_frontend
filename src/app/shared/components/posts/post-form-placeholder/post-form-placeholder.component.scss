@@ -1,0 +1,43 @@
+#post-form-container {
+    background: #F4F4F4;
+    margin-bottom: 20px;
+    padding: 20px;
+
+    form {
+        display: flex;
+    }
+
+
+
+    .form-controls {
+        width: 100%;
+
+        textarea {
+            width: 100%;
+            height: 48px;
+            resize: none;
+            outline: none;
+            padding-left: 20px;
+
+            &::placeholder {
+                font-family: 'Muli-Regular', sans-serif;
+                color: #9D9D9D;
+                transform: translateY(12px)
+            }
+        }
+    }
+
+    .action-btn-wrap {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            display: flex;
+            align-items: center;
+
+            span {
+                margin-left: 10px;
+            }
+        }
+    }
+}

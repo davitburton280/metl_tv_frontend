@@ -1,0 +1,19 @@
+<div id="members">
+    <strong>Members</strong>
+
+    <ul class="bordered">
+        <li *ngFor="let member of members" [class.rounded]="!isOwnGroup">
+            <div class="details">
+                <div class="avatarDiv">
+                    <img class="avatar" [src]="member.avatar|getImgPath: 'user_avatars'">
+                </div>
+                <strong class="member-name" [routerLink]="'/users/'+member.username">
+                    {{member.first_name + ' ' + member.last_name}}
+                </strong>
+            </div>
+            <app-group-members-actions-menu [member]="member" [authUser]="authUser" [selectedGroup]="selectedGroup"
+                                            *ngIf="isOwnGroup" [isOwnGroup]="isOwnGroup">
+            </app-group-members-actions-menu>
+        </li>
+    </ul>
+</div>

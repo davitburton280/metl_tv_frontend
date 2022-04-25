@@ -1,0 +1,54 @@
+<div class="playlist-wrap" *ngIf="playlistOpened && playlistData && playlistData.videos.length > 0">
+    <h2>{{playlistData.name}}</h2>
+    <div class="list-wrap">
+        <ng-container *ngFor="let video of playlistData.videos">
+
+            <div class="playlist-video" [class.selected]="videoId === video.id"
+                 (click)="openVideoPage(video, playlistData?.id)">
+
+                <div class="thumbnail-container">
+                    <img [src]="video.thumbnail|getImgPath">
+                </div>
+
+                <div class="details-container">
+                    <p class="video-name" (click)="openVideoPage(video, playlistData?.id)">{{video.name}}</p>
+                    <p class="main-text-3">{{video.channel.name}}</p>
+                </div>
+
+                <div class="remove-btn-container" *ngIf="authUser.id === playlistData.channel.id"
+                     (click)="removeVideoFromPlaylist(video,playlistId)">
+                    <span class="material-icons">delete</span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<div class="suggested-videos" *ngFor="let video of videoSuggestions;let ind = index">
+    <div class="suggested-video" *ngIf="ind < 5">
+
+        <div class="thumbnail-container">
+            <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video)">
+        </div>
+
+        <div class="details-container">
+            <p class="video-name">{{video.name}}</p>
+            <p class="channel-sub-name" [routerLink]="'/channels/'"
+               [queryParams]="{username: video.user.username}"
+            >{{video.channel.name}}</p>
+            <div class="details-row">
+                <span class="watchers-count">
+                    {{video.status === 'live' ? '17k watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
+                </span>
+                <span class="dot">&middot;</span>
+                <span class="upload-time">{{video.created_at|dateFromNow}}</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--<div [hidden]="isProduction">-->
+<!--    <img class="ads" src="assets/img/ads.png">-->
+<!--    <img class="ads" src="assets/img/ads.png">-->
+<!--</div>-->

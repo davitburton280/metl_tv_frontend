@@ -1,0 +1,15 @@
+<div class="row">
+    <button id="create-group-btn" (click)="openModal()">Create new group</button>
+</div>
+<h3 class="groups-type-title bottomClass">Groups you manage</h3>
+<ul class="ulBorderBottom">
+    <li class="group-item-wrap" *ngFor="let group of filterGroups('managed')">
+        <app-group-item [group]="group"></app-group-item>
+    </li>
+</ul>
+<h3 class="groups-type-title bottomClass">Groups you've joined</h3>
+<ul>
+    <li class="group-item-wrap" *ngFor="let group of filterGroups('joined')">
+        <app-group-item [group]="group"></app-group-item>
+    </li>
+</ul>

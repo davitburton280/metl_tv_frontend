@@ -1,0 +1,86 @@
+@import 'variables';
+@import "dropzone-custom";
+
+#tags-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .center-group {
+        display: flex;
+        align-items: center;
+        width: 33%;
+        @media (max-width: 890px){
+            flex-direction:column;
+            align-items: unset;
+        }
+
+        .image-container {
+            position: relative;
+
+            .saved-thumbnail {
+                width: 150px;
+            }
+        }
+
+        .actions-container {
+            width: 100%;
+
+            #change-thumbnail {
+                background-color: #b3b3b3;
+                color: $white;
+                margin-left: 10px;
+                display: flex;
+                align-items: center;
+                padding: 8px 24px;
+                @media (max-width: 890px){
+                    margin-left:0;
+                    padding: 8px 21px;
+                }
+            }
+        }
+
+
+
+    }
+
+    .right-group {
+        display: flex;
+        align-items: center;
+
+        #video-tags {
+            width: 250px;
+
+            mat-form-field {
+                width: 100%;
+            }
+        }
+
+        #save-tags {
+            background-color: $metl-green;
+            color: $white;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            border-radius: 0;
+            transition: 0.3s ease-in-out;
+            margin-left: 30px;
+            padding: 10px;
+            //@media screen and (max-width: 767px) {
+            //    margin-left: 0;
+            //}
+        }
+    }
+}
+@media (max-width: 500px) {
+    .video-tags-right-part {
+        display: flex;
+        flex-direction: column;
+    }
+}
+@media (max-width: 500px) {
+    .actions-video {
+        margin-top: 10px;
+    }
+}

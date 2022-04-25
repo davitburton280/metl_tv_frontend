@@ -1,0 +1,114 @@
+<div class="notifications-title-read" *ngIf="notificationsCategory==='new'">
+    <h3>Notifications</h3>
+
+    <div>
+        <p class="mark-as-read" *ngIf="notificationsStore.allNotifications.length > 0" (click)="markAllAsRead()">Mark
+            all
+            as read</p>
+        <p class="remove-all" *ngIf="notificationsStore.allNotifications.length > 0"
+           (click)="removeAll()">Remove all notifications</p>
+    </div>
+</div>
+
+<div class="top">
+    <div>
+        <p *ngIf="filterByCategory(notificationsStore.allNotifications, notificationsCategory)?.length > 0">{{notificationsCategory === 'new' ? 'New' : 'Earlier' }}</p>
+    </div>
+    <div>
+        <p class="view-more-notifications"
+           *ngIf="notificationsStore.allNotifications?.length > 0 && shownInSidebar && notificationsCategory==='new'"
+           (click)="router.navigate(['users/notifications'])">View more</p>
+    </div>
+</div>
+<p *ngIf="notificationsCategory==='new' && notificationsStore.allNotifications.length === 0">No notifications found</p>
+<ul [class.sidebar-notifications]="shownInSidebar">
+    <li *ngFor="let notification of notificationsStore.allNotifications"
+        class="notification" [class.unread]="!isNotificationRead(notification)"
+        [class.flex-wrap]="notification?.type === 'users_connection_request'"
+    >
+        <div class="left d-flex pl-2" (click)="onNotificationClick(notification)">
+            <div class="avatar-container">
+                <img class="avatar" id="profile-image"
+                     [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">
+            </div>
+            <div class="notification-body">
+                <p class="notification-text" [innerHTML]="notification.msg"></p>
+                <span class="date"
+                      [matTooltip]="notification.created_at|elegantDate">{{notification.created_at|dateFromNow}}</span>
+            </div>
+        </div>
+        <div class="additional-actions">
+            <div class="connection-actions"
+
+                 *ngIf="notification?.type === 'users_connection_request'">
+
+                <button class="confirm-connection-btn" (click)="acceptConnection(notification)">
+                    <mat-icon>check</mat-icon>
+                    <span>Accept</span>
+                </button>
+                <button class="decline-connection-btn" (click)="declineConnection(notification)">
+                    <mat-icon>close</mat-icon>
+                    <span>Decline</span>
+                </button>
+            </div>
+            <div class="connection-actions"
+                 *ngIf="notification?.type === 'chat_group_join_invitation'">
+                <button class="confirm-connection-btn" (click)="acceptChatGroupJoin(notification)">
+                    <mat-icon>check</mat-icon>
+                    <span>Accept</span>
+                </button>
+                <button class="decline-connection-btn" (click)="declineChatGroupJoin(notification)">
+                    <mat-icon>close</mat-icon>
+                    <span>Decline</span>
+                </button>
+            </div>
+            <div class="connection-actions"
+                 *ngIf="notification?.type === 'page_group_join_invitation'">
+                <button class="confirm-connection-btn" (click)="acceptPageGroupJoin(notification)">
+                    <mat-icon>check</mat-icon>
+                    <span>Accept</span>
+                </button>
+                <button class="decline-connection-btn" (click)="declinePageGroupJoin(notification)">
+                    <mat-icon>close</mat-icon>
+                    <span>Decline</span>
+                </button>
+            </div>
+            <div class="connection-actions"
+                 *ngIf="notification?.type === 'page_group_admin_request' ||notification?.type === 'page_group_moderator_request' ">
+                <button class="confirm-connection-btn" (click)="acceptPageGroupAdminRequest(notification)">
+                    <mat-icon>check</mat-icon>
+                    <span>Accept</span>
+                </button>
+                <button class="decline-connection-btn" (click)="declinePageGroupAdminRequest(notification)">
+                    <mat-icon>close</mat-icon>
+                    <span>Decline</span>
+                </button>
+            </div>
+            <div class="regular-notification-actions"
+                 *ngIf="notification?.type!== 'users_connection_request'">
+                <div class="dotes" [hidden]="true">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" [disableRipple]="true"
+                            aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="readNotification(notification)">
+                            <mat-icon>check</mat-icon>
+                            <span>Mark as read</span>
+                        </button>
+                        <!--                        <button mat-menu-item (click)="removeNotification(notification)">-->
+                        <!--                            <mat-icon>close</mat-icon>-->
+                        <!--                            <span>Remove this notification</span>-->
+                        <!--                        </button>-->
+                        <!--                        <button mat-menu-item>-->
+                        <!--                            <mat-icon>cancel_presentation</mat-icon>-->
+                        <!--                            <span>Turn off notifications from this page</span>-->
+                        <!--                        </button>-->
+                    </mat-menu>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+

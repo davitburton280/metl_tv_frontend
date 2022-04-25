@@ -1,0 +1,134 @@
+.rightside{
+    max-width: 1122px;
+    width: 100%;
+}
+.rightside-header {
+    width: 100%;
+    min-height: 165px;
+    background: #18B587 0 0 no-repeat padding-box;
+    text-align: center;
+    .logo-text {
+        font-family: "Muli",sans-serif, bold;
+        font-size: 30px;
+        font-weight: 400;
+        color: #FFFFFF;
+    }
+    .logo-text-img {
+        max-width: 146px;
+        display: flex;
+    }
+}
+.rightside-main {
+    width: 100%;
+    background: #F8F8F8 0 0 no-repeat padding-box;
+    .main-title {
+        font-family: "Muli",sans-serif, bold;
+        font-size: 20px;
+        font-weight: 600;
+        color: #000000;
+        text-align: center;
+    }
+    .rightside-main-text {
+        font-family: "Muli",sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        color: #393939;
+        text-align: center;
+    }
+}
+.melt-card {
+    max-width: 747px;
+    width: 100%;
+    min-height: 104px;
+    height: auto;
+    background: #FFFFFF 0 0 no-repeat padding-box;
+    box-shadow: 0 0 6px #00000029;
+    margin-bottom: 20px;
+    .melt-card-img {
+        width: 58px;
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+    .card-text {
+        max-width: 606px;
+        width: 100%;
+       h5 {
+            text-align: left;
+            font-family: "Muli",sans-serif,bold;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        p {
+            text-align: left;
+            font-family: "Muli",sans-serif;
+            font-size: 14px;
+            font-weight: 400;
+            color: #393939;
+        }
+    }
+}
+
+.subscribe-btn {
+    width: 143px;
+    height: 40px;
+    background-color: #18B587;
+    border: none;
+    color: #FFFFFF;
+    font-family: "Muli",sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+.price-text {
+    color: #F53C6F;
+    font-family: "Muli",sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+}
+
+
+
+@media (max-width: 768px) {
+    .card-text h5 {
+        font-size: 16px;
+    }
+    .card-text p {
+        font-size: 12px;
+    }
+    .main-title {
+        font-size: 18px;
+    }
+    .rightside-main-text {
+        font-size: 14px;
+    }
+    .subscribe-btn {
+        width: 100px;
+        height: 30px;
+        font-size: 12px;
+    }
+    .melt-card-img  {
+        width: 40px;
+
+    }
+}
+@media (max-width: 576px) {
+    .card-text h5 {
+        font-size: 12px;
+    }
+    .card-text p {
+        font-size: 10px;
+    }
+    .main-title {
+        font-size: 14px;
+    }
+    .rightside-main-text {
+        font-size: 12px;
+    }
+    .melt-card-img  {
+        width: 30px;
+
+    }
+
+}

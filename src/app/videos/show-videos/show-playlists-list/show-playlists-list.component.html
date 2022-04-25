@@ -1,0 +1,18 @@
+<div class="playlist-container" *ngFor="let playlist of items.playlists">
+    <ng-container *ngIf="playlist.videos.length > 0">
+        <div class="thumbnail-container" (click)="openPlaylistPage(playlist, playlist.videos[0].id)">
+            <div class="thumbnail">
+                <div class="short-details">
+                    <mat-icon>playlist_add_check</mat-icon>
+                    <p class="name">{{playlist.name}}</p>
+                    <p class="video-count">{{playlist.videos.length + (playlist.videos.length === 1 ? ' video' : ' videos')}}</p>
+                </div>
+                <img [src]="playlist.thumbnail|getImgPath">
+            </div>
+            <div class="fake-bg thumbnail"></div>
+        </div>
+        <div class="details">
+
+        </div>
+    </ng-container>
+</div>

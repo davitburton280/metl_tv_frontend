@@ -1,0 +1,30 @@
+button {
+    margin-top: 22px;
+    padding: 6px 24px;
+    border-radius: 0;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.actions {
+    display: flex;
+
+
+    .confirm {
+        background: #18B587;
+    }
+
+    .cancel {
+        background: #F53C6F;
+        margin-left: 40px;
+    }
+}
+
+.confirmation-modal{
+    min-height: 140px;
+    min-width: 280px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center
+}

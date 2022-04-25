@@ -1,0 +1,12 @@
+<hr>
+<div class="d-flex align-items-center justify-content-between flex-wrap">
+    <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
+    <app-external-accounts-handler [userCards]="userCards"
+                                   (viewExtAccountPayouts)="getExtAccountType($event)"
+                                   (extAccountChanged)="getExtAccountType($event)"></app-external-accounts-handler>
+    <!--    <mat-spinner [diameter]="15" *ngIf="loader.dataLoading"></mat-spinner>-->
+</div>
+
+<app-mat-reusable-table [data]="accountPayouts" [matSortActive]="'initiated'" [columns]="displayedColumns"
+                        [tab]="'payouts'">
+</app-mat-reusable-table>

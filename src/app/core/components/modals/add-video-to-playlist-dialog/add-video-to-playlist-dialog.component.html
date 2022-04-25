@@ -1,0 +1,46 @@
+<div class="add-video-playlist-modal">
+    <div class="content-wrap">
+        <h1 class="title">Add videos to playlist</h1>
+
+        <div class="content">
+            <div class="tab-list">
+                <ul>
+                    <li>
+                        <a class="nav-link" [class.active]="activeTab==='search'" (click)="changeTab('search')">
+                            Video search
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" [class.active]="activeTab==='url'" (click)="changeTab('url')">URL</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" [class.active]="activeTab==='yours'" (click)="changeTab('yours')">
+                            Your videos
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="tab-items">
+
+                <app-search-videos-tab *ngIf="activeTab==='search'" [playlist]="playlist"
+                                       (selectVideo)="selectVideo($event)"></app-search-videos-tab>
+                <app-video-url-tab *ngIf="activeTab==='url'" [playlist]="playlist"
+                                   (selectVideo)="selectVideo($event)"></app-video-url-tab>
+                <app-your-videos-tab *ngIf="activeTab==='yours'" [currentUser]="currentUser" [authUser]="authUser"
+                                     [playlist]="playlist" (selectVideo)="selectVideo($event)">
+                </app-your-videos-tab>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="btn-wrap">
+        <button class="btn cancel" (click)="cancel()">Cancel</button>
+        <button class="btn add-videos" (click)="addVideos()" [disabled]="ifSubmitInactive(activeTab)">Add videos
+        </button>
+    </div>
+
+</div>

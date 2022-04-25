@@ -1,0 +1,46 @@
+<div id="regular-video-list-container">
+    <div class="video-container" *ngFor="let video of items.videos; trackBy: trackByElement">
+        <div class="thumbnail">
+            <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, video.user.username)">
+            <span class="live-now" *ngIf="video.status==='live'">Live now</span>
+            <span class="duration" *ngIf="video.status!=='live'">{{video.duration}}</span>
+        </div>
+        <div class="details">
+            <h4 class="title">{{video.name}}</h4>
+            <div class="shortened-details">
+                <div class="user-avatar avatarClass">
+                    <img class="avatar" [src]="video.channel.avatar|getImgPath: 'avatars'">
+                </div>
+                <span class="channel-name" [routerLink]="'/channels/'+video.user.username">
+                    {{video.user.channel.name}}
+                </span>
+                <span class="dot">&middot;</span>
+                <span class="watchers-count">
+                        {{video.status === 'live' ? video.participants + ' watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}
+                    </span>
+                <span class="dot">&middot;</span>
+                <span class="upload-time">{{video.created_at | dateFromNow}}</span>
+            </div>
+            <p class="shortened-description">
+                {{video.description}}
+            </p>
+
+            <div class="saved-video" *ngIf="checkIfSavedByCurrentUser(video)">
+                <mat-icon>turned_in</mat-icon>
+                <span>Saved</span>
+            </div>
+
+            <div class="tags">
+                <ul>
+                    <li *ngFor="let tag of video?.tags" (click)="getVideosByTag(tag.name)">
+                        <span>{{tag.name}}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="is-new-video" *ngIf="checkIfNewVideo(video)">
+                <span class="new">New</span>
+            </div>
+        </div>
+    </div>
+</div>

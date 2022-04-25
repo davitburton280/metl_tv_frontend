@@ -1,0 +1,96 @@
+@import 'variables';
+@import 'mixins';
+
+.tab-container {
+    padding-left: 20px;
+    font-family: "Muli-Bold", sans-serif;
+
+
+    #all-members-wrap {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+}
+
+app-group-members-list, app-member-requests-list {
+    flex: 30%;
+    width: 30%;
+    max-width: 35%;
+    //padding-left: 20px;
+    padding-left: 10px;
+}
+
+app-admins-list {
+    width: 30%;
+    padding-left: 10px;
+}
+
+
+@media only screen and (min-width:767px) and (max-width: 1200px) {
+    app-group-members-list, app-member-requests-list {
+        flex: 50%;
+        width: 50%;
+        max-width: 50%;
+    }
+
+     #all-members-wrap{
+        flex-wrap: wrap;
+    }
+    app-admins-list{
+        width: 50% !important;
+    }
+}
+
+@media only screen and (min-width: 650px) and (max-width: 766px) {
+    #all-members-wrap{
+       flex-direction: column;
+    }
+
+    app-group-members-list, app-member-requests-list {
+        flex: 60%;
+        width: 60%;
+        max-width: 60%;
+    }
+
+    app-admins-list{
+        width: 60% !important;
+    }
+
+}
+
+@media only screen and (min-width: 500px) and (max-width: 649px) {
+    #all-members-wrap{
+        flex-direction: column;
+    }
+
+    app-group-members-list, app-member-requests-list {
+        flex: 85%;
+        width: 85%;
+        max-width: 85%;
+    }
+
+    app-admins-list{
+        width: 85% !important;
+    }
+}
+
+@media only screen and (max-width: 499px) {
+    #all-members-wrap{
+        flex-direction: column;
+    }
+
+    app-group-members-list, app-member-requests-list {
+        flex: 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    app-admins-list{
+        width: 100% !important;
+    }
+
+}
+
+
+

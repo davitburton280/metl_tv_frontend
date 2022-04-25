@@ -1,0 +1,73 @@
+<div class="start-live-video-page">
+
+    <div class="text">
+        <h1>Start live video</h1>
+        <p>Start sharing your story and connecting with viewers. Get your webcam ready, check your lighting, and
+            click below to go live!
+            We ask that you keep in mind of the <a href="https://www.copyright.gov/dmca-directory/" target="_blank">DMCA rules</a> and
+            please do not
+            play any music that is not owned by you
+            while you stream. We will remove any videos that are in violation of the DMCA. <br>
+            Smile, you look great!
+        </p>
+        <div class="loader" *ngIf="deviceStatus!=='loaded' && deviceStatus!=='failed'">
+            <mat-spinner [diameter]="20"></mat-spinner>
+            <strong>Loading devices info</strong>
+        </div>
+        <form [formGroup]="deviceRecognitionForm" *ngIf="deviceStatus==='loaded' || deviceStatus==='failed'">
+            <div id="devices">
+                <div class="item-wrap">
+
+                    <div class="item">
+                        <div class="info border" *ngIf="!videoDevice.hasError('required')">
+                            <span class="material-icons">videocam</span>
+                            <mat-form-field style="width:88%;">
+                                <mat-select formControlName="video_device">
+                                    <mat-option
+                                        *ngFor="let videoDevice of userMediaDevices|filterDevices:{kind:'videoinput'}"
+                                        [value]="videoDevice.label">
+                                        {{videoDevice.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-icon class="refresh" (click)="getConnectedDevices()">refresh</mat-icon>
+                        </div>
+                        <div class="error-msg" *ngIf="videoDevice.hasError('required')">
+                            <mat-icon>videocam_off</mat-icon>
+                            <ng-container>
+                                <span>Can't find camera. Make sure it's connected and try again</span>
+                                <mat-icon class="refresh" (click)="getConnectedDevices()">refresh</mat-icon>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="info border" *ngIf="!audioDevice.hasError('required')">
+                            <span class="material-icons">mic</span>
+                            <mat-form-field style="width:88%;">
+                                <mat-select formControlName="audio_device">
+                                    <mat-option
+                                        *ngFor="let audioDevice of userMediaDevices|filterDevices:{kind:'audioinput'}"
+                                        [value]="audioDevice.label">
+                                        {{audioDevice.label}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-icon class="refresh" (click)="getConnectedDevices()">refresh</mat-icon>
+                        </div>
+                        <div class="error-msg" *ngIf="audioDevice.hasError('required')">
+                            <mat-icon>mic</mat-icon>
+                            <span>Can't find microphone. Make sure it's connected and try again</span>
+                            <mat-icon class="refresh" (click)="getConnectedDevices()">refresh</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn" type="button" (click)="startLiveVideo()" [disabled]="!deviceRecognitionForm.valid">
+                <span class="material-icons"> video_call </span>
+                <span>Start live video</span>
+            </button>
+        </form>
+    </div>
+
+</div>

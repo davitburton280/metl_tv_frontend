@@ -1,0 +1,154 @@
+.stock-select {
+    width: 316px;
+    height: 51px;
+    background: #EEEEEE 0 0 no-repeat padding-box;
+    box-shadow: 0 0 6px #9A9A9A24;
+    color: #545454;
+    font-size: 16px;
+    padding: 16px;
+    font-family: "Muli-Regular";
+    outline: 0;
+    border: 0;
+    margin-right: 32px;
+}
+
+.my-stocks {
+    width: 200px;
+    height: 51px;
+    box-shadow: 0 0 6px #9A9A9A24;
+    background: #F53C6F;
+    font-size: 16px;
+    font-family: "Muli-Regular";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white !important;
+}
+
+.prospective-stocks {
+    width: 200px;
+    height: 51px;
+    background: #F53C6F 0 0 no-repeat padding-box;
+    box-shadow: 0 0 6px #9A9A9A24;
+    background: #EEEEEE;
+    font-size: 16px;
+    font-family: "Muli-Regular";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #545454 !important;
+}
+
+.stock-block {
+    display: flex;
+    margin-bottom: 32px;
+}
+
+.stock-content {
+    padding-left: 50px;
+}
+
+.stock-content-img {
+    width: 100%;
+}
+
+.stock-btns {
+    display: flex;
+}
+
+.stock-item {
+    cursor: pointer;
+}
+
+.stock-tabs {
+    margin-top: 70px;
+
+    li {
+        height: 35px;
+        padding: 5px;
+    }
+
+    a {
+        color: #000000;
+        text-decoration: none;
+    }
+
+    .active {
+        background: #F53C6F;
+
+        a {
+            color: white;
+        }
+    }
+}
+
+.small-chart-container {
+    width: 100%;
+    height: 150px;
+}
+
+@media(max-width: 991px) {
+    .stock-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .stock-select {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}
+
+@media(max-width: 480px) {
+    .stock-select {
+        width: 80%;
+    }
+    .stock-btns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .prospective-stocks {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (min-width: 451px) and (max-width: 991px) {
+    .stock-content{
+        padding-left: 0;
+    }
+
+    .stock-tabs{
+        padding: 0 10px;
+    }
+
+    //.historical{
+    //    box-shadow: 0 10px;
+    //}
+}
+
+@media screen and (max-width: 440px) {
+    .stock-content{
+        padding-left: 0;
+    }
+
+    .stock-tabs{
+        padding: 0 5px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .stock-content{
+        padding-left: 0;
+    }
+
+    .stock-tabs{
+        padding: 0 5px;
+        max-width: 280px;
+        width: 100%;
+    }
+
+    //.mat-header-cell:last-of-type{
+    //    padding-right: 2px;
+    //}
+}

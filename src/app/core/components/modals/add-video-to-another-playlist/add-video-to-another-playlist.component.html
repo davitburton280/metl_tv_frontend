@@ -1,0 +1,44 @@
+<div class="save-to-playlists-popup">
+    <div class="save-to-playlists-form">
+        <h2>Save to...</h2>
+        <form [formGroup]="saveToPlaylistsForm">
+            <ul formArrayName="playlists">
+                <li *ngFor="let c of playlistIds.controls;let i = index" class="playlist">
+
+                    <div class="d-flex justify-content-between" [formGroupName]="i">
+                        <div class="d-flex align-items-center">
+                            <input type="hidden" formControlName="id">
+                            <input type="checkbox" [id]="'playlist-'+(i+1)" formControlName="checked"
+                                   (change)="addToPlaylist($event, c)">
+                            <label [for]="'playlist-'+(i+1)">{{c.value.name}}</label>
+                        </div>
+                        <mat-icon>{{c.value.privacy ? 'lock' : 'public'}}</mat-icon>
+                    </div>
+                </li>
+            </ul>
+
+            <button class="btn save-playlists" (click)="save()">Save</button>
+        </form>
+    </div>
+
+    <div class="new-playlist">
+        <form [formGroup]="addPlaylistForm">
+
+            <h2><i class="fas fa-plus"></i> Create new playlist</h2>
+
+            <div class="input">
+                <input type="text" placeholder="Playlist Title" formControlName="name">
+            </div>
+
+            <div class="select">
+                <select name="" id="privacy" formControlName="privacy">
+                    <option [value]="''">Visibility</option>
+                    <option [value]="0">Public</option>
+                    <option [value]="1">Private</option>
+                </select>
+            </div>
+            <button class="btn" (click)="addPlaylist()">Add playlist</button>
+        </form>
+    </div>
+
+</div>

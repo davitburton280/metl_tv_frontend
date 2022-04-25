@@ -1,0 +1,31 @@
+<div class="about-tab">
+
+
+    <div class="info">
+        <h2 *ngIf="channelUser.channel?.description">Description</h2>
+
+        <div class="date">
+            <span>Joined {{channelUser.channel.created_at|date: 'd MMM, yyyy'}}</span>
+            <button class="btn" (click)="editModeOn()"
+                    *ngIf="!editMode && authUser.username === channelUser.username">Edit
+            </button>
+        </div>
+    </div>
+
+    <div class="description" [hidden]="editMode">
+        <p>{{channelUser.channel.description}}</p>
+    </div>
+
+    <div class="edit-form-controls" [hidden]="!editMode">
+        <form [formGroup]="aboutForm" id="channel-about-form">
+            <textarea rows="15" formControlName="description"></textarea>
+
+            <button class="save" (click)="saveChannelDescription()">Save</button>
+
+            <mat-error *ngIf="aboutForm.get('description').hasError('maxlength')">
+                Not more than 100 characters please
+            </mat-error>
+        </form>
+    </div>
+</div>
+

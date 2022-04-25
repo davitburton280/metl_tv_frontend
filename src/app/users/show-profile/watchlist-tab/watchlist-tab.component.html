@@ -1,0 +1,7 @@
+<!--<mat-spinner *ngIf="stocksLoading==='loading'" [diameter]="20"></mat-spinner>-->
+<small class="error" *ngIf="userStocks?.length === 0">
+    No stocks added to watchlist</small>
+<app-stock-tiles [stocks]="filteredStocks" [userStocks]="userStocks" *ngIf="userStocks?.length > 0"
+                 (updatedStocksList)="saveUpdatedStocksList($event)" [followingAllowed]="true"
+                 (updatedStocksPriority)="updateStocksPriority($event)"
+></app-stock-tiles>

@@ -1,0 +1,112 @@
+<nav class="home-header navbar navbar-expand-lg navbar-light">
+    <div class="website-logo">
+        <img class="navbar-brand" src="assets/img/logo.png" (click)="router.navigate(['/'])">
+    </div>
+
+    <!--     Search videos for responsive mode-->
+    <div *ngIf="!routerUrl?.includes('analytics')">
+        <app-search-videos-form class="mb-0  middle-search-form"
+                                (search)="searchVideos($event)"></app-search-videos-form>
+    </div>
+    <div class="right-side-actions">
+        <button class="navbar-toggler" type="button" [class.disabled]="router.url === '/users/video/publish'"
+                (click)="closeLeftSidenav.emit(false)">
+            <!--            <i class="fas fa-bars"></i>-->
+            <mat-icon>menu</mat-icon>
+            <!--            <span class="navbar-toggler-icon"></span>-->
+        </button>
+        <button id="top-row-toggle" (click)="showNavbarResponsiveRow = !showNavbarResponsiveRow">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </div>
+
+    <!--     Search videos for normal mode-->
+    <div id="navbarSupportedContent" [hidden]="!showNavbarResponsiveRow">
+        <div class="header-right nav-menu flex-sm-nowrap flex-wrap">
+            <app-search-videos-form class="d-none d-lg-block" *ngIf="!routerUrl?.includes('analytics')"
+                                    (search)="searchVideos($event)"></app-search-videos-form>
+            <app-search-stocks-form class="d-none d-lg-block" [autocomplete]="true" [openStockOnEnter]="true"
+                                    *ngIf="routerUrl?.includes('analytics')" [groupResults]="true"
+                                    (search)="searchStocks($event)"></app-search-stocks-form>
+            <app-stocks-marquee [stocks]="stocks"></app-stocks-marquee>
+            <div class="notification-block">
+                <div class="nav-item dropdown">
+                    <a class="header-bit-btn nav-lin" data-toggle="dropdown" (click)="checkIfUserHasCard()">Buy
+                        Coins</a>
+                    <div class="dropdown-menu" [hidden]="!showPurchaseBits">
+                        <app-purchase-bits [totals]="totals"></app-purchase-bits>
+                    </div>
+                </div>
+                <div class="messages" (click)="messagesClicked()" [hidden]="isMessagesIconHidden()">
+                    <i class="fab fa-facebook-messenger"></i>
+                    <span *ngIf="getUnreadMessagesCount() > 0">{{getUnreadMessagesCount()}}</span>
+                </div>
+                <div class="notification" (click)="notificationIconClicked()" [hidden]="!auth.loggedIn()">
+                    <i class="fas fa-bell"></i>
+                    <span *ngIf="getUnreadNotificationsCount() > 0">{{getUnreadNotificationsCount()}}</span>
+                </div>
+
+                <a class="header-login-btn" *ngIf="!auth.loggedIn()" (click)="router.navigate(['auth/login'])">Login</a>
+
+                <div class="nav-item" [hidden]="isWalletIconHidden()">
+                    <img src="assets/img/wallet-nav-icon.svg" class="wallet-icon"
+                         (click)="openWalletPage()">
+                </div>
+
+                <div class="user-dropdown nav-item dropdown">
+
+                    <button mat-icon-button [matMenuTriggerFor]="menu1" class="dotes">
+                        <img src="assets/img/user.svg" class="user-icon">
+                    </button>
+                    <mat-menu #menu1="matMenu">
+                        <div class="user-links">
+                            <p class="user-link" *ngIf="toggleMyProfileLink()"
+                               (click)="openProfilePage()">My Profile</p>
+                            <p class="user-link" *ngIf="!routerUrl?.includes('groups')"
+                               (click)="router.navigate(['groups'])">My Groups</p>
+                            <p class="user-link" *ngIf="toggleMyChannelLink()"
+                               (click)="goToChannelPage()">My Channel</p>
+                            <p class="user-link" (click)="logout()">Logout</p>
+                        </div>
+                    </mat-menu>
+                </div>
+
+
+                <!--                <div class="nav-item dropdown" *ngIf="auth.loggedIn()">-->
+                <!--                    <img src="assets/img/user.svg" data-toggle="dropdown" class="user-icon dropdown-toggle">-->
+                <!--                    <div class="dropdown-menu">-->
+                <!--                    <span class="dropdown-item" *ngIf="toggleMyProfileLink()"-->
+                <!--                          (click)="router.navigate(['user/profile-form'])">My Profile</span>-->
+                <!--                        <span class="dropdown-item" *ngIf="!routerUrl?.includes('cards')"-->
+                <!--                              (click)="router.navigate(['wallet/cards'])">My Cards</span>-->
+                <!--                        <span class="dropdown-item" *ngIf="toggleMyChannelLink()"-->
+                <!--                              (click)="goToChannelPage()">My Channel</span>-->
+                <!--                        <span class="dropdown-item"-->
+                <!--                              (click)="router.navigate(['users/connections'])">My Connections</span>-->
+
+                <!--                        <span class="dropdown-item" (click)="logout()">Logout</span>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+
+                <div class="dotes">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <ng-container *ngFor="let l of additionalLinks">
+                            <button class="right-section-link" mat-menu-item (click)="changePage(l)">
+                                {{l.name}}
+                            </button>
+                        </ng-container>
+                    </mat-menu>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <app-search-videos-form class="bottom-search-form" *ngIf="!routerUrl?.includes('analytics')"
+                            (search)="searchVideos($event)"></app-search-videos-form>
+</nav>

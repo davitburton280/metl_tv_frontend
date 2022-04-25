@@ -1,0 +1,47 @@
+.about-wrap{
+    margin-top: 64px 0 120px;
+    .inner-wrap{
+
+        margin: auto;
+        width: 100%;
+        max-width: 1360px;
+
+        .text-img{
+            display: flex;
+            align-items: center;
+        }
+        .img{
+            flex: 0.6;
+            img{
+                width: 100%;
+            }
+        }
+
+        .text{
+            flex: 1;
+            margin-right: 32px;
+            h1{
+                font-size: 32px;
+                color: #18B587;
+            }
+
+            p{
+                margin-top: 16px;
+                font-size: 16px;
+                color: #545454;
+                &.green{
+                    color: #18B587;
+                    font-size: 20px;
+                    font-weight: 600;
+                }
+                a{
+                    color: #F53C6F;
+                }
+
+                span{
+                    color: #18B587;
+                }
+            }
+        }
+    }
+}

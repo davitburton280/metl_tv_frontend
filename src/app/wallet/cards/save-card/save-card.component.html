@@ -1,0 +1,25 @@
+<div class="stripe-card-container">
+    <form [formGroup]="saveCardForm">
+        <div class="field-row">
+            <input formControlName="name" class="form-control">
+        </div>
+        <div>
+            <mat-error *ngIf="isSubmitted && saveCardForm.get('name').hasError('required')">
+                Card name is required
+            </mat-error>
+        </div>
+
+        <ngx-stripe-card [hidden]="editCase"
+                         [options]="cardOptions"
+                         [elementsOptions]="elementsOptions">
+        </ngx-stripe-card>
+
+        <div class="field-row">
+
+            <button type="button" class="back" (click)="goToCardsList()">Back</button>
+            <button type="button" class="save-card"
+                    (click)="saveCard()">{{editCase ? 'Update' : 'Add card'}} </button>
+            <mat-spinner *ngIf="loader.dataLoading" [diameter]="15"></mat-spinner>
+        </div>
+    </form>
+</div>

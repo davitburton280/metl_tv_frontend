@@ -1,0 +1,24 @@
+<div class="connection-requests-container">
+    <ng-container *ngFor="let request of connectionRequests">
+        <div class="connection">
+            <div class="left">
+                <div class="img user-avatar">
+                    <img class="avatar" [src]="request.avatar|getImgPath: 'user_avatars'">
+                </div>
+                <div class="text">
+                    <div class="name">{{request.first_name + ' ' + request.last_name}}</div>
+                </div>
+            </div>
+            <div class="right">
+                <div class="connection-actions">
+                    <button class="confirm-connection-btn" (click)="confirmConnection(request)">
+                        <span>Confirm</span>
+                    </button>
+                    <button class="decline-connection-btn" (click)="declineConnection(request)">
+                        <strong>Decline</strong>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

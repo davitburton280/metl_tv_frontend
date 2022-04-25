@@ -1,0 +1,42 @@
+<div id="stock-tiles-holder" cdkDropListGroup [class.no-moving]="dragDropDisabled">
+    <ng-container *ngFor="let stock of passedStocks;let ind = index;trackBy:trackByElement">
+        <div cdkDropList class="stock-item-placeholder" cdkDropListOrientation="horizontal"
+             [cdkDropListData]="{item:stock,index:ind}" (cdkDropListDropped)="drop($event)">
+
+            <div class="stock-item" cdkDrag [cdkDragDisabled]="dragDropDisabled"
+                 (click)="openStockProfile(stock.symbol)"
+                 [ngClass]="'stock-item-'+(stock.changesPercentage > 0? 'green':'red')">
+                <div *cdkDragPlaceholder>
+                </div>
+                <div class="stock-follow" *ngIf="followingAllowed">
+                    <button [class.unfollow-btn]="userStocks|isStockFollowed:stock"
+                            (click)="updateFollowedStocksList(stock)">
+                        <mat-icon *ngIf="(userStocks|isStockFollowed:stock) else followTmpl">delete</mat-icon>
+                        <ng-template #followTmpl>
+                            <span>Follow</span>
+                        </ng-template>
+                    </button>
+                </div>
+
+                <div class="stock-details">
+                    <p class="stock-name">{{stock.name}}</p>
+                    <p class="stock-price"><span class="dollar-sign">$</span>{{stock.price}}</p>
+                    <div class="stock-price-details">
+                        <p class="stock-price-change">{{stock.change?.toFixed(2)}}</p>
+                        <p class="stock-price-change-percent">{{(+stock.changesPercentage).toFixed(2)}}%</p>
+                    </div>
+                </div>
+
+                <div class="small-chart-container"
+                     *ngIf="stock.hasOwnProperty('series') && stockChartSettings; let sChS;">
+                    <ngx-charts-line-chart [scheme]="sChS.colorScheme" [results]="[stock]" [view]="sChS.view"
+                                           [autoScale]="sChS.autoScale" [timeline]="sChS.timeline"
+                                           [animations]="sChS.animations" [tooltipDisabled]="sChS.tooltipDisabled">
+                    </ngx-charts-line-chart>
+                </div>
+            </div>
+
+
+        </div>
+    </ng-container>
+</div>

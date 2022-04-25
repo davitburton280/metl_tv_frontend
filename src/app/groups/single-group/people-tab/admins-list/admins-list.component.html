@@ -1,0 +1,22 @@
+<div id="admins">
+    <strong>Admins & moderators</strong>
+
+    <ul class="bordered">
+        <li *ngFor="let admin of admins">
+            <div class="details">
+                <img class="avatar" [src]="admin.avatar|getImgPath: 'user_avatars'">
+                <div>
+                    <p class="full-name" [routerLink]="'/users/'+admin.username">
+                        {{admin.first_name + ' ' + admin.last_name}}
+                    </p>
+                    <span class="role">{{getRoleName(admin)}}</span>
+                </div>
+            </div>
+
+            <app-group-members-actions-menu *ngIf="showActionsMenu(admin)"
+                                            [member]="admin"
+                                            [authUser]="authUser" [selectedGroup]="selectedGroup"
+                                            [isOwnGroup]="isOwnGroup"></app-group-members-actions-menu>
+        </li>
+    </ul>
+</div>

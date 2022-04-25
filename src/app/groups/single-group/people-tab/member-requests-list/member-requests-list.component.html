@@ -1,0 +1,21 @@
+<div id="member-requests">
+    <strong>Requests</strong>
+
+    <ul>
+        <li *ngFor="let member of requestedMembers" class="group-member pending">
+            <div class="requestPartDiv">
+            <div class="avatarDiv">
+                <img class="avatar" [src]="member.avatar|getImgPath: 'user_avatars'">
+            </div>
+            <strong class="avatarName">{{member.first_name + ' ' + member.last_name}}</strong>
+            </div>
+            <div class="confirmIgnoreBtns">
+                <button class="confirm-request" (click)="confirmJoinGroup(member)">Confirm</button>
+                <button class="ignore-request" (click)="ignoreJoinGroup(member)">Ignore</button>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+

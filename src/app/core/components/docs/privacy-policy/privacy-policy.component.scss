@@ -1,0 +1,116 @@
+
+.privacy-policy{
+    &.text-list{
+        h1{
+            color: #18B587;
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+        }
+        >span{
+            display: block;
+            text-align: center;
+            font-size: 16px;
+            color: #A5A5A5;
+            font-weight: 300;
+        }
+        .text{
+             margin: 24px 0 60px;
+
+            .table{ 
+                display: table; 
+                margin: 24px 0;
+                border: 1px solid #C9C9C9;
+                .tr{ 
+                    display: table-row; 
+                    &:last-child{
+                        border-right: 1px solid #C9C9C9;
+                        .td{
+                            border-bottom: 0;
+                        }
+                    }
+                    .td{ 
+                        display: table-cell; 
+                        vertical-align: middle;
+                        color: #545454;
+                        font-size: 16px;
+                        padding: 12px 16px;
+                        border-bottom: 1px solid #C9C9C9;
+                        border-right: 1px solid #C9C9C9;
+                        &:last-child{
+                            border-right: 0;
+                        }
+                    }
+                }
+            }
+
+            P{
+                color: #545454;
+                font-size: 16px;
+                line-height: 24px;
+                margin-bottom: 12px;
+                display: flex;
+                align-items: center;
+                &.bold{
+                    font-weight: bold;
+                }
+    
+                &.green{
+                    color: #18B587;
+                }
+
+                &.red{
+                    color: #F53C6F;
+                }
+
+                &.italic{
+                    font-style: italic;
+                }
+
+                &.underline{
+                    text-decoration: underline;
+                }
+    
+                &.list{
+                    align-items: flex-start;
+                    &::before{
+                        content: "";
+                        flex: 0 0 7px;
+                        height: 7px;
+                        background: #18B587;
+                        display: inline-block;
+                        border-radius: 50%;
+                        margin-right: 12px;
+                        margin-top: 10px;
+                    }
+                }
+
+                .material-icons{
+                    color: #18B587;
+                    margin-right: 8px;
+                }
+    
+                a{
+                    margin: 0px 6px;
+                }
+            }
+            
+    
+            a{
+                color: #545454;
+                &.red{
+                    color: #F53C6F;
+                    font-size: 16px;
+                    display: block;
+                    text-decoration: underline;
+                    margin-bottom: 8px;
+                }
+    
+                i{
+                    color: #18B587;
+                    margin-right: 6px;
+                }
+            }
+        }
+    }
+}

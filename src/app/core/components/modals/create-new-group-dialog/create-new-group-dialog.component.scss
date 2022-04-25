@@ -1,0 +1,61 @@
+@import 'variables';
+@import 'mixins';
+
+.dialog-container {
+    position: relative;
+    padding: 40px;
+
+    #admin-info {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+    .close-btn-wrap {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    h3, label {
+        font-family: "Muli-Regular", sans-serif;
+    }
+
+    form {
+
+        .field-row {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            font-family: "Muli-Bold", sans-serif;
+            margin-bottom: 10px;
+        }
+
+        #group-name-input, #privacy-types {
+            height: 40px;
+            border: 1px solid #c3c3c3;
+            width: 100%;
+            padding-left: 10px;
+        }
+
+        .button-wrap {
+            margin-top: 30px;
+
+            button {
+                @include regularButton;
+                width: 100%;
+            }
+        }
+    }
+}
+//
+//.backOption{
+//    background-color: #18B587 !important;
+//    color: white;
+//}
+.backOption:hover{
+    background-color: #18B587 !important
+}
+

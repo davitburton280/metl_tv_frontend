@@ -1,0 +1,47 @@
+<div id="groups-list" class="list-wrap">
+    <ul class="list">
+        <li class="list-chat-group" [class.active]="group.id===selectedGroup?.id"
+            *ngFor="let group of filteredGroupsMessages"
+            [class.unconfirmed]="!ifConfirmedToJoinTheGroup(group)">
+
+            <ng-container
+                [ngTemplateOutlet]="groupTemplate"
+                [ngTemplateOutletContext]="{messages: group?.group_messages, group: group}">
+            </ng-container>
+
+            <ng-template #groupTemplate let-messages="messages" let-group="group">
+
+                <div class="left" (click)="makeGroupActive(group)">
+                    <img class="img group-avatar" [src]="group.avatar|getImgPath:'group_avatars'">
+                    <div class="text">
+                        <div class="name">{{group.name}}</div>
+                        <span *ngIf="messages">{{messages[messages?.length - 1]?.message| fixLineBreaks:'':' '}}</span>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <button class="seen-circle" [hidden]="!isSeenByAuthUser(messages)" *ngIf="messages">
+                        <strong>{{isSeenByAuthUser(messages)}}</strong>
+                    </button>
+
+                    <div class="three-dots-container" [hidden]="isSeenByAuthUser(messages)"
+                         *ngIf="authUser.id !== selectedGroup?.creator_id && sidebarMode">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" class="dotes" [disableRipple]="true">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <!--        <button mat-menu-item (click)="showMembersInput = !showMembersInput">-->
+                            <!--            Add members-->
+                            <!--        </button>-->
+                            <button mat-menu-item (click)="leaveGroup()"
+                            >
+                                Leave group
+                            </button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </ng-template>
+        </li>
+    </ul>
+</div>
+

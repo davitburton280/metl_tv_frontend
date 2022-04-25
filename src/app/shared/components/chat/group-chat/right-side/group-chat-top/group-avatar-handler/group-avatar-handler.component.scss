@@ -1,0 +1,63 @@
+@import 'variables';
+
+//@todo ".left" duplicate part remove
+.left {
+    display: flex;
+    align-items: center;
+
+
+    .img {
+        margin-right: 16px;
+    }
+
+    .group-name {
+        color: #18B587;
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: capitalize;
+        cursor: pointer;
+    }
+}
+
+.group-avatar-wrap {
+    position: relative;
+    width: 42px !important;
+    height: 42px;
+    border-radius: 10px;
+    margin-right: 16px !important;
+
+    #remove-group-avatar {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+    }
+
+    .group-avatar {
+        width: 100% !important;
+        height: 42px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    label[for="group-avatar-input"] {
+        width: 100%;
+        margin-bottom: 0 !important;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+
+
+        mat-icon {
+            display: block;
+        }
+
+        img {
+            opacity: 0.5;
+        }
+    }
+}

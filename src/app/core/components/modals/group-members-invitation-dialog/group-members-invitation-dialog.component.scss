@@ -1,0 +1,224 @@
+@import 'variables';
+@import 'mixins';
+
+#dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px 20px;
+
+    h3 {
+        font-family: "Muli-Bold", sans-serif;
+    }
+
+    .close-box {
+        cursor: pointer;
+    }
+}
+
+input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+
+    &:checked + span {
+        //background-color: $metl-green !important;
+    }
+}
+
+#group-members-wrap {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding: 0 25px;
+
+    #suggested-contacts {
+        border-top: 1px solid #EFEFEF;
+        border-bottom: 1px solid #EFEFEF;
+        flex: 60%;
+
+        #contact-search-wrap {
+            position: relative;
+            width: 93%;
+            margin-top: 15px;
+
+            input {
+                position: relative;
+                z-index: 1;
+                width: 100%;
+                padding: 8px 32px 8px 16px !important;
+                font-family: "Muli-Light", sans-serif;
+                background: #EFEFEF;
+                color: #545454;
+                font-size: 16px;
+            }
+
+            i {
+                position: absolute;
+                color: #6A6A6A;
+                right: 11px;
+                top: 10px;
+                z-index: 333;
+                cursor: pointer;
+            }
+        }
+
+        .joined-contact {
+            i {
+                font-size: 22px;
+                color: $metl-green;
+            }
+        }
+
+        .invited-contact {
+            i {
+                font-size: 20px;
+                color: #a7a3a3;
+            }
+        }
+    }
+
+    #selected-contacts {
+        background-color: #c8c8c873;
+        flex: 40%;
+
+        #selected-contacts-count {
+            font-size: 14px;
+            font-family: "Muli-SemiBold", sans-serif;
+            color: $metl-green;
+            margin: 20px;
+        }
+
+        li {
+            padding-left: 20px;
+            width: 95%;
+
+
+            .state {
+                i {
+                    font-size: 14px;
+                }
+
+            }
+        }
+    }
+
+    > div {
+
+        height: 500px;
+        overflow: auto;
+
+        ul {
+            margin-top: 20px;
+            height: 400px;
+            padding-right: 10px;
+
+            li {
+                display: flex;
+                max-width: 492px;
+                width: 100%;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 20px;
+
+
+                .details {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    font-family: "Muli-Bold", sans-serif;
+
+                    label {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 25px;
+
+    #send-invites {
+        @include regularButton;
+        padding: 0;
+        margin-right: 10px;
+    }
+
+    #close-dialog {
+        background-color: transparent;
+        padding: 0 20px;
+        font-size: 16px;
+        font-family: "Muli-Light", sans-serif;
+    }
+}
+
+.state {
+
+    label input {
+        visibility: hidden; /* <-- Hide the default checkbox. The rest is to hide and allow tabbing, which display:none prevents */
+        display: block;
+        height: 0;
+        width: 0;
+        overflow: hidden;
+    }
+
+    label span { /* <-- Style the artificial checkbox */
+        height: 20px;
+        width: 20px;
+        border: 1px solid grey;
+        display: inline-block;
+        position: relative;
+        background-color: transparent;
+    }
+
+    [type=checkbox]:checked + span:before { /* <-- Style its checked state */
+        content: '\2714';
+        position: absolute;
+        top: -2px;
+        left: 3px;
+        color: $metl-green;
+    }
+}
+
+
+#remove-from-selected-contacts-btn {
+    cursor: pointer;
+}
+
+.avatar-wrap {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 42px !important;
+    height: 42px;
+    border-radius: 50%;
+    margin-right: 16px !important;
+}
+
+
+.processed-contact {
+    p {
+        color: #bdbdbd;
+    }
+
+    .contact-status {
+        font-size: .8125rem;
+        margin-top: 2px;
+    }
+
+    img {
+        opacity: 0.7;
+    }
+
+    .state {
+        label > span {
+            border: 1px solid #dddddd;
+        }
+    }
+}
+
+
+

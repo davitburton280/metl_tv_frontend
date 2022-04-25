@@ -1,0 +1,22 @@
+<div class="chat-message-form" [class.embed]="embed">
+    <form [formGroup]="chatForm" class="chat-form">
+                    <textarea cdkTextareaAutosize rows="4" *ngIf="!embed" class="flex-1 mx-3" formControlName="message"
+                              placeholder="Type your message" id="message-textarea"
+                              (keyup)="setTyping()" (focus)="setSeen()"
+                              (keyup.enter)="sendMessageOnEnter($event)">
+                    </textarea>
+        <div class="embed-textarea" *ngIf="embed">
+            <button class="add-btn">+</button>
+            <textarea class="flex-1 mx-3" cdkTextareaAutosize formControlName="message" placeholder="Message"
+                      (keyup)="setTyping()" (focus)="setSeen()" (keyup.enter)="sendMessageOnEnter($event)">
+            </textarea>
+
+            <button class="send-btn" (click)="sendMessage()"><img alt="send button" src="assets/img/send.svg"></button>
+        </div>
+    </form>
+    <div class="icons" [hidden]="isProduction || embed">
+        <a href=""><img src="assets/img/gif-24px.svg" alt=""></a>
+        <a href=""><img src="assets/img/mood-24px.svg" alt=""></a>
+        <a (click)="sendMessage()"><img src="assets/img/send-24px.svg" alt=""></a>
+    </div>
+</div>

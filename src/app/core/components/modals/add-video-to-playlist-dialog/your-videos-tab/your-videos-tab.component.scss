@@ -1,0 +1,20 @@
+@import 'mixins';
+@import 'variables';
+
+.video-item {
+    @include videoItem
+}
+
+.tags {
+    //margin-top: 10px;
+
+    li {
+        display: inline-block;
+        margin-right: 5px;
+
+        span {
+            @include tagItem;
+        }
+    }
+}
+

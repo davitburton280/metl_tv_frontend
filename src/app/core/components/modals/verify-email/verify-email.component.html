@@ -1,0 +1,35 @@
+<div id="verify-email">
+    <ng-container *ngIf="!codeChecked">
+        <h1>Sign up</h1>
+        <h3>Enter verification code</h3>
+        <p>We've sent a 4 digit code to {{email}}. Confirm it belongs to you to keep your account secure</p>
+        <form [formGroup]="verifyCodeForm">
+            <input placeholder="Enter code" formControlName="code">
+            <p class="error" *ngIf="verifyCodeForm.get('code').hasError('required') && isSubmitted">
+                Please provide the code that was sent to your email
+            </p>
+            <p class="error" *ngIf="verifyCodeForm.get('code').hasError('patternInvalid') && isSubmitted">
+                Please write exactly 4 digits only
+            </p>
+            <p id="resend-code" (click)="resendCode()">Resend code</p>
+            <div class="loader-holder" *ngIf="loader.formProcessing">
+                <mat-spinner [diameter]="25"></mat-spinner>
+            </div>
+            <p *ngIf="codeResent">Code is resent</p>
+
+            <p class="error wrong-code" *ngIf="!emailCtrl.hasError('required') && codeWrong">
+                The code is wrong
+            </p>
+            <button (click)="verifyCode()" *ngIf="!verifyingCode">Submit</button>
+        </form>
+    </ng-container>
+    <div [hidden]="!codeChecked" id="thanks">
+        <img src="assets/img/checked.svg">
+        <p class="thanks-for-verification">
+            Thanks for verifying your e-mail address.
+        </p>
+        <div class="loader-holder">
+            <mat-spinner [diameter]="25"></mat-spinner>
+        </div>
+    </div>
+</div>

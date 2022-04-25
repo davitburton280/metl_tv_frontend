@@ -1,0 +1,9 @@
+<div>
+    {{userCards.cards.length}}
+    <ul>
+        <li *ngFor="let card of userCards.cards">
+            <p>**** **** **** {{card.last4}}</p>
+            <mat-icon (click)="removeCard(card)">cancel</mat-icon>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,40 @@
+.single-playlist {
+    h2 {
+        font-size: 32px;
+        font-weight: bold;
+        color: #18B587;
+    }
+
+    .inner-wrap {
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+
+        .left {
+            flex: 0 0 316px;
+            margin-right: 32px;
+        }
+
+        .right {
+            flex: 0 0 500px;
+            .playlist-item {
+                .details {
+                    .title, .shortened-description {
+                        white-space: nowrap;
+                    }
+                    .shortened-details {
+                        .channel-name,
+                        .watchers-count,
+                        .upload-time {
+                            white-space: nowrap;
+                        }
+                    }
+                }
+            }
+            @media screen  and (max-width: 560px){
+                flex: 1;
+            }
+        }
+    }
+}

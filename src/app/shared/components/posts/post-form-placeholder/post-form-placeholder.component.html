@@ -1,0 +1,19 @@
+<div id="post-form-container">
+    <form>
+        <div class="user-avatar" *ngIf="(userStore.authUser$|async) as authUser">
+            <img class="avatar" [src]="authUser.avatar|getImgPath: 'user_avatars'">
+        </div>
+
+        <div class="form-controls">
+            <textarea placeholder="Create a public post..." routerLink="/posts/create"
+                      [queryParams]="{group_id: selectedGroup?.id}"></textarea>
+
+            <div class="action-btn-wrap">
+                <button>
+                    <img src="assets/img/photo-green-small.svg">
+                    <span>Add photo/video</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
