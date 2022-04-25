@@ -29,7 +29,8 @@
                                          [channelUser]="usersMessagesStore.selectedUserMessages">
                     </app-chat-bottom-box>
                     <app-chat-bottom-box *ngIf="groupChatStore.showBottomChatBox" [chatBoxType]="'group'"
-                                         [selectedGroup]="groupChatStore.selectedGroupMessages"></app-chat-bottom-box>
+                                         [selectedGroup]="groupChatStore.selectedGroupMessages">
+                    </app-chat-bottom-box>
                 </div>
             </div>
         </section>
