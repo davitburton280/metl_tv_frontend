@@ -8,7 +8,7 @@
 
             <!-- Publisher video recording interface -->
             <div class="left">
-                <div class="video-container">
+                <div class="video-container liveVideo">
                     <app-video-js-record [openViduToken]="openViduToken" [thumbnailFile]="thumbnailFile"
                                          [videoSettings]="videoSettings" [participants]="participants"
                                          (recordingStarted)="getRecordedVideoId($event)"></app-video-js-record>

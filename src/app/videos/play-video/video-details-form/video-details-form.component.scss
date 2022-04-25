@@ -11,6 +11,9 @@
         display: flex;
         align-items: center;
         width: 33%;
+        @media (max-width: 1890px) and (min-width: 1006px){
+            flex-direction:column;
+        }
         @media (max-width: 890px){
             flex-direction:column;
             align-items: unset;
@@ -26,6 +29,10 @@
 
         .actions-container {
             width: 100%;
+            @media (max-width: 1890px) and (min-width: 1006px){
+                display: flex;
+                 justify-content: center;
+             }
 
             #change-thumbnail {
                 background-color: #b3b3b3;
@@ -34,6 +41,9 @@
                 display: flex;
                 align-items: center;
                 padding: 8px 24px;
+                @media (max-width: 1890px) and (min-width: 1006px){
+                    margin-left:0;
+                }
                 @media (max-width: 890px){
                     margin-left:0;
                     padding: 8px 21px;

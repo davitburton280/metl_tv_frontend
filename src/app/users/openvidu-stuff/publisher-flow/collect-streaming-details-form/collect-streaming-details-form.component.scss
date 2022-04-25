@@ -177,9 +177,13 @@
             margin-top: 32px;
             border: 0;
             border-radius: 0;
-            padding: 16px 32px;
+            padding: 8px 32px 8px 32px;
+            //padding: 16px 32px;
             background: #F53C6F;
             box-shadow: 0 0 6px #006DCC2E;
+            font-family: "Muli-Light";
+            font-size: 16px;
+            color:  #ffffff;
         }
     }
 }

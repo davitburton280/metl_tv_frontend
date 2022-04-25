@@ -60,6 +60,9 @@
 
 .stream-errors {
     display: flex;
+    @media (max-width: 767px){
+        flex-direction: column;
+    }
 }
 
 .reload {
@@ -168,4 +171,8 @@
     .dot {
         margin: 0 10px;
     }
+}
+
+.liveVideo{
+    display:flex !important;
 }

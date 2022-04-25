@@ -12,12 +12,12 @@
     }
 
     .is-new-video {
+        margin-top: 10px;
 
         .new {
             background-color: #18B587;
             color: white;
             padding: 2px;
-
         }
 
         @media (max-width: 992px) {
