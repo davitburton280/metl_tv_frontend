@@ -40,7 +40,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     getVideo() {
         this.subscriptions.push(this.videoService.get({}).subscribe(dt => {
             this.videos = dt.videos;
-            this.videoService.liveVideoRefresh.emit();
         }));
     }
 
