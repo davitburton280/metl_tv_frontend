@@ -1,16 +1,18 @@
-<p class="shareLink" >Share this link via</p>
-<div class="linkImages">
-    <a  target="_blank" [href]="getTweeterLink()">
-        <img class="twitterImg" src="assets/img/twitter.svg" alt="">
-    </a>
-    <a  [href]="getFacebookLink()"
-       onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-       target="_blank" title="Share on Facebook">
-        <img class="facebookImg" src="assets/img/facebook.svg" alt="">
-    </a>
+<div class="modalDiv">
+    <p class="shareLink" >Share this link via</p>
+    <div class="linkImages">
+        <a  target="_blank" [href]="getTweeterLink()">
+            <img class="twitterImg" src="assets/img/twitter.svg" alt="">
+        </a>
+        <a  [href]="getFacebookLink()"
+           onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+           target="_blank" title="Share on Facebook">
+            <img class="facebookImg" src="assets/img/facebook.svg" alt="">
+        </a>
+    </div>
+    <div class="copyingDiv">
+        <input id="link-address-holder" [value]="shareUrl" #urlHolder>
+        <p class="copyLink">Or copy link</p>
+    </div>
+    <button class="copy-url" (click)="copyInputMessage(urlHolder)">Copy</button>
 </div>
-<div class="copyingDiv">
-    <input id="link-address-holder" [value]="shareUrl" #urlHolder>
-    <p class="copyLink">Or copy link</p>
-</div>
-<button class="copy-url" (click)="copyInputMessage(urlHolder)">Copy</button>

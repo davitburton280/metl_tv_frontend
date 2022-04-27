@@ -10,13 +10,18 @@
 }
 
 .shareLink{
-    margin-left: 30px;
     display: flex;
-    margin-top:20px;
     margin-bottom: 46px;
     font-size: 36px;
     font-family: "Muli-Bold";
-    color:#5B5B5B
+    color:#5B5B5B;
+
+    @media (max-width: 1023px) and (min-width: 650px){
+        font-size: 28px;
+}
+    @media (max-width: 649px) {
+        font-size: 20px;
+    }
 }
 
 .linkImages{
@@ -29,12 +34,29 @@
     height: 85px;
     opacity: 1;
     margin-right: 30px;
+    @media (max-width: 1023px) and (min-width: 650px){
+        width: 54px;
+        height: 75px;
+    }
+
+    @media (max-width: 649px) {
+        width: 44px;
+        height: 65px;
+    }
 }
 
 .facebookImg{
     width: 64px;
     height: 85px;
     opacity: 1;
+    @media (max-width: 1023px) and (min-width: 650px){
+        width: 54px;
+        height: 75px;
+    }
+    @media (max-width: 649px) {
+    width: 44px;
+    height: 65px;
+}
 }
 
 .copyingDiv{
@@ -48,6 +70,13 @@
     max-width: 440px;
     width: 100%;
     position: relative;
+    @media (max-width: 1023px) and (min-width: 650px){
+        padding: 13px 11px;
+    }
+    @media (max-width: 649px) {
+        flex-direction: column;
+    }
+
 }
 
 #link-address-holder{
@@ -56,6 +85,12 @@
     font-size: 20px;
     color: #707070;
     margin-right: 20px;
+    @media (max-width: 1023px) and (min-width: 650px){
+        font-size: 16px;
+    }
+    @media (max-width: 649px) {
+        font-size: 12px;
+    }
 }
 
 .copyLink{
@@ -63,6 +98,12 @@
     color: #18B587;
     display: flex;
     margin-left: 10px;
+    @media (max-width: 1023px) and (min-width: 650px){
+        font-size: 16px;
+    }
+    @media (max-width: 649px) {
+        font-size: 12px;
+    }
 }
 
 .copyLink:before{
@@ -74,6 +115,12 @@
     position: absolute;
     bottom: 10px;
     right: 140px;
+    @media (max-width: 1023px) and (min-width: 650px){
+        right: 140px;
+    }
+    @media (max-width: 649px){
+        display: none;
+    }
 }
 
 .copy-url{
@@ -82,7 +129,11 @@
     color: #FFFFFF;
     font-size: 13px;
     margin: 0 auto;
-
 }
+
+.modalDiv{
+    padding: 20px 40px 0 40px
+}
+
 
 

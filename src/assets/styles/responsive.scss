@@ -56,8 +56,8 @@
 @media (max-width: 1200px) {
 
     .chat-information {
-        width: 260px;
-
+        max-width: 260px;
+        width: 100%;
     }
 
     .black-text {
