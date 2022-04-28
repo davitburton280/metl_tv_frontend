@@ -3,11 +3,15 @@
 #video-chat-container {
     display: flex;
     height: 100vh;
+    @media (max-width: 750px){
+        flex-direction: column;
+    }
 }
 
 //}
 
 #video-tags-list {
+    display: flex;
     .tag {
         color: #0035C6;
         font-size: 16px;
