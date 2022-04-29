@@ -3,7 +3,7 @@
 #video-chat-container {
     display: flex;
     height: 100vh;
-    @media (max-width: 750px){
+    @media (max-width: 1300px){
         flex-direction: column;
     }
 }
@@ -61,6 +61,10 @@
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+    @media (max-width: 1300px){
+        max-width: 640px;
+        width: 100%;
+    }
 
     #video-info {
         h3 {
@@ -100,4 +104,16 @@
             }
         }
     }
+}
+
+
+#video-info-row{
+    width: 100%;
+}
+#video-info{
+    width: 100%;
+}
+.videoTagsAndActions{
+    display: flex;
+    justify-content: space-between;
 }
