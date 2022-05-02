@@ -4,7 +4,7 @@
 
     <!-- Shown when session connected -->
     <ng-container *ngIf="openViduToken">
-        <div id="video-chat-container">
+        <div id="video-chat-container" class="videoContainerLivePartDiv">
 
             <!-- Publisher video recording interface -->
             <div class="left">
@@ -15,11 +15,27 @@
                 </div>
                 <div id="video-info-row">
                     <div id="video-info">
+                        <div class="videoTagsAndActions">
                         <ul id="video-tags-list">
                             <li *ngFor="let tag of videoSettings.tags" class="tag">
                                 #{{tag.name}}
                             </li>
                         </ul>
+                        <div id="video-info-actions" *ngIf="videoId">
+                            <div id="participants-count">
+                                <i class="fa fa-users"></i>
+                                <span>{{participants.length}}</span>
+                            </div>
+                            <!--                        <ul>-->
+                            <!--                            <li *ngFor="let participant of participants">{{participant}}</li>-->
+                            <!--                        </ul>-->
+
+                            <div id="share-wrap" (click)="openSocialShareModal()">
+                                <i class="fas fa-share-alt"></i>
+                                <p>Share</p>
+                            </div>
+                        </div>
+                        </div>
                         <h3>{{videoSettings.name}}</h3>
                         <div class="details-row" *ngIf="videoId">
                             <span class="watchers-count">{{participants.length}} watching now</span>
@@ -32,20 +48,7 @@
                         <!--                            <span>{{participants.length}} users</span>-->
                         <!--                        </p>-->
                     </div>
-                    <div id="video-info-actions" *ngIf="videoId">
-                        <div id="participants-count">
-                            <i class="fa fa-users"></i>
-                            <span>{{participants.length}}</span>
-                        </div>
-                        <!--                        <ul>-->
-                        <!--                            <li *ngFor="let participant of participants">{{participant}}</li>-->
-                        <!--                        </ul>-->
 
-                        <div id="share-wrap" (click)="openSocialShareModal()">
-                            <i class="fas fa-share-alt"></i>
-                            <p>Share</p>
-                        </div>
-                    </div>
 
                 </div>
                 <div id="channel-info">

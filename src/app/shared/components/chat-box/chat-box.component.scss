@@ -4,6 +4,7 @@
 
 .chat-content {
     max-width: 500px;
+    width: 100%;
     //margin-bottom: 40px;
 
     //height: 100%;
@@ -11,6 +12,10 @@
 
     &.opened {
         box-shadow: 0 0 6px #0000001A;
+        margin-left: 10px;
+        @media (max-width: 1300px){
+            margin-left: 0
+        }
     }
 
     .chat-title {
@@ -97,6 +102,9 @@
         height: 85px;
         padding: 14px 12px;
         background: #F8F8F8 0 0 no-repeat padding-box;
+        @media (max-width: 400px){
+            padding:0
+        }
 
         &.shorter-footer {
             padding: 0;
