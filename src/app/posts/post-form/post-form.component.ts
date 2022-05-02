@@ -77,7 +77,7 @@ export class PostFormComponent implements OnInit {
         // this.formReady.emit(this.postForm.value);
 
         if (this.postForm.valid) {
-            console.log(this.postForm.value, this.selectedGroup)
+            console.log(this.postForm.value, this.selectedGroup);
             this.postsService.add(this.postForm.value).subscribe((dt) => {
                 this.postsStore.setAllPosts(dt);
                 this.socketService.postAdded({

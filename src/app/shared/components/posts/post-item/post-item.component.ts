@@ -5,6 +5,7 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
 import { SocialShareDialogComponent } from '@core/components/modals/social-share-dialog/social-share-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import {PageEvent} from '@angular/material/paginator';
+import { PostsStoreService } from "@core/services/stores/posts-store.service";
 
 @Component({
     selector: 'app-post-item',
@@ -19,16 +20,21 @@ export class PostItemComponent implements OnInit {
 
     selectedPost: Post;
     authUser;
+    allPosts;
 
     constructor(
         private postsService: PostsService,
         private userStore: UserStoreService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private postsStore: PostsStoreService
     ) {
     }
 
     ngOnInit(): void {
         this.authUser = this.userStore.authUser;
+        this.postsStore.allPosts$.subscribe((data: any) => {
+            this.allPosts = data.posts;
+        });
     }
     openSocialShareModal() {
         this.dialog.open(SocialShareDialogComponent, {
@@ -65,6 +71,11 @@ export class PostItemComponent implements OnInit {
         id.push(post.id);
         this.postsService.delete(id).subscribe((e) => {
             console.log(e);
+            console.log(post);
+            console.log(this.allPosts);
+            this.allPosts = this.allPosts.filter(data => data.id !== post.id);
+            console.log(this.allPosts);
+            this.postsStore.setAllPosts(this.allPosts);
         });
     }
 

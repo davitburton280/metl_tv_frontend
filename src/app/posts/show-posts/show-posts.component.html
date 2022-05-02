@@ -12,7 +12,7 @@
     <span class="material-icons" (click)="searchPost(input.value)">search</span>
 </div>
 
-<app-post-item *ngFor="let post of postsStore.allPosts$|async; trackBy: trackByElement" [post]="post"
+<app-post-item *ngFor="let post of allPost; trackBy: trackByElement" [post]="post"
 (vote)="vote($event)">
 </app-post-item>
 

@@ -248,11 +248,9 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             // console.log(end - this.start);
             // tslint:disable-next-line:no-shadowed-variable
             console.log(playerCastom.duration);
-            setTimeout(() => {
-                // console.log(playerCastom.duration);
-            }, 1000);
-            // console.log(this.player);
-            // console.log(e);
+
+            console.log(this.player);
+            console.log(e);
             // console.log(moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)));
             const recordingDuration = moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)).format('mm:ss');
 

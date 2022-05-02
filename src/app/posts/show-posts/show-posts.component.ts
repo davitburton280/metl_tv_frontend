@@ -15,6 +15,7 @@ export class ShowPostsComponent implements OnInit {
     posts = [];
     trackByElement = trackByElement;
     authUser;
+    allPost: any[];
 
     // Pagination
 
@@ -34,6 +35,10 @@ export class ShowPostsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.postsStore.allPosts$.subscribe((data: any) => {
+            this.allPost = data.posts;
+            this.paginatorLength = data.totalCount;
+        });
         this.authUser = this.userStore.authUser;
         this.getAllPosts().then();
     }
