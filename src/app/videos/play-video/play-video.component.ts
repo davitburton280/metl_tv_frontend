@@ -55,7 +55,6 @@ export class PlayVideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.subscriptions.push(this.videoService.getVideoById(params).subscribe(dt => {
             this.videoData = dt;
-            console.log('+++++++++++++++++++++++ 58 ', this.videoData);
             this.titleService.setTitle(dt.name);
             if (this.auth.loggedIn()) {
                 this.userVideoConnection = this.checkUserVideoConnection(dt);

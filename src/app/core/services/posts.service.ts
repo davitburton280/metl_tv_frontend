@@ -11,6 +11,8 @@ import {PostsStoreService} from '@core/services/stores/posts-store.service';
 })
 export class PostsService {
 
+    pageSize;
+
     constructor(
         private http: HttpClient,
         private postsStore: PostsStoreService
@@ -44,8 +46,19 @@ export class PostsService {
         return this.http.put(`${API_URL}posts/vote`, params)
             .pipe(shareReplay(1))
             .subscribe((posts: Post[]) => {
-                this.postsStore.selectPost(posts.find(p => p.id === params.post_id))
+                this.postsStore.selectPost(posts.find(p => p.id === params.post_id));
                 this.postsStore.setAllPosts(posts);
             });
+    }
+
+    searchPost(params) {
+        console.log(params);
+        return this.http.get<Post[]>(`${API_URL}posts/news-feed`, {params});
+    }
+
+    delete(id: number[]) {
+        const options = {body: {idList: id}};
+        // @ts-ignore
+        return this.http.delete(`${API_URL}posts/remove`,  options);
     }
 }

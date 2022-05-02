@@ -9,6 +9,8 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {CK_EDITOR_CONFIG} from '@core/constants/global';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {PostsStoreService} from '@core/services/stores/posts-store.service';
+import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
+import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 
 @Component({
     selector: 'app-post-form',
@@ -22,6 +24,8 @@ export class PostFormComponent implements OnInit {
 
     @Input() selectedGroup;
     @Output() formReady = new EventEmitter();
+
+    public dataPosts = '';
 
     constructor(
         private fb: FormBuilder,
@@ -44,6 +48,14 @@ export class PostFormComponent implements OnInit {
         // console.log(queryParams.group_id)
         this.initForm(queryParams);
         this.selectedGroup = this.groupsStore.groups.find(g => g.id === +queryParams.group_id);
+    }
+
+    onChange({editor}: ChangeEvent) {
+        // this.dataPosts = editor.getData();
+        console.log( editor.getData() );
+    }
+    public onReady(editor) {
+        console.log(editor);
     }
 
     initForm(queryParams) {

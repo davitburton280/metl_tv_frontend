@@ -23,7 +23,7 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-        console.log(this.videoUrl)
+        console.log(this.videoUrl);
     }
 
     initPlayer() {
@@ -40,7 +40,6 @@ export class VideoJsPlayerComponent implements OnInit, AfterViewInit {
                     m *= 60;
                 }
                 return s;
-
             };
 
             videojs.registerPlugin('watermark', watermark);

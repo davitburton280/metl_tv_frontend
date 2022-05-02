@@ -8,10 +8,17 @@
 </ul>
 
 <div class="search">
-    <input placeholder="Search" type="text">
-    <span class="material-icons">search</span>
+    <input #input placeholder="Search" type="text" (keyup.enter)="searchPost(input.value)">
+    <span class="material-icons" (click)="searchPost(input.value)">search</span>
 </div>
 
 <app-post-item *ngFor="let post of postsStore.allPosts$|async; trackBy: trackByElement" [post]="post"
 (vote)="vote($event)">
 </app-post-item>
+
+<mat-paginator [length]="paginatorLength"
+               [pageSize]="paginatorPageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pagination($event)"
+               aria-label="Select page">
+</mat-paginator>

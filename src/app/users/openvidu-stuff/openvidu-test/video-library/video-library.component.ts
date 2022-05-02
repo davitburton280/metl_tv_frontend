@@ -66,7 +66,7 @@ export class VideoLibraryComponent implements OnInit {
     this.openViduService.getToken({email: 'admin@gmail.com', sessionName: 'SessionA'}).subscribe((token: any) => {
       this.tokens.push(token);
       this.session = true;
-      console.log(this.tokens)
+      console.log('getToken ', this.tokens);
     });
   }
 

@@ -20,6 +20,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {BlobToFilePipe} from '@shared/pipes/blob-to-file.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {Router} from '@angular/router';
+import { start } from "repl";
 
 @Component({
     selector: 'app-video-js-record',
@@ -48,6 +49,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     @Output() recordingStarted = new EventEmitter();
 
     screenSharing = false;
+    start;
 
     // constructor initializes our declared vars
     constructor(
@@ -195,6 +197,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
             // console.log('start timestamp:' + this.player.currentTimestamp)
             this.recordingStartTimeStamp = moment(this.player.currentTimestamp);
+            this.start = new Date();
+            // console.log(start);
 
             // this.thumbnailFile = this.videoSettings.thumbnail;
             console.log('+++++++++++++++++++++++ 200 ');
@@ -226,7 +230,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
 
         // users completed recording and stream is available
-        this.player.on('finishRecord', () => {
+        this.player.on('finishRecord', (e) => {
             // recordedData is a blob object containing the recorded data that
             // can be downloaded by the users, stored on server etc.
             // console.log('finished recording: ', this.player);
@@ -235,6 +239,14 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             this.recordingEndTimeStamp = moment(this.player.currentTimestamp);
             // console.log('Duration timestamp:' + moment.utc((moment.duration(this.recordingEndTimeStamp - this.recordingStartTimeStamp, 'seconds').asMilliseconds()).format('HH:mm')))
 
+            const x = e.target.player.controlBar.durationDisplay.formattedTime_;
+            const end = new Date();
+            // @ts-ignore
+            console.log(end - this.start);
+            console.log(x);
+            console.log(this.player);
+            console.log(e);
+            console.log(moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)));
             const recordingDuration = moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)).format('mm:ss');
 
             const fd: FormData = new FormData();

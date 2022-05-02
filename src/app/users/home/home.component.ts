@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import {API_URL} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
@@ -8,6 +8,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {ChatService} from '@core/services/chat.service';
 import {Subscription} from 'rxjs';
+import { ChangeDetection } from "@angular/cli/lib/config/schema";
 
 @Component({
     selector: 'app-home',
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         public auth: AuthService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
+        private cdr: ChangeDetectorRef
     ) {
     }
 
@@ -34,13 +36,16 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.getVideo();
         this.authUser = this.getAuthUser.transform();
         this.videoService.liveVideoRefresh.subscribe(() => {
+            console.log('++++++++++++++++++++++++++ 38 ');
             this.getVideo();
         });
     }
     getVideo() {
         this.subscriptions.push(this.videoService.get({}).subscribe(dt => {
             this.videos = dt.videos;
-            this.videoService.liveVideoRefresh.emit();
+            this.cdr.detectChanges();
+            console.log('++++++++++++++++++++++++++ 44 ');
+            // this.videoService.liveVideoRefresh.emit();
         }));
     }
 

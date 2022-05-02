@@ -8,7 +8,7 @@
                 <span class="post-group-name" [routerLink]="'/groups/'+group.custom_name+'/about'">{{group.name}}</span>
             </ng-container>
         </p>
-        <p>{{post.created_at| dateFromNow}}</p>
+        <p>{{ post.views + ' views ' }}{{ post.created_at| dateFromNow }}</p>
     </div>
 
     <div class="info">
@@ -33,17 +33,17 @@
                         <a href=""><span class="material-icons">chat_bubble</span>Comments</a>
                         <a (click)="openSocialShareModal()"><span class="material-icons">share</span>Share</a>
                 </div>
-                <div class="dotes">
+                <div class="dotes" *ngIf="authUser.id === post.author_id">
 
                     <button mat-icon-button [matMenuTriggerFor]="menu">
                         <i class="material-icons">more_vert</i>
                     </button>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="editPost(post)">
                             <mat-icon>edit</mat-icon>
                             <span>Edit</span>
                         </button>
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)="deletePost(post)">
                             <mat-icon>delete</mat-icon>
                             <span>Delete</span>
                         </button>

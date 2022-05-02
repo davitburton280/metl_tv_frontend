@@ -4,6 +4,7 @@ import {PostsService} from '@core/services/posts.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import { SocialShareDialogComponent } from '@core/components/modals/social-share-dialog/social-share-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
     selector: 'app-post-item',
@@ -57,6 +58,18 @@ export class PostItemComponent implements OnInit {
             return usersPosts.liked === vote &&
                 usersPosts.user_id === this.authUser.id;
         });
+    }
+
+    deletePost(post) {
+        const id = [];
+        id.push(post.id);
+        this.postsService.delete(id).subscribe((e) => {
+            console.log(e);
+        });
+    }
+
+    editPost(post) {
+        console.log(post);
     }
 
 }
