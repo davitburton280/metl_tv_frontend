@@ -115,7 +115,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                     },
                     screen: true,
                     displayMilliseconds: false,
-                    maxLength: 3600, //30
+                    maxLength: 3600, // 30
                     debug: true,
                     videoEngine: 'recordrtc',
                     videoMimeType: 'video/webm;codecs=h264',
@@ -127,7 +127,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
                 // videoJsResolutionSwitcher: {
                 //     default: 'low', // Default resolution [{Number}, 'low', 'high'],
-                //     dynamicLabel: true
+                //     dynamicLabel: true""
                 // }
 
             }
@@ -241,12 +241,19 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
             const x = e.target.player.controlBar.durationDisplay.formattedTime_;
             const end = new Date();
+            // tslint:disable-next-line:no-shadowed-variable
+            const el = 'video_' + this.idx;
+            const playerCastom = document.getElementById(el);
             // @ts-ignore
-            console.log(end - this.start);
-            console.log(x);
-            console.log(this.player);
-            console.log(e);
-            console.log(moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)));
+            // console.log(end - this.start);
+            // tslint:disable-next-line:no-shadowed-variable
+            console.log(playerCastom.duration);
+            setTimeout(() => {
+                // console.log(playerCastom.duration);
+            }, 1000);
+            // console.log(this.player);
+            // console.log(e);
+            // console.log(moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)));
             const recordingDuration = moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)).format('mm:ss');
 
             const fd: FormData = new FormData();
