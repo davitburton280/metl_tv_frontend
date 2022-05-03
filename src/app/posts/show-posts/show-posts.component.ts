@@ -19,7 +19,7 @@ export class ShowPostsComponent implements OnInit {
 
     // Pagination
 
-    paginatorLength = 0;
+    paginatorLength;
     paginatorPageSize = 10;
     perPage = 1;
     pageSizeOptions: number[] = [5, 10, 25, 100];
@@ -57,6 +57,11 @@ export class ShowPostsComponent implements OnInit {
             limit: this.paginatorPageSize
         };
         await this.postsService.getAllPosts(params);
+    }
+    delete() {
+        if ((this.paginatorLength - 1) % this.paginatorPageSize === 0) { this.perPage -= 1; }
+        if (this.perPage <= 1) { this.perPage = 1; }
+        this.getAllPosts().then();
     }
 
     vote(postData) {

@@ -13,12 +13,13 @@
 </div>
 
 <app-post-item *ngFor="let post of allPost; trackBy: trackByElement" [post]="post"
-(vote)="vote($event)">
+(vote)="vote($event)" (deletePosts)="delete()">
 </app-post-item>
 
 <mat-paginator [length]="paginatorLength"
                [pageSize]="paginatorPageSize"
                [pageSizeOptions]="pageSizeOptions"
                (page)="pagination($event)"
+               [pageIndex]="perPage-1"
                aria-label="Select page">
 </mat-paginator>

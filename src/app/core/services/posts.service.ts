@@ -20,7 +20,7 @@ export class PostsService {
     }
 
     getGroupPosts(params) {
-        return this.http.get<Post[]>(`${API_URL}posts/get`, {params})
+        return this.http.get<Post[]>(`${API_URL}posts/get`, {params});
     }
 
     getAllPosts(params) {
