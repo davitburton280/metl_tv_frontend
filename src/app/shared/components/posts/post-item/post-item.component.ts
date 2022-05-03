@@ -4,9 +4,7 @@ import {PostsService} from '@core/services/posts.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import { SocialShareDialogComponent } from '@core/components/modals/social-share-dialog/social-share-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import {PageEvent} from '@angular/material/paginator';
 import { PostsStoreService } from '@core/services/stores/posts-store.service';
-import { any } from "codelyzer/util/function";
 
 @Component({
     selector: 'app-post-item',
@@ -37,7 +35,6 @@ export class PostItemComponent implements OnInit {
         this.authUser = this.userStore.authUser;
         this.postsStore.allPosts$.subscribe((data: any) => {
             this.allPosts = data.posts;
-            this.totalCount = data.totalCount;
         });
     }
     openSocialShareModal() {
