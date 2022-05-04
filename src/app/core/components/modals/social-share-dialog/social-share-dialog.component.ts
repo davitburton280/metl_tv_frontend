@@ -1,5 +1,5 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-social-share-dialog',
@@ -10,6 +10,7 @@ export class SocialShareDialogComponent implements OnInit {
     shareUrl;
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
+        private dialog: MatDialog,
     ) {
         this.shareUrl = data.shareUrl;
     }
@@ -26,6 +27,7 @@ export class SocialShareDialogComponent implements OnInit {
     }
 
     copyInputMessage(inputElement){
+        this.dialog.closeAll();
         inputElement.select();
         document.execCommand('copy');
         inputElement.setSelectionRange(0, 0);

@@ -28,6 +28,7 @@
         "@auth0/angular-jwt": "^4.2.0",
         "@ckeditor/ckeditor5-angular": "^3.0.0",
         "@ckeditor/ckeditor5-build-classic": "^33.0.0",
+        "@ckeditor/ckeditor5-image": "^34.0.0",
         "@ctrl/ngx-emoji-mart": "^3.1.0",
         "@opentok/client": "^2.18.0",
         "@stripe/stripe-js": "^1.16.0",

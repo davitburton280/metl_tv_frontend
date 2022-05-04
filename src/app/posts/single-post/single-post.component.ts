@@ -4,6 +4,7 @@ import {PostsService} from '@core/services/posts.service';
 import {Observable} from 'rxjs';
 import {Post} from '@shared/models/post';
 import {PostsStoreService} from '@core/services/stores/posts-store.service';
+import {Location} from '@angular/common';
 
 @Component({
     selector: 'app-single-post',
@@ -15,12 +16,18 @@ export class SinglePostComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private postsService: PostsService,
-        public postsStore: PostsStoreService
+        public postsStore: PostsStoreService,
+        private location: Location
     ) {
     }
 
     ngOnInit(): void {
         this.getPostById();
+    }
+
+    delete() {
+        console.log(this.route);
+        this.location.back();
     }
 
     getPostById() {

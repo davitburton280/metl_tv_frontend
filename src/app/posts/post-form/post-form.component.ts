@@ -20,12 +20,16 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular';
 export class PostFormComponent implements OnInit {
     postForm: FormGroup;
     authUser;
-    Editor = ClassicEditor;
+    public Editor = ClassicEditor;
 
     @Input() selectedGroup;
     @Output() formReady = new EventEmitter();
 
-    public dataPosts = '';
+    public dataPosts = '<p>Edit Posts</p>';
+    defaultSelect = 'Select a group';
+
+    imageFile;
+    resultFileUpload;
 
     constructor(
         private fb: FormBuilder,
@@ -43,19 +47,34 @@ export class PostFormComponent implements OnInit {
     ngOnInit(): void {
         const queryParams = this.route.snapshot.queryParams;
         this.authUser = this.userStore.authUser;
-        ClassicEditor.defaultConfig = CK_EDITOR_CONFIG;
+        this.Editor.defaultConfig = CK_EDITOR_CONFIG;
 
         // console.log(queryParams.group_id)
         this.initForm(queryParams);
         this.selectedGroup = this.groupsStore.groups.find(g => g.id === +queryParams.group_id);
     }
 
-    onChange({editor}: ChangeEvent) {
-        // this.dataPosts = editor.getData();
-        console.log( editor.getData() );
+    // this.Editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+    //     return this.onChange(loader);
+    // };
+
+    onChange(editor) {
+        console.log( editor );
     }
+    // imgUpload(event): any{
+    //     this.imageFile = event.target.files[0];
+    //     const reader = new FileReader();
+    //     reader.onload = (e) => {
+    //         this.resultFileUpload = e.target.result;
+    //     };
+    //     reader.readAsDataURL(this.imageFile);
+    // }
     public onReady(editor) {
         console.log(editor);
+        editor.ui.getEditableElement().parentElement.insertBefore(
+            editor.ui.view.toolbar.element,
+            editor.ui.getEditableElement()
+        );
     }
 
     initForm(queryParams) {

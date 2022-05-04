@@ -1,17 +1,25 @@
 <div id="post-form-container">
     <h1>Create a post</h1>
     <form [formGroup]="postForm">
-        <div class="choose-group">
-            <select formControlName="group_id" (change)="selectGroup($event)">
-                <option value="" selected disabled>Select a group</option>
-                <option *ngFor="let group of groupsStore.groups"
-                        [value]="group.id">{{group.name}}</option>
-            </select>
+        <div class="post-addPhoto">
+            <div class="choose-group">
+                <select formControlName="group_id" (change)="selectGroup($event)">
+                    <option value="" selected disabled>{{defaultSelect}}</option>
+                    <option *ngFor="let group of groupsStore.groups"
+                            [value]="group.id">{{group.name}}</option>
+                </select>
+            </div>
+            <div class="action-btn-wrap">
+                <button>
+                    <img src="assets/img/photo-green-small.svg" alt="">
+                    <span>Add photo/video</span>
+                </button>
+            </div>
         </div>
 
         <div class="form-controls">
             <ckeditor id="editor" [editor]="Editor"
-                      [data]="dataPosts"
+                      [(ngModel)]="dataPosts"
                       [config]="{removePlugins : [['format']]}"
                       [formControlName]="'description'"
                       (change)="onChange($event)"

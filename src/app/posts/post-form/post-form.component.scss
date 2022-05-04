@@ -1,5 +1,14 @@
 @import 'mixins';
 
+.post-addPhoto {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .action-btn-wrap {
+    }
+}
+
 .choose-group {
     select {
         padding: 10px;

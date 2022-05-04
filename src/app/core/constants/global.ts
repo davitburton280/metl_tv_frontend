@@ -67,7 +67,7 @@ export const DEVICES_ICONS = [
             {type: 'success', msg: 'Microphone is connected', icon: 'checked'}
         ]
     }
-]
+];
 
 
 export const VIDEO_FILTERS = [
@@ -130,7 +130,7 @@ export const MAIN_SECTIONS = [
         auth: true
     },
     {name: 'Messages', img: 'item-8.png', icon: '', link: '/chat/messages', production: true, auth: true},
-    {name: 'Groups', img: 'group.svg', icon: '', link: '/groups', production: true, auth: true, separator: true,},
+    {name: 'Groups', img: 'group.svg', icon: '', link: '/groups', production: true, auth: true, separator: true},
 
     {name: 'Saved videos', img: 'saved-videos.svg', icon: '', link: '/videos/saved', production: true, auth: true},
     {name: 'Videos', img: 'item-11.png', icon: '', link: '/videos', auth: true, separator: false, production: true},
@@ -217,6 +217,9 @@ export const CK_EDITOR_CONFIG =
         removePlugins: 'toolbar',
         toolbar: {
             items: [
+                'heading',
+                '|',
+                'alignment',
                 'bold',
                 'italic',
                 'link',
@@ -226,18 +229,8 @@ export const CK_EDITOR_CONFIG =
                 '|',
                 'insertTable',
                 '|',
-                'imageUpload',
-                '|',
                 'undo',
                 'redo'
-            ]
-        },
-        image: {
-            toolbar: [
-                'imageStyle:full',
-                'imageStyle:side',
-                '|',
-                'imageTextAlternative'
             ]
         },
         table: {
