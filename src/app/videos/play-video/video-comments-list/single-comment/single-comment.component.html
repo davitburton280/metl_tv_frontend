@@ -4,7 +4,7 @@
         <div class="d-flex align-items-center mb-2 detailsPart">
             <div class="mr-3 user-name" [class.author.px-2]="isAuthor(comment)"
                  (click)="openChannelPage(comment?.user?.username)">
-                {{getFullName(comment?.user)}} <i class="fas fa-check-circle ml-1" *ngIf="isAuthor(comment)"></i>
+                {{comment?.user?.username}} <i class="fas fa-check-circle ml-1" *ngIf="isAuthor(comment)"></i>
             </div>
             <div class="comment-date">{{comment.created_at | dateFromNow}}</div>
         </div>

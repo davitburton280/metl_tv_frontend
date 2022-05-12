@@ -138,12 +138,13 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     }
 
     removeUploadedThumbnail(filename) {
-        // this.videoService.removeVideoThumbnail(filename).subscribe(dt => {
+        console.log(filename);
+        this.videoService.removeVideoThumbnail(filename).subscribe(dt => {
         this.thumbnailFile = [];
         this.toastr.success('The thumbnail has been removed successfully');
         this.thumbnailUploaded = false;
         this.startStreamingForm.patchValue({thumbnail: ''});
-        // });
+        });
     }
 
     submit() {

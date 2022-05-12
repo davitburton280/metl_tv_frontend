@@ -107,7 +107,7 @@ export class SocketIoService {
     getTyping() {
         return new Observable(observer => {
             this.socket.on('getTyping', msg => {
-                // console.log('typing')
+                // console.log(msg);
                 observer.next(msg);
             });
         });

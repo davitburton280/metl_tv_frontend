@@ -1,7 +1,6 @@
 <div id="post-form-container">
     <h1>Create a post</h1>
     <form [formGroup]="postForm">
-        <div class="post-addPhoto">
             <div class="choose-group">
                 <select formControlName="group_id" (change)="selectGroup($event)">
                     <option value="" selected disabled>{{defaultSelect}}</option>
@@ -9,17 +8,9 @@
                             [value]="group.id">{{group.name}}</option>
                 </select>
             </div>
-            <div class="action-btn-wrap">
-                <button>
-                    <img src="assets/img/photo-green-small.svg" alt="">
-                    <span>Add photo/video</span>
-                </button>
-            </div>
-        </div>
 
         <div class="form-controls">
             <ckeditor id="editor" [editor]="Editor"
-                      [(ngModel)]="dataPosts"
                       [config]="{removePlugins : [['format']]}"
                       [formControlName]="'description'"
                       (change)="onChange($event)"

@@ -25,8 +25,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     profileChangedEvent: any;
     coverChangedEvent: any;
-    profileBase64: any;
-    coverBase64: any;
 
     subscribedToChannel = false;
     subscribersCount = 0;
@@ -54,14 +52,14 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private notificationsStore: NotificationsSubjectStoreService,
         private socketService: SocketIoService,
         public loader: LoaderService,
-        private fb: FormBuilder,
+        private fb: FormBuilder
     ) {
 
 
     }
 
     ngOnInit(): void {
-
+        console.log(this.authUser);
         if (this.channelUser) {
             this.initChannelForm();
             this.checkChannelSubscription();
@@ -113,7 +111,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     profileChangeEvent(event: any) {
         this.profileChangedEvent = event;
-        console.log(event)
+        console.log(event);
 
         const filename = `avatar_${Date.now()}.jpg`;
         const fd = new FormData();
@@ -121,6 +119,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         fd.append('avatar', filename);
         fd.append('id', this.authUser.id);
         this.subscriptions.push(this.usersService.changeProfileImage(fd).subscribe((dt) => {
+            console.log(dt);
             this.changeAuthUserInfo(dt);
         }));
     }

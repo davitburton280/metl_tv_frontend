@@ -20,9 +20,10 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     @ViewChild('groupMessagesList') private messagesList: ElementRef;
 
     subscriptions: Subscription[] = [];
-    groupsMessages = [];
+    groupsTypingMessages = [];
 
     typingText = {
+        id: null,
         group: false,
         text: ''
     };
@@ -85,11 +86,32 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
     }
 
     getTypingTextStatus(dt) {
+        console.log(dt);
         const sameGroupTyping = dt.from_id !== this.authUser.id && dt.group_name === this.selectedGroupMessages.name && dt.message;
         this.typingText = {
+            id: dt.from_id,
             group: sameGroupTyping ? this.selectedGroupMessages?.name === dt.group_name : null,
             text: sameGroupTyping ? `${dt.from_username} is typing...` : null
         };
+        if (this.typingText.group && this.groupsTypingMessages.length === 0) {
+            this.groupsTypingMessages.push(this.typingText);
+        }
+        if (this.typingText.group && this.groupsTypingMessages.length > 0 && this.arrFilter(this.groupsTypingMessages, this.typingText)) {
+            this.groupsTypingMessages.push(this.typingText);
+        }
+        if (!this.typingText.group && !this.arrFilter(this.groupsTypingMessages, this.typingText)) {
+            this.groupsTypingMessages = this.groupsTypingMessages.filter((el) => el.id !== this.typingText.id);
+        }
+        console.log(this.groupsTypingMessages);
+    }
+    arrFilter(arr, value) {
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id === value.id) {
+                return false;
+            }
+        }
+        return true;
     }
 
     sendMessage(formValue) {
@@ -105,6 +127,7 @@ export class GroupChatMessagesComponent implements OnInit, AfterViewChecked, OnD
 
     resetTyping() {
         this.typingText = {
+            id: null,
             group: false,
             text: ''
         };

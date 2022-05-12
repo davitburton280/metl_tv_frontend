@@ -8,8 +8,8 @@
             <div class="details-row">
                 <div id="details-block">
                     <div class="avatar-container">
-                        <label for="profile-image-input">
-                            <img class="avatar" id="profile-image"
+                        <label for="">
+                            <img class="avatar" style="cursor: unset" id="profile-image"
                                  [src]="profileUser?.avatar|getImgPath: 'user_avatars'">
                         </label>
                     </div>
@@ -75,10 +75,10 @@
 
             </div>
 
-            <div [hidden]="true">
-                <input type="file" id="profile-image-input"/>
-                <input type="hidden">
-            </div>
+<!--            <div [hidden]="true">-->
+<!--                <input type="file" id="profile-image-input"/>-->
+<!--                <input type="hidden">-->
+<!--            </div>-->
         </div>
 
         <div id="group-actions">

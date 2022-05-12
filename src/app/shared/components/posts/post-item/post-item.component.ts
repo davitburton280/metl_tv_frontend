@@ -1,17 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import {Post} from '@shared/models/post';
 import {PostsService} from '@core/services/posts.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import { SocialShareDialogComponent } from '@core/components/modals/social-share-dialog/social-share-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PostsStoreService } from '@core/services/stores/posts-store.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-post-item',
     templateUrl: './post-item.component.html',
     styleUrls: ['./post-item.component.scss']
 })
-export class PostItemComponent implements OnInit {
+export class PostItemComponent implements OnInit, OnDestroy {
     @Input() post: Post;
     @Input() group;
     @Input() accessedFromGroup = false;
@@ -27,7 +28,8 @@ export class PostItemComponent implements OnInit {
         private postsService: PostsService,
         private userStore: UserStoreService,
         private dialog: MatDialog,
-        private postsStore: PostsStoreService
+        private postsStore: PostsStoreService,
+        public router: Router,
     ) {
     }
 
@@ -62,7 +64,7 @@ export class PostItemComponent implements OnInit {
     isPostVotedByAuthUser(vote) {
         return !!this.post?.user_posts?.find(up => {
             const usersPosts = up.users_posts;
-            return usersPosts.liked === vote &&
+            return usersPosts.voted === vote &&
                 usersPosts.user_id === this.authUser.id;
         });
     }
@@ -76,7 +78,12 @@ export class PostItemComponent implements OnInit {
     }
 
     editPost(post) {
-        console.log(post);
+        console.log('-----------------');
+        this.postsStore.setEditePost(post);
+        this.router.navigate(['/posts/create']);
+    }
+    ngOnDestroy() {
+
     }
 
 }

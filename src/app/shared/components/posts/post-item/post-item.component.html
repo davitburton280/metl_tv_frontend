@@ -24,9 +24,9 @@
             </div>
         </div>
         <div class="right-wrap">
-            <p [innerHTML]="post.description"></p>
+            <div [innerHTML]="post.description" [routerLink]="'/posts/'+post.id"></div>
 
-            <img class="post-cover" [routerLink]="'/posts/'+post.id" [src]="post.cover_img|getImgPath: 'post_covers'">
+            <img *ngIf="post.cover_img !== null" class="post-cover" [routerLink]="'/posts/'+post.id" [src]="post.cover_img|getImgPath: 'post_covers'">
 
             <div class="post-menu">
                 <div class="menu">

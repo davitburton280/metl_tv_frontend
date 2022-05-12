@@ -30,7 +30,9 @@
     </ul>
 
     <div class="chat-form">
-        <small class="text-center font-italic d-block">{{typingText.text}}</small>
+        <div *ngFor="let typing of groupsTypingMessages" style="display: flex">
+            <small *ngIf="typing.text" class="text-center font-italic d-block">{{typing.text}}</small>
+        </div>
         <app-chat-form [embed]="embedMode" [chatType]="'group'" (seen)="setSeen($event)" (typing)="setTyping($event)"
                        (sent)="sendMessage($event)">
         </app-chat-form>

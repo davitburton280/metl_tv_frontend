@@ -23,7 +23,7 @@ export class ShowPostsComponent implements OnInit {
     paginatorPageSize = 10;
     perPage = 1;
     pageSizeOptions: number[] = [5, 10, 25, 100];
-    pageEvent: PageEvent;
+    sortingOptions = '';
 
     // /////////////////////////////// //
 
@@ -38,6 +38,7 @@ export class ShowPostsComponent implements OnInit {
         this.postsStore.allPosts$.subscribe((data: any) => {
             this.allPost = data.posts;
             this.paginatorLength = data.totalCount;
+            // console.log(this.allPost);
         });
         this.authUser = this.userStore.authUser;
         this.getAllPosts().then();
@@ -54,10 +55,19 @@ export class ShowPostsComponent implements OnInit {
         const params = {
             user_id: this.authUser.id,
             offset: this.perPage,
-            limit: this.paginatorPageSize
+            limit: this.paginatorPageSize,
+            sorting_keyword: this.sortingOptions
         };
         await this.postsService.getAllPosts(params);
     }
+    sortPosts(sort) {
+        if (this.sortingOptions === sort) {
+            this.sortingOptions = '';
+        } else {
+            this.sortingOptions = sort;
+        }
+        this.getAllPosts().then();
+}
     delete() {
         if ((this.paginatorLength - 1) % this.paginatorPageSize === 0) { this.perPage -= 1; }
         if (this.perPage <= 1) { this.perPage = 1; }

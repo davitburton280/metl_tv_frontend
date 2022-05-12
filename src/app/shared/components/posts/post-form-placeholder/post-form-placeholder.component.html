@@ -7,6 +7,16 @@
         <div class="form-controls">
             <textarea placeholder="Create a public post..." routerLink="/posts/create"
                       [queryParams]="{group_id: selectedGroup?.id}"></textarea>
+            <div class="action-btn-wrap">
+                <button (click)="file.click()" >
+                    <img src="assets/img/photo-green-small.svg" alt="">
+                    <span>Add photo/video</span>
+                </button>
+                <input type="file" hidden #file (change)="videoUpload($event)">
+                <p>{{videoName}}</p>
+                <mat-spinner *ngIf="videoUploadSpinner" [diameter]="24"></mat-spinner>
+                <mat-icon *ngIf="finishVideoUpload" style="background-color: #0aa06e; color: #ffffff">done</mat-icon>
+            </div>
         </div>
     </form>
 </div>

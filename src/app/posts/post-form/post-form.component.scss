@@ -6,6 +6,18 @@
     align-items: flex-start;
 
     .action-btn-wrap {
+
+        button {
+
+            img {
+                margin-right: 15px;
+            }
+            span {
+                position: relative;
+                font-size: 15px;
+                bottom: 6px;
+            }
+        }
     }
 }
 
@@ -27,5 +39,4 @@
     justify-content: flex-end;
     margin-top: 20px;
 }
-
 

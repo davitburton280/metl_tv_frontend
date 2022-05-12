@@ -7,6 +7,10 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
     providedIn: 'root'
 })
 export class PostsStoreService {
+    private fileImg = new BehaviorSubject(null);
+    fileImg$ = this.fileImg.asObservable();
+    private editePost = new BehaviorSubject(null);
+    editePost$ = this.editePost.asObservable();
     private allPostsSource = new BehaviorSubject([]);
     allPosts$ = this.allPostsSource.asObservable();
 
@@ -34,6 +38,13 @@ export class PostsStoreService {
         this.allPostsSource.next(posts);
     }
 
+    setEditePost(post) {
+        this.editePost.next(post);
+    }
+    setImageUpload(file) {
+        this.fileImg.next(file);
+    }
+
     vote() {
 
     }
@@ -57,7 +68,7 @@ export class PostsStoreService {
         }
     }
 
-    selectPost(post: Post) {
+    selectPost(post) {
         this.selectedPostSource.next(post);
     }
 }

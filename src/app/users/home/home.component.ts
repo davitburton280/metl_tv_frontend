@@ -8,6 +8,7 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {ChatService} from '@core/services/chat.service';
 import {Subscription} from 'rxjs';
+import { FilterOutFalsyValuesFromObjectPipe } from "@shared/pipes/filter-out-falsy-values-from-object.pipe";
 
 @Component({
     selector: 'app-home',
@@ -16,6 +17,8 @@ import {Subscription} from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy {
     videos = [];
+    videosStreams = [];
+    videosClipz = [];
     apiUrl = API_URL;
     authUser;
 
@@ -27,6 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         public auth: AuthService,
         private getAuthUser: GetAuthUserPipe,
         private socketService: SocketIoService,
+        private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
     }
 
@@ -35,6 +39,20 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.authUser = this.getAuthUser.transform();
         this.videoService.liveVideoRefresh.subscribe(() => {
             this.getVideo();
+        });
+
+        const params = {filters: {video_type: 'clipz'}};
+        const filters = this.getExactParams.transform(params);
+
+        this.videoService.get(filters).subscribe(dt => {
+            this.videosClipz = dt.videos;
+        });
+
+        const params1 = {filters: {video_type: 'videos'}};
+        const filters1 = this.getExactParams.transform(params1);
+
+        this.videoService.get(filters1).subscribe(dt => {
+            this.videosStreams = dt.videos;
         });
     }
     getVideo() {

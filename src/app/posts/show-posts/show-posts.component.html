@@ -1,10 +1,10 @@
 <app-post-form-placeholder></app-post-form-placeholder>
 
 <ul class="categories">
-    <li><a class="active"><span class="material-icons">whatshot</span>Hot</a></li>
-    <li><a><span class="material-icons">new_releases</span>New</a></li>
-    <li><a><span class="material-icons">trending_up</span>Top</a></li>
-    <li><a><span class="material-icons">new_releases</span>Best of the week</a></li>
+    <li (click)="sortPosts('hot')"><a [ngClass]="{'active': sortingOptions==='hot'}"><span class="material-icons">whatshot</span>Hot</a></li>
+    <li (click)="sortPosts('new')"><a [ngClass]="{'active': sortingOptions==='new'}"><span class="material-icons">new_releases</span>New</a></li>
+    <li (click)="sortPosts('top')"><a [ngClass]="{'active': sortingOptions==='top'}"><span class="material-icons">trending_up</span>Top</a></li>
+    <li (click)="sortPosts('best_of_the_week')"><a [ngClass]="{'active': sortingOptions==='best_of_the_week'}"><span class="material-icons">new_releases</span>Best of the week</a></li>
 </ul>
 
 <div class="search">
@@ -12,9 +12,11 @@
     <span class="material-icons" (click)="searchPost(input.value)">search</span>
 </div>
 
-<app-post-item *ngFor="let post of allPost; trackBy: trackByElement" [post]="post"
-(vote)="vote($event)" (deletePosts)="delete()">
-</app-post-item>
+<div>
+    <app-post-item *ngFor="let post of allPost; trackBy: trackByElement" [post]="post"
+                   (vote)="vote($event)" (deletePosts)="delete()">
+    </app-post-item>
+</div>
 
 <mat-paginator [length]="paginatorLength"
                [pageSize]="paginatorPageSize"

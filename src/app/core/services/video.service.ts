@@ -15,8 +15,12 @@ export class VideoService {
     }
 
     get(params) {
-        return this.httpClient.get<any>(`${API_URL}videos/get`, {params});
+        return this.httpClient.get<any>(`${API_URL}videos/get`, { params });
     }
+
+    // addVideoFile(file) {
+    //     return this.httpClient.post<any>(`${API_URL}videos/uploadVideo`, file);
+    // }
 
     saveVideoToken(params) {
         return this.httpClient.post<any>(`${API_URL}videos/save-video-token`, params);
@@ -31,7 +35,8 @@ export class VideoService {
     }
 
     removeVideoThumbnail(params) {
-        return this.httpClient.delete<any>(`${API_URL}videos/remove-video-thumbnail`, {params});
+        console.log(params);
+        return this.httpClient.delete<any>(`${API_URL}videos/remove-video-thumbnail?` + params);
     }
 
     removeVideo(params) {
