@@ -37,11 +37,14 @@
                         </div>
                     </li>
                 </ng-container>
+                <div *ngFor="let msg of groupsTypingMessages">
+                    <small *ngIf="groupsTypingMessages.length > 0" class="text-center font-italic d-block">{{msg.text}}</small>
+                </div>
             </ng-container>
         </ul>
 
         <div class="chat-form" [class.disabled]="isContactBlocked(uMessages)">
-            <small class="text-center font-italic d-block">{{typingText}}</small>
+<!--            <small class="text-center font-italic d-block">{{typingText}}</small>-->
             <app-chat-form [embed]="embedMode" (seen)="setSeen($event)" (typing)="setTyping($event)"
                            (sent)="sendMessage($event)">
             </app-chat-form>

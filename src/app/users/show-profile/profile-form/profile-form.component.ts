@@ -38,6 +38,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
     dropzoneFiles = [];
 
     authUser;
+    coverFile = [];
 
 
     constructor(
@@ -72,7 +73,8 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
             // confirm_password: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
             // confirm_password: ['', Validators.required],
             birthday: [''], // Validators.required
-            avatar: ['']
+            avatar: [''],
+            cover: ['']
         });
     }
 
@@ -95,10 +97,16 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
         console.log(e);
     }
 
+    addCoverImg(e) {
+        this.coverFile.push(e.target.files[0]);
+        this.profileForm.patchValue({cover: e.target.files[0].name});
+    }
+
     buildFormData() {
         const formData: FormData = new FormData();
         const formValue = this.profileForm.value;
         const dropFileExist = Object.entries(this.dropzoneFiles).length > 0;
+        const coverFileExist = Object.entries(this.coverFile).length > 0;
 
         for (const field in this.profileForm.value) {
             if (field === 'birthday') {
@@ -119,14 +127,21 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
             formData.append('avatar', fileName);
             formData.append('user_avatar_file', file, fileName);
         }
+        if (coverFileExist) {
+            const cover = this.coverFile[0];
+            const fileName = `cover_${Date.now()}.jpg`;
+            formData.append('cover', fileName);
+            formData.append('cover_avatar_file', cover, fileName);
+        }
 
         return formData;
     }
 
     saveChanges() {
+        console.log('++++++++');
         const formData = this.buildFormData();
         this.usersService.saveProfileChanges(formData).subscribe(async (dt) => {
-
+            console.log(dt);
             const token = dt.hasOwnProperty('token') ? dt?.token : '';
             if (token) {
                 localStorage.setItem('token', token);
@@ -134,7 +149,6 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
                 this.toastr.success('The changes are saved successfully');
                 await this.router.navigateByUrl('');
             }
-
         });
     }
 

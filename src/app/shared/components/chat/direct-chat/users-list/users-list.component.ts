@@ -49,7 +49,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
     getUsersMessages() {
 
         this.usersMessagesStore.usersMessages$.subscribe(dt => {
-            // console.log('users list!!!', dt)
+            console.log('users list!!!', dt);
             this.cdr.markForCheck();
             this.filteredUsersMessages = dt.filter(d => {
                 const connection = d.users_connections[0];

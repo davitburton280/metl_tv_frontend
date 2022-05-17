@@ -12,7 +12,7 @@
     </div>
     <div class="copyingDiv">
         <input id="link-address-holder" [value]="shareUrl" #urlHolder>
-        <p class="copyLink">Or copy link</p>
+        <p class="copyLink" (click)="copyInputMessage(urlHolder)">Or copy link</p>
     </div>
     <button class="copy-url" (click)="copyInputMessage(urlHolder)">Copy</button>
 </div>

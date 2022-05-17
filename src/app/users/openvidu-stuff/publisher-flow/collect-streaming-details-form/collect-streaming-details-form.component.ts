@@ -95,20 +95,28 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     }
 
     add(event: MatChipInputEvent): void {
-        console.log('add')
+        console.log('add');
+        console.log(this.tags.length);
         const input = event.input;
-        const value = event.value;
+        if (this.tags.length < 3) {
+            const value = event.value;
 
-        if ((value || '').trim()) {
-            this.tags.push({name: value.trim()});
-            this.startStreamingForm.patchValue({tags: this.tags});
-            // console.log(this.tags)
-            // console.log(this.startStreamingForm.value)
+            if ((value || '').trim()) {
+                this.tags.push({name: value.trim()});
+                this.startStreamingForm.patchValue({tags: this.tags});
+                console.log(this.tags);
+                // console.log(this.startStreamingForm.value)
+            }
         }
-
         // Reset the input value
         if (input) {
             input.value = '';
+        }
+    }
+    resetValue(event) {
+        console.log(!!event.target.value);
+        if (event.target.value && this.tags.length >= 3) {
+            event.target.value = '';
         }
     }
 
@@ -176,7 +184,9 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     }
 
     autoCompleteTagsSelected(event: MatAutocompleteSelectedEvent): void {
-        this.tags.push({name: event.option.viewValue});
-        this.startStreamingForm.patchValue({tags: this.tags});
+        if (this.tags.length < 3) {
+            this.tags.push({name: event.option.viewValue});
+            this.startStreamingForm.patchValue({tags: this.tags});
+        }
     }
 }

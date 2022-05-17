@@ -70,6 +70,8 @@
                  [ngStyle]="{'background-size':'cover'}">
                 <i class="fa fa-times remove-profile-img" (click)="removeImage()"></i>
             </div>
+            <button (click)="imgCover.click()">Add Cover</button>
+            <input #imgCover type="file" hidden (change)="addCoverImg($event)">
         </div>
     </div>
 </form>

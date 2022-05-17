@@ -23,7 +23,14 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     selectedUserMessages;
 
     typingText = null;
+    userTypingText = {
+        id: null,
+        from_id: null,
+        to_id: null,
+        text: this.typingText
+    };
     isBlockedUser = false;
+    groupsTypingMessages = [];
 
     constructor(
         private usersMessagesStore: UsersMessagesSubjectService,
@@ -82,14 +89,63 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
 
     getTyping() {
         this.subscriptions.push(this.socketService.getTyping().subscribe((dt: any) => {
-            if (dt.from_id !== this.authUser.id && this.selectedUserMessages.id === dt.from_id) {
-                this.typingText = dt.message ? `${dt.from_first_name} is typing...` : null;
+            console.log(dt);
+            console.log(dt.from_id);
+            console.log(this.selectedUserMessages.id);
+            console.log(this.authUser.id);
+            this.typingText = dt.message ? `${dt.from_first_name} is typing...` : null;
+            if (dt.from_id !== this.authUser.id && this.selectedUserMessages.id === dt.from_id && this.typingText && this.arrFilter(this.groupsTypingMessages, this.authUser.id)) {
+                this.userTypingText = {
+                    id: this.authUser.id,
+                    from_id: dt.from_id,
+                    to_id: dt.to_id,
+                    text: this.typingText
+                };
+                this.groupsTypingMessages.push(this.userTypingText);
+                console.log('-----------------');
             }
+            if (this.groupsTypingMessages.length > 0) {
+                console.log('typing from id', this.userTypingText.from_id);
+                console.log('select id', this.selectedUserMessages.id);
+                this.groupsTypingMessages = this.groupsTypingMessages.filter(() => this.selectedUserMessages.id !== this.userTypingText.id && this.typingText);
+            }
+            console.log(this.typingText);
+            console.log(this.groupsTypingMessages);
         }));
+    }
+    //     this.subscriptions.push(this.socketService.getTyping().subscribe((dt: any) => {
+    //     console.log(dt);
+    //     const sameGroupTyping = dt.from_id !== this.authUser.id && dt.group_name === this.selectedUserMessages.name && dt.message;
+    //     this.typingText = sameGroupTyping ? `${dt.from_username} is typing...` : null;
+    //     this.userTypingText = {
+    //         id: dt.from_id,
+    //         text: this.typingText
+    //     };
+    //     console.log(sameGroupTyping);
+    //     if (this.userTypingText.text && this.groupsTypingMessages.length === 0) {
+    //         this.groupsTypingMessages.push(this.userTypingText);
+    //     }
+    //     if (this.userTypingText.text && this.groupsTypingMessages.length > 0 && this.arrFilter(this.groupsTypingMessages, this.userTypingText)) {
+    //         this.groupsTypingMessages.push(this.userTypingText);
+    //     }
+    //     if (!this.userTypingText.text && !this.arrFilter(this.groupsTypingMessages, this.userTypingText)) {
+    //         this.groupsTypingMessages = this.groupsTypingMessages.filter((el) => el.id !== this.userTypingText.id);
+    //     }
+    //     console.log(this.groupsTypingMessages);
+    //     }));
+    // }
+
+    arrFilter(arr, value) {
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i].id === value) {
+                return false;
+            }
+        }
+        return true;
     }
 
     sendMessage(formValue) {
-        console.log('send message', formValue)
         this.socketService.sendMessage(formValue);
     }
 

@@ -48,6 +48,17 @@ export class ChatFormComponent implements OnInit, OnDestroy {
 
     }
 
+    chatFile(event, input) {
+        console.log(event.target.files[0]);
+        console.log(input.value);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const url = e.target.result;
+            input.value = `<div><img style="width: inherit" alt=${event.target.files[0].name} src=${url}></div>`;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
     getSelectedUserChanges() {
         this.subscriptions.push(this.usersMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
             if (dt) {

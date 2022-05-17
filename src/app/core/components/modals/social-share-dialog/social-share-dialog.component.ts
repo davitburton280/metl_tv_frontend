@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-social-share-dialog',
@@ -11,6 +12,7 @@ export class SocialShareDialogComponent implements OnInit {
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private dialog: MatDialog,
+        private toastr: ToastrService,
     ) {
         this.shareUrl = data.shareUrl;
     }
@@ -31,6 +33,7 @@ export class SocialShareDialogComponent implements OnInit {
         inputElement.select();
         document.execCommand('copy');
         inputElement.setSelectionRange(0, 0);
+        this.toastr.success('Captioned');
     }
 
 }

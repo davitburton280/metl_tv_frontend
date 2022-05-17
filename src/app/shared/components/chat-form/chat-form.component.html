@@ -6,9 +6,10 @@
                               (keyup.enter)="sendMessageOnEnter($event)">
                     </textarea>
         <div class="embed-textarea" *ngIf="embed">
-            <button class="add-btn">+</button>
+            <button class="add-btn" (click)="input.click()">+</button>
+            <input type="file" hidden #input (change)="chatFile($event, textAreaMsg)">
             <textarea class="flex-1 mx-3" cdkTextareaAutosize formControlName="message" placeholder="Message"
-                      (keyup)="setTyping()" (focus)="setSeen()" (keyup.enter)="sendMessageOnEnter($event)">
+                      (keyup)="setTyping()" (focus)="setSeen()" (keyup.enter)="sendMessageOnEnter($event)" #textAreaMsg>
             </textarea>
 
             <button class="send-btn" (click)="sendMessage()"><img alt="send button" src="assets/img/send.svg"></button>

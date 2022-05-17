@@ -20,6 +20,7 @@
                            placeholder="Tags..."
                            matInput
                            maxlength="10"
+                           (input)="resetValue($event)"
                            [matChipInputFor]="tagList"
                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                            (matChipInputTokenEnd)="add($event)"
