@@ -6,6 +6,7 @@ import {ShowSavedVideosComponent} from '@app/videos/show-saved-videos/show-saved
 import {AuthGuard} from '@core/guards/auth.guard';
 import {VideojsTestComponent} from '@app/videos/videojs-test/videojs-test.component';
 import {AddVideoComponent} from '@app/videos/add-video/add-video.component';
+import { ClipzVideoComponent } from '@app/videos/clipz-video/clipz-video.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,13 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: {
             title: 'Saved Videos',
+        }
+    },
+    {
+        path: 'clipz',
+        component: ClipzVideoComponent,
+        data: {
+            title: 'Clipz',
         }
     }
 ];

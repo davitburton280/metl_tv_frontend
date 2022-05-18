@@ -5,7 +5,8 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
 import { SocialShareDialogComponent } from '@core/components/modals/social-share-dialog/social-share-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PostsStoreService } from '@core/services/stores/posts-store.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import {API_URL} from '@core/constants/global';
 
 @Component({
     selector: 'app-post-item',
@@ -23,6 +24,8 @@ export class PostItemComponent implements OnInit, OnDestroy {
     authUser;
     allPosts;
     totalCount;
+    API_URL = API_URL;
+    commentsField;
 
     constructor(
         private postsService: PostsService,
@@ -30,10 +33,13 @@ export class PostItemComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private postsStore: PostsStoreService,
         public router: Router,
+        private route: ActivatedRoute
     ) {
     }
 
     ngOnInit(): void {
+        this.commentsField = !!this.route.snapshot?.params?.id;
+        console.log(this.route.snapshot?.params?.id);
         this.authUser = this.userStore.authUser;
         this.postsStore.allPosts$.subscribe((data: any) => {
             this.allPosts = data.posts;
@@ -78,10 +84,11 @@ export class PostItemComponent implements OnInit, OnDestroy {
     }
 
     editPost(post) {
-        console.log('-----------------');
+        console.log(post);
         this.postsStore.setEditePost(post);
         this.router.navigate(['/posts/create']);
     }
+
     ngOnDestroy() {
 
     }

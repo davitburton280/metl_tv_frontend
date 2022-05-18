@@ -185,6 +185,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
             sessionName: this.sessionData.sessionName,
             role: 'PUBLISHER'
         }).subscribe((token: any) => {
+            console.log(token);
             // const {token} = data;
             this.openViduToken = token;
             this.receiveMessage();

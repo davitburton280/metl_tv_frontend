@@ -18,9 +18,9 @@ export class VideoService {
         return this.httpClient.get<any>(`${API_URL}videos/get`, { params });
     }
 
-    // addVideoFile(file) {
-    //     return this.httpClient.post<any>(`${API_URL}videos/uploadVideo`, file);
-    // }
+    uploadFile(fd, type) {
+        return this.httpClient.post<any>(`${API_URL}upload/` + type, fd);
+    }
 
     saveVideoToken(params) {
         return this.httpClient.post<any>(`${API_URL}videos/save-video-token`, params);

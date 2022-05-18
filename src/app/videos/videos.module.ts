@@ -18,6 +18,7 @@ import { CommentActionsComponent } from './play-video/video-comments-list/commen
 import { SingleCommentComponent } from './play-video/video-comments-list/single-comment/single-comment.component';
 import { VideojsTestComponent } from './videojs-test/videojs-test.component';
 import { AddVideoComponent } from './add-video/add-video.component';
+import { ClipzVideoComponent } from './clipz-video/clipz-video.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,8 @@ import { AddVideoComponent } from './add-video/add-video.component';
         CommentActionsComponent,
         SingleCommentComponent,
         VideojsTestComponent,
-        AddVideoComponent
+        AddVideoComponent,
+        ClipzVideoComponent
     ],
     imports: [
         CommonModule,

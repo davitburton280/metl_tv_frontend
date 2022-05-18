@@ -26,11 +26,13 @@
         <div class="right-wrap">
             <div [innerHTML]="post.description" [routerLink]="'/posts/'+post.id"></div>
 
-            <img *ngIf="post.cover_img !== null" class="post-cover" [routerLink]="'/posts/'+post.id" [src]="post.cover_img|getImgPath: 'post_covers'">
+            <img *ngIf="post?.cover_img?.includes('image')" class="post-cover" [routerLink]="'/posts/'+post.id" [src]="post.cover_img|getImgPath: 'images'">
+            <video *ngIf="post?.cover_img?.includes('video')" [routerLink]="'/posts/'+post.id" [src]="post.cover_img|getImgPath: 'videos'" controls ></video>
+<!--            <video src="https://metl.tv/uploads/videos/video_1652789198844.mp4" controls ></video>-->
 
             <div class="post-menu">
                 <div class="menu">
-                        <a href=""><span class="material-icons">chat_bubble</span>Comments</a>
+                        <a *ngIf="commentsField"><span class="material-icons">chat_bubble</span>Comments</a>
                         <a (click)="openSocialShareModal()"><span class="material-icons">share</span>Share</a>
                 </div>
                 <div class="dotes" *ngIf="authUser.id === post.author_id">

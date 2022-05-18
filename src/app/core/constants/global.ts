@@ -81,12 +81,12 @@ export const VIDEO_FILTERS = [
         ]
     },
 
-    {
-        group: {name: 'Duration', value: 'duration'}, items: [
-            {name: 'Clipz (<= 30 seconds)', value: 'short'},
-            {name: 'Long (>30 seconds and <1 hour)', value: 'long'},
-        ]
-    },
+    // {
+    //     group: {name: 'Duration', value: 'duration'}, items: [
+    //         {name: 'Clipz (<= 30 seconds)', value: 'short'},
+    //         {name: 'Long (>30 seconds and <1 hour)', value: 'long'},
+    //     ]
+    // },
     {
         group: {name: 'Category', value: 'category'}, items: [
             {name: 'All', value: 'all'},
@@ -134,7 +134,7 @@ export const MAIN_SECTIONS = [
 
     {name: 'Saved videos', img: 'saved-videos.svg', icon: '', link: '/videos/saved', production: true, auth: true},
     {name: 'Videos', img: 'item-11.png', icon: '', link: '/videos', auth: true, separator: true, production: true},
-    {name: 'Clipz', img: 'item-11.png', icon: '', link: '/clipz', auth: true, separator: true, production: true},
+    {name: 'Clipz', img: 'item-11.png', icon: '', link: '/videos/clipz', auth: true, separator: true, production: true},
     {name: 'Analytics', img: 'item-9.png', icon: '', link: '/stocks/analytics', auth: true, production: true},
 ];
 

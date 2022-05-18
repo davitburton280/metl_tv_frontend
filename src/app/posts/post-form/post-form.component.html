@@ -1,5 +1,5 @@
 <div id="post-form-container">
-    <h1>Create a post</h1>
+    <h1>{{title}}</h1>
     <form [formGroup]="postForm">
             <div class="choose-group">
                 <select formControlName="group_id" (change)="selectGroup($event)">
@@ -19,7 +19,7 @@
             <!--            <textarea formControlName="description" placeholder="Create a public post..."></textarea>-->
 
             <div class="action-btn-wrap">
-                <button (click)="savePost()" id="add-post">Post</button>
+                <button (click)="savePosts()" id="add-post">{{edit ? 'Edit' : 'Post'}}</button>
             </div>
         </div>
     </form>

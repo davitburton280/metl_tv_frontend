@@ -20,7 +20,6 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {BlobToFilePipe} from '@shared/pipes/blob-to-file.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {Router} from '@angular/router';
-import { start } from "repl";
 
 @Component({
     selector: 'app-video-js-record',
@@ -245,6 +244,9 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             const el = 'video_' + this.idx;
             const playerCastom = document.getElementById(el);
             // @ts-ignore
+
+
+
             // console.log(end - this.start);
             // tslint:disable-next-line:no-shadowed-variable
             console.log(playerCastom.duration);

@@ -60,8 +60,8 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
     initForm() {
         this.profileForm = this.fb.group({
             id: [''],
-            first_name: ['', [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
-            last_name: ['', [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
+            first_name: [{ value: '', disabled: true }, [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
+            last_name: [{ value: '', disabled: true }, [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
             username: ['', [Validators.required, patternValidator(NUMBER_AFTER_TEXT_PATTERN)]],
             email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
             // password: ['',
@@ -127,12 +127,12 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
             formData.append('avatar', fileName);
             formData.append('user_avatar_file', file, fileName);
         }
-        if (coverFileExist) {
-            const cover = this.coverFile[0];
-            const fileName = `cover_${Date.now()}.jpg`;
-            formData.append('cover', fileName);
-            formData.append('cover_avatar_file', cover, fileName);
-        }
+        // if (coverFileExist) {
+        //     const cover = this.coverFile[0];
+        //     const fileName = `cover_${Date.now()}.jpg`;
+        //     formData.append('cover', fileName);
+        //     // formData.append('cover_avatar_file', cover, fileName);
+        // }
 
         return formData;
     }

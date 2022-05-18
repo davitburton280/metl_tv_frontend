@@ -1,0 +1,21 @@
+<div class="all-videos">
+    <button class="filter-toggle-btn" *ngIf="isFiltersShown()" (click)="showFilters = !showFilters">
+        <mat-icon>tune</mat-icon>
+        <span>Filters</span>
+    </button>
+    <app-video-filters (filter)="getFilteredList($event)" *ngIf="showFilters"></app-video-filters>
+    <div id="videos-list">
+        <mat-spinner [diameter]="20" *ngIf="loadingVideos"></mat-spinner>
+        <ng-container *ngIf="!search && !loadingVideos">
+            <app-show-regular-list [items]="items" [authUser]="authUser"></app-show-regular-list>
+<!--            <app-show-playlists-list [items]="items" [authUser]="authUser"></app-show-playlists-list>-->
+        </ng-container>
+
+        <ng-container *ngIf="search && !loadingVideos">
+            <app-show-search-results [channelsVideos]="channelsVideos" [authUser]="authUser"></app-show-search-results>
+        </ng-container>
+    </div>
+    <div *ngIf="search && channelsVideos?.length === 0">
+        <span class="error">No results found</span>
+    </div>
+</div>

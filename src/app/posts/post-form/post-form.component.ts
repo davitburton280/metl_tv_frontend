@@ -10,6 +10,7 @@ import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {CK_EDITOR_CONFIG} from '@core/constants/global';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {PostsStoreService} from '@core/services/stores/posts-store.service';
+import { VideoService } from '@core/services/video.service';
 
 @Component({
     selector: 'app-post-form',
@@ -29,8 +30,9 @@ export class PostFormComponent implements OnInit, OnDestroy {
     editPost;
 
     imageFile;
-    resultFileUpload;
-    imageUploadEditing;
+    title = 'Create a post';
+    edit = false;
+    fileEditor = null;
 
     constructor(
         private fb: FormBuilder,
@@ -41,7 +43,8 @@ export class PostFormComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private postsService: PostsService,
-        private _location: Location
+        private _location: Location,
+        private uploadFile: VideoService
     ) {
     }
 
@@ -55,10 +58,24 @@ export class PostFormComponent implements OnInit, OnDestroy {
         this.selectedGroup = this.groupsStore.groups.find(g => g.id === +queryParams.group_id);
         this.postsStore.editePost$.subscribe((post) => {
             this.editPost = post;
-            // console.log(this.editPost);
+            console.log(this.editPost);
+            if (post) {
+                this.title = 'Edit Posts';
+                this.edit = true;
+                this.postForm.patchValue({
+                    description: post.description,
+                    username: [this.userStore.authUser.username],
+                    author_id: [post.autor_id],
+                    group_id: [post.group_id],
+                    cover_img: [post.cover_img],
+                    votes: [post.votes]
+                });
+            }
         }).unsubscribe();
+
         this.postsStore.fileImg$.subscribe((file) => {
-            console.log(file);
+            this.fileEditor = file;
+            console.log(this.fileEditor);
         });
     }
 
@@ -75,8 +92,31 @@ export class PostFormComponent implements OnInit, OnDestroy {
         reader.readAsDataURL(this.imageFile);
     }
 
-    onChange(editor) {
-        console.log( editor );
+    onChange(event) {
+        console.log( event );
+        // this.formReady.emit(this.postForm.value);
+        const domParser = new DOMParser();
+        const htmlElement = domParser.parseFromString(this.postForm.value.description, 'text/html');
+        const imgTag = htmlElement.getElementsByTagName('img');
+        // @ts-ignore
+        for (const img of imgTag) {
+            console.log(img.src = 'aaa');
+        }
+
+        console.log(htmlElement);
+        console.log(this.fileEditor);
+        console.log(this.postForm.value);
+    }
+
+    savePosts() {
+        console.log(this.postForm.value);
+        const fd = new FormData();
+        fd.append('image', this.fileEditor);
+        fd.append('belonging', 'post_img');
+        fd.append('duration', '');
+        this.uploadFile.uploadFile(fd, 'image').subscribe((file) => {
+            console.log(file);
+        });
     }
 
     public onReady(editor) {
@@ -107,18 +147,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
     }
 
     async savePost() {
-        // this.formReady.emit(this.postForm.value);
-        const domParser = new DOMParser();
-        const htmlElement = domParser.parseFromString(this.postForm.value.description, 'text/html');
-        const imgTag = htmlElement.getElementsByTagName('img');
-        // @ts-ignore
-        for (const img of imgTag) {
-
-        }
-        // imgTag[0].src = 'sdsdsds';
-        console.log(imgTag);
-        console.log(htmlElement);
-        if (this.postForm.valid) {
+        if (this.postForm.valid && !this.edit) {
             console.log(this.postForm.value, this.selectedGroup);
             this.postsService.add(this.postForm.value).subscribe((dt) => {
                 this.postsStore.setAllPosts(dt);
@@ -131,6 +160,9 @@ export class PostFormComponent implements OnInit, OnDestroy {
                 this._location.back();
                 this.postForm.reset();
             });
+        }
+        if (this.postForm.valid && this.edit) {
+            console.log(this.postForm.value);
         }
     }
 

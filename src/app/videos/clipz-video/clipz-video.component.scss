@@ -1,0 +1,15 @@
+@import 'variables';
+@import 'mixins';
+
+.filter-toggle-btn {
+    text-transform: uppercase;
+    background-color: unset;
+    display: flex;
+    align-items: center;
+    font-family: "Muli-Bold";
+    padding: 10px;
+
+    span {
+        margin-left: 10px;
+    }
+}

@@ -2,13 +2,13 @@
     <div class="left-side pr-lg-2">
 
 
-        <input class="login-input" placeholder="First Name" formControlName="first_name" disabled>
+        <input class="login-input" placeholder="First Name" formControlName="first_name">
         <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>
         <span class="error" *ngIf="isSubmitted && firstName.hasError('patternInvalid')">
                     First name should contain only alphabetical characters
         </span>
 
-        <input class="login-input" placeholder="Last Name" formControlName="last_name" disabled>
+        <input class="login-input" placeholder="Last Name" formControlName="last_name">
         <span class="error" *ngIf="isSubmitted && lastName.hasError('required')">Last name is required</span>
         <span class="error" *ngIf="isSubmitted && lastName.hasError('patternInvalid')">
                     Last name should contain only alphabetical characters
@@ -29,9 +29,9 @@
 
         <input class="login-input" placeholder="Email" formControlName="email">
         <span class="error" *ngIf="isSubmitted && email.hasError('required')">E-mail is required</span>
-        <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">
-                    E-mail is <strong>invalid</strong>
-                </span>
+        <span class="error" *ngIf="isSubmitted && email.hasError('patternInvalid')">E-mail is
+            <strong>invalid</strong>
+        </span>
 
 
         <!--                <input class="login-input" placeholder="Password" type="password" formControlName="password">-->

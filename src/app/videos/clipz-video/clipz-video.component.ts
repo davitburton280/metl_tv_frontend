@@ -1,23 +1,20 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {VideoService} from '@core/services/video.service';
-import {API_URL} from '@core/constants/global';
-import * as moment from 'moment';
-import {ActivatedRoute, ActivationEnd, Data, Router} from '@angular/router';
-import {SubjectService} from '@core/services/subject.service';
-import {ChannelsService} from '@core/services/channels.service';
-import {filter, map, tap} from 'rxjs/operators';
-import {checkIfObjectEmpty} from '@core/helpers/check-if-object-empty';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
-import {Subscription} from 'rxjs';
-import {buildPlayVideoRoute} from '@core/helpers/build-play-video-route';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { GetAuthUserPipe } from '@shared/pipes/get-auth-user.pipe';
+import { VideoService } from '@core/services/video.service';
+import { FilterOutFalsyValuesFromObjectPipe } from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
+import { ChannelsService } from '@core/services/channels.service';
+import { API_URL } from '@core/constants/global';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SubjectService } from '@core/services/subject.service';
 
 @Component({
-    selector: 'app-show-videos',
-    templateUrl: './show-videos.component.html',
-    styleUrls: ['./show-videos.component.scss']
+  selector: 'app-clipz-video',
+  templateUrl: './clipz-video.component.html',
+  styleUrls: ['./clipz-video.component.scss']
 })
-export class ShowVideosComponent implements OnInit, OnDestroy {
+export class ClipzVideoComponent implements OnInit, OnDestroy {
+
     items = {videos: [], playlists: []};
     channelsVideos = [];
     apiUrl = API_URL;
@@ -26,7 +23,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     authUser;
     showTrending = false;
     showFilters = false;
-    filters = {video_type: 'videos'};
+    filters = {video_type: 'clipz'};
     filterStatus = 'idle';
     subscriptions: Subscription[] = [];
     loadingVideos = false;
@@ -45,7 +42,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.route.queryParams.subscribe(d => {
                 this.search = this.route.snapshot.queryParams?.search;
-                this.showTrending = this.router.url.includes('videos');
+                this.showTrending = this.router.url.includes('clipz');
                 this.selectedTag = this.route.snapshot.queryParams?.tag;
                 if (this.search) {
                     this.searchChannelsVideos({search: this.search, filters: this.filters});
@@ -58,11 +55,9 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-
-
     }
 
-    getFilteredList(filters = {video_type: 'videos'}) {
+    getFilteredList(filters = {video_type: 'clipz'}) {
         this.filters = filters;
         this.filterStatus = 'applied';
         if (this.search) {
@@ -85,6 +80,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     }
 
     searchChannelsVideos(params) {
+        console.log(params);
 
         params = this.getExactParams.transform(params);
         this.loadingVideos = true;
@@ -105,4 +101,5 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
+
 }
