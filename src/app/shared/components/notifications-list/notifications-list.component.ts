@@ -80,6 +80,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     }
 
     acceptConnection(notification) {
+        console.log(notification);
         this.socketService.acceptConnection({
             notification_id: notification._id,
             connection_id: notification.connection_id,
@@ -90,9 +91,18 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
         // console.log(this.notificationsStore.allNotifications, notification._id)
         const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== notification._id);
-        // console.log(notifications)
+        console.log(notifications);
         this.notificationsStore.setInitialNotifications(notifications);
     }
+
+    // connectWithUser() {
+    //     this.socketService.connectWithUser({
+    //         from_user: this.authUser,
+    //         to_user: this.profileUser,
+    //         msg: `<strong>${this.authUser.first_name + ' ' + this.authUser.last_name}</strong>
+    //             has sent a connection request to you`
+    //     });
+    // }
 
     declineConnection(notification) {
         this.socketService.declineConnection({
@@ -109,6 +119,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getConnectWithUser() {
         this.subscriptions.push(this.socketService.getConnectWithUser().subscribe((dt: any) => {
+            console.log(dt);
             if (this.authUser.id === dt.notification.to_user.id) {
                 this.notificationsStore.updateNotifications(dt.notification);
             }
@@ -117,6 +128,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
 
     getAcceptedDeclinedRequests() {
         this.subscriptions.push(this.socketService.acceptedConnection().subscribe((dt: any) => {
+            console.log(dt);
             const {notification, users_messages} = dt;
 
             this.usersMessagesStore.setUserMessages(users_messages);

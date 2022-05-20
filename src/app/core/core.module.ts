@@ -39,6 +39,7 @@ import {RouterModule} from '@angular/router';
 import { GroupMembersInvitationDialogComponent } from './components/modals/group-members-invitation-dialog/group-members-invitation-dialog.component';
 import { CreateNewGroupDialogComponent } from './components/modals/create-new-group-dialog/create-new-group-dialog.component';
 import { SocialShareDialogComponent } from './components/modals/social-share-dialog/social-share-dialog.component';
+import { UploadFileComponent } from './components/modals/upload-file/upload-file.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { SocialShareDialogComponent } from './components/modals/social-share-dia
         GroupMembersInvitationDialogComponent,
         CreateNewGroupDialogComponent,
         SocialShareDialogComponent,
+        UploadFileComponent,
         // ChatBottomBoxComponent
     ],
     imports: [

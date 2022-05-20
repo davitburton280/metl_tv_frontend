@@ -3,7 +3,9 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
 import { VideoService } from '@core/services/video.service';
 import { PostsService } from '@core/services/posts.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PostsStoreService } from "@core/services/stores/posts-store.service";
+import { PostsStoreService } from '@core/services/stores/posts-store.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UploadFileComponent } from '@core/components/modals/upload-file/upload-file.component';
 
 @Component({
     selector: 'app-post-form-placeholder',
@@ -26,6 +28,7 @@ export class PostFormPlaceholderComponent implements OnInit {
         private uploadFile: VideoService,
         private fb: FormBuilder,
         private postsStore: PostsStoreService,
+        private dialog: MatDialog
     ) {
     }
 
@@ -55,40 +58,38 @@ export class PostFormPlaceholderComponent implements OnInit {
             });
     }
 
-    videoUpload(event): any {
-        this.videoUploadSpinner = true;
-        const file = event.target.files[0];
-        console.log(file.type);
-        console.log(file.type.includes('video'));
-        // tslint:disable-next-line:prefer-for-of
-        if (file.type.includes('video')) {
-            // tslint:disable-next-line:prefer-for-of
-                const audio = new Audio();
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const data = e.target.result.toString().length;
-                    const bytes = new ArrayBuffer(data);
-                    audio.src = e.target.result.toString();
-                    audio.addEventListener('loadedmetadata', () => {
-                        console.log(audio.duration);
-                        this.fd.append('video', file);
-                        this.fd.append('belonging', 'post_video');
-                        this.fd.append('duration', `${audio.duration}`);
-                        this.videoUploadSpinner = false;
-                        this.finishVideoUpload = true;
-                        this.addPhotoVideoPosts(this.fd, 'video');
-                    }, false);
-                };
-                reader.readAsDataURL(file);
-        }
-        console.log(file.type.includes('image'));
-        if (file.type.includes('image')) {
-            this.fd.append('image', file);
-            this.fd.append('belonging', 'post_image');
-            this.fd.append('duration', ``);
-            this.videoUploadSpinner = false;
-            this.finishVideoUpload = true;
-            this.addPhotoVideoPosts(this.fd, 'image');
-        }
+    uploadDialog() {
+        this.dialog.open(UploadFileComponent, {
+            maxWidth: '591px',
+            maxHeight: '479px',
+            height: '100%',
+            width: '100%',
+            data: { countUploadFile: 'oneFile' }
+        }).afterClosed().subscribe(dt => {
+            console.log(dt);
+            if (dt) {
+                const fd = new FormData();
+                let type = '';
+                dt.forEach((elem) => {
+                    if (elem.type.includes('image')) {
+                        console.log(elem);
+                        type = 'image';
+                        console.log(type);
+                        fd.append('image', elem.file);
+                        fd.append('belonging', 'post_image');
+                        fd.append('duration', '');
+                    }
+                    if (elem.type.includes('video')) {
+                        type = 'video';
+                        console.log(type);
+                        fd.append('image', elem.file);
+                        fd.append('belonging', 'post_video');
+                        fd.append('duration', elem.duration);
+                    }
+                });
+                console.log(type);
+                this.addPhotoVideoPosts(fd, type);
+            }
+        });
     }
 }

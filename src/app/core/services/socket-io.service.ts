@@ -34,7 +34,7 @@ export class SocketIoService {
     getConnectWithUser() {
         return new Observable(observer => {
             this.socket.on('getConnectWithUser', msg => {
-                // console.log('get connect')
+                console.log(msg);
                 observer.next(msg);
             });
         });
@@ -337,6 +337,7 @@ export class SocketIoService {
 
     acceptConnection(data) {
         // this.setupSocketConnection();
+        console.log(data);
         this.socket.emit('acceptConnection', data);
     }
 
@@ -349,7 +350,7 @@ export class SocketIoService {
         // this.setupSocketConnection();
         return new Observable(observer => {
             this.socket.on('acceptedConnection', msg => {
-                console.log('accept')
+                console.log('accept');
                 observer.next(msg);
             });
         });

@@ -15,4 +15,27 @@ body {
 @import "assets/styles/main";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 
