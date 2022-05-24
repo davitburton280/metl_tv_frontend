@@ -145,7 +145,7 @@
                 </mat-error>
             </ng-container>
             <div *ngIf="thumbnailUploaded" id="uploaded-thumbnail-container">
-                <mat-icon (click)="removeUploadedThumbnail(thumbnailFile.name)" id="remove-thumbnail">clear
+                <mat-icon (click)="removeUploadedThumbnail(thumbnailImage)" id="remove-thumbnail">clear
                 </mat-icon>
                 <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/images/'+imageName}}">
             </div>

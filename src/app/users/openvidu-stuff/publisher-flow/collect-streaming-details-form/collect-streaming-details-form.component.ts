@@ -39,6 +39,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     imageName;
     count = 0;
     limit = DESCRIPTION_CHARACTERS_LIMIT;
+    thumbnailImage;
 
     @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
     @ViewChild('tagList') tagList: MatChipList;
@@ -164,6 +165,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
                 });
                 this.uploadFile.uploadFile(fd, type).subscribe((res) => {
                     console.log(res);
+                    this.thumbnailImage = res.path;
                     this.imageName = res.path;
                     this.startStreamingForm.patchValue({thumbnail: this.imageName});
                     this.toastr.success(res.message);
@@ -193,11 +195,11 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
 
     removeUploadedThumbnail(filename) {
         console.log(filename);
-        this.videoService.removeVideoThumbnail(filename).subscribe(dt => {
-        this.thumbnailFile = [];
-        this.toastr.success('The thumbnail has been removed successfully');
-        this.thumbnailUploaded = false;
-        this.startStreamingForm.patchValue({thumbnail: ''});
+        this.videoService.deleteFile(filename, 'image').subscribe(dt => {
+            this.thumbnailImage = '';
+            this.toastr.success('The thumbnail has been removed successfully');
+            this.thumbnailUploaded = false;
+            this.startStreamingForm.patchValue({thumbnail: ''});
         });
     }
 

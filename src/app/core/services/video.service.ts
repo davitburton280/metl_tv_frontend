@@ -22,6 +22,12 @@ export class VideoService {
         return this.httpClient.post<any>(`${API_URL}upload/` + type, fd);
     }
 
+    deleteFile(filename, type) {
+        const options = {body: {file: filename}};
+        // @ts-ignore
+        return this.httpClient.delete<any>(`${API_URL}file/` + type, options);
+    }
+
     saveVideoToken(params) {
         return this.httpClient.post<any>(`${API_URL}videos/save-video-token`, params);
     }

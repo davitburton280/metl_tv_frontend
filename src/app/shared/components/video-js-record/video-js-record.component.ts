@@ -20,6 +20,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {BlobToFilePipe} from '@shared/pipes/blob-to-file.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {Router} from '@angular/router';
+import { API_URL } from '@core/constants/global';
 
 @Component({
     selector: 'app-video-js-record',
@@ -27,6 +28,8 @@ import {Router} from '@angular/router';
     styleUrls: ['./video-js-record.component.scss']
 })
 export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit {
+
+    apiUrl = API_URL;
 
     // index to create unique ID for component
     idx = 'clip1';
@@ -49,6 +52,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
     screenSharing = false;
     start;
+
+    videoSRC = '';
 
     // constructor initializes our declared vars
     constructor(
@@ -237,7 +242,9 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             // console.log(document.getElementsByTagName('video')[0].duration)
             // console.log('end timestamp:' + this.player.currentTimestamp)
             this.recordingEndTimeStamp = moment(this.player.currentTimestamp);
-            // console.log('Duration timestamp:' + moment.utc((moment.duration(this.recordingEndTimeStamp - this.recordingStartTimeStamp, 'seconds').asMilliseconds()).format('HH:mm')))
+            // console.log('Duration timestamp:' + moment.
+            // utc((moment.duration(this.recordingEndTimeStamp - this.recordingStartTimeStamp, 'seconds')
+            // .asMilliseconds()).format('HH:mm')))
 
             const x = e.target.player.controlBar.durationDisplay.formattedTime_;
             const end = new Date();
@@ -262,18 +269,39 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             fd.append('author_id', this.authUser.id);
             // fd.append('full_name', this.authUser.full_name);
             // fd.append('category_id', this.authUser._id);
-            fd.append('video_name', this.player.recordedData.name);
+            // fd.append('video_name', this.player.recordedData.name);
             fd.append('video_duration', recordingDuration);
-            fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
+            // fd.append('video_stream_file', this.blobToFile.transform(this.player.recordedData));
             // if (this.thumbnailFile) {
             //     fd.append('thumbnail', this.thumbnailFile.name);
             // }
             fd.append('video_settings', JSON.stringify(this.videoSettings));
             this.subject.setVideoRecordingState({recording: false});
             this.recordingState = 'finished';
-            this.videoService.saveRecordedData(fd).subscribe(() => {
-                localStorage.setItem('session', '');
-                localStorage.setItem('video_settings', '');
+
+            const formDataFile = new FormData();
+            formDataFile.append('video', this.blobToFile.transform(this.player.recordedData));
+            formDataFile.append('belonging', 'live_video');
+            formDataFile.append('duration', recordingDuration);
+            this.videoService.uploadFile(formDataFile, 'video').subscribe((res) => {
+                console.log(res);
+
+                // const video = document.getElementById('liveVideo');
+                // this.videoSRC = this.apiUrl + 'uploads/videos/' + res.path;
+                // console.log(video);
+                // // tslint:disable-next-line:no-shadowed-variable
+                // video.addEventListener('loadedmetadata', (e) => {
+                //     console.log(e);
+                //     // const duration = video.duration;
+                //     // await console.log(duration);
+                // });
+                if (res) {
+                    fd.append('video_name', res.path);
+                    this.videoService.saveRecordedData(fd).subscribe(() => {
+                        localStorage.setItem('session', '');
+                        localStorage.setItem('video_settings', '');
+                    });
+                }
             });
         });
 

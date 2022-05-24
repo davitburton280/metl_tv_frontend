@@ -18,6 +18,8 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     chatForm: FormGroup;
     authUser;
 
+    inputDisabled = true;
+
     selectedUser = null;
     selectedGroup = null;
     @Input() embed = false;
@@ -38,6 +40,9 @@ export class ChatFormComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
+        this.usersMessagesStore.selectedUserMessages$.subscribe((dt) => {
+            this.inputDisabled = !dt;
+        });
         this.initForm();
 
         if (this.chatType === 'direct') {
@@ -92,13 +97,15 @@ export class ChatFormComponent implements OnInit, OnDestroy {
 
 
     initForm() {
+        console.log(this.inputDisabled);
 
         const mainFields = {
             from_username: [this.authUser.username],
             from_id: [this.authUser.id],
 
             // to_user: [null],
-            message: ['', Validators.required],
+            message: [ {value: '', disabled: this.inputDisabled}, Validators.required],
+            // message: ['', Validators.required],
 
         };
 
