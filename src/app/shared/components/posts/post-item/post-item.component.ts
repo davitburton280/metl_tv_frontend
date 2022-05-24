@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PostsStoreService } from '@core/services/stores/posts-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {API_URL} from '@core/constants/global';
+import { UploadFileComponent } from "@core/components/modals/upload-file/upload-file.component";
 
 @Component({
     selector: 'app-post-item',
@@ -86,7 +87,22 @@ export class PostItemComponent implements OnInit, OnDestroy {
     editPost(post) {
         console.log(post);
         this.postsStore.setEditePost(post);
-        this.router.navigate(['/posts/create']);
+        if (post.cover_img) {
+            this.dialog.open(UploadFileComponent, {
+                maxWidth: '591px',
+                maxHeight: '479px',
+                height: '100%',
+                width: '100%',
+                data: {
+                    countUploadFile: 'oneFile',
+                    post
+                }
+            }).afterClosed().subscribe(dt => {
+                console.log(dt);
+            });
+        } else {
+            this.router.navigate(['/posts/create']);
+        }
     }
 
     ngOnDestroy() {

@@ -35,6 +35,15 @@ export class PostsService {
         return this.http.post<Post[]>(`${API_URL}posts/add`, params);
     }
 
+    editPosts(obj) {
+        const body = {
+            group_id: obj.group_id,
+            description: obj.description,
+            // cover_img: obj.cover_img
+        };
+        return this.http.put(`${API_URL}posts/edit?id=${obj.id}`, body);
+    }
+
     getById(params) {
         return this.http.get<Post>(`${API_URL}posts/get-by-id`, {params})
             .subscribe((post: Post) => {
