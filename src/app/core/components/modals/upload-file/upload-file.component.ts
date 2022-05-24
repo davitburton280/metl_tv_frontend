@@ -9,13 +9,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class UploadFileComponent implements OnInit {
 
     srcImg;
-    fd = new FormData();
     shoeUploadImg = false;
     percentProgressBar = 0;
     fileName = [];
     typeFile = [];
     countUploadFile;
     files = [];
+    type;
 
   constructor(
       public dialogRef: MatDialogRef<UploadFileComponent>,
@@ -24,6 +24,7 @@ export class UploadFileComponent implements OnInit {
 
   ngOnInit(): void {
       console.log(this.data);
+      this.type = this.data.type;
       this.countUploadFile = this.data.countUploadFile;
   }
 
@@ -46,6 +47,9 @@ export class UploadFileComponent implements OnInit {
             this.typeFile.push(fl.type);
             this.files.push(obj);
             if (fl.type.includes('video')) {
+                if (this.type === 'image') {
+                    this.dialogRef.close('Upload images');
+                }
                 // tslint:disable-next-line:prefer-for-of
                 const audio = new Audio();
                 const reader = new FileReader();

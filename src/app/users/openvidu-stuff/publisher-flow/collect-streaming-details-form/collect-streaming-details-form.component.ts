@@ -9,6 +9,8 @@ import {MatChipInputEvent, MatChipList} from '@angular/material/chips';
 import {LoaderService} from '@core/services/loader.service';
 import {Observable} from 'rxjs';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import { UploadFileComponent } from '@core/components/modals/upload-file/upload-file.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-stream-details-form',
@@ -34,9 +36,13 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     selectedPrivacy;
 
     savedTags = [];
+    imageName;
+    count = 0;
+    limit = DESCRIPTION_CHARACTERS_LIMIT;
 
     @ViewChild('chipsInput') chipsInput: ElementRef<HTMLInputElement>;
     @ViewChild('tagList') tagList: MatChipList;
+    // tslint:disable-next-line:no-output-rename
     @Output('formReady') formReady = new EventEmitter();
 
     constructor(
@@ -44,7 +50,9 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         private toastr: ToastrService,
         private fb: FormBuilder,
         private getAuthUser: GetAuthUserPipe,
-        public loader: LoaderService
+        public loader: LoaderService,
+        private dialog: MatDialog,
+        private uploadFile: VideoService,
     ) {
     }
 
@@ -63,7 +71,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     initForm(): void {
         this.startStreamingForm = this.fb.group({
             name: ['', Validators.required],
-            description: ['', [Validators.required, Validators.maxLength(DESCRIPTION_CHARACTERS_LIMIT)]],
+            description: ['', [Validators.required, Validators.maxLength(this.limit)]],
             category_id: ['', Validators.required],
             tags: [[], Validators.required],
             sessionName: [this.sessionName],
@@ -91,7 +99,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     }
 
     autocompleteSelect(e) {
-        console.log(e)
+        console.log(e);
     }
 
     add(event: MatChipInputEvent): void {
@@ -129,20 +137,58 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         }
     }
 
-    getThumbnailFile(e) {
-        this.thumbnailFile = e.target.files[0];
-        const fd = new FormData();
-        fd.append('video_thumbnail_file', this.thumbnailFile);
-        this.startStreamingForm.patchValue({thumbnail: this.thumbnailFile.name});
-        this.thumbnailUploading = true;
-        this.loader.fileProcessing = true;
-
-        this.videoService.saveVideoThumbnail(fd).subscribe(filename => {
-            this.toastr.success('The thumbnail has been uploaded successfully');
-            this.thumbnailUploading = false;
-            this.thumbnailUploaded = true;
-            this.loader.fileProcessing = false;
+    uploadImg() {
+        this.dialog.open(UploadFileComponent, {
+            maxWidth: '591px',
+            maxHeight: '479px',
+            height: '100%',
+            width: '100%',
+            data: {
+                countUploadFile: 'oneFile',
+                type: 'image'
+            }
+        }).afterClosed().subscribe((dt) => {
+            if (dt) {
+                this.thumbnailUploading = true;
+                this.loader.fileProcessing = true;
+                console.log(dt);
+                if (typeof dt === 'string') {
+                    return this.toastr.error(dt);
+                }
+                const fd = new FormData();
+                const type = 'image';
+                dt.forEach((elem) => {
+                    fd.append('image', elem.file);
+                    fd.append('belonging', 'thumbnail_image');
+                    fd.append('duration', '');
+                });
+                this.uploadFile.uploadFile(fd, type).subscribe((res) => {
+                    console.log(res);
+                    this.imageName = res.path;
+                    this.startStreamingForm.patchValue({thumbnail: this.imageName});
+                    this.toastr.success(res.message);
+                    this.thumbnailUploading = false;
+                    this.loader.fileProcessing = false;
+                    this.thumbnailUploaded = true;
+                });
+            }
         });
+    }
+
+    getThumbnailFile(e) {
+        // this.thumbnailFile = e.target.files[0];
+        // const fd = new FormData();
+        // fd.append('video_thumbnail_file', this.thumbnailFile);
+        // this.startStreamingForm.patchValue({thumbnail: this.thumbnailFile.name});
+        // this.thumbnailUploading = true;
+        // this.loader.fileProcessing = true;
+        //
+        // this.videoService.saveVideoThumbnail(fd).subscribe(filename => {
+        //     this.toastr.success('The thumbnail has been uploaded successfully');
+        //     this.thumbnailUploading = false;
+        //     this.thumbnailUploaded = true;
+        //     this.loader.fileProcessing = false;
+        // });
     }
 
     removeUploadedThumbnail(filename) {
@@ -163,6 +209,15 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
                 ...this.startStreamingForm.value
             });
         }
+    }
+
+    resetTextArea(e) {
+        console.log(e.target.value.length);
+        if (e.target.value.length > this.limit) {
+            e.target.value = e.target.value.slice(0, this.limit);
+            this.startStreamingForm.value.description = e.target.value;
+        }
+        this.count = e.target.value.length;
     }
 
 

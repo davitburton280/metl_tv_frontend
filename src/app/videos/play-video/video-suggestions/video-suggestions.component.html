@@ -7,7 +7,7 @@
                  (click)="openVideoPage(video, playlistData?.id)">
 
                 <div class="thumbnail-container">
-                    <img [src]="video.thumbnail|getImgPath">
+                    <img [src]="video?.thumbnail|getImgPath:'images'">
                 </div>
 
                 <div class="details-container">
@@ -28,7 +28,7 @@
     <div class="suggested-video" *ngIf="ind < 5">
 
         <div class="thumbnail-container">
-            <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video)">
+            <img [src]="video.thumbnail|getImgPath:'images'" (click)="openVideoPage(video)">
         </div>
 
         <div class="details-container">

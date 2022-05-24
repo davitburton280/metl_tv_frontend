@@ -2,7 +2,7 @@
     <div class="start-live-video">
 
         <div id="video-name">
-            <input formControlName="name" placeholder="Video name">
+            <input class="liveVideo" formControlName="name" placeholder="Video name">
             <mat-error *ngIf="streamName.hasError('required') && isSubmitted">The stream name is required</mat-error>
         </div>
 
@@ -16,7 +16,7 @@
                         <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
 
-                    <input type="text" #chipsInput
+                    <input class="liveVideo" type="text" #chipsInput
                            placeholder="Tags..."
                            matInput
                            maxlength="10"
@@ -73,7 +73,7 @@
         <!--        </mat-form-field>-->
 
         <div id="video-categories">
-            <select formControlName="category_id">
+            <select formControlName="category_id" class="liveVideo">
                 <option selected disabled [value]="''">Category</option>
                 <option *ngFor="let category of videoCategories" [value]="category.id">{{category.name}}</option>
             </select>
@@ -83,13 +83,13 @@
         </div>
 
         <div id="video-description">
-            <textarea formControlName="description" placeholder="Video description"></textarea>
+            <textarea formControlName="description" placeholder="Video description" (input)="resetTextArea($event)"></textarea>
             <mat-error *ngIf="streamDesc.hasError('required') && isSubmitted">
                 The stream description is required
             </mat-error>
-            <mat-error *ngIf="streamDesc.hasError('maxlength')">
-                Not more than 140 characters please
-            </mat-error>
+            <p>
+                Max length symbols {{count}} / {{limit}}
+            </p>
         </div>
 
         <div id="privacy">
@@ -134,12 +134,12 @@
 
         <div id="thumbnail">
             <ng-container *ngIf="!thumbnailUploaded">
-                <label for="custom-thumbnail">
+                <label for="custom-thumbnail" (click)="uploadImg()">
                     <span class="material-icons">backup</span>
                     Upload Thumbnail
                 </label>
                 <mat-spinner [diameter]="15" *ngIf="loader.fileProcessing"></mat-spinner>
-                <input type="file" id="custom-thumbnail" (change)="getThumbnailFile($event)">
+<!--                <input type="file" id="custom-thumbnail" (change)="getThumbnailFile($event)">-->
                 <mat-error *ngIf="startStreamingForm.get('thumbnail').hasError('required') && isSubmitted">
                     The thumbnail is required
                 </mat-error>
@@ -147,7 +147,7 @@
             <div *ngIf="thumbnailUploaded" id="uploaded-thumbnail-container">
                 <mat-icon (click)="removeUploadedThumbnail(thumbnailFile.name)" id="remove-thumbnail">clear
                 </mat-icon>
-                <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/thumbnails/'+thumbnailFile.name}}">
+                <img id="uploaded-thumbnail" src="{{apiUrl+'uploads/images/'+imageName}}">
             </div>
         </div>
 

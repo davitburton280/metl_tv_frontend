@@ -82,13 +82,14 @@ export class PostFormPlaceholderComponent implements OnInit {
                     if (elem.type.includes('video')) {
                         type = 'video';
                         console.log(type);
-                        fd.append('image', elem.file);
+                        fd.append('video', elem.file);
                         fd.append('belonging', 'post_video');
                         fd.append('duration', elem.duration);
                     }
                 });
-                console.log(type);
-                this.addPhotoVideoPosts(fd, type);
+                if (type === 'image' || type === 'video') {
+                    this.addPhotoVideoPosts(fd, type);
+                }
             }
         });
     }

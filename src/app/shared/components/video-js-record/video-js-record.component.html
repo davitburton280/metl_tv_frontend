@@ -3,7 +3,7 @@
     <div id="live-session-finished" *ngIf="recordingState === 'finished'">
         <div class="messages-container">
             <h2>Live video ended</h2>
-            <p class="back-to-channel-videos" [routerLink]="'channels/'+authUser.username+'/tab/videos'">Go to my
+            <p class="back-to-channel-videos" [routerLink]="'/channels/'+authUser.username+'/tab/videos'">Go to my
                 channel</p>
         </div>
     </div>

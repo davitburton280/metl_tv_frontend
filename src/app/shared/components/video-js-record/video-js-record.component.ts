@@ -118,6 +118,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                     debug: true,
                     videoEngine: 'recordrtc',
                     videoMimeType: 'video/webm;codecs=h264',
+                    // videoMimeType: 'video/x-matroska;codecs=avc1,opus',
                     // videoMimeType: 'video/webm;codecs=vp8,opus',
                     frameWidth: 640,
                     frameHeight: 480
@@ -249,10 +250,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
             // console.log(end - this.start);
             // tslint:disable-next-line:no-shadowed-variable
-            console.log(playerCastom.duration);
 
             console.log(this.player);
-            console.log(e);
             // console.log(moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)));
             const recordingDuration = moment.utc(this.recordingEndTimeStamp.diff(this.recordingStartTimeStamp)).format('mm:ss');
 

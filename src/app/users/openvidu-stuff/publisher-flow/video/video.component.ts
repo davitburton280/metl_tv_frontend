@@ -405,9 +405,19 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     openSocialShareModal() {
         console.log('modal');
-        this.dialog.open(SocialShareDialogComponent, {width: '500px', height: '400px', data: {shareUrl: this.shareUrl}})
-            .afterClosed().subscribe(dt => {
-        });
+        console.log(this.recordingState);
+        if (this.recordingState === 'started') {
+            this.dialog.open(SocialShareDialogComponent, {width: '500px', height: '400px', data: {shareUrl: this.shareUrl}})
+                .afterClosed().subscribe(dt => {
+            });
+        }
+        if (this.recordingState === 'finished') {
+            const {hostName} = this.getUrlParts.transform(window.location.href);
+            this.shareUrl = `${hostName}videos/play?id=${this.videoId}`;
+            this.dialog.open(SocialShareDialogComponent, {width: '500px', height: '400px', data: {shareUrl: this.shareUrl}})
+                .afterClosed().subscribe(dt => {
+            });
+        }
     }
 
     ngAfterViewInit() {
