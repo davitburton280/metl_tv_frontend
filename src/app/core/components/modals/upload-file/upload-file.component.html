@@ -1,6 +1,6 @@
 <div class="uploadModal">
     <div class="header">
-        <h1>Upload File</h1>
+        <h1>Upload file</h1>
         <mat-icon class="iconClosedModal" (click)="closedModal()">close</mat-icon>
     </div>
     <div *ngIf="(countUploadFile === 'oneFile')" class="inputFile">
@@ -19,11 +19,13 @@
     </div>
     <div *ngFor="let file of files; let i = index">
         <div *ngIf="shoeUploadImg" class="progressFile">
-            <div class="img">
-                <mat-icon *ngIf="file.type.includes('video')">movie</mat-icon>
-                <img *ngIf="file.type.includes('image')" [src]="file.src" alt="">
+            <div class="imgAndName">
+                <div class="img">
+                    <mat-icon *ngIf="file.type.includes('video')">movie</mat-icon>
+                    <img *ngIf="file.type.includes('image')" [src]="file.src" alt="">
+                </div>
+                <div class="name">{{file.name}}</div>
             </div>
-            <div class="name">{{file.name}}</div>
             <div class="progressBar">
                 {{percentProgressBar}}%<mat-progress-bar class="matProgressBar" mode="determinate" [value]="percentProgressBar"></mat-progress-bar>
             </div>
@@ -50,7 +52,7 @@
         </div>
     </div>
     <div class="button">
-        <button class="canselButton" (click)="closedModal()">Cansel</button>
+        <button class="canselButton" (click)="closedModal()">Cancel</button>
         <button class="saveButton" (click)="saveFile()">Save</button>
     </div>
 </div>

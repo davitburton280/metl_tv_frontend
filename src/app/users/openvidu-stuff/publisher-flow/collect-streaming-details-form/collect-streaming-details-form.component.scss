@@ -13,13 +13,15 @@
 
     #video-name {
         input {
-            font-size: 20px;
+            font-size: 18px;
             margin-top: 24px;
             width: 100%;
             height: 51px;
             background: #FFFFFF 0 0 no-repeat padding-box;
             box-shadow: 0 0 6px #EEEEEE;
             color: #8c8888;
+            padding-left: 5px;
+            border: 2px solid #8c8888;
             //border: 0.5px solid #F53C6F;
         }
     }
@@ -27,8 +29,10 @@
     #video-categories, #privacy {
         margin-top: 24px;
 
+
         .liveVideo {
-            font-size: 20px;
+            font-size: 18px;
+            padding-left: 5px;
         }
 
 
@@ -37,7 +41,8 @@
             height: 51px;
             background: #FFFFFF 0 0 no-repeat padding-box;
             box-shadow: 0 0 6px #EEEEEE;
-            border: none;
+            padding-left: 5px;
+            border: 2px solid #8c8888;
             font: normal normal normal 16px/20px 'Muli-Regular';
             color: #8c8888;
             outline: none;
@@ -52,12 +57,14 @@
         margin: 24px 0;
 
         textarea {
+            font-size: 18px;
+            padding-left: 5px;
+            border:  2px solid #8c8888;
             width: 100%;
             height: 151px;
             background: #FFFFFF 0 0 no-repeat padding-box;
             box-shadow: 0 0 6px #EEEEEE;
             opacity: 1;
-            border: none;
             outline: none;
             resize: none;
         }
@@ -114,9 +121,10 @@
     #video-tags {
         mat-form-field {
             width: 100%;
+            font-size: 18px;
 
             .liveVideo {
-                font-size: 20px;
+                font-size: 18px;
             }
         }
     }

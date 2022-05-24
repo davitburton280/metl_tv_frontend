@@ -28,6 +28,11 @@ form {
         cursor: pointer;
     }
 }
+
+.comment-input-container{
+    margin-top: 10px;
+}
+
 @media  (max-width: 1054px) and (min-width: 992px){
     .buttonsPart{
         flex-direction: column !important;

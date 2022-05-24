@@ -12,7 +12,11 @@
 
         h1 {
             font-size: 24px;
+            font-family: "Muli-Bold";
+            font-size: 24px;
+            letter-spacing: 0px;
             color: #5B5B5B;
+            opacity: 1;
         }
         .iconClosedModal {
             font-weight: bold;
@@ -45,28 +49,37 @@
         display: flex;
         align-items: center;
         margin-bottom: 40px;
-
-        .img {
-            margin-right: 16px;
-            margin-left: 35px;
-            color: #9D9D9D;
-
-            img {
-                width: 25px;
-                height: 25px;
-            }
+        @media (max-width: 600px) {
+            flex-direction: column;
         }
 
-        .name {
-            max-width: 150px;
-            font-size: 14px;
-            color: #545454;
-            margin-right: 50px;
-            width: 100%;
-            height: 18px;
-            overflow-x: scroll;
-            overflow-y: hidden;
-            white-space: nowrap;
+        .imgAndName {
+            display: flex;
+            align-items: center;
+
+            .img {
+                margin-right: 16px;
+                margin-left: 35px;
+                color: #9D9D9D;
+
+                img {
+                    width: 25px;
+                    height: 25px;
+                }
+            }
+
+            .name {
+                max-width: 150px;
+                font-size: 14px;
+                font-family:"Muli-Regular";
+                color: #545454;
+                margin-right: 50px;
+                width: 100%;
+                height: 18px;
+                overflow-x: scroll;
+                overflow-y: hidden;
+                white-space: nowrap;
+            }
         }
 
         .mat-progress-bar {
@@ -81,13 +94,19 @@
             display: flex;
             align-items: center;
             font-size: 12px;
+            font-family: "Muli-Bold";
             margin-right: 25px;
+            @media (max-width: 600px) {
+                margin-top: 8px;
+                margin-bottom: 8px;
+            }
         }
 
         .cancel {
             font-size: 10px;
             text-decoration: underline;
             color: #9D9D9D;
+            font-family: "Muli-Bold";
         }
     }
 
@@ -98,8 +117,8 @@
             margin-bottom: 15px;
             color: #F53C6F;
             font-size: 14px;
+            font-family: "Muli-Bold";
             padding: 18px 13px;
-            font-weight: bold;
         }
 
         .listUploaded {
@@ -166,11 +185,15 @@
 
         .canselButton {
             color: #9D9D9D;
+            font-size: 12px;
+            font-family: "Muli-Bold";
         }
 
         .saveButton {
             background-color: #18B587;
             color: #FFFFFF;
+            font-size: 12px;
+            font-family: "Muli-Bold";
         }
     }
 }
@@ -183,3 +206,5 @@
 ::ng-deep .mat-progress-bar-buffer {
     background: #FFFFFF;
 }
+
+
