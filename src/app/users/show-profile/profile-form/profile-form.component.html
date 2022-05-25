@@ -1,5 +1,35 @@
 <form [formGroup]="profileForm" class="flex-wrap-reverse">
+    <div class="editPart">
+    <div id="profile-cover-image" class="editCoverDiv" >
+        <img class="editCover" [src]="profileUser?.cover|getImgPath:'covers'">
+        <div class="coverImgEditDiv">
+            <img class="remove-profile-img" src="assets/img/edit.svg"/>
+        </div>
+    </div>
+        <div class="editPart1">
+            <div class="right-side mx-auto ml-xl-4 pl-lg-2">
+                <!-- User image or drop zone container-->
+                <div class="userImg">
+
+
+                    <!-- Showing drop zone for non-authenticated users and for a users without a profile-form image -->
+                    <dropzone [config]="dropzoneConfig" *ngIf="!profileImg" (removedFile)="removeImage()"
+                              id="dropzone" class="profileImgDropzone single" #dropzone (thumbnail)="onAddedFile($event)"
+                              [message]="'Click or drag an image to upload'">
+                    </dropzone>
+
+                    <div class="profile-img" *ngIf="profileImg"
+                         [style.background]="profileImg| getImgPath:'user_avatars':'background'"
+                         [ngStyle]="{'background-size':'cover'}">
+                        <!--                <i class="fa fa-times remove-profile-img" (click)="removeImage()"></i>-->
+                        <img class="remove-profile-img" src="assets/img/edit.svg"/>
+                    </div>
+                    <!--            <button (click)="imgCover.click()">Add Cover</button>-->
+                    <!--            <input #imgCover type="file" hidden (change)="addCoverImg($event)">-->
+                </div>
+            </div>
     <div class="left-side pr-lg-2">
+
 
 
         <input class="login-input" placeholder="First Name" formControlName="first_name">
@@ -54,24 +84,7 @@
             <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
         </div>
     </div>
-    <div class="right-side mx-auto ml-xl-4 pl-lg-2">
-        <!-- User image or drop zone container-->
-        <div class="userImg">
 
-
-            <!-- Showing drop zone for non-authenticated users and for a users without a profile-form image -->
-            <dropzone [config]="dropzoneConfig" *ngIf="!profileImg" (removedFile)="removeImage()"
-                      id="dropzone" class="profileImgDropzone single" #dropzone (thumbnail)="onAddedFile($event)"
-                      [message]="'Click or drag an image to upload'">
-            </dropzone>
-
-            <div class="profile-img" *ngIf="profileImg"
-                 [style.background]="profileImg| getImgPath:'user_avatars':'background'"
-                 [ngStyle]="{'background-size':'cover'}">
-                <i class="fa fa-times remove-profile-img" (click)="removeImage()"></i>
-            </div>
-            <button (click)="imgCover.click()">Add Cover</button>
-            <input #imgCover type="file" hidden (change)="addCoverImg($event)">
         </div>
     </div>
 </form>
