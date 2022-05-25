@@ -21,6 +21,8 @@ import * as  moment from 'moment';
 import {ToastrService} from 'ngx-toastr';
 import {SubjectService} from '@core/services/subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
+import { UploadFileComponent } from '@core/components/modals/upload-file/upload-file.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-profile',
@@ -49,10 +51,12 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
         private getAuthUser: GetAuthUserPipe,
         private toastr: ToastrService,
         private userStore: UserStoreService,
-        public router: Router
+        public router: Router,
+        private dialog: MatDialog
     ) {
         this.initForm();
         this.authUser = this.getAuthUser.transform();
+        console.log(this.authUser);
         this.profileForm.patchValue({...this.authUser, birthday: moment(this.authUser.birthday).format('MM/DD/YYYY')});
 
     }
@@ -86,7 +90,16 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
 
     }
 
-    removeImage() {
+    editImage() {
+        this.dialog.open(UploadFileComponent, {
+            maxWidth: '591px',
+            maxHeight: '479px',
+            height: '100%',
+            width: '100%',
+            data: { countUploadFile: 'oneFile' }
+        }).afterClosed().subscribe(dt => {
+            console.log(dt);
+        });
         this.authUser.avatar = '';
         this.profileForm.patchValue({avatar: ''});
     }
@@ -182,6 +195,9 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
 
     get profileImg(): any {
         return this.authUser ? this.authUser.avatar : false;
+    }
+    get coverImg(): any {
+        return this.authUser ? this.authUser.cover : false;
     }
 
     ngOnDestroy(): void {

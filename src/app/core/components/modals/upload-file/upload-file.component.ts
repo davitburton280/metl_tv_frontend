@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { API_URL } from '@core/constants/global';
 import { PostsService } from '@core/services/posts.service';
-import { VideoService } from "@core/services/video.service";
+import { VideoService } from '@core/services/video.service';
 
 @Component({
   selector: 'app-upload-file',

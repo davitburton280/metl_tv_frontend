@@ -11,9 +11,9 @@
 
         <div class="form-controls">
             <ckeditor id="editor" [editor]="Editor"
-                      [config]="{removePlugins : [['format']]}"
+                      [config]="{removePlugins : [['format', 'flashupload']]}"
                       [formControlName]="'description'"
-                      (change)="onChange($event)"
+                      (change)="chengCKEditor($event)"
                       (ready)="onReady($event)">
             </ckeditor>
             <!--            <textarea formControlName="description" placeholder="Create a public post..."></textarea>-->

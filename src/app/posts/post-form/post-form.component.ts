@@ -11,6 +11,7 @@ import {CK_EDITOR_CONFIG} from '@core/constants/global';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {PostsStoreService} from '@core/services/stores/posts-store.service';
 import { VideoService } from '@core/services/video.service';
+import { API_URL } from '@core/constants/global';
 
 @Component({
     selector: 'app-post-form',
@@ -18,7 +19,7 @@ import { VideoService } from '@core/services/video.service';
     styleUrls: ['./post-form.component.scss']
 })
 export class PostFormComponent implements OnInit, OnDestroy {
-    postForm: FormGroup;
+    public postForm: FormGroup;
     authUser;
     public Editor = ClassicEditor;
 
@@ -33,6 +34,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
     title = 'Create a post';
     edit = false;
     fileEditor = null;
+    apiUrl = API_URL;
 
     constructor(
         private fb: FormBuilder,
@@ -77,42 +79,86 @@ export class PostFormComponent implements OnInit, OnDestroy {
         });
     }
 
-    addPhoto(event) {
-        console.log(event);
-        this.imageFile = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const url = e.target.result;
-            this.dataPosts = this.dataPosts + `<figure class="image">\n' +
-                '    <img src=${url} alt="Description of an image">\n' +
-                '</figure>`;
-        };
-        reader.readAsDataURL(this.imageFile);
-    }
+    // addPhoto(event) {
+    //     console.log(event);
+    //     this.imageFile = event.target.files[0];
+    //     const reader = new FileReader();
+    //     reader.onload = (e) => {
+    //         const url = e.target.result;
+    //         this.dataPosts = this.dataPosts + `<figure class="image">\n' +
+    //             '    <img src=${url} alt="Description of an image">\n' +
+    //             '</figure>`;
+    //     };
+    //     reader.readAsDataURL(this.imageFile);
+    // }
 
-    onChange(event) {
-        console.log( event );
-        // this.formReady.emit(this.postForm.value);
-        const domParser = new DOMParser();
-        const htmlElement = domParser.parseFromString(this.postForm.value.description, 'text/html');
-        const imgTag = htmlElement.getElementsByTagName('img');
-        // @ts-ignore
-        for (const img of imgTag) {
-            console.log(img.src = 'aaa');
+    newData;
+    chengCKEditor({editor}: ChangeEvent) {
+        // const regex = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
+        //
+        // console.log(editor?.getData());
+        // let data = editor?.getData();
+        // const found = regex.test(data);
+        // console.log(found);
+        // data = data.replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
+        //     console.log('-----------------', capture);
+        //     return '';
+        // });
+        //
+        // if (this.newData !== data || found) {
+        //     console.log(data);
+        //     editor.setData(data);
+        //     this.newData = data;
+        //     console.log(editor?.getData());
+        // }
+        //
+        // this.postForm.value.description = '';
+        if (this.postForm.value.description.includes('img src="')) {
+
+            // console.log(this.postForm.value);
+        } else {
+            this.fileEditor = null;
+            // console.log(this.postForm.value);
         }
 
+        // this.formReady.emit(this.postForm.value);
+        // const domParser = new DOMParser();
+        // const htmlElement = domParser.parseFromString(this.postForm.value.description, 'text/html');
+        // const imgTag = htmlElement.getElementsByTagName('img');
+        // // @ts-ignore
+        // for (const img of imgTag) {
+        //     console.log(img.src = 'aaa');
+        // }
+        //
         // console.log(htmlElement);
-        const htmlString = String(htmlElement);
-        this.postForm.patchValue({ description: htmlString });
-        console.log(this.fileEditor);
-        console.log(this.postForm.value);
+        // console.log(this.fileEditor);
+        // console.log(this.postForm.value);
     }
 
     savePosts() {
-        console.log(this.postForm.value);
+        console.log(this.postForm.value.description);
         if (!this.edit) {
-            this.savePost().then();
+            const fd = new FormData();
+            fd.append('image', this.fileEditor);
+            fd.append('belonging', 'post_img');
+            fd.append('duration', '');
+            this.uploadFile.uploadFile(fd, 'image').subscribe(dt => {
+                if (dt) {
+                    this.postForm.value.description = this.postForm.value.description
+                        .replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
+                        console.log('-----------------', capture);
+                        return '<img src="' + this.apiUrl + 'uploads/images/' + dt.path + '"/>';
+                    });
+                    this.savePost().then().catch(err => {
+                        this.uploadFile.deleteFile(dt.path, 'image').subscribe(res => console.log(res));
+                    });
+                }
+            },
+            err => {
+                console.log(err);
+            });
         } else {
+            // tslint:disable-next-line:no-shadowed-variable
             const fd = new FormData();
             fd.append('image', this.fileEditor);
             fd.append('belonging', 'post_img');
@@ -133,13 +179,6 @@ export class PostFormComponent implements OnInit, OnDestroy {
                 console.log(dt);
             });
         }
-        // const fd = new FormData();
-        // fd.append('image', this.fileEditor);
-        // fd.append('belonging', 'post_img');
-        // fd.append('duration', '');
-        // this.uploadFile.uploadFile(fd, 'image').subscribe((file) => {
-        //     console.log(file);
-        // });
     }
 
     public onReady(editor) {
@@ -148,6 +187,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
             editor.ui.view.toolbar.element,
             editor.ui.getEditableElement()
         );
+        // editor.removePlugins.get('html5upload,flashupload').create();
         editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
             return new UploadAdapter(loader, editor.t, this.postsStore);
         };
@@ -216,6 +256,8 @@ export class UploadAdapter {
     }
 
     upload(loader, t) {
+        console.log(loader);
+        console.log(t);
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
 
@@ -229,9 +271,9 @@ export class UploadAdapter {
                 reject(error);
             };
 
-            this.loader.file.then(async (file) => {
-                reader.readAsDataURL(file);
-                await this.postsStore.setImageUpload(file);
+            this.loader.file.then(async (fl) => {
+                reader.readAsDataURL(fl);
+                await this.postsStore.setImageUpload(fl);
             });
         });
     }
