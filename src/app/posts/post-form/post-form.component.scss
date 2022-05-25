@@ -40,3 +40,9 @@
     margin-top: 20px;
 }
 
+:host ::ng-deep .ck.ck-content {
+            img {
+                //max-width: 300px;
+                max-height: 250px;
+            }
+    }

@@ -9,7 +9,7 @@ export const VIDEO_DEFAULT_THUMBNAILS_PATH = 'assets/img/video-thumbnail-default
 export const VIDEO_DEFAULT_COVERS_PATH = 'assets/img/default-thumbnail.png';
 export const VIDEO_DEFAULT_AVATARS_PATH = 'assets/img/default-user.png';
 export const USER_DEFAULT_AVATARS_PATH = 'assets/img/default-user.png';
-export const GROUP_DEFAULT_AVATARS_PATH = 'assets/img/default-group-people-icon_light.jpg';
+export const GROUP_DEFAULT_AVATARS_PATH = 'assets/img/default-group-people-icon_light.svg';
 export const DEFAULT_VIDEO_SUGGESTIONS_COUNT = 5;
 export const MAX_CARDS_PER_USER = 3;
 
@@ -130,7 +130,7 @@ export const MAIN_SECTIONS = [
         auth: true
     },
     {name: 'Messages', img: 'item-8.png', icon: '', link: '/chat/messages', production: true, auth: true},
-    {name: 'Groups', img: '', icon: 'group', link: '/groups', production: true, auth: true, separator: true},
+    {name: 'Groups', img: 'group.svg', icon: '', link: '/groups', production: true, auth: true, separator: true},
 
     {name: 'Saved videos', img: 'saved-videos.svg', icon: '', link: '/videos/saved', production: true, auth: true},
     {name: 'Videos', img: 'item-11.png', icon: '', link: '/videos', auth: true, separator: true, production: true},

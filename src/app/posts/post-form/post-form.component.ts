@@ -63,12 +63,10 @@ export class PostFormComponent implements OnInit, OnDestroy {
                 this.title = 'Edit Posts';
                 this.edit = true;
                 this.postForm.patchValue({
+                    id: post.id,
                     description: post.description,
-                    username: [this.userStore.authUser.username],
-                    author_id: [post.autor_id],
                     group_id: [post.group_id],
-                    cover_img: [post.cover_img],
-                    votes: [post.votes]
+                    cover_img: [post.cover_img]
                 });
             }
         }).unsubscribe();
@@ -103,20 +101,45 @@ export class PostFormComponent implements OnInit, OnDestroy {
             console.log(img.src = 'aaa');
         }
 
-        console.log(htmlElement);
+        // console.log(htmlElement);
+        const htmlString = String(htmlElement);
+        this.postForm.patchValue({ description: htmlString });
         console.log(this.fileEditor);
         console.log(this.postForm.value);
     }
 
     savePosts() {
         console.log(this.postForm.value);
-        const fd = new FormData();
-        fd.append('image', this.fileEditor);
-        fd.append('belonging', 'post_img');
-        fd.append('duration', '');
-        this.uploadFile.uploadFile(fd, 'image').subscribe((file) => {
-            console.log(file);
-        });
+        if (!this.edit) {
+            this.savePost().then();
+        } else {
+            const fd = new FormData();
+            fd.append('image', this.fileEditor);
+            fd.append('belonging', 'post_img');
+            fd.append('duration', '');
+            this.uploadFile.uploadFile(fd, 'image').subscribe((file) => {
+                console.log(file);
+            });
+            console.log(this.editPost);
+            console.log('edit');
+            console.log(this.postForm.value);
+            const obj = {
+                id: this.editPost.id,
+                description: this.postForm.value.description,
+                group_id: this.postForm.value.group_id[0],
+                cover_img: ''
+            };
+            this.postsService.editPosts(obj).subscribe((dt) => {
+                console.log(dt);
+            });
+        }
+        // const fd = new FormData();
+        // fd.append('image', this.fileEditor);
+        // fd.append('belonging', 'post_img');
+        // fd.append('duration', '');
+        // this.uploadFile.uploadFile(fd, 'image').subscribe((file) => {
+        //     console.log(file);
+        // });
     }
 
     public onReady(editor) {

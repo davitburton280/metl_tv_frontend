@@ -39,7 +39,7 @@ export class PostsService {
         const body = {
             group_id: obj.group_id,
             description: obj.description,
-            // cover_img: obj.cover_img
+            cover_img: obj.cover_img
         };
         return this.http.put(`${API_URL}posts/edit?id=${obj.id}`, body);
     }
