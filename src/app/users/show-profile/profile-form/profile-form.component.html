@@ -3,7 +3,7 @@
     <div id="profile-cover-image" class="editCoverDiv" >
         <img class="editCover" [src]="coverImg|getImgPath:'covers'">
         <div class="coverImgEditDiv">
-            <img class="remove-profile-img" src="assets/img/edit.svg"/>
+            <img class="remove-profile-img" src="assets/img/edit.svg">
         </div>
     </div>
         <div class="editPart1">
@@ -18,12 +18,27 @@
                               [message]="'Click or drag an image to upload'">
                     </dropzone>
 
-                    <div class="profile-img" *ngIf="profileImg"
-                         [style.background]="profileImg| getImgPath:'user_avatars':'background'"
-                         [ngStyle]="{'background-size':'cover'}">
-                        <!--                <i class="fa fa-times remove-profile-img" (click)="removeImage()"></i>-->
+
+
+                    <div class="profile-img" >
+                        <img class="profileImage" [src]="profileImg| getImgPath:'user_avatars'">
                         <img class="remove-profile-img" src="assets/img/edit.svg" alt="" (click)="editImage()">
                     </div>
+
+
+
+<!--                    <div class="profile-img" *ngIf="profileImg"-->
+<!--                         [style.background]="profileImg| getImgPath:'user_avatars':'background'"-->
+<!--                         [ngStyle]="{'background-size':'cover'}">-->
+<!--                        &lt;!&ndash;                <i class="fa fa-times remove-profile-img" (click)="removeImage()"></i>&ndash;&gt;-->
+<!--                        <img class="remove-profile-img" src="assets/img/edit.svg" alt="" (click)="editImage()">-->
+<!--                    </div>-->
+
+
+
+
+
+
                     <!--            <button (click)="imgCover.click()">Add Cover</button>-->
                     <!--            <input #imgCover type="file" hidden (change)="addCoverImg($event)">-->
                 </div>

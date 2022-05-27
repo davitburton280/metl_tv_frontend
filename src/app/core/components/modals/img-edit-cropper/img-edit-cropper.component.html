@@ -1,0 +1,16 @@
+<div class="imageCropper">
+    <div class="header">
+        <h1>{{title}}</h1>
+        <mat-icon class="iconClosedModal" (click)="closedModal()">close</mat-icon>
+    </div>
+
+    <div class="img-container">
+        <img #image [src]="imageSrc" (load)="cropperImgLoad()" crossorigin alt="">
+    </div>
+
+    <div class="img-save-button">
+        <button (click)="saveCropperImg()">Save Image</button>
+    </div>
+
+</div>
+
