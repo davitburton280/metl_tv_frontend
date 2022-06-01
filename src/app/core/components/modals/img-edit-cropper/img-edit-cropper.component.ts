@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { API_URL } from '@core/constants/global';
 import Cropper from 'cropperjs';
@@ -7,7 +7,8 @@ import { GetAuthUserPipe } from '@shared/pipes/get-auth-user.pipe';
 @Component({
   selector: 'app-img-edit-cropper',
   templateUrl: './img-edit-cropper.component.html',
-  styleUrls: ['./img-edit-cropper.component.scss']
+  styleUrls: ['./img-edit-cropper.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ImgEditCropperComponent implements OnInit, AfterViewInit {
 
@@ -20,6 +21,7 @@ export class ImgEditCropperComponent implements OnInit, AfterViewInit {
     public imageElement: ElementRef;
     private cropper: Cropper;
     file;
+    shape;
 
 
 
@@ -34,7 +36,7 @@ export class ImgEditCropperComponent implements OnInit, AfterViewInit {
     public ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.title = this.data.title;
-        // this.imageSrc = API_URL + 'uploads/user_avatars/' + this.authUser.avatar;
+        this.shape = this.data.shape;
         this.file = this.data.file;
         this.imgSrcFile(this.file);
     }
@@ -51,7 +53,29 @@ export class ImgEditCropperComponent implements OnInit, AfterViewInit {
 
     }
 
+    loadImage() {
+        if (this.shape === 'circle') {
+            this.avatarImgLoad();
+        }
+        if (this.shape === 'square') {
+            this.cropperImgLoad();
+        }
+    }
+
     cropperImgLoad() {
+        this.cropper = new Cropper(this.imageElement.nativeElement, {
+            zoomable: false,
+            scalable: false,
+            viewMode: 2,
+            aspectRatio: 1200 / 300,
+            crop: () => {
+                const canvas = this.cropper.getCroppedCanvas();
+                this.cropperImage = canvas.toDataURL('image/png');
+            }
+        });
+    }
+
+    avatarImgLoad() {
         this.cropper = new Cropper(this.imageElement.nativeElement, {
             zoomable: false,
             scalable: false,
@@ -60,11 +84,17 @@ export class ImgEditCropperComponent implements OnInit, AfterViewInit {
             crop: () => {
                 const canvas = this.cropper.getCroppedCanvas();
                 this.cropperImage = canvas.toDataURL('image/png');
-                canvas.width = 400;
-                canvas.height = 400;
-                console.log(canvas);
             }
         });
+    }
+
+    saveImg() {
+        if (this.shape === 'circle') {
+            this.saveAvatarImg();
+        }
+        if (this.shape === 'square') {
+            this.saveCropperImg();
+        }
     }
 
     saveCropperImg() {
@@ -75,7 +105,19 @@ export class ImgEditCropperComponent implements OnInit, AfterViewInit {
            maxHeight: 300,
        }).toBlob((blob) => {
            console.log(blob);
-           this.dialogRef.close(blob);
+           this.dialogRef.close({ blob, shape: 'square' });
+       });
+    }
+
+    saveAvatarImg() {
+       this.cropper.getCroppedCanvas({
+           minWidth: 400,
+           minHeight: 400,
+           maxWidth: 400,
+           maxHeight: 400,
+       }).toBlob((blob) => {
+           console.log(blob);
+           this.dialogRef.close({ blob, shape: 'circle' });
        });
     }
 

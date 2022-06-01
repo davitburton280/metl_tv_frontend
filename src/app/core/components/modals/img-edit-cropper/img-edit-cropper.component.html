@@ -4,13 +4,12 @@
         <mat-icon class="iconClosedModal" (click)="closedModal()">close</mat-icon>
     </div>
 
-    <div class="img-container">
-        <img #image [src]="imageSrc" (load)="cropperImgLoad()" crossorigin alt="">
+    <div class="img-container" [ngClass]="{'circle': shape === 'circle'}">
+        <img #image [src]="imageSrc" (load)="loadImage()" crossorigin alt="">
     </div>
 
     <div class="img-save-button">
-        <button (click)="saveCropperImg()">Save Image</button>
+        <button (click)="saveImg()">Save Image</button>
     </div>
 
 </div>
-

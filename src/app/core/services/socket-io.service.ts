@@ -450,4 +450,16 @@ export class SocketIoService {
         });
     }
 
+    subscribeChanel(data) {
+        this.socket.emit('subscribeChanel', data);
+    }
+
+    getSubscribeChanel() {
+        return new Observable(observer => {
+            this.socket.on('getSubscribeChanel', msg => {
+                observer.next(msg);
+            });
+        });
+    }
+
 }

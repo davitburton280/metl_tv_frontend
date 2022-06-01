@@ -1,6 +1,6 @@
 <div id="profile-wrap" *ngIf="profileUser">
     <div id="profile-cover-image">
-        <img [src]="profileUser?.cover|getImgPath:'covers'">
+        <img [src]="profileUser?.cover|getImgPath:'images'">
     </div>
 
     <div class="row">
@@ -10,7 +10,7 @@
                     <div class="avatar-container">
                         <label for="">
                             <img class="avatar" style="cursor: unset" id="profile-image"
-                                 [src]="profileUser?.avatar|getImgPath: 'user_avatars'">
+                                 [src]="profileUser?.avatar|getImgPath: 'images'">
                         </label>
                     </div>
 

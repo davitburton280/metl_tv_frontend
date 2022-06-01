@@ -68,7 +68,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
                     id: post.id,
                     description: post.description,
                     group_id: [post.group_id],
-                    cover_img: [post.cover_img]
+                    // cover_img: [post.cover_img]
                 });
             }
         }).unsubscribe();
@@ -92,7 +92,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
     //     reader.readAsDataURL(this.imageFile);
     // }
 
-    newData;
+    // newData;
     chengCKEditor({editor}: ChangeEvent) {
         // const regex = /<img [^>]*src=['"]([^'"]+)[^>]*>/gi;
         //
@@ -136,7 +136,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
     }
 
     savePosts() {
-        console.log(this.postForm.value.description);
+        // console.log(this.postForm.value.description);
         if (!this.edit) {
             const fd = new FormData();
             fd.append('image', this.fileEditor);
@@ -146,10 +146,11 @@ export class PostFormComponent implements OnInit, OnDestroy {
                 if (dt) {
                     this.postForm.value.description = this.postForm.value.description
                         .replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
-                        console.log('-----------------', capture);
+                        // console.log('-----------------', capture);
                         return '<img src="' + this.apiUrl + 'uploads/images/' + dt.path + '"/>';
                     });
                     this.savePost().then().catch(err => {
+                        console.log(err);
                         this.uploadFile.deleteFile(dt.path, 'image').subscribe(res => console.log(res));
                     });
                 }
@@ -158,26 +159,44 @@ export class PostFormComponent implements OnInit, OnDestroy {
                 console.log(err);
             });
         } else {
-            // tslint:disable-next-line:no-shadowed-variable
-            const fd = new FormData();
-            fd.append('image', this.fileEditor);
-            fd.append('belonging', 'post_img');
-            fd.append('duration', '');
-            this.uploadFile.uploadFile(fd, 'image').subscribe((file) => {
-                console.log(file);
-            });
-            console.log(this.editPost);
-            console.log('edit');
-            console.log(this.postForm.value);
-            const obj = {
-                id: this.editPost.id,
-                description: this.postForm.value.description,
-                group_id: this.postForm.value.group_id[0],
-                cover_img: ''
-            };
-            this.postsService.editPosts(obj).subscribe((dt) => {
-                console.log(dt);
-            });
+            if (this.postForm.value.description.includes('img src="')) {
+                const fd = new FormData();
+                fd.append('image', this.fileEditor);
+                fd.append('belonging', 'post_img');
+                fd.append('duration', '');
+                this.uploadFile.uploadFile(fd, 'image').subscribe((file) => {
+                    // console.log(file);
+                    this.postForm.value.description = this.postForm.value.description
+                        .replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
+                            // console.log('-----------------', capture);
+                            return '<img src="' + this.apiUrl + 'uploads/images/' + file.path + '"/>';
+                        });
+                    const obj = {
+                        id: this.editPost.id,
+                        description: this.postForm.value.description,
+                        group_id: this.postForm.value.group_id[0]
+                    };
+                    this.postsService.editPosts(obj).subscribe((dt) => {
+                        console.log(dt);
+                        this._location.back();
+                    },
+                        error => {
+                            console.log(error);
+                            this.uploadFile.deleteFile(file.path, 'image').subscribe(res => console.log(res));
+                        });
+                });
+            } else {
+                this.fileEditor = null;
+                const obj = {
+                    id: this.editPost.id,
+                    description: this.postForm.value.description,
+                    group_id: this.postForm.value.group_id[0],
+                };
+                this.postsService.editPosts(obj).subscribe((dt) => {
+                    console.log(dt);
+                    this._location.back();
+                });
+            }
         }
     }
 

@@ -7,6 +7,20 @@
 .video-container {
     flex: 1;
     display: flex;
+
+    //:host::ng-deep .video-js .vjs-volume-panel.vjs-control.vjs-volume-panel-horizontal {
+    //    display: block!important;
+    //}
+    :host::ng-deep .vjs-record .vjs-record-button.vjs-control {
+        color: #F53C6F;
+
+        &:before {
+            font-size: 2em;
+            line-height: .9em;
+            margin-left: 15px;
+        }
+    }
+
 }
 
 #live-session-finished {
