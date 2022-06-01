@@ -6,7 +6,7 @@ import {UsersService} from '@core/services/users.service';
 import {Base64ToFilePipe} from '@shared/pipes/base64-to-file.pipe';
 import {User} from '@shared/models/user';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs';
+import { of, Subscription } from "rxjs";
 import {patternValidator} from '@core/helpers/pattern-validator';
 import {
     EMAIL_PATTERN,
@@ -23,6 +23,8 @@ import {SubjectService} from '@core/services/subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import { UploadFileComponent } from '@core/components/modals/upload-file/upload-file.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ImgEditCropperComponent } from '@core/components/modals/img-edit-cropper/img-edit-cropper.component';
+import { concatAll, map } from "rxjs/operators";
 
 @Component({
     selector: 'app-profile',
@@ -42,6 +44,15 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
     authUser;
     coverFile = [];
 
+    imageCoverChangedEvent: any;
+    imageAvatarChangedEvent: any;
+    imageCoverFile;
+    imageAvatarFile;
+    coverShowImg = false;
+    avatarShowImg = false;
+    coverImgSrc;
+    avatarImgSrc;
+
 
     constructor(
         private fb: FormBuilder,
@@ -52,7 +63,8 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
         private toastr: ToastrService,
         private userStore: UserStoreService,
         public router: Router,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private uploadFile: VideoService
     ) {
         this.initForm();
         this.authUser = this.getAuthUser.transform();
@@ -68,17 +80,8 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
             last_name: [{ value: '', disabled: true }, [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
             username: ['', [Validators.required, patternValidator(NUMBER_AFTER_TEXT_PATTERN)]],
             email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
-            // password: ['',
-            //     [
-            //         Validators.required, patternValidator(NO_SPACE_PATTERN),
-            //         Validators.minLength(PASSWORD_MIN_LENGTH), Validators.maxLength(PASSWORD_MAX_LENGTH)
-            //     ],
-            // ],
-            // confirm_password: new FormControl('', {validators: [Validators.required], updateOn: 'blur'}),
-            // confirm_password: ['', Validators.required],
-            birthday: [''], // Validators.required
-            avatar: [''],
-            cover: ['']
+            birthday: [''],
+            // avatar: [''],
         });
     }
 
@@ -90,18 +93,43 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
 
     }
 
-    editImage() {
-        this.dialog.open(UploadFileComponent, {
-            maxWidth: '591px',
-            maxHeight: '479px',
+    editImage(event, shape) {
+        const file = event.target.files[0];
+        this.dialog.open(ImgEditCropperComponent, {
+            maxWidth: '60vw',
+            maxHeight: '70vh',
             height: '100%',
             width: '100%',
-            data: { countUploadFile: 'oneFile' }
+            data: {
+                title: 'Profile Image Cropper',
+                shape,
+                file
+            }
         }).afterClosed().subscribe(dt => {
             console.log(dt);
+            if (dt) {
+                if (dt.shape === 'square') {
+                    this.imageCoverFile = dt.blob;
+                    this.coverShowImg = true;
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.coverImgSrc = e.target.result.toString();
+                    };
+                    reader.readAsDataURL(this.imageCoverFile);
+                }
+                if (dt.shape === 'circle') {
+                    this.imageAvatarFile = dt.blob;
+                    this.avatarShowImg = true;
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.avatarImgSrc = e.target.result.toString();
+                    };
+                    reader.readAsDataURL(this.imageAvatarFile);
+                }
+            }
         });
-        this.authUser.avatar = '';
-        this.profileForm.patchValue({avatar: ''});
+        // this.authUser.avatar = '';
+        // this.profileForm.patchValue({avatar: ''});
     }
 
     onAddedFile(e) {
@@ -150,9 +178,52 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
         return formData;
     }
 
-    saveChanges() {
+    async saveChanges() {
         console.log('++++++++');
+        if (this.coverShowImg) {
+            const fdCover = new FormData();
+            fdCover.append('image', this.imageCoverFile);
+            fdCover.append('belonging', 'profile_cover_img');
+            fdCover.append('duration', '');
+            await this.uploadFile.uploadFile(fdCover, 'image').subscribe((data) => {
+                console.log(data);
+                this.coverShowImg = false;
+                this.saveEditeProfile('cover', data.path);
+            });
+        }
+        if (this.avatarShowImg) {
+            const fdAvatar = new FormData();
+            fdAvatar.append('image', this.imageAvatarFile);
+            fdAvatar.append('belonging', 'profile_avatar_img');
+            fdAvatar.append('duration', '');
+            await this.uploadFile.uploadFile(fdAvatar, 'image').subscribe((data) => {
+                console.log(data);
+                this.coverShowImg = false;
+                this.saveEditeProfile('avatar', data.path);
+            });
+        }
+        if (!this.avatarShowImg && !this.coverShowImg) {
+            this.saveEditeProfile();
+        }
+
+        // const source = of(
+        //     [
+        //         this.uploadFile.uploadFile(fdCover, 'image'),
+        //         this.uploadFile.uploadFile(fdAvatar, 'image'),
+        //         this.usersService.saveProfileChanges(formData)
+        //     ]);
+        // const arrPosts = source.pipe(concatAll());
+        // arrPosts.subscribe(data => {
+        //     console.log(data);
+        // },
+        //     error => console.log(error));
+    }
+
+    saveEditeProfile(key?, value?) {
         const formData = this.buildFormData();
+        if (key && value) {
+            formData.append(key, value);
+        }
         this.usersService.saveProfileChanges(formData).subscribe(async (dt) => {
             console.log(dt);
             const token = dt.hasOwnProperty('token') ? dt?.token : '';
@@ -160,7 +231,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
                 localStorage.setItem('token', token);
                 this.userStore.setAuthUser(token);
                 this.toastr.success('The changes are saved successfully');
-                await this.router.navigateByUrl('');
+                await this.router.navigateByUrl('users/' + this.profileForm.value.username);
             }
         });
     }

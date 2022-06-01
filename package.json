@@ -38,6 +38,7 @@
         "@videojs/themes": "^1.0.0",
         "angular-cc-library": "^2.1.2",
         "chart.js": "^2.9.3",
+        "cropperjs": "^1.5.12",
         "google-libphonenumber": "^3.2.22",
         "jquery": "^3.5.1",
         "jwt-decode": "^3.0.0",

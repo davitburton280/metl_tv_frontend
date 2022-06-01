@@ -29,7 +29,7 @@
         <div class="left d-flex pl-2" (click)="onNotificationClick(notification)">
             <div class="avatar-container">
                 <img class="avatar" id="profile-image"
-                     [src]="notification.from_user.avatar|getImgPath: 'user_avatars'">
+                     [src]="notification.from_user.avatar|getImgPath: 'images'">
             </div>
             <div class="notification-body">
                 <p class="notification-text" [innerHTML]="notification.msg"></p>

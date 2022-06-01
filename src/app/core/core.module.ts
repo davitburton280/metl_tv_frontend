@@ -40,6 +40,7 @@ import { GroupMembersInvitationDialogComponent } from './components/modals/group
 import { CreateNewGroupDialogComponent } from './components/modals/create-new-group-dialog/create-new-group-dialog.component';
 import { SocialShareDialogComponent } from './components/modals/social-share-dialog/social-share-dialog.component';
 import { UploadFileComponent } from './components/modals/upload-file/upload-file.component';
+import { ImgEditCropperComponent } from '@core/components/modals/img-edit-cropper/img-edit-cropper.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { UploadFileComponent } from './components/modals/upload-file/upload-file
         CreateNewGroupDialogComponent,
         SocialShareDialogComponent,
         UploadFileComponent,
+        ImgEditCropperComponent
         // ChatBottomBoxComponent
     ],
     imports: [

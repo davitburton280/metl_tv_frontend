@@ -154,25 +154,33 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
                 this.loader.fileProcessing = true;
                 console.log(dt);
                 if (typeof dt === 'string') {
-                    return this.toastr.error(dt);
-                }
-                const fd = new FormData();
-                const type = 'image';
-                dt.forEach((elem) => {
-                    fd.append('image', elem.file);
-                    fd.append('belonging', 'thumbnail_image');
-                    fd.append('duration', '');
-                });
-                this.uploadFile.uploadFile(fd, type).subscribe((res) => {
-                    console.log(res);
-                    this.thumbnailImage = res.path;
-                    this.imageName = res.path;
-                    this.startStreamingForm.patchValue({thumbnail: this.imageName});
-                    this.toastr.success(res.message);
                     this.thumbnailUploading = false;
                     this.loader.fileProcessing = false;
-                    this.thumbnailUploaded = true;
-                });
+                    return this.toastr.error(dt);
+                }
+                if (dt[0].type.includes('image')) {
+                    const fd = new FormData();
+                    const type = 'image';
+                    dt.forEach((elem) => {
+                        fd.append('image', elem.file);
+                        fd.append('belonging', 'thumbnail_image');
+                        fd.append('duration', '');
+                    });
+                    this.uploadFile.uploadFile(fd, type).subscribe((res) => {
+                        console.log(res);
+                        this.thumbnailImage = res.path;
+                        this.imageName = res.path;
+                        this.startStreamingForm.patchValue({thumbnail: this.imageName});
+                        this.toastr.success(res.message);
+                        this.thumbnailUploading = false;
+                        this.loader.fileProcessing = false;
+                        this.thumbnailUploaded = true;
+                    });
+                } else {
+                    this.thumbnailUploading = false;
+                    this.loader.fileProcessing = false;
+                    return this.toastr.error(dt);
+                }
             }
         });
     }

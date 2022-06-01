@@ -63,12 +63,12 @@
         <div id="connection-status-buttons"  *ngIf="channelUser.username !== authUser.username">
             <!--            <i class="sub-bell fas fa-bell"></i>-->
 
-            <a class="subscribe-btn" *ngIf="!subscribedToChannel" (click)="subscribeToChannel(channelUser.channel)">
+            <a class="subscribe-btn" *ngIf="!subscribedToChannel" (click)="subscribeToChannel(channelUser)">
                 <mat-icon>favorite_border</mat-icon>
                 <span>Subscribe</span>
             </a>
             <a class="subscribe-btn subscribed" *ngIf="subscribedToChannel"
-               (click)="subscribeToChannel(channelUser.channel)">
+               (click)="subscribeToChannel(channelUser)">
                 <mat-icon>favorite</mat-icon>
                 <span>Subscribed</span>
             </a>

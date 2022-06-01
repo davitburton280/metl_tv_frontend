@@ -1,32 +1,30 @@
 <form [formGroup]="profileForm" class="flex-wrap-reverse">
     <div class="editPart">
     <div id="profile-cover-image" class="editCoverDiv" >
-        <img class="editCover" [src]="coverImg|getImgPath:'covers'">
+        <img class="editCover" *ngIf="!coverShowImg" [src]="coverImg|getImgPath:'images'" alt="">
+        <img class="editCover" *ngIf="coverShowImg" [src]="coverImgSrc" alt="">
         <div class="coverImgEditDiv">
-            <img class="remove-profile-img" src="assets/img/edit.svg">
+            <img class="remove-profile-img" src="assets/img/edit.svg" alt="" (click)="coverChangeImg.click()">
         </div>
+        <input type="file" #coverChangeImg hidden (change)="editImage($event, 'square')">
     </div>
         <div class="editPart1">
             <div class="right-side mx-auto ml-xl-4 pl-lg-2">
                 <!-- User image or drop zone container-->
                 <div class="userImg">
 
-
                     <!-- Showing drop zone for non-authenticated users and for a users without a profile-form image -->
-                    <dropzone [config]="dropzoneConfig" *ngIf="!profileImg" (removedFile)="editImage()"
+                    <dropzone [config]="dropzoneConfig" *ngIf="!profileImg"
                               id="dropzone" class="profileImgDropzone single" #dropzone (thumbnail)="onAddedFile($event)"
                               [message]="'Click or drag an image to upload'">
                     </dropzone>
 
-
-
                     <div class="profile-img" >
-                        <img class="profileImage" [src]="profileImg| getImgPath:'user_avatars'">
-                        <img class="remove-profile-img" src="assets/img/edit.svg" alt="" (click)="editImage()">
+                        <img class="profileImage" *ngIf="!avatarShowImg" [src]="profileImg| getImgPath:'images'" alt="">
+                        <img class="profileImage" *ngIf="avatarShowImg" [src]="avatarImgSrc" alt="">
+                        <img class="remove-profile-img" src="assets/img/edit.svg" alt="" (click)="avatarChangeImg.click()">
+                        <input type="file" #avatarChangeImg hidden (change)="editImage($event, 'circle')">
                     </div>
-
-
-
 <!--                    <div class="profile-img" *ngIf="profileImg"-->
 <!--                         [style.background]="profileImg| getImgPath:'user_avatars':'background'"-->
 <!--                         [ngStyle]="{'background-size':'cover'}">-->
@@ -34,18 +32,11 @@
 <!--                        <img class="remove-profile-img" src="assets/img/edit.svg" alt="" (click)="editImage()">-->
 <!--                    </div>-->
 
-
-
-
-
-
                     <!--            <button (click)="imgCover.click()">Add Cover</button>-->
                     <!--            <input #imgCover type="file" hidden (change)="addCoverImg($event)">-->
                 </div>
             </div>
     <div class="left-side pr-lg-2">
-
-
 
         <input class="login-input" placeholder="First Name" formControlName="first_name">
         <span class="error" *ngIf="isSubmitted && firstName.hasError('required')">First name is required</span>

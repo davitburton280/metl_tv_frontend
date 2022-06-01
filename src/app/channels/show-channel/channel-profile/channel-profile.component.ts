@@ -35,6 +35,10 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     channelForm: FormGroup;
     subscriptions: Subscription[] = [];
 
+    usersConnectionStatus = 'idle';
+
+    usersConnection;
+
 
 
     @Input() channelUser;
@@ -64,6 +68,9 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
             this.initChannelForm();
             this.checkChannelSubscription();
         }
+        this.socketService.getSubscribeChanel().subscribe(dt => {
+            console.log(dt);
+        });
     }
 
     initChannelForm() {
@@ -136,38 +143,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         // });
     }
 
-    // profileCropped(event) {
-    //     // this.loader.dataLoading = true;
-    //
-    //     this.changingImage = true;
-    //     // this.profileBase64 = event.base64;
-    //     const filename = `avatar_${Date.now()}.jpg`;
-    //     const fd = new FormData();
-    //     this.channelForm.patchValue({avatar: filename});
-    //     // fd.append('avatar_file', this.base64ToFile.transform(event.base64), filename);
-    //     fd.append('avatar_file', this.base64ToFile.transform(event.base64), filename);
-    //     fd.append('avatar', filename);
-    //     fd.append('id', this.authUser.id);
-    //     this.subscriptions.push(this.usersService.changeProfileImage(fd).subscribe((dt) => {
-    //         this.changeAuthUserInfo(dt);
-    //     }));
-    // }
-
-    // coverCropped(event) {
-    //     this.coverBase64 = event.base64;
-    //     this.changingImage = true;
-    //     const fd = new FormData();
-    //     const filename = `cover_${Date.now()}.jpg`;
-    //     this.channelForm.patchValue({cover: filename});
-    //     fd.append('cover_file', this.base64ToFile.transform(event.base64), filename);
-    //     fd.append('cover', filename);
-    //     fd.append('id', this.authUser.id);
-    //     this.loader.dataLoading = true;
-    //     this.subscriptions.push(this.usersService.changeCoverImage(fd).subscribe((dt) => {
-    //         this.changeAuthUserInfo(dt);
-    //     }));
-    // }
-
     removeCover() {
         this.channelUser.channel.cover = '';
         this.channelForm.patchValue({cover: this.channelUser.channel.cover});
@@ -178,17 +153,37 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         this.channelForm.patchValue({avatar: this.channelUser.channel.avatar});
     }
 
-    subscribeToChannel(channel): void {
+    subscribeToChannel(user): void {
+        this.connectWithUser(user);
         this.subscriptions.push(this.channelService.subscribeToChannel({
             user_id: this.authUser.id,
-            channel_id: channel.id
+            channel_id: user.channel.id
         }).subscribe(dt => {
+            console.log(dt);
             this.subscribedToChannel = dt.status === 'Subscribed';
             this.subscribersCount = dt.subscribers_count;
             this.subscriptions.push(this.channelService.getUserChannelSubscriptions({user_id: this.authUser.id}).subscribe(d => {
                 this.subject.setUserSubscriptions(d);
             }));
+            this.socketService.subscribeChanel({
+                from_user: user,
+                to_user: this.authUser,
+                msg: `You have successfully subscribed to Gold Subscription for ${user.username}'s channel!`
+            });
         }));
+    }
+
+    connectWithUser(user) {
+        // this.usersConnectionStatus = 'connected';
+        this.socketService.subscribeChanel({
+            from_user: this.authUser,
+            to_user: user,
+            msg: `<strong>${this.authUser.username }</strong>
+                just subscribed to your Gold Subscription tier!`
+        });
+        const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== user.id);
+        console.log(notifications);
+        this.notificationsStore.setInitialNotifications(notifications);
     }
 
     toggleEditMode() {
