@@ -1,0 +1,65 @@
+.reportPopUpDiv{
+    width: 414px;
+    height: 364px;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 30px 22px 10px 32px;
+    box-sizing: border-box;
+}
+
+.removeAddTotalDiv{
+    display: flex;
+    align-items: center;
+    margin-bottom: 29px;
+}
+
+.removeAddTotalDiv:last-child {
+    margin-bottom: 16px;
+}
+
+.removeAddDiv{
+    margin-left: 9px;
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #5C5C5C;
+}
+
+.textAreaReportPopUp{
+    width: 360px;
+    height: 98px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px 12px;
+    border: none;
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #ACA5A5;
+    margin-bottom: 17px;
+    box-sizing: border-box;
+}
+
+.sendBtn{
+    margin-bottom: 21px;
+    width: 96px;
+    height: 31px;
+    background: #18B587;
+    color:#FFFFFF; ;
+    font-family: Muli-Bold, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    align-self: end;
+}

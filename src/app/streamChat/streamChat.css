@@ -1,0 +1,111 @@
+.streamChat{
+    width: 334px;
+    height: 551px;
+    padding-top: 29px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.streamChatTitleWithIcons{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+}
+
+.streamChatTitle{
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+}
+
+.coinAndRedEllipse{
+    position: relative;
+}
+
+.redEllipse{
+    position: absolute;
+    left: 14px;
+}
+
+.liveStreamerDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+}
+
+.liveStreamer{
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 13px;
+    color: #B3B3B3;
+}
+
+.topcheerersWholeDiv{
+    width: 314px;
+    height: 48px;
+    background-color:#F8F8F8;
+    border: none;
+    box-sizing: border-box;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+}
+.topcheerersDiv{
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    margin-left: 76px;
+ }
+
+
+.nicknameCoinsAndSum {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 12px;
+    margin-bottom: 23px;
+    padding-right: 25px;
+}
+
+.nickname{
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 13px;
+    color: #9B9B9B;
+}
+
+.coinsAndSum{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 33%;
+}
+
+.sum{
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #FCAD02;
+    margin-left: 5px;
+}
+
+

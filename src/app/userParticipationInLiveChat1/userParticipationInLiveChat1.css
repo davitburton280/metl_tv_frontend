@@ -1,0 +1,125 @@
+.userParticipationDiv{
+    width: 414px;
+    height: 198px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 30px 22px;
+}
+
+.userAndComment{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.userOrCommentDiv{
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #5C5C5C;
+    margin-right: 72px;
+}
+
+.userParticipationBelowDiv{
+    display: flex;
+}
+
+.userParticipationBelowDivLeftPart{
+    display: flex;
+}
+
+.userDiv{
+    position: relative;
+}
+
+.userFrameIcon{
+    position: absolute;
+    top: 2px;
+    left: -6px;
+}
+
+.userImageDiv{
+    width: 24px;
+    height: 24px;
+}
+
+.userImgLivePart{
+    width: 100%;
+    object-fit: contain;
+}
+
+
+.nicknameAndStreamer{
+    margin-left: 4px;
+    margin-right: 28px;
+}
+.nicknameDiv{
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 13px;
+    color: #9B9B9B;
+    margin-bottom: 1px;
+}
+
+.userDiv{
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 13px;
+    color: #F53C6F;
+    margin-bottom: 12px;
+}
+
+.textDivLivePart{
+    margin-right: 42px;
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #5C5C5C;
+}
+
+.textAndDots{
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+}
+
+.dotsDiv{
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.threeDots{
+    height: 3px;
+}
+
+.openingModal{
+    width: 274px;
+    height: 32px;
+    background: #FFFFFF;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 5px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    padding: 6px;
+    font-family: Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 2px;
+    bottom: -20px;
+    position: absolute;
+}
+
+
