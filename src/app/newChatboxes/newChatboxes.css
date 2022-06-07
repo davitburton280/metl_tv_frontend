@@ -1,0 +1,319 @@
+.chatBoxesWholeDiv{
+    width: 1130px;
+    height: 1080px;
+    background: #FFFFFF;
+    padding-left: 131px;
+    padding-right: 163px;
+}
+
+.twoChatBoxes{
+    display: flex;
+}
+
+.firstChat{
+    margin-top: 232px;
+    width: 363px;
+    height: 603px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 20px rgba(165, 164, 164, 0.25);
+    margin-right: 110px;
+    display: flex;
+    flex-direction: column;
+}
+
+.secondChat{
+    margin-top: 151px;
+    width: 363px;
+    height: 683px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 20px rgba(165, 164, 164, 0.25);
+    display: flex;
+    flex-direction: column;
+}
+
+.chatFirstDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 21px 10px 23px;
+    border-bottom:  1px solid #545454;
+}
+
+.nicknameAndUserImg{
+    display: flex;
+    align-items: center;
+}
+
+.chatUser1Img{
+
+}
+
+.nickName{
+    font-family:Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #9B9B9B;
+    margin-left: 6px;
+}
+
+
+.closeBtnDiv{
+    width: 20px;
+    height: 20px;
+}
+
+.closeBtnChat{
+    width: 100%;
+}
+
+.firstChating{
+    display: flex;
+    margin-left: 10px;
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
+.chatUser2Div{
+    width: 24px;
+    height: 24px;
+}
+
+.chatUser2Img{
+    width: 100%;
+}
+
+.textDiv{
+    width: 253px;
+    height: 57px;
+    background: #18B587;
+    border-radius: 10px;
+    margin-left: 6px;
+}
+
+.secondOne{
+    display: flex;
+    align-self: flex-end;
+    margin-right: 10px;
+}
+
+.secondWriter{
+    margin-top: 8px;
+    margin-bottom: 24px;
+    margin-right: 10px;
+    display: flex;
+    align-self: flex-end;
+}
+
+.timeDiv{
+    display: flex;
+    justify-content: center;
+    font-family:Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #9B9B9B;
+    border-bottom: 1px solid #D5D5D5;;
+}
+
+.belowGreen{
+    margin-bottom: 24px;
+    margin-top: 24px;
+    display: flex;
+    align-self: flex-end;
+    margin-right: 10px;
+}
+
+.greyBigDiv{
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    box-sizing: border-box;
+    width:200px;
+    height: 116px;
+    padding: 8px 10px 8px 15px;
+    background: #EEEEEE;
+    border-radius: 10px;
+}
+
+.greySmallDiv{
+    display: flex;
+    margin-bottom: 14px;
+    justify-content: space-between;
+
+
+}
+
+.greySmallDiv:last-child{
+    margin-bottom: 0;
+}
+
+
+.greySmallDivLeftPart{
+    display: flex;
+    align-items: center;
+}
+
+.iconDiv{
+    width: 24px;
+    height: 24px;
+}
+
+.iconClass{
+    width: 100%;
+}
+
+.fileName{
+    font-family:Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #9B9B9B;
+    margin-left:15px;
+}
+
+.closingDiv{
+    width: 10px;
+    height: 10px;
+}
+
+.closingImg{
+    width: 100%;
+}
+
+.messageSendingPart{
+    display: flex;
+    margin-top: 45px;
+    margin-bottom: 19px;
+}
+
+.messageSendingDiv{
+    padding: 13px;
+    width: 303px;
+    height: 40px;
+    background: #EEEEEE;
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 4px;
+}
+
+.messageLeftPart{
+    width: 21px;
+    height: 21px;
+    margin-right: 16px;
+}
+
+.plusIcon{
+    width: 100%;
+}
+
+.messageTypingText{
+    font-family:Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #B3B3B3;
+}
+
+.sendingGreenBtn{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #18B587;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.greyOpenedDiv{
+    margin-right: 4px;
+    width: 303px;
+    height: 151px;
+    background: #EEEEEE;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-left: 10px;
+    display: flex;
+    justify-self: flex-start;
+    align-self: flex-start;
+    margin-top: 24px;
+    padding: 13px 20px 50px 10px
+}
+
+.insideWholeDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+.insideDiv{
+    width: 121px;
+    height: 35px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.insideDiv:first-child{
+    margin-right: 23px;
+}
+
+.iconInsideDiv{
+    width: 24px;
+    height: 24px;
+}
+
+.fileInsideDiv{
+    font-family:Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: #9B9B9B;
+    margin-left: 3px;
+}
+
+.insideBigDiv{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.closeDarkIconDiv{
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    right: -5px;
+    top: -5px
+}
+
+.closingDarkImg{
+    width: 100%;
+}
+
+.sendingGreenBtnOpened{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #18B587;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 132px;
+}
+
+.messageSendingPartOpened{
+    display: flex;
+}
