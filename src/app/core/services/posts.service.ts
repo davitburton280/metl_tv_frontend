@@ -63,7 +63,7 @@ export class PostsService {
 
     searchPost(params) {
         console.log(params);
-        return this.http.get<Post[]>(`${API_URL}posts/news-feed`, {params});
+        return this.http.get<Post[]>(`${API_URL}posts/news-feed`, { params });
     }
 
     delete(id: number[]) {

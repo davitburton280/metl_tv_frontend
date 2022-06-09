@@ -14,6 +14,7 @@ import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-
 import {Router} from '@angular/router';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
+import { VideoService } from "@core/services/video.service";
 
 @Component({
     selector: 'app-channel-profile',
@@ -39,6 +40,15 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     usersConnection;
 
+    srcCoverImg;
+    srcEditCoverImg;
+    showHidEditCoverImg = false;
+    fdCover = new FormData();
+    srcAvatarImg;
+    srcEditAvatarImg;
+    showHidEditAvatarImg = false;
+    fdAvatar = new FormData();
+
 
 
     @Input() channelUser;
@@ -56,17 +66,20 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private notificationsStore: NotificationsSubjectStoreService,
         private socketService: SocketIoService,
         public loader: LoaderService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private uploadFile: VideoService
     ) {
 
 
     }
 
     ngOnInit(): void {
-        console.log(this.authUser);
+        // console.log(this.authUser);
         if (this.channelUser) {
             this.initChannelForm();
             this.checkChannelSubscription();
+            this.srcCoverImg = this.channelUser.channel.cover;
+            this.srcAvatarImg = this.channelUser.channel.avatar;
         }
         this.socketService.getSubscribeChanel().subscribe(dt => {
             console.log(dt);
@@ -102,59 +115,70 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     }
 
     coverChangeEvent(event: any) {
+        // console.log('++++++++');
+        // console.log(event);
         this.coverChangedEvent = event;
-
-        const fd = new FormData();
-        const filename = `cover_${Date.now()}.jpg`;
-        this.channelForm.patchValue({cover: filename});
-        fd.append('cover_file', event.target.files[0], filename);
-        fd.append('cover', filename);
-        fd.append('id', this.authUser.id);
-        this.loader.dataLoading = true;
-        this.subscriptions.push(this.usersService.changeCoverImage(fd).subscribe((dt) => {
-            this.changeAuthUserInfo(dt);
-        }));
+        this.fdCover = new FormData();
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            this.srcEditCoverImg = ev.target.result;
+            this.showHidEditCoverImg = true;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+        this.fdCover.append('image', event.target.files[0]);
+        this.fdCover.append('belonging', 'chanel_cover_img');
+        this.fdCover.append('duration', '');
     }
 
     profileChangeEvent(event: any) {
         this.profileChangedEvent = event;
-        console.log(event);
-
-        const filename = `avatar_${Date.now()}.jpg`;
-        const fd = new FormData();
-        fd.append('avatar_file', event.target.files[0], filename);
-        fd.append('avatar', filename);
-        fd.append('id', this.authUser.id);
-        this.subscriptions.push(this.usersService.changeProfileImage(fd).subscribe((dt) => {
-            console.log(dt);
-            this.changeAuthUserInfo(dt);
-        }));
+        this.fdAvatar = new FormData();
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            this.srcEditAvatarImg = ev.target.result;
+            this.showHidEditAvatarImg = true;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+        this.fdAvatar.append('image', event.target.files[0]);
+        this.fdAvatar.append('belonging', 'chanel_avatar_img');
+        this.fdAvatar.append('duration', '');
     }
 
     detectImageChange() {
-        // document.querySelector('img.avatar').addEventListener('load', () => {
-        //     console.log('Loading image!!!')
         if (this.profileChangedEvent || this.coverChangedEvent) {
             this.loader.dataLoading = false;
             this.changingImage = false;
-            console.log('Avatar changed');
-            console.log(this.changingImage);
+            this.showHidEditCoverImg = false;
+            this.showHidEditAvatarImg = false;
+            // console.log('Avatar changed');
+            // console.log(this.changingImage);
         }
-        // });
     }
 
     removeCover() {
-        this.channelUser.channel.cover = '';
-        this.channelForm.patchValue({cover: this.channelUser.channel.cover});
+        console.log(this.channelUser);
+        this.srcEditCoverImg = '';
+        this.srcEditAvatarImg = '';
+        this.fdCover = new FormData();
+        this.fdAvatar = new FormData();
+        this.srcCoverImg = '';
+        this.srcAvatarImg = '';
+        this.detectImageChange();
+        this.coverChangedEvent = null;
+        this.profileChangedEvent = null;
+        this.showHidEditAvatarImg = false;
     }
 
     removeAvatar() {
-        this.channelUser.channel.avatar = '';
+        // this.channelUser.channel.avatar = '';
+        // this.srcCoverImg = this.channelUser.channel.cover;
+        this.srcAvatarImg = '';
+        this.srcAvatarImg = '';
         this.channelForm.patchValue({avatar: this.channelUser.channel.avatar});
     }
 
     subscribeToChannel(user): void {
-        this.connectWithUser(user);
+        // this.connectWithUser(user);
         this.subscriptions.push(this.channelService.subscribeToChannel({
             user_id: this.authUser.id,
             channel_id: user.channel.id
@@ -188,6 +212,9 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     toggleEditMode() {
         this.editMode = !this.editMode;
+        this.showHidEditCoverImg = false;
+        this.srcCoverImg = this.channelUser.channel.cover;
+        this.coverChangedEvent = null;
     }
 
     saveChanges() {
@@ -196,10 +223,40 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         console.log('save changes!!!');
 
         if (this.channelForm.valid) {
-            this.subscriptions.push(this.channelService.changeChannelDetails(this.channelForm.value).subscribe((dt => {
-                this.editMode = false;
-                this.changeAuthUserInfo(dt);
-            })));
+            this.loader.dataLoading = true;
+            if (this.coverChangedEvent) {
+                this.uploadFile.uploadFile(this.fdCover, 'image').subscribe(dt => {
+                    this.channelForm.patchValue({
+                        cover: dt.path
+                    });
+                    console.log(this.channelForm.value);
+                    this.subscriptions.push(this.channelService.changeChannelDetails(this.channelForm.value).subscribe((data => {
+                        this.editMode = false;
+                        this.changeAuthUserInfo(data);
+                    })));
+                });
+            }
+
+            if (this.profileChangedEvent) {
+                this.uploadFile.uploadFile(this.fdAvatar, 'image').subscribe(dat => {
+                    this.channelForm.patchValue({
+                        avatar: dat.path
+                    });
+                    console.log(this.channelForm.value);
+                    this.subscriptions.push(this.channelService.changeChannelDetails(this.channelForm.value).subscribe((data => {
+                        this.editMode = false;
+                        this.changeAuthUserInfo(data);
+                    })));
+                });
+            }
+
+            if (!this.profileChangedEvent && !this.coverChangedEvent) {
+                console.log(this.channelForm.value);
+                this.subscriptions.push(this.channelService.changeChannelDetails(this.channelForm.value).subscribe((data => {
+                    this.editMode = false;
+                    this.changeAuthUserInfo(data);
+                })));
+            }
         }
     }
 

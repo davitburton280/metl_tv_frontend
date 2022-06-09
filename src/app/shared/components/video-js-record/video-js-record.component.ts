@@ -201,7 +201,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             this.subject.setVideoRecordingState({recording: true, viaSocket: false});
 
             // console.log('start timestamp:' + this.player.currentTimestamp)
-            this.recordingStartTimeStamp = moment(this.player.currentTimestamp);
+            // this.recordingStartTimeStamp = moment(this.player.currentTimestamp);
             this.start = new Date();
             // console.log(start);
 
@@ -225,12 +225,15 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
                 tags: this.videoSettings.tags,
                 participants: this.participants.length
             }).subscribe((dt) => {
+                console.log(dt);
+                console.log('+++++++++++++++++');
                 this.videoId = dt?.id;
                 this.recordingStarted.emit(dt);
+                this.recordingStartTimeStamp = moment(this.player.currentTimestamp);
             });
 
 
-            // console.log('started recording!');
+            console.log('started recording!');
         });
 
 

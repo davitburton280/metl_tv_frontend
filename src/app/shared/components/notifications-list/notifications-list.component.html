@@ -8,6 +8,7 @@
         <p class="remove-all" *ngIf="notificationsStore.allNotifications.length > 0"
            (click)="removeAll()">Remove all notifications</p>
     </div>
+    <mat-icon (click)="closeRightSidenav.emit(true)">clear</mat-icon>
 </div>
 
 <div class="top">

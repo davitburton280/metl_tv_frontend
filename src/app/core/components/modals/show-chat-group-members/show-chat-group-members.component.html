@@ -16,7 +16,7 @@
         <ul>
             <li *ngFor="let member of getOnlyJoinedMembers()">
                 <div class="details">
-                    <img class="avatar" [src]="member.avatar|getImgPath: 'user_avatars'">
+                    <img class="avatar" [src]="member.avatar|getImgPath: 'images'">
                     <span>{{member.first_name + ' ' + member.last_name}}</span>
                 </div>
 

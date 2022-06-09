@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PostsStoreService } from '@core/services/stores/posts-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import {API_URL} from '@core/constants/global';
-import { UploadFileComponent } from "@core/components/modals/upload-file/upload-file.component";
+import { UploadFileComponent } from '@core/components/modals/upload-file/upload-file.component';
 
 @Component({
     selector: 'app-post-item',

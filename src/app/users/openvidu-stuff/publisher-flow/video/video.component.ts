@@ -213,7 +213,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
                             insertMode: 'APPEND',   // How the video is inserted in the target element 'video-container'
                             mirror: false           // Whether to mirror your local video or not
                         });
-
+                        console.log(publisher);
                         this.session.publish(publisher);
 
                         // Set the main video in the page to display our webcam and store our Publisher

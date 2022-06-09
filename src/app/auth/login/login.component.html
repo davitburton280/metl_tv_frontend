@@ -1,4 +1,4 @@
-<section class="login-content">
+<section class="login-content" (keyup.enter)="login()">
     <div class="login-content-left">
         <img class="login-logo" (click)="router.navigate(['/'])" src="assets/img/metltvlogo.svg">
         <div class="login-abs">
@@ -27,6 +27,7 @@
         </span>
                 <p class="forgot-password" (click)="router.navigate(['auth/forgot-password'])">Forgot password?</p>
                 <a class="login-submit" (click)="login()">Login</a>
+
             </form>
         </div>
     </div>

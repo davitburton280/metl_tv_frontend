@@ -1,5 +1,11 @@
 <mat-spinner [diameter]="15" *ngIf="loader.channelLoading.status==='loading'"></mat-spinner>
 <div class="profile-list">
+    <table>
+        <tr>
+            <td class="myProfile" [routerLink]="'/users/'+authUser?.username">My Profile</td>
+            <td class="myChannel" [routerLink]="'/channels/'+authUser?.username" [routerLinkActive]="'active'">My Channel</td>
+        </tr>
+    </table>
     <!--    <app-categories></app-categories>-->
     <ng-container *ngIf="channelUser">
         <app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>

@@ -6,7 +6,10 @@
                                     [showReplies]="showReplies" [selectedComment]="selectedComment"
                                     class="w-100" [reply]="true" (likeDislikeComment)="likeDislikeComment($event)"
                                     (commentAdded)="commentAdded($event)" (toggleReplies)="toggleReplies($event)"
-                                    (selectComment)="selectComment($event, true)"></app-single-comment>
+                                    (selectComment)="selectComment($event, true)"
+                                    [selectedReply]="selectedReply"
+                                    [reply2Reply]="true">
+                </app-single-comment>
                 <div class="replies" [hidden]="!isReplyShown(c)">
                     <ng-container *ngFor="let reply of c.replies">
                         <div class="d-flex reply mt-4" *ngIf="reply.id!==selectedReply?.id || !editReply">
@@ -18,7 +21,8 @@
                                                     [selectedReply]="selectedReply" [reply2Reply]="true"
                                                     (likeDislikeComment)="likeDislikeComment($event)"
                                                     (commentAdded)="commentAdded($event)" class="w-100"
-                                                    (selectComment)="replyToReply(c, reply)"></app-single-comment>
+                                                    (selectComment)="replyToReply(c, reply)">
+                                </app-single-comment>
                             </div>
                             <div class="right-group">
                                 <app-comment-actions [comment]="reply"

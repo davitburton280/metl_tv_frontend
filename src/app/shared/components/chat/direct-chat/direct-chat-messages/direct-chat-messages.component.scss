@@ -37,3 +37,63 @@
         padding: 0 18px;
     }
 }
+
+
+.greyBigDiv{
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    box-sizing: border-box;
+    width:200px;
+    //height: 116px;
+    padding: 8px 10px 8px 15px;
+    background: #EEEEEE;
+    border-radius: 10px;
+}
+
+.greySmallDiv{
+    display: flex;
+    margin-bottom: 14px;
+    justify-content: space-between;
+
+
+}
+
+.greySmallDiv:last-child{
+    margin-bottom: 0;
+}
+
+
+.greySmallDivLeftPart{
+    display: flex;
+    align-items: center;
+}
+
+.iconDiv{
+    width: 24px;
+    height: 24px;
+}
+
+.iconClass{
+    width: 100%;
+}
+
+.fileName{
+    font-family:Muli-Regular, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #9B9B9B;
+    margin-left:15px;
+}
+
+.closingDiv{
+    width: 10px;
+    height: 10px;
+}
+
+.closingImg{
+    width: 100%;
+}

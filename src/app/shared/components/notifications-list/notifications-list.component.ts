@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import {Subscription} from 'rxjs';
 import {NotificationsService} from '@core/services/notifications.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -26,6 +26,7 @@ export class NotificationsListComponent implements OnInit, OnDestroy {
     @Input() shownInSidebar = false;
     @Input() notificationsCategory = 'new';
     @Input() authUser;
+    @Output() closeRightSidenav = new  EventEmitter();
 
     constructor(
         private notificationsService: NotificationsService,

@@ -5,7 +5,7 @@
         <li *ngFor="let member of requestedMembers" class="group-member pending">
             <div class="requestPartDiv">
             <div class="avatarDiv">
-                <img class="avatar" [src]="member.avatar|getImgPath: 'user_avatars'">
+                <img class="avatar" [src]="member.avatar|getImgPath: 'images'">
             </div>
             <strong class="avatarName">{{member.first_name + ' ' + member.last_name}}</strong>
             </div>

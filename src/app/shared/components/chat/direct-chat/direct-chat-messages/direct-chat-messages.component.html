@@ -12,7 +12,7 @@
                     <mat-icon>arrow_back</mat-icon>
                 </button>
                 <div class="img">
-                    <img alt="user-avatar" class="avatar" [src]="uMessages.avatar|getImgPath: 'user_avatars'">
+                    <img alt="user-avatar" class="avatar" [src]="uMessages.avatar|getImgPath: 'images'">
                 </div>
                 <div class="name" *ngIf="uMessages.first_name">{{uMessages.first_name + ' ' + uMessages.last_name}}</div>
             </div>
@@ -30,10 +30,27 @@
                             <p class="date">{{m.created_at | date: 'HH:mm' }}</p>
                         </div>
                         <div class="message" [innerHTML]="m.message"></div>
+
+                        <div class="greyBigDiv" >
+                            <div class="greySmallDiv">
+                                <div class="greySmallDivLeftPart">
+                                    <div class="iconDiv">
+                                        <img  class="iconClass" src="../../assets/img/chatIcon1.png" alt="chatIcon">
+                                        <!--                                        <img  class="iconClass" src="../../assets/img/chatIcon2.png" alt="chatIcon">-->
+                                        <!--                                        <img  class="iconClass" src="../../assets/img/chatIcon3.png" alt="chatIcon">-->
+                                    </div>
+                                    <div class="fileName">File name</div>
+                                </div>
+                                <div class="closingDiv">
+                                    <img class="closingImg" src="../../assets/img/closeChat.png" (click)="downloadFile(m)">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="seen" *ngIf="isSeenByOtherUser(m)">
                             <img class="seen-avatar"
                                  [matTooltip]="sHelper.getSeenTooltip(selectedUserMessages, m)"
-                                 [src]="uMessages.avatar|getImgPath: 'user_avatars'">
+                                 [src]="uMessages.avatar|getImgPath: 'images'">
                         </div>
                     </li>
                 </ng-container>

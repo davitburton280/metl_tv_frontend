@@ -45,4 +45,13 @@
                 //max-width: 300px;
                 max-height: 250px;
             }
+    ul {
+        padding-left: 40px;
+    }
+    li {
+        list-style-type: unset;
+    }
+    ol {
+        margin: 0;
+    }
     }

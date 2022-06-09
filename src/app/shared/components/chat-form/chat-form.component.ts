@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'app-chat-form',
@@ -27,6 +28,11 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     @Output() sent = new EventEmitter();
     @Output() typing = new EventEmitter();
     @Output() seen = new EventEmitter();
+    @ViewChild('input') input;
+
+    files = [];
+    mode: ProgressSpinnerMode = 'determinate';
+    value = [];
 
     constructor(
         private fb: FormBuilder,
@@ -54,14 +60,64 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     }
 
     chatFile(event, input) {
-        console.log(event.target.files[0]);
-        console.log(input.value);
+        console.log(this.input.nativeElement.value);
+        const fl = event.target.files;
+        for (let i = 0; i < fl.length; i++) {
+            this.files.push({ file: fl[i], progress: false, progressValue: 0 });
+            this.fileProgressBarr(fl[i], i);
+        }
+        console.log(this.files);
+        const files = [];
+        this.files.forEach((elem) => {
+            const obj = {
+                name: 'backName',
+                originName: elem.file.name,
+            };
+            files.push(obj);
+        });
+        this.chatForm.patchValue({ fileName: files });
+        console.log(this.chatForm.value);
+        this.input.nativeElement.value = '';
+    }
+
+    fileProgressBarr(file, i) {
+        this.files[i].progress = true;
         const reader = new FileReader();
-        reader.onload = (e) => {
-            const url = e.target.result;
-            input.value = `<div><img style="width: inherit" alt=${event.target.files[0].name} src=${url}></div>`;
+        reader.onprogress = (e) => {
+            const loaded = e.loaded;
+            const total = e.total;
+            this.files[i].progressValue = Number(((loaded / total) * 100).toFixed());
+            if (this.files[i].progressValue === 100) {
+                this.files[i].progress = false;
+            }
         };
-        reader.readAsDataURL(event.target.files[0]);
+        reader.readAsDataURL(file);
+    }
+
+    removeMessageFile(file) {
+        console.log(file);
+        if (this.files.length > 0) {
+            this.files.forEach((elem, index) => {
+                if (elem.file.name === file.name
+                    && elem.file.size === file.size
+                    && elem.file.type === file.type
+                    && elem.file.lastModified === file.lastModified) {
+                    this.files.splice(index, 1);
+                }
+            });
+            this.chatForm.patchValue({ fileName: [] });
+            const files = [];
+            this.files.forEach((el) => {
+                const obj = {
+                    name: 'backName',
+                    originName: el.file.name,
+                };
+                files.push(obj);
+            });
+            this.chatForm.patchValue({ fileName: files });
+        }
+        console.log(this.files);
+        console.log(this.chatForm.value);
     }
 
     getSelectedUserChanges() {
@@ -105,6 +161,7 @@ export class ChatFormComponent implements OnInit, OnDestroy {
 
             // to_user: [null],
             message: [ {value: '', disabled: this.inputDisabled}, Validators.required],
+            fileName: [[]],
             // message: ['', Validators.required],
 
         };
@@ -165,6 +222,9 @@ export class ChatFormComponent implements OnInit, OnDestroy {
                 ...this.chatForm.value,
             });
             this.chatForm.patchValue({message: ''});
+            this.chatForm.patchValue({fileName: []});
+            this.files = [];
+            console.log(this.chatForm.value);
         }
     }
 

@@ -51,6 +51,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
 
     trackUsersMessagesChange() {
         this.subscriptions.push(this.usersMessagesStore.selectedUserMessages$.subscribe((dt: any) => {
+            console.log(dt);
             this.selectedUserMessages = dt;
             if (dt && dt.length > 0) {
                 this.isBlockedUser = !!dt.users_connections[0].is_blocked;
@@ -121,7 +122,8 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
 
     getMessagesFromSocket() {
         this.subscriptions.push(this.socketService.onNewMessage().subscribe((dt: any) => {
-            this.typingText = null;
+            console.log(dt);
+            this.userTypingText.text = null;
             this.sHelper.scrollMsgsToBottom(this.messagesList);
         }));
     }
@@ -149,6 +151,10 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         if (!this.isBlockedUser) {
             this.sHelper.scrollMsgsToBottom(this.messagesList);
         }
+    }
+
+    downloadFile(m) {
+        console.log(m);
     }
 
     ngOnDestroy() {

@@ -142,22 +142,28 @@ export class PostFormComponent implements OnInit, OnDestroy {
             fd.append('image', this.fileEditor);
             fd.append('belonging', 'post_img');
             fd.append('duration', '');
-            this.uploadFile.uploadFile(fd, 'image').subscribe(dt => {
-                if (dt) {
-                    this.postForm.value.description = this.postForm.value.description
-                        .replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
-                        // console.log('-----------------', capture);
-                        return '<img src="' + this.apiUrl + 'uploads/images/' + dt.path + '"/>';
-                    });
-                    this.savePost().then().catch(err => {
+            if (this.postForm.value.description.includes('img src="')) {
+                this.uploadFile.uploadFile(fd, 'image').subscribe(dt => {
+                        if (dt) {
+                            this.postForm.value.description = this.postForm.value.description
+                                .replace(/<img [^>]*src=['"]([^'"]+)[^>]*>/gi, (match, capture) => {
+                                    // console.log('-----------------', capture);
+                                    return '<img src="' + this.apiUrl + 'uploads/images/' + dt.path + '"/>';
+                                });
+                            this.savePost().then().catch(err => {
+                                console.log(err);
+                                this.uploadFile.deleteFile(dt.path, 'image').subscribe(res => console.log(res));
+                            });
+                        }
+                    },
+                    err => {
                         console.log(err);
-                        this.uploadFile.deleteFile(dt.path, 'image').subscribe(res => console.log(res));
                     });
-                }
-            },
-            err => {
-                console.log(err);
-            });
+            } else {
+                this.savePost().then().catch(err => {
+                    console.log(err);
+                });
+            }
         } else {
             if (this.postForm.value.description.includes('img src="')) {
                 const fd = new FormData();

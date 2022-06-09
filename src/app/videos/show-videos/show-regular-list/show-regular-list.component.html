@@ -1,7 +1,7 @@
 <div id="regular-video-list-container">
     <div class="video-container" *ngFor="let video of items.videos; trackBy: trackByElement">
         <div class="thumbnail">
-            <img [src]="video.thumbnail|getImgPath" (click)="openVideoPage(video, video.user.username)">
+            <img [src]="video.thumbnail|getImgPath:'images'" (click)="openVideoPage(video, video.user.username)">
             <span class="live-now" *ngIf="video.status==='live'">Live now</span>
             <span class="duration" *ngIf="video.status!=='live'">{{video.duration}}</span>
         </div>
@@ -9,7 +9,7 @@
             <h4 class="title">{{video.name}}</h4>
             <div class="shortened-details">
                 <div class="user-avatar avatarClass">
-                    <img class="avatar" [src]="video.channel.avatar|getImgPath: 'avatars'">
+                    <img class="avatar" [src]="video.channel.avatar|getImgPath: 'images'">
                 </div>
                 <span class="channel-name" [routerLink]="'/channels/'+video.user.username">
                     {{video.user.channel.name}}

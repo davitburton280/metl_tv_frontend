@@ -19,7 +19,7 @@
                         <label [for]="'contact_'+control.value.i">
                             <div class="avatar-wrap">
                                 <img class="avatar"
-                                     [src]="control.value.avatar|getImgPath: 'user_avatars'">
+                                     [src]="control.value.avatar|getImgPath: 'images'">
                             </div>
                             <div>
                                 <p class="contact-full-name">{{control.value.first_name + ' ' + control.value.last_name}}</p>
@@ -52,7 +52,7 @@
                 <li *ngFor="let control of checkedContactCtrls;let i = index" [formGroupName]="i">
                     <div class="details">
                         <label [for]="control.value.id+'_'+i">
-                            <img class="avatar" [src]="control.value.avatar|getImgPath: 'user_avatars'">
+                            <img class="avatar" [src]="control.value.avatar|getImgPath: 'images'">
                             <span>{{control.value.first_name + ' ' + control.value.last_name}}</span>
                         </label>
                     </div>

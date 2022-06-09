@@ -7,7 +7,7 @@
 
             <div class="avatar-status-wrap">
                 <img class="avatar" [matTooltip]="m.first_name+ ' '+m.last_name"
-                     [src]="m.avatar|getImgPath: 'user_avatars'">
+                     [src]="m.avatar|getImgPath: 'images'">
                 <mat-icon *ngIf="ifRemoveMemberShown(m)" (click)="removeSavedMember(m)">cancel</mat-icon>
                 <div class="status" [ngClass]="getUserCurrentStatus(m) ? 'online':'offline'"></div>
             </div>

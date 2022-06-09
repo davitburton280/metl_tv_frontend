@@ -56,6 +56,7 @@ export class VideosListHolderComponent implements OnInit, OnDestroy {
     }
 
     removeVideo(video) {
+        console.log(video);
         this.subscriptions.push(this.dialog.open(ConfirmationDialogComponent).afterClosed().subscribe(confirmed => {
             if (confirmed) {
                 this.videoService.removeVideo({

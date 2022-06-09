@@ -5,7 +5,7 @@
              cdkDrag
              (cdkDragDropped)="dragDropped($event, channel)" (click)="openChannelPage(channel)">
             <ng-container *ngIf="i < 5">
-                <img class="list-img" [src]="channel.avatar | getImgPath:'avatars'">
+                <img class="list-img" [src]="channel.avatar | getImgPath:'images'">
                 <div class="">
                     <p class="channel-name">{{channel.name}}</p>
                 </div>

@@ -151,7 +151,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     addUserToSocket(pair) {
-        console.log('add user to socket!!!!', pair);
+        // console.log('add user to socket!!!!', pair);
         this.socketService.addNewUser({
             ...this.authUser,
             chat_groups: pair.chatGroups.map(cg => cg.name),

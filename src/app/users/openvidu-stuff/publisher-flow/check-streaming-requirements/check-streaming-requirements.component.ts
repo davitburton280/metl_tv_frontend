@@ -53,7 +53,7 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
     }
 
     async getConnectedDevices(pageLoad = false) {
-        console.log(navigator.mediaDevices)
+
         navigator.mediaDevices.getUserMedia({audio: true, video: true}).then(() => {
             this.deviceStatus = 'loading';
             navigator.mediaDevices.enumerateDevices()

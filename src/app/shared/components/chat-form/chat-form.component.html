@@ -6,13 +6,46 @@
                               (keyup.enter)="sendMessageOnEnter($event)">
                     </textarea>
         <div class="embed-textarea" *ngIf="embed">
-            <button class="add-btn" (click)="input.click()">+</button>
-            <input type="file" hidden #input (change)="chatFile($event, textAreaMsg)">
-            <textarea class="flex-1 mx-3" cdkTextareaAutosize formControlName="message" placeholder="Message"
-                      (keyup)="setTyping()" (focus)="setSeen()" (keyup.enter)="sendMessageOnEnter($event)" #textAreaMsg>
-            </textarea>
 
-            <button class="send-btn" (click)="sendMessage()"><img alt="send button" src="assets/img/send.svg"></button>
+
+<!--            <button class="send-btn" (click)="sendMessage()"><img alt="send button" src="assets/img/send.svg"></button>-->
+
+
+            <div class="greyOpenedDiv">
+                <div class="insideWholeDiv">
+                    <div class="insideBigDiv">
+                        <div class="insideDiv" *ngFor="let file of files; let i=index">
+                            <div class="iconInsideDiv">
+                                <img *ngIf="file.file.type.includes('video')" class="chatUser1Img" src="../../assets/img/chatIcon1.png" alt="chatIcon video">
+                                <img *ngIf="file.file.type.includes('image')" class="chatUser1Img" src="../../assets/img/chatIcon2.png" alt="chatIcon image">
+                                <img *ngIf="!file.file.type.includes('video') && !file.file.type.includes('image')" class="chatUser1Img" src="../../assets/img/chatIcon3.png" alt="chatIcon file">
+                            </div>
+                            <div class="fileInsideDiv">{{file.file.name}}</div>
+                            <div class="closeDarkIconDiv" (click)="removeMessageFile(file.file)">
+                                <img *ngIf="!file.progress" class="closingDarkImg" src="../../assets/img/closeDarkIcon.png" alt="closeIcon">
+                                <mat-progress-spinner *ngIf="file.progress"
+                                    class="example-margin"
+                                    [color]="'primary'"
+                                    [mode]="mode"
+                                    [value]="file.progressValue">
+                                </mat-progress-spinner>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="embed-div">
+                    <button class="add-btn" (click)="input.click()">+</button>
+                    <input type="file" hidden multiple #input (change)="chatFile($event, textAreaMsg)">
+                    <textarea class="flex-1 mx-3" cdkTextareaAutosize formControlName="message" placeholder="Message"
+                              (keyup)="setTyping()" (focus)="setSeen()" (keyup.enter)="sendMessageOnEnter($event)" #textAreaMsg>
+                    </textarea>
+                </div>
+            </div>
+            <div class="sendingGreenBtnOpened" (click)="sendMessage()">
+                <img class="sendingBtn" src="../../assets/img/chatIcon5.png">
+            </div>
+
+
         </div>
     </form>
     <div class="icons" [hidden]="isProduction || embed">

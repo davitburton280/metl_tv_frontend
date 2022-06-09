@@ -1,4 +1,10 @@
 <div id="profile-wrap" *ngIf="profileUser">
+    <table>
+        <tr>
+            <td class="myProfile" [routerLink]="'/users/'+authUser?.username" [routerLinkActive]="'active'">My Profile</td>
+            <td class="myChannel" [routerLink]="'/channels/'+authUser?.username">My Channel</td>
+        </tr>
+    </table>
     <div id="profile-cover-image">
         <img [src]="profileUser?.cover|getImgPath:'images'">
     </div>

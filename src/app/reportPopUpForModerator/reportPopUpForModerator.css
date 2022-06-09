@@ -44,6 +44,7 @@
     color: #ACA5A5;
     margin-bottom: 17px;
     box-sizing: border-box;
+    resize: none;
 }
 
 .sendBtn{

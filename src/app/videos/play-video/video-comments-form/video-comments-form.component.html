@@ -1,6 +1,6 @@
 <form [formGroup]="videoCommentsForm" class="w-100">
     <div class="d-flex mt-3 comment-input-container">
-        <img class="avatar" [src]="authUser.avatar|getImgPath:'user_avatars'">
+        <img class="avatar" [src]="authUser.avatar|getImgPath:'images'">
         <input type="hidden" formControlName="comment">
         <mat-form-field floatLabel="never">
             <textarea matInput cdkTextareaAutosize [placeholder]="placeholderText" class="comment-input" #cEditable

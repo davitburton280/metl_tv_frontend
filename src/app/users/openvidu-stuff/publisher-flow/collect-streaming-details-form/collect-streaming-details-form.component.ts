@@ -105,7 +105,6 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
 
     add(event: MatChipInputEvent): void {
         console.log('add');
-        console.log(this.tags.length);
         const input = event.input;
         if (this.tags.length < 3) {
             const value = event.value;
@@ -113,7 +112,6 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
             if ((value || '').trim()) {
                 this.tags.push({name: value.trim()});
                 this.startStreamingForm.patchValue({tags: this.tags});
-                console.log(this.tags);
                 // console.log(this.startStreamingForm.value)
             }
         }
@@ -123,7 +121,6 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         }
     }
     resetValue(event) {
-        console.log(!!event.target.value);
         if (event.target.value && this.tags.length >= 3) {
             event.target.value = '';
         }
@@ -152,7 +149,6 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
             if (dt) {
                 this.thumbnailUploading = true;
                 this.loader.fileProcessing = true;
-                console.log(dt);
                 if (typeof dt === 'string') {
                     this.thumbnailUploading = false;
                     this.loader.fileProcessing = false;
@@ -167,7 +163,6 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
                         fd.append('duration', '');
                     });
                     this.uploadFile.uploadFile(fd, type).subscribe((res) => {
-                        console.log(res);
                         this.thumbnailImage = res.path;
                         this.imageName = res.path;
                         this.startStreamingForm.patchValue({thumbnail: this.imageName});
@@ -222,7 +217,6 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     }
 
     resetTextArea(e) {
-        console.log(e.target.value.length);
         if (e.target.value.length > this.limit) {
             e.target.value = e.target.value.slice(0, this.limit);
             this.startStreamingForm.value.description = e.target.value;

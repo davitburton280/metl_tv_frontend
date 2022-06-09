@@ -1,6 +1,6 @@
 <form [formGroup]="channelForm">
     <div class="profile-block">
-        <div [hidden]="true" *ngIf="channelUser.username === authUser.username">
+        <div [hidden]="true" *ngIf="editMode">
             <input type="file" id="cover-image-input" (change)="coverChangeEvent($event)"/>
             <input type="hidden" formControlName="cover">
 <!--            <ngx-photo-editor-->
@@ -12,11 +12,12 @@
 
         <div class="cover-image-container">
             <label for="cover-image-input">
-                <img id="cover-image" [src]="channelUser.channel?.cover|getImgPath: 'covers'"
+                <img id="cover-image" *ngIf="!showHidEditCoverImg" [src]="srcCoverImg|getImgPath: 'images'"
                      (load)="detectImageChange()">
+                <img class="editImg" *ngIf="showHidEditCoverImg" [src]="srcEditCoverImg" alt="">
             </label>
             <button mat-icon-button type="button" class="remove-cover-btn" (click)="removeCover()"
-                    *ngIf="editMode && channelUser.channel.cover">
+                    *ngIf="editMode && srcCoverImg">
                 <mat-icon>clear</mat-icon>
             </button>
         </div>
@@ -26,25 +27,20 @@
         <div id="channel-name-avatar">
             <div class="avatar-container">
                 <label for="profile-image-input">
-                    <img class="avatar" [ngStyle]="{opacity: editMode ? 0.5: 1}" id="profile-image"
+                    <img class="avatar" *ngIf="!showHidEditAvatarImg" [ngStyle]="{opacity: editMode ? 0.5: 1}" id="profile-image"
                          (load)="detectImageChange()"
-                         [src]="channelUser.channel.avatar|getImgPath: 'avatars'">
-                    <mat-icon id="add-photo-btn" *ngIf="editMode && !channelUser.channel.avatar">add</mat-icon>
+                         [src]="srcAvatarImg|getImgPath: 'images'">
+                    <img class="avatar" *ngIf="showHidEditAvatarImg" [ngStyle]="{opacity: editMode ? 0.5: 1}" [src]="srcEditAvatarImg" alt="">
+                    <mat-icon id="add-photo-btn" *ngIf="editMode && !srcAvatarImg">add</mat-icon>
                 </label>
                 <mat-icon (click)="removeAvatar()" class="remove-avatar-btn"
-                          *ngIf="editMode && channelUser.channel.avatar">clear
+                          *ngIf="editMode && srcAvatarImg">clear
                 </mat-icon>
             </div>
 
-            <div [hidden]="true" *ngIf="this.channelUser.username === this.authUser.username">
+            <div [hidden]="true" *ngIf="editMode">
                 <input type="file" id="profile-image-input" (change)="profileChangeEvent($event)"/>
                 <input type="hidden" formControlName="avatar">
-<!--                <ngx-photo-editor-->
-<!--                    [imageChanedEvent]="profileChangedEvent"-->
-<!--                    (imageCropped)="profileCropped($event)"-->
-<!--                    [aspectRatio]="4/3"-->
-<!--                    [viewMode]="1"-->
-<!--                    [resizeToWidth]="500"></ngx-photo-editor>-->
 
             </div>
             <div>

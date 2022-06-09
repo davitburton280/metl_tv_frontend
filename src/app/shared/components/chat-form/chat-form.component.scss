@@ -55,23 +55,35 @@
 .embed-textarea {
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    //height: 50px;
+
+    .embed-div {
+        display: flex;
+        align-items: center;
+        //height: 50px;
+        //background-color: #d5d5d5;
+        //border-radius: 10px;
+    }
 
     .add-btn {
-        width: 25px;
-        height: 20px;
+        width: 21px;
+        height: 21px;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 50%;
+        margin: 0 5px;
+        background-color: #FFFFFF;
+        box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
     }
 
     textarea {
-        border: 1px solid #ddd;
-        border-radius: 2px;
-        padding: 5px 10px;
-        width: 100%;
-        height: 40px !important;
+        border: unset;
+        padding: 10px 10px;
+        width: 77%;
+        height: 36px !important;
+        background-color: inherit;
 
         &:focus {
             outline: none;
@@ -81,10 +93,191 @@
     }
 
     .send-btn {
-        background-color: transparent;
+        background-color: #18B587;
         border: 0;
         outline: 0;
         margin-left: 5px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+
+        img {
+            filter: brightness(100);
+        }
+    }
+
+
+    .fileName{
+        font-family:Muli-Regular, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        color: #9B9B9B;
+        margin-left:15px;
+    }
+
+    .closingDiv{
+        width: 10px;
+        height: 10px;
+    }
+
+    .closingImg{
+        width: 100%;
+    }
+
+    .messageSendingPart{
+        display: flex;
+        margin-top: 45px;
+        margin-bottom: 19px;
+    }
+
+    .messageSendingDiv{
+        padding: 13px;
+        width: 303px;
+        height: 40px;
+        background: #EEEEEE;
+        border-radius: 10px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        margin-right: 4px;
+    }
+
+    .messageLeftPart{
+        width: 21px;
+        height: 21px;
+        margin-right: 16px;
+    }
+
+    .plusIcon{
+        width: 100%;
+    }
+
+    .messageTypingText{
+        font-family:Muli-Regular, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        color: #B3B3B3;
+        border: unset;
+        resize: unset;
+        width: 100%;
+        height: 24px;
+    }
+    .messageTypingText:focus-visible {
+        outline: unset;
+    }
+
+    .sendingGreenBtn{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #18B587;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .greyOpenedDiv{
+        margin-right: 4px;
+        width: 303px;
+        max-height: 151px;
+        background: #EEEEEE;
+        border-radius: 10px;
+        //padding: 13px 20px 50px 10px
+        padding: 10px
+    }
+
+    .insideWholeDiv{
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: 100px;
+    }
+
+    .insideDiv{
+        width: 121px;
+        height: 35px;
+        background: #FFFFFF;
+        border-radius: 10px;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-bottom: 10px;
+        margin-right: 15px;
+    }
+
+    //.insideDiv:first-child{
+    //    margin-right: 23px;
+    //}
+
+    .iconInsideDiv{
+        width: 24px;
+        height: 24px;
+    }
+
+    .fileInsideDiv{
+        font-family:Muli-Regular, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        color: #9B9B9B;
+        margin-left: 3px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .insideBigDiv{
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding-top: 5px;
+    }
+
+    .closeDarkIconDiv{
+        width: 17px;
+        height: 17px;
+        position: absolute;
+        right: -5px;
+        top: -5px;
+        cursor: pointer;
+
+        mat-progress-spinner {
+            width: 17px!important;
+            height: 17px!important;
+            //.mat-progress-spinner svg {
+            //    width: 17px!important;
+            //    height: 17px!important;
+            //}
+        }
+        ::ng-deep .mat-progress-spinner svg {
+            width: 17px!important;
+            height: 17px!important;
+        }
+        ::ng-deep .mat-progress-spinner circle {
+            stroke: #18b587;
+        }
+    }
+
+    .closingDarkImg{
+        width: 100%;
+    }
+
+    .sendingGreenBtnOpened{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #18B587;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        //margin-top: 132px;
     }
 }
 

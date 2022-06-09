@@ -1,5 +1,5 @@
 <div class="d-flex comments_part_below">
-    <img class="avatar avatar-comments" [src]="comment?.user.avatar | getImgPath:'user_avatars'">
+    <img class="avatar avatar-comments" [src]="comment?.user.avatar | getImgPath:'images'">
     <div class="details">
         <div class="d-flex align-items-center mb-2 detailsPart">
             <div class="mr-3 user-name" [class.author.px-2]="isAuthor(comment)"
@@ -22,9 +22,11 @@
             </div>
             <div class="reply-container">
                 <span class="reply" (click)="selectCommentFn(comment)">Reply</span>
-                <app-video-comments-form [videoData]="videoData" [reply]="reply"
-                                         *ngIf="showReplyForm && (comment.id===selectedComment?.id ||comment.id == selectedReply?.id)"
-                                         [selectedComment]="selectedComment" [reply2Reply]="reply2Reply"
+                <app-video-comments-form [videoData]="videoData"
+                                         [reply]="reply"
+                                         *ngIf="showReplyForm && (comment.id===selectedComment?.id ||comment.id === selectedReply?.id)"
+                                         [selectedComment]="selectedComment"
+                                         [reply2Reply]="reply2Reply"
                                          [selectedReply]="selectedReply"
                                          (added)="commentAddedFn($event)"
                                          class="w-100"></app-video-comments-form>

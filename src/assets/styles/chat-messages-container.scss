@@ -125,6 +125,15 @@
             .message {
                 background: #18B587;
                 color: #FFFFFF;
+                max-width: 245px;
+                width: 100%;
+
+                ::ng-deep div {
+                    img {
+                        max-width: 220px!important;
+                        width: 100%;
+                    }
+                }
             }
 
             .message-date {
@@ -165,6 +174,11 @@
             line-height: 21px;
             padding: 16px;
             font-family: "Muli-Light";
+
+            ::ng-deep img {
+                max-width: 700px;
+                width: 100%;
+            }
         }
 
         .seen {
@@ -175,6 +189,7 @@
                 width: 20px;
                 height: 20px;
                 border-radius: 20px;
+                margin-top: 10px;
             }
         }
     }

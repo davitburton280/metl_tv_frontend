@@ -34,6 +34,14 @@
 .cover-image-container {
     position: relative;
 
+    #cover-image {
+        object-fit: contain;
+    }
+
+    .editImg {
+        object-fit: contain;
+    }
+
     .remove-cover-btn {
         position: absolute;
         right: 0;
@@ -77,6 +85,11 @@ label[for="cover-image-input"] {
 
     label {
         margin-bottom: 0;
+
+        #profile-image {
+            cursor: unset;
+            object-fit: contain;
+        }
     }
 
     .remove-avatar-btn {

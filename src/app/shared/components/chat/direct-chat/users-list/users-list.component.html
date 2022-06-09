@@ -39,7 +39,7 @@
                         <div class="left-group" (click)="selectUserMessages(userMessages, lastMsg)">
 
                             <div class="img user-avatar">
-                                <img class="avatar" [src]="user.avatar|getImgPath: 'user_avatars'">
+                                <img class="avatar" [src]="user.avatar|getImgPath: 'images'">
                                 <div class="status"
                                      [ngClass]="getUserCurrentStatus(user.username) ? 'online':'offline'"></div>
                             </div>

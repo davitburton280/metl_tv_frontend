@@ -4,7 +4,7 @@
             <ng-container *ngIf="chatBoxType === 'direct'">
                 <div class="avatar-container">
                     <img class="avatar user-avatar" alt="channel-user-avatar"
-                         [src]="channelUser?.avatar|getImgPath: 'user_avatars'">
+                         [src]="channelUser?.avatar|getImgPath: 'images'">
                     <span>{{channelUser?.first_name + ' ' + channelUser?.last_name}}</span>
                 </div>
             </ng-container>

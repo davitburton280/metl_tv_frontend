@@ -71,10 +71,11 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
         });
 
         if (this.reply2Reply) {
-            this.replyUsername = '@' + this.selectedReply?.user.username + ' ';
-            this.videoCommentsForm.patchValue({comment: this.replyUsername});
+            if (this.authUser.id !== this.selectedReply.from_id) {
+                this.replyUsername = '@' + this.selectedReply?.user.username + ' ';
+                this.videoCommentsForm.patchValue({ comment: this.replyUsername });
+            }
         }
-
     }
 
     saveComment() {

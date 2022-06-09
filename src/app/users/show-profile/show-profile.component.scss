@@ -1,6 +1,32 @@
 @import 'mixins';
 @import 'page-tabs';
 
+#profile-wrap {
+
+    table {
+        margin-bottom: 20px;
+
+        tr {
+
+            td {
+                width: 100px;
+                height: 35px;
+                //border: 1px solid #000000;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .myProfile {
+                margin-right: 15px;
+            }
+            .active {
+                background-color: #F53C6F;
+                color: #FFFFFF;
+            }
+        }
+    }
+}
+
 #profile-cover-image {
     margin-bottom: 20px;
 

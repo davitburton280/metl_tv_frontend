@@ -35,7 +35,7 @@
 
                             <img class="avatar" [class.selectable]="message.from_user.username!==this.authUser.username"
                                  [class.selected]="selectedUsersToReply.includes(message.from_user.username) && userSelected"
-                                 [src]="message.from_channel?.avatar|getImgPath:'avatars'"
+                                 [src]="message.from_channel?.avatar|getImgPath:'images'"
                                  (click)="selectUserToReply(message)">
                             <p class="chat-block-1 username">
                                 {{message.from_channel?.name + (message.from_user.username === authUser.username ? '(Me)' : '')}}
