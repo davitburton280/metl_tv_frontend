@@ -81,7 +81,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             height: 480,
             bigPlayButton: false,
             controlBar: {
-                volumePanel: true
+                volumePanel: true,
+                pictureInPictureToggle: false,
             },
             plugins: {
                 /*
@@ -189,8 +190,8 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
         // device is ready
         this.player.on('deviceReady', (a) => {
-            // console.log(a)
-            this.shareScreen.emit();
+            console.log(a);
+            this.shareScreen.emit(a);
             // console.log('device is ready!');
         });
 
@@ -332,6 +333,21 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
             this.player.dispose();
             this.player = false;
         }
+    }
+
+    muted() {
+        navigator.mediaDevices.getUserMedia({audio: true, video: true}).then((stream) => {
+            console.log(stream.getTracks());
+            stream.getTracks()[0].enabled = false;
+            stream.getTracks()[1].enabled = false;
+        });
+    }
+    unMuted() {
+        navigator.mediaDevices.getUserMedia({audio: true, video: true}).then((stream) => {
+            console.log(stream.getTracks());
+            stream.getTracks()[0].enabled = true;
+            stream.getTracks()[1].enabled = true;
+        });
     }
 
 }

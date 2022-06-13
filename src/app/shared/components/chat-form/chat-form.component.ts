@@ -7,6 +7,7 @@ import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-
 import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { VideoService } from "@core/services/video.service";
 
 @Component({
     selector: 'app-chat-form',
@@ -40,6 +41,7 @@ export class ChatFormComponent implements OnInit, OnDestroy {
         private usersMessagesStore: UsersMessagesSubjectService,
         private groupMessagesStore: GroupsMessagesSubjectService,
         private fixLineBreaks: FixTextLineBreaksPipe,
+        private uploadFile: VideoService,
         private renderer: Renderer2
     ) {
     }
@@ -66,17 +68,6 @@ export class ChatFormComponent implements OnInit, OnDestroy {
             this.files.push({ file: fl[i], progress: false, progressValue: 0 });
             this.fileProgressBarr(fl[i], i);
         }
-        console.log(this.files);
-        const files = [];
-        this.files.forEach((elem) => {
-            const obj = {
-                name: 'backName',
-                originName: elem.file.name,
-            };
-            files.push(obj);
-        });
-        this.chatForm.patchValue({ fileName: files });
-        console.log(this.chatForm.value);
         this.input.nativeElement.value = '';
     }
 
@@ -105,16 +96,6 @@ export class ChatFormComponent implements OnInit, OnDestroy {
                     this.files.splice(index, 1);
                 }
             });
-            this.chatForm.patchValue({ fileName: [] });
-            const files = [];
-            this.files.forEach((el) => {
-                const obj = {
-                    name: 'backName',
-                    originName: el.file.name,
-                };
-                files.push(obj);
-            });
-            this.chatForm.patchValue({ fileName: files });
         }
         console.log(this.files);
         console.log(this.chatForm.value);
@@ -160,8 +141,8 @@ export class ChatFormComponent implements OnInit, OnDestroy {
             from_id: [this.authUser.id],
 
             // to_user: [null],
-            message: [ {value: '', disabled: this.inputDisabled}, Validators.required],
-            fileName: [[]],
+            message: [ {value: '', disabled: this.inputDisabled}],
+            files: [[]],
             // message: ['', Validators.required],
 
         };
@@ -217,14 +198,43 @@ export class ChatFormComponent implements OnInit, OnDestroy {
     }
 
     sendMessage() {
-        if (this.chatForm.valid && this.chatForm.value.message.trim() !== '') {
-            this.sent.emit({
-                ...this.chatForm.value,
-            });
-            this.chatForm.patchValue({message: ''});
-            this.chatForm.patchValue({fileName: []});
-            this.files = [];
-            console.log(this.chatForm.value);
+        console.log('send');
+        if (this.chatForm.valid) {
+            if (this.files.length > 0) {
+                const fd = new FormData();
+                this.files.forEach(elem => {
+                    fd.append('files', elem.file);
+                });
+                this.uploadFile.uploadFile(fd, 'message_files').subscribe(dt => {
+                    console.log(dt);
+                    if (dt) {
+                        const files = [];
+                        dt.path.forEach((elem) => {
+                            const obj = {
+                                name: elem.path,
+                                originName: elem.name,
+                            };
+                            files.push(obj);
+                        });
+                        this.chatForm.patchValue({ files });
+                        this.sent.emit({
+                            ...this.chatForm.value,
+                        });
+                        this.chatForm.patchValue({message: ''});
+                        this.chatForm.patchValue({files: []});
+                        this.files = [];
+                    }
+                });
+            }
+            if (this.files.length === 0) {
+                this.sent.emit({
+                    ...this.chatForm.value,
+                });
+                this.chatForm.patchValue({message: ''});
+                this.chatForm.patchValue({files: []});
+                this.files = [];
+                console.log(this.chatForm.value);
+            }
         }
     }
 
