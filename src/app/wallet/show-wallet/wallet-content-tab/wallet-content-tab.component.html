@@ -4,7 +4,7 @@
         <div class="d-flex">
             <ul>
                 <li *ngFor="let card of userCards">
-                    <img src="assets/img/credit-card.svg" alt="" width="22" height="15">
+                    <img class="greenImg" src="assets/img/credit-card.svg" alt="" width="22" height="15">
                     <span class="ml-2">**** **** **** {{card.last4}}</span>
                 </li>
             </ul>
@@ -14,9 +14,7 @@
         </div>
     </div>
     <ng-container>
-
         <div class="mr-lg-5 mr-4">
-
             <div class="sub-titles mb-3 wallet-subtitles">Purchased Metl Coins</div>
             <div class="d-flex align-items-center">
                 <div class="mr-5">
@@ -51,8 +49,7 @@
     </ng-container>
 </div>
 
-
-<hr>
+<hr class="lineBreak">
 <div class="d-flex align-items-center">
     <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
     <mat-spinner [diameter]="15" *ngIf="loader.dataLoading"></mat-spinner>
@@ -66,7 +63,5 @@
         </div>
     </div>
 </div>
-
-
 <app-mat-reusable-table [data]="payments" [columns]="displayedColumns" [tab]="'payments'"
                         [changing]="changingValue"></app-mat-reusable-table>

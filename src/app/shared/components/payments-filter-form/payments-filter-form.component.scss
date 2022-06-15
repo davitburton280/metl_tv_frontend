@@ -5,14 +5,8 @@
 .firstOne{
     margin-right: 10px;
  }
-
-.inputDate{
-    width: 199px;
-    height: 36px;
-    background-color: #F8F8F8;
-    padding: 10px 12px;
-    margin-top: 25px;
-    position: relative;
+.date-div  .mat-form-field-wrapper{
+    background-color: #F8F8F8 !important;
 }
 
 .labelDate{
@@ -28,4 +22,8 @@
     position: absolute;
     bottom: -3px;
     right: 10px;
+}
+
+.mat-datepicker-toggle-default-icon{
+    width: 24px !important;
 }
