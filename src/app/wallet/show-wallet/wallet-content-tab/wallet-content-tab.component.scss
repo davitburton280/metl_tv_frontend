@@ -53,3 +53,56 @@
     }
 }
 
+.d-flex{
+    display: flex;
+}
+
+.mr-lg-5{
+    margin-right: 98px;
+}
+
+.wallet-subtitles{
+    font-family: Muli-Bold, sans-serif;
+    font-style: normal;
+    font-weight:700;
+    font-size: 18px;
+    line-height:23px;
+    color: #000000;
+    margin-bottom: 26px;
+}
+
+.addnewCardDiv{
+    font-family: Muli-SemiBold, sans-serif;
+    font-style: normal;
+    font-weight:600;
+    font-size: 16px;
+    line-height:20px;
+    color: #F53C6F;
+}
+
+.paymentHistoryAndBtns{
+    align-items: center;
+}
+
+.paymentHistoryDiv{
+    font-family: Muli-Bold, sans-serif;
+    font-style: normal;
+    font-weight:700;
+    font-size: 18px;
+    line-height:23px;
+    color: #000000;
+}
+
+.paymentPartBtn{
+    font-family: Muli-Light, sans-serif;
+    font-style: normal;
+    font-weight:300;
+    font-size: 16px;
+    line-height:20px;
+    color: #FFFFFF;
+}
+
+.walletContent{
+    margin-top: 41px;
+}
+

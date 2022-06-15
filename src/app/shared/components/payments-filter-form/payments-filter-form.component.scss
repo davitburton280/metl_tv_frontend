@@ -1,0 +1,31 @@
+.wholeDiv{
+    display: flex;
+    justify-content: space-between;
+}
+.firstOne{
+    margin-right: 10px;
+ }
+
+.inputDate{
+    width: 199px;
+    height: 36px;
+    background-color: #F8F8F8;
+    padding: 10px 12px;
+    margin-top: 25px;
+    position: relative;
+}
+
+.labelDate{
+    font-family: Muli-Bold, sans-serif;
+    font-style: normal;
+    font-weight:700;
+    font-size: 16px;
+    line-height:20px;
+    color:#000000
+}
+
+.datepickerIcon{
+    position: absolute;
+    bottom: -3px;
+    right: 10px;
+}

@@ -6,7 +6,7 @@
         <ng-container *ngIf="userCards?.length >= 0">
         <mat-tab-group [disableRipple]="true" #tabGroup [selectedIndex]="selectedTabIndex" [@.disabled]="true"
                        (selectedTabChange)="tabChange($event)" >
-            <mat-tab label="Wallet">
+            <mat-tab label="Wallet" class="labelName">
                 <app-wallet-content-tab [userCards]="userCards" [authUser]="authUser" [accountTransfers]="transfers"
                                         *ngIf="transfersLoaded" (changeTab)="getDefaultExtAccount($event)"></app-wallet-content-tab>
             </mat-tab>

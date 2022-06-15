@@ -1,6 +1,6 @@
-<div class="d-flex">
+<div class="d-flex walletContent">
     <div class="mr-lg-5 mr-4">
-        <div class="sub-titles mb-3">Saved Payment Methods</div>
+        <div class="sub-titles mb-3 wallet-subtitles">Saved Payment Methods</div>
         <div class="d-flex">
             <ul>
                 <li *ngFor="let card of userCards">
@@ -9,7 +9,7 @@
                 </li>
             </ul>
         </div>
-        <div role="button" class="red-link-btn" (click)="router.navigate(['wallet/cards/add'])">
+        <div role="button" class="red-link-btn addnewCardDiv" (click)="router.navigate(['wallet/cards/add'])">
             + Add New Card
         </div>
     </div>
@@ -17,7 +17,7 @@
 
         <div class="mr-lg-5 mr-4">
 
-            <div class="sub-titles mb-3">Purchased Metl Coins</div>
+            <div class="sub-titles mb-3 wallet-subtitles">Purchased Metl Coins</div>
             <div class="d-flex align-items-center">
                 <div class="mr-5">
                     <small>{{totals?.purchased.toFixed(2)}}</small>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="mr-lg-5 mr-4">
-            <div class="sub-titles mb-3">Received Metl Coins</div>
+            <div class="sub-titles mb-3 wallet-subtitles">Received Metl Coins</div>
             <div class="d-flex align-items-center">
                 <div class="mr-5">
                     <small>{{totals?.received.toFixed(2)}}</small>
@@ -57,11 +57,11 @@
     <app-payments-filter-form (formReady)="getFilters($event)"></app-payments-filter-form>
     <mat-spinner [diameter]="15" *ngIf="loader.dataLoading"></mat-spinner>
 </div>
-<div class="d-flex justify-content-between flex-wrap">
-    <div class="sub-titles mb-3">Payment History</div>
+<div class="d-flex justify-content-between flex-wrap paymentHistoryAndBtns">
+    <div class="sub-titles mb-3 paymentHistoryDiv">Payment History</div>
     <div id="external-accounts">
-        <div role="button" class="btn-green mr-2 p-3" (click)="changeTabToPayouts()">Manage Account(s) for Payouts</div>
-        <div role="button" class="btn-red"
+        <div role="button" class="btn-green mr-2 p-3 paymentPartBtn" (click)="changeTabToPayouts()">Link bank account</div>
+        <div role="button" class="btn-red paymentPartBtn"
              (click)="tellChild()">Export to Excel
         </div>
     </div>
