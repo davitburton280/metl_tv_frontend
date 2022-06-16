@@ -10,6 +10,17 @@
     flex-direction: column;
     align-items: center;
     overflow: auto;
+    position: relative;
+
+    .purchase-bits_head {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+
+        .purchase-bits_head__closed {
+            cursor: pointer;
+        }
+    }
 
     &::-webkit-scrollbar {
         width: 6px;

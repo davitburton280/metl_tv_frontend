@@ -1,7 +1,7 @@
 <div class="stripe-card-container">
     <form [formGroup]="saveCardForm">
         <div class="field-row">
-            <input formControlName="name" class="form-control">
+            <input formControlName="name" class="form-control" placeholder="Your Name">
         </div>
         <div>
             <mat-error *ngIf="isSubmitted && saveCardForm.get('name').hasError('required')">

@@ -1,4 +1,7 @@
 <div class="purchase-bits">
+    <div class="purchase-bits_head">
+        <mat-icon class="purchase-bits_head__closed" (click)="closed()">clear</mat-icon>
+    </div>
     <p class="purchase-text">Purchase coins</p>
     <p class="purchase-text-2 d-flex align-items-center">
         You have<img src="assets/img/coin/gold.svg" alt="" width="12" height="12" class="ml-2">
@@ -16,13 +19,13 @@
             <div>
                 <p class="bits-text-1 mb-0">{{product.name}}</p>
                 <div>
-                    <!--                    <img src="assets/img/coin/{{coinImages[ind]}}.svg"-->
-                    <!--                         *ngFor="let coin of createArray(product.unit_amount/1000);let ind = index" alt="" width="16"-->
-                    <!--                         height="16" class="mr-1">-->
-                    <!--                    <img src="assets/img/coin/silver.svg" alt=""  width="16" height="16" class="mr-1">-->
-                    <!--                    <img src="assets/img/coin/pink.svg" alt=""  width="16" height="16" class="mr-1">-->
-                    <!--                    <img src="assets/img/coin/green.svg" alt=""  width="16" height="16" class="mr-1">-->
-                    <!--                    <img src="assets/img/coin/blue.svg" alt=""  width="16" height="16" class="mr-1">-->
+                    <img src="assets/img/coin/{{coinImages[ind]}}.svg"
+                         *ngFor="let coin of coinImages;let ind = index" alt="" width="16"
+                         height="16" class="mr-1">
+<!--                    <img src="assets/img/coin/silver.svg" alt=""  width="16" height="16" class="mr-1">-->
+<!--                    <img src="assets/img/coin/pink.svg" alt=""  width="16" height="16" class="mr-1">-->
+<!--                    <img src="assets/img/coin/green.svg" alt=""  width="16" height="16" class="mr-1">-->
+<!--                    <img src="assets/img/coin/blue.svg" alt=""  width="16" height="16" class="mr-1">-->
                 </div>
             </div>
             <p class="bits-text-2">{{product?.metadata?.discount || 0}}% discount</p>

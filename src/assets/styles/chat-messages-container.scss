@@ -87,7 +87,7 @@
 
 .chat-history {
     //margin-top: 16px;
-    overflow-x: auto;
+    overflow-x: hidden;
     height: 600px;
     @media (min-width: 767px) and (max-width: 1024px) {
         height: 420px;

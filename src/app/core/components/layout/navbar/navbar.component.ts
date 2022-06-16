@@ -98,7 +98,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
         this.getRouterUrlParams();
 
         if (this.userStore.isAuthenticated()) {
-            // this.getUserCards();
+            this.getUserCards();
             this.getDailyStocks();
             this.getMessagesFromSocket();
             this.getBlockUnblockUser();
@@ -273,7 +273,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     checkIfUserHasCard() {
         if (this.userCards?.length > 0) {
-            this.showPurchaseBits = true;
+            this.showPurchaseBits = !this.showPurchaseBits;
         } else {
             this.toastr.error('Please add at least one card first', 'No cards');
         }

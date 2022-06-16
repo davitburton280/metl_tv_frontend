@@ -35,7 +35,7 @@
                 </div>
                 <div class="embed-div">
                     <button class="add-btn" (click)="input.click()">+</button>
-                    <input type="file" hidden multiple #input (change)="chatFile($event, textAreaMsg)">
+                    <input type="file" hidden multiple #input (change)="chatFile($event)" accept="image/*, video/*, text/*">
                     <textarea class="flex-1 mx-3" cdkTextareaAutosize formControlName="message" placeholder="Message"
                               (keyup)="setTyping()" (focus)="setSeen()" (keyup.enter)="sendMessageOnEnter($event)" #textAreaMsg>
                     </textarea>

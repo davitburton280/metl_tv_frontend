@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {API_URL} from '@core/constants/global';
 import {Card} from '@shared/models/card';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'

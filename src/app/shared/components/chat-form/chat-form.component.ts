@@ -7,7 +7,8 @@ import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-
 import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
-import { VideoService } from "@core/services/video.service";
+import { VideoService } from '@core/services/video.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-chat-form',
@@ -42,7 +43,8 @@ export class ChatFormComponent implements OnInit, OnDestroy {
         private groupMessagesStore: GroupsMessagesSubjectService,
         private fixLineBreaks: FixTextLineBreaksPipe,
         private uploadFile: VideoService,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        private toaster: ToastrService
     ) {
     }
 
@@ -61,9 +63,26 @@ export class ChatFormComponent implements OnInit, OnDestroy {
 
     }
 
-    chatFile(event, input) {
-        console.log(this.input.nativeElement.value);
+    chatFile(event) {
         const fl = event.target.files;
+        console.log(fl);
+        if (fl.length > 10) {
+            this.toaster.error('select max 10 file');
+            this.input.nativeElement.value = '';
+            return;
+        } else {
+            let size = 0;
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < fl.length; i++) {
+                size += fl[i].size;
+            }
+            if ((size / 1024) / 1024 > 100) {
+                this.toaster.error('maximum file size 100 MB');
+                this.input.nativeElement.value = '';
+                return;
+            }
+        }
+        console.log(this.input.nativeElement.value);
         for (let i = 0; i < fl.length; i++) {
             this.files.push({ file: fl[i], progress: false, progressValue: 0 });
             this.fileProgressBarr(fl[i], i);
@@ -203,16 +222,19 @@ export class ChatFormComponent implements OnInit, OnDestroy {
             if (this.files.length > 0) {
                 const fd = new FormData();
                 this.files.forEach(elem => {
-                    fd.append('files', elem.file);
+                    fd.append('message_files', elem.file);
                 });
                 this.uploadFile.uploadFile(fd, 'message_files').subscribe(dt => {
                     console.log(dt);
+                    console.log(this.files);
                     if (dt) {
+                        this.toaster.success(dt.message);
                         const files = [];
                         dt.path.forEach((elem) => {
                             const obj = {
                                 name: elem.path,
                                 originName: elem.name,
+                                type: elem.type
                             };
                             files.push(obj);
                         });

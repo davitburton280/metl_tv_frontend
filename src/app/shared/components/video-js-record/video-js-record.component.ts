@@ -62,7 +62,7 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
         private getAuthUser: GetAuthUserPipe,
         private blobToFile: BlobToFilePipe,
         private subject: SubjectService,
-        public router: Router
+        public router: Router,
     ) {
 
 
@@ -208,7 +208,6 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
 
             // this.thumbnailFile = this.videoSettings.thumbnail;
             console.log('+++++++++++++++++++++++ 200 ');
-            this.videoService.liveVideoRefresh.emit();
 
             this.videoService.saveVideoToken({
                 token: this.openViduToken,
@@ -336,18 +335,20 @@ export class VideoJsRecordComponent implements OnInit, OnDestroy, AfterViewInit 
     }
 
     muted() {
-        navigator.mediaDevices.getUserMedia({audio: true, video: true}).then((stream) => {
-            console.log(stream.getTracks());
-            stream.getTracks()[0].enabled = false;
-            stream.getTracks()[1].enabled = false;
-        });
+        this.subject.publish.next(false);
+        // navigator.mediaDevices.getUserMedia({audio: true, video: true}).then((stream) => {
+        //     console.log(stream.getTracks());
+        //     stream.getTracks()[0].enabled = false;
+        //     stream.getTracks()[1].enabled = false;
+        // });
     }
     unMuted() {
-        navigator.mediaDevices.getUserMedia({audio: true, video: true}).then((stream) => {
-            console.log(stream.getTracks());
-            stream.getTracks()[0].enabled = true;
-            stream.getTracks()[1].enabled = true;
-        });
+        this.subject.publish.next(true);
+        // navigator.mediaDevices.getUserMedia({audio: true, video: true}).then((stream) => {
+        //     console.log(stream.getTracks());
+        //     stream.getTracks()[0].enabled = true;
+        //     stream.getTracks()[1].enabled = true;
+        // });
     }
 
 }

@@ -44,7 +44,28 @@ export const NAVBAR_ADDITIONAL_LINKS = [
     {name: 'METL.TV security', link: 'security'},
     {name: 'Privacy policy', link: 'privacy-policy'},
     {name: 'Cookie policy', link: 'cookie-policy'},
-    {name: 'Metl Pro', link: 'turbo-plan'}
+    {name: 'Plan Channel Subscriptions', link: 'turbo-plan'}
+];
+
+export const CHANEL_SUBSCRIPTIONS_LIST = [
+    {
+        title: 'Bronze Trier',
+        card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        img: '../../assets/img/bronzeFrame.png',
+        price: 1499
+    },
+    {
+        title: 'Silver Trier',
+        card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        img: '../../assets/img/silverFrame.png',
+        price: 2999
+    },
+    {
+        title: 'Gold Trier',
+        card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        img: '../../assets/img/goldFrame.png',
+        price: 4999
+    }
 ];
 
 export const VIDEO_CATEGORIES = ['Stock', 'Etf', 'Cryptocurrency'];

@@ -30,6 +30,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     sessionData = {sessionName: '', myUserName: ''};
     streamCreated;
     streamDestroyed = false;
+    publisher: Publisher;
 
     authUser;
     participants = [];
@@ -66,6 +67,10 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         this.joinSession();
         const {hostName} = this.getUrlParts.transform(window.location.href);
         this.shareUrl = `${hostName}users/video/watch?session=${this.sessionData.sessionName}&publisher=${this.authUser.username}&id=${this.videoId}`;
+        this.subject.publish.subscribe((ev) => {
+            console.log(ev);
+            this.publisher.publishAudio(ev);
+        });
     }
 
     openSocialShareModal() {

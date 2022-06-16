@@ -146,6 +146,12 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
 
     async saveBankAccount() {
         let formValue = this.stripeBankAccountForm.value;
+        console.log(formValue);
+        console.log(this.externalAccountType);
+        console.log(this.subject.currentUserCards);
+        this.subject.currentUserCards.subscribe((dt) => {
+            console.log(dt);
+        });
         this.loader.formProcessing = true;
         if (this.externalAccountType === 'debit_card') {
             this.stripeService.createToken(this.card.element, {
@@ -157,15 +163,16 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
                 formValue = {
                     ...restData,
                     external_account: result.token.id,
-                    customer_id: this.subject.currentUserCards?.[0].customer
+                    // customer_id: this.subject.currentUserCards?.[0].customer
                 };
                 this.addExternalAccount(formValue);
             });
         } else {
             this.stripeService.createToken('bank_account', formValue.external_account).subscribe(result => {
+                console.log(result);
                 this.addExternalAccount({
                     external_account: result.token.id,
-                    customer_id: this.subject.currentUserCards?.[0].customer,
+                    // customer_id: this.subject.currentUserCards?.[0].customer,
                     ...this.stripeBankAccountForm.getRawValue()
                 });
             });
@@ -173,7 +180,9 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
     }
 
     addExternalAccount(formValue) {
+        console.log(formValue);
         this.accountsService.addStripeExternalAccount(formValue).subscribe(async (dt) => {
+            console.log(dt);
             this.loader.formProcessing = false;
             this.subject.changeUserCards(dt);
             await this.router.navigate(['wallet/show']);

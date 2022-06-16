@@ -3,7 +3,7 @@
     <h3 class="mb-4 title">Wallet <img class="wallet-img" src="assets/img/wallet-main-page-icon.svg" alt="" width="30" height="25">
     </h3>
     <div>
-        <ng-container *ngIf="userCards?.length >= 0">
+        <ng-container *ngIf="userCards?.length > 0">
         <mat-tab-group [disableRipple]="true" #tabGroup [selectedIndex]="selectedTabIndex" [@.disabled]="true"
                        (selectedTabChange)="tabChange($event)" >
             <mat-tab label="Wallet" class="labelName">

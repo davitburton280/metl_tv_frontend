@@ -14,7 +14,6 @@ import {ContactUsComponent} from '@core/components/docs/contact-us/contact-us.co
 import {PageLoadingComponent} from '@core/components/docs/page-loading/page-loading.component';
 import {PaymentSuccessComponent} from '@app/users/payment-success/payment-success.component';
 import {PaymentCancelComponent} from '@app/users/payment-cancel/payment-cancel.component';
-import {TurboPlanComponent} from '@core/components/docs/turbo-plan/turbo-plan.component';
 
 
 const routes: Routes = [
@@ -143,7 +142,8 @@ const routes: Routes = [
     },
     {
         path: 'turbo-plan',
-        component: TurboPlanComponent
+        loadChildren: () => import('./chanel-subscription/chanel-subscription.module').then(m => m.ChanelSubscriptionModule),
+        canActivate: [AuthGuard]
     },
 
     {path: '**', component: NotFoundComponent},

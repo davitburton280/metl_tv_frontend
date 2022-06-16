@@ -52,6 +52,8 @@ export class SubjectService {
     currentDefaultExtAccountSource = this.defaultExtAccountSource.asObservable();
     currentPaymentsData = this.paymentsDataSource.asObservable();
 
+    publish = new BehaviorSubject(true);
+
 
     constructor() {
     }

@@ -6,6 +6,10 @@ import {SocketIoService} from '@core/services/socket-io.service';
 import {ChatService} from '@core/services/chat.service';
 import {SubjectService} from '@core/services/subject.service';
 import {SharedChatHelper} from '@core/helpers/shared-chat-helper';
+import { API_URL } from '@core/constants/global';
+import { HttpClient } from "@angular/common/http";
+import { GetAuthUserPipe } from "@shared/pipes/get-auth-user.pipe";
+import { VideoService } from "@core/services/video.service";
 
 @Component({
     selector: 'app-direct-chat-messages',
@@ -32,17 +36,22 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     isBlockedUser = false;
     groupsTypingMessages = [];
 
+    apiUrl = API_URL;
+
     constructor(
         private usersMessagesStore: UsersMessagesSubjectService,
         private subject: SubjectService,
         private socketService: SocketIoService,
         private chatService: ChatService,
         public mobileHelper: MobileResponsiveHelper,
-        public sHelper: SharedChatHelper
+        public sHelper: SharedChatHelper,
+        private httpClient: HttpClient,
+        private videoService: VideoService,
     ) {
     }
 
     ngOnInit(): void {
+        // this.authUser = this.getAuthUser.transform();
         this.trackUsersMessagesChange();
         this.getSeen();
         this.getTyping();
@@ -91,7 +100,9 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     getTyping() {
         this.subscriptions.push(this.socketService.getTyping().subscribe((dt: any) => {
             this.typingText = dt.message ? `${dt.from_first_name} is typing...` : null;
-            if (dt.from_id !== this.authUser.id && this.selectedUserMessages.id === dt.from_id && this.typingText && this.arrFilter(this.groupsTypingMessages, this.authUser.id)) {
+            if (dt.from_id !== this.authUser.id &&
+                this.selectedUserMessages.id === dt.from_id &&
+                this.typingText && this.arrFilter(this.groupsTypingMessages, this.authUser.id)) {
                 this.userTypingText = {
                     id: this.authUser.id,
                     from_id: dt.from_id,
@@ -101,7 +112,8 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
                 this.groupsTypingMessages.push(this.userTypingText);
             }
             if (this.groupsTypingMessages.length > 0) {
-                this.groupsTypingMessages = this.groupsTypingMessages.filter(() => this.selectedUserMessages.id !== this.userTypingText.id && this.typingText);
+                this.groupsTypingMessages = this.groupsTypingMessages.filter(
+                    () => this.selectedUserMessages.id !== this.userTypingText.id && this.typingText);
             }
         }));
     }
@@ -139,7 +151,7 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
     backToUsers() {
         this.selectedUserMessages = null;
         this.usersMessagesStore.changeUser([]);
-        console.log(this.usersMessagesStore.selectedUserMessages)
+        console.log(this.usersMessagesStore.selectedUserMessages);
         this.usersMessagesStore.showResponsiveChatBox = false;
     }
 
@@ -153,12 +165,36 @@ export class DirectChatMessagesComponent implements OnInit, AfterViewChecked, On
         }
     }
 
-    downloadFile(m) {
-        console.log(m);
+    async downloadFile(m) {
+        const url = this.apiUrl + 'uploads/message_files/' + m.name;
+        try {
+            const res = await this.httpClient.get(url, { responseType: 'blob' }).toPromise();
+            this.downloadFiles(res, m);
+        } catch (e) {
+            console.log(e.body.message);
+        }
+    }
+
+    downloadFiles(data, m) {
+        const url = window.URL.createObjectURL(data);
+        console.log(url);
+        const a = document.createElement('a');
+        a.setAttribute('href', url);
+        a.download = m.originName;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    remove(file) {
+        console.log(file);
+        this.videoService.deleteFile(file.name, 'message_files').subscribe(dt => {
+            console.log(dt);
+        });
     }
 
     ngOnDestroy() {
         this.subscriptions.forEach(s => s.unsubscribe());
     }
-
 }

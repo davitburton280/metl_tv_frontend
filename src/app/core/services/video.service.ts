@@ -1,13 +1,14 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {API_URL} from '@core/constants/global';
+import { BehaviorSubject, Subject } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 export class VideoService {
 
-    @Output() liveVideoRefresh: EventEmitter<any> = new EventEmitter<any>();
+    liveVideoRefresh = new Subject();
 
     constructor(
         private httpClient: HttpClient

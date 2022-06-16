@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {CompletePurchaseModalComponent} from '@shared/components/complete-purchase-modal/complete-purchase-modal.component';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
@@ -22,6 +22,7 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
     authUser;
 
     @Input() totals;
+    @Output('closeDropDownMenu') closeDropDownMenu = new EventEmitter();
 
     constructor(
         private dialog: MatDialog,
@@ -35,12 +36,13 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
-        // this.getStripeProducts();
+        this.getStripeProducts();
 
     }
 
     getStripeProducts(){
         this.subscriptions.push(this.productsService.getStripeProducts().subscribe(dt => {
+            console.log(dt);
             this.bitProducts = dt;
         }));
     }
@@ -67,6 +69,10 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
 
     createArray(len) {
         return new Array(len < 1 ? 1 : len);
+    }
+
+    closed() {
+        this.closeDropDownMenu.emit();
     }
 
     ngOnDestroy(): void {

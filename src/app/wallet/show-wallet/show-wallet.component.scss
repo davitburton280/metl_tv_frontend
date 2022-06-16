@@ -12,6 +12,9 @@
         }
     }
 }
+:host ::ng-deep .mat-tab-body-content {
+    overflow: hidden;
+}
 
 .labelName{
     font-family: Muli-Bold, sans-serif;

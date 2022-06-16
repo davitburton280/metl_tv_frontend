@@ -1,0 +1,31 @@
+<div class="channelDiv">
+    <div class="channelSubscriptionDiv">
+        <div class="logoAndChannel">
+            <img src="../../assets/img/logoSubscriptionPart.png" alt="logo">
+            <div class="channelAndIcon">
+                <div class="channelSubscription"> Metl.tv Channel Subscribtion</div>
+                <img src="../../assets/img/rocket.png" alt="rocket">
+            </div>
+        </div>
+    </div>
+    <div class="channelBelowDiv">
+        <div class="chooseTrier">Choose Trier for Subscrition</div>
+        <div class="subscriptionText">With  Metl.tv Channel subscribtion gets even better with features you can't get anywhere else.</div>
+        <div class="cardDivs">
+            <div class="cardDiv" *ngFor="let plan of planList">
+                <div class="cardPart1">
+                    <img [src]=plan.img alt="bronzeFrame">
+                    <div class="cardTitle">{{plan.title}}</div>
+                </div>
+                <div class="cardText">{{plan.card_text}}</div>
+                <div class="cardPart2">
+                    <div class="cardLeftPart">
+                        <div class="cardLeftPart1">{{plan.title}}</div>
+                        <div class="cardLeftPart2">${{(plan.price / 100).toFixed(2)}} / Month</div>
+                    </div>
+                    <button class="cardRightPartBtn" (click)="goToPlanChanel(plan)">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

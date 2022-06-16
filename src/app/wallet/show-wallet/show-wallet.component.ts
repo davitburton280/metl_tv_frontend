@@ -50,7 +50,7 @@ export class ShowWalletComponent implements OnInit, OnDestroy, AfterViewInit {
     getUserCards() {
         this.subscriptions.push(
             this.subject.currentUserCards
-                .pipe(filter(uc => uc?.length > 0))
+                // .pipe(filter(uc => uc?.length > 0))
                 .subscribe(dt => {
                     this.userCards = dt;
                 })

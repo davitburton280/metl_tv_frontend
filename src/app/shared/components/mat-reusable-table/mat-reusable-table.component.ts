@@ -7,6 +7,7 @@ import {Subject, Subscription} from 'rxjs';
 import * as XLSX from 'xlsx';
 import {GetWalletTablesColumnContentsPipe} from '@shared/pipes/get-wallet-tables-column-contents.pipe';
 import {CapitalizeAddSpacesPipe} from '@shared/pipes/capitalize-add-spaces.pipe';
+import { LoaderService } from '@core/services/loader.service';
 
 @Component({
     selector: 'app-mat-reusable-table',
@@ -30,10 +31,13 @@ export class MatReusableTableComponent implements OnInit, AfterViewInit, OnChang
     @ViewChild(MatSort) sort: MatSort;
 
     filteredData = [];
+    showFilterData = true;
+    showFilterDataNotFound = false;
 
     constructor(
         private getColumnContent: GetWalletTablesColumnContentsPipe,
-        private capitalizeAddSpaces: CapitalizeAddSpacesPipe
+        private capitalizeAddSpaces: CapitalizeAddSpacesPipe,
+        public loader: LoaderService
     ) {
     }
 
@@ -61,6 +65,7 @@ export class MatReusableTableComponent implements OnInit, AfterViewInit, OnChang
     }
 
     filterPayments() {
+        this.showFilterData = true;
         this.filteredData = this.data.slice(this.pageIndex * this.pageSize,
             this.pageIndex * this.pageSize + this.pageSize);
     }

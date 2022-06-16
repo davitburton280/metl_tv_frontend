@@ -1,0 +1,144 @@
+.channelDiv{
+    max-width: 1122px;
+    width: 100%;
+    height: 1097px;
+}
+
+.channelSubscriptionDiv{
+    height: 165px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #18B587;
+}
+
+
+.logoAndChannel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.channelAndIcon{
+    display: flex;
+    align-items: center;
+}
+
+.channelSubscription{
+    font-family: Muli-Bold, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 30px;
+    line-height: 38px;
+    color: #FFFFFF;
+    margin-top: 9px;
+    margin-right: 16px;
+}
+
+.channelBelowDiv{
+    padding-top:52px;
+    padding-left: 31px;
+    padding-right: 31px;
+    background: #F8F8F8;
+    height: 932px;
+}
+
+.chooseTrier{
+    font-family: Muli-Bold, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 25px;
+    color: #545454;
+    text-align: center;
+}
+.subscriptionText{
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #545454;
+    text-align: center;
+    margin-top: 9px;
+    margin-bottom: 44px;
+}
+
+.cardDivs{
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardDiv{
+    max-width: 340px;
+    width: 100%;
+    padding: 15px 30px 34px 15px;
+    background: #FFFFFF;
+    margin-right: 20px;
+}
+
+.cardDiv:last-child{
+    margin-right: 0
+}
+
+.cardPart1{
+    display: flex;
+    align-items: center;
+    margin-bottom:21px;
+}
+.cardTitle{
+    font-family: Muli-bold, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+    margin-left: 15px;
+}
+
+.cardText{
+    width: 200px;
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    margin-bottom: 67px;
+}
+
+.cardPart2{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.cardLeftPart1{
+    font-family: Muli-SemiBold, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+}
+
+.cardLeftPart2{
+    font-family: Muli-bold, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 13px;
+    line-height: 16px;
+    color: #F53C6F;
+}
+
+.cardRightPartBtn{
+    font-family: Muli-bold, sans-serif;
+    font-weight: 700;
+    background-color:#18B587;
+    font-style: normal;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 32px;
+}

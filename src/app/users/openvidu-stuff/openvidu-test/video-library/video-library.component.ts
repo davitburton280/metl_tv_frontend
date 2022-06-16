@@ -68,7 +68,10 @@ export class VideoLibraryComponent implements OnInit {
         this.tokens.push(token);
         this.session = true;
         console.log('getToken ', this.tokens);
-    });
+    },
+        (err) => {
+            console.log(err);
+        });
   }
 
 
