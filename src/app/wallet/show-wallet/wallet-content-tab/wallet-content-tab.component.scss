@@ -3,15 +3,20 @@
 ::ng-deep .mat-table {
     thead {
         .mat-header-row {
-            background-color: #e9ecef;
-            height: 46px;
+            background-color:#EDEDED;
+            height: 45px;
+            box-shadow: 0px 3px 6px #00000029;
 
             .mat-header-cell {
                 .table-item {
                     height: 46px;
-                    font: normal normal 600 14px/20px "Muli-Bold";
-                    color: #495057;
                     text-transform: capitalize;
+                    font-family: Muli-Bold, sans-serif;
+                    font-style: normal;
+                    font-weight:700;
+                    font-size: 14px;
+                    line-height: 18px;
+                    color: #000000;
                 }
 
                 &:first-child {
@@ -34,9 +39,13 @@
     }
 
     .table-item {
-        height: 46px;
-        font: normal normal 300 14px/20px "Muli-Light";
-        color: #000000;
+        height: 58px;
+        font-family: Muli-SemiBold, sans-serif;
+        font-style: normal;
+        font-weight:600;
+        font-size: 14px;
+        line-height: 18px;
+        color: #545454;
         display: flex;
         align-items: center;
     }
@@ -83,6 +92,7 @@
 
 .paymentHistoryAndBtns{
     align-items: center;
+    margin-bottom: 30px;
 }
 
 .paymentHistoryDiv{
@@ -101,6 +111,7 @@
     font-size: 16px;
     line-height:20px;
     color: #FFFFFF;
+    box-sizing: border-box !important
 }
 
 .walletContent{
@@ -126,4 +137,31 @@
    border: 1px solid #C9C9C9;
     margin-top: 40px;
 }
+
+.smallNumbers{
+    font-family: Muli-SemiBold, sans-serif;
+    font-style: normal;
+    font-weight:600;
+    font-size: 10px;
+    line-height:13px;
+    margin-bottom: 6px;
+    color: #545454;
+}
+
+.total-class{
+    font-family: Muli-SemiBold, sans-serif;
+    font-style: normal;
+    font-weight:600;
+    font-size: 25px;
+    line-height:31px;
+    color: #545454;
+    margin-left: 62px;
+}
+
+
+.mat-tab-group.mat-primary .mat-ink-bar{
+    color:#18B587 !important;
+    height: 4px !important;
+}
+
 
