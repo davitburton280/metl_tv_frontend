@@ -5,6 +5,7 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
 import {PostsStoreService} from '@core/services/stores/posts-store.service';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { PageEvent } from '@angular/material/paginator';
+import { STOCK_CATEGORIES } from '@core/constants/global';
 
 @Component({
     selector: 'app-show-posts',
@@ -24,6 +25,9 @@ export class ShowPostsComponent implements OnInit {
     perPage = 1;
     pageSizeOptions: number[] = [5, 10, 25, 100];
     sortingOptions = '';
+    category = STOCK_CATEGORIES;
+    categoryName = 'Category';
+    search = '';
 
     // /////////////////////////////// //
 
@@ -47,8 +51,8 @@ export class ShowPostsComponent implements OnInit {
         this.perPage = e.pageIndex + 1;
         this.paginatorPageSize = e.pageSize;
         this.paginatorLength = e.length;
-        this.getAllPosts().then();
         this.paginatorLength = this.postsService.pageSize;
+        this.getAllPosts().then();
     }
 
     async getAllPosts() {
@@ -56,7 +60,8 @@ export class ShowPostsComponent implements OnInit {
             user_id: this.authUser.id,
             offset: this.perPage,
             limit: this.paginatorPageSize,
-            sorting_keyword: this.sortingOptions
+            sorting_keyword: this.sortingOptions,
+            search: this.search
         };
         await this.postsService.getAllPosts(params);
     }
@@ -68,6 +73,11 @@ export class ShowPostsComponent implements OnInit {
         }
         this.getAllPosts().then();
 }
+
+    selectCategory(stock) {
+        this.categoryName = stock.name;
+        this.sortPosts(stock.value);
+    }
     delete() {
         if ((this.paginatorLength - 1) % this.paginatorPageSize === 0) { this.perPage -= 1; }
         if (this.perPage <= 1) { this.perPage = 1; }
@@ -79,9 +89,21 @@ export class ShowPostsComponent implements OnInit {
     }
 
     searchPost(value) {
-        this.postsService.searchPost({ search: value }).subscribe((e) => {
-            console.log(e);
+        const params = {
+            offset: this.perPage,
+            limit: this.paginatorPageSize,
+            sorting_keyword: this.sortingOptions,
+            search: this.search
+        };
+        this.postsService.searchPost(params).subscribe((data: any) => {
+            this.allPost = data.posts;
+            this.paginatorLength = data.totalCount;
+            console.log(data);
         });
+    }
+
+    searchInput(e) {
+        this.search = e.target.value;
     }
 
 }

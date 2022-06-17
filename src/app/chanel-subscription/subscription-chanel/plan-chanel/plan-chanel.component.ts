@@ -4,8 +4,8 @@ import { CHANEL_SUBSCRIPTIONS_LIST } from '@core/constants/global';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SubjectService } from '@core/services/subject.service';
-import { MatDialog } from "@angular/material/dialog";
-import { PaymentPlanComponent } from "@core/components/modals/payment-plan/payment-plan.component";
+import { MatDialog } from '@angular/material/dialog';
+import { PaymentPlanComponent } from '@core/components/modals/payment-plan/payment-plan.component';
 
 @Component({
   selector: 'app-plan-chanel',

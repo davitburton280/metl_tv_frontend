@@ -124,7 +124,7 @@ export const STOCK_CATEGORIES = [
     {name: 'Stocks', value: 'stocks'},
     {name: 'ETF', value: 'etf'},
     {name: 'Forex', value: 'forex'},
-    {name: 'Cryptocurrency', value: 'crypto'},
+    {name: 'Crypto', value: 'crypto'},
 ];
 
 export const DESCRIPTION_CHARACTERS_LIMIT = 140;

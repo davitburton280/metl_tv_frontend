@@ -5,10 +5,17 @@
     <li (click)="sortPosts('new')"><a [ngClass]="{'active': sortingOptions==='new'}"><span class="material-icons">new_releases</span>New</a></li>
     <li (click)="sortPosts('top')"><a [ngClass]="{'active': sortingOptions==='top'}"><span class="material-icons">trending_up</span>Top</a></li>
     <li (click)="sortPosts('best_of_the_week')"><a [ngClass]="{'active': sortingOptions==='best_of_the_week'}"><span class="material-icons">new_releases</span>Best of the week</a></li>
+    <li [matMenuTriggerFor]="menuSelectCategory"><a [ngClass]="{'active': sortingOptions===categoryName.toLocaleLowerCase()}"><span class="material-icons">category</span>{{categoryName}}</a></li>
 </ul>
 
+<mat-menu #menuSelectCategory="matMenu">
+    <ul>
+        <li [ngClass]="{'active': sortingOptions===stock.value}" *ngFor="let stock of category" (click)="selectCategory(stock)">{{stock.name}}</li>
+    </ul>
+</mat-menu>
+
 <div class="search">
-    <input #input placeholder="Search" type="text" (keyup.enter)="searchPost(input.value)">
+    <input #input placeholder="Search" type="text" (input)="searchInput($event)" (keyup.enter)="searchPost(input.value)">
     <span class="material-icons" (click)="searchPost(input.value)">search</span>
 </div>
 
