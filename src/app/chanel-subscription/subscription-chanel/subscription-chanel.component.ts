@@ -19,7 +19,6 @@ export class SubscriptionChanelComponent implements OnInit {
   }
 
     goToPlanChanel(plan) {
-        console.log(plan);
         const str = plan.title.slice(0, -6);
         this.router.navigate(['turbo-plan/plan-chanel'], {queryParams: {plan: str}});
     }

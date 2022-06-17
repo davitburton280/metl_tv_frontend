@@ -90,11 +90,12 @@ export class CompletePurchaseModalComponent implements OnInit, OnDestroy {
                 name: this.purchase.name
             }
         }).subscribe(async (clientSecret) => {
+            console.log('createPayment ', clientSecret);
             const stripe = await this.stripePromise;
             await stripe.confirmCardPayment(clientSecret, {
                 payment_method: this.selectedCard.id
             }).catch(e => {
-                console.log(e)
+                console.log(e);
             }).then((r) => {
                 this.loader.formProcessing = false;
                 this.toastr.success('The purchase has been completed successfully', 'Done!');

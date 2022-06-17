@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CHANEL_SUBSCRIPTIONS_LIST } from '@core/constants/global';
+import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { SubjectService } from '@core/services/subject.service';
+import { MatDialog } from "@angular/material/dialog";
+import { PaymentPlanComponent } from "@core/components/modals/payment-plan/payment-plan.component";
 
 @Component({
   selector: 'app-plan-chanel',
@@ -7,9 +14,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlanChanelComponent implements OnInit {
 
-  constructor() { }
+    params;
+    planList = CHANEL_SUBSCRIPTIONS_LIST;
+    plan;
+    userCards;
+    subscriptions: Subscription[] = [];
+
+  constructor(
+      private route: ActivatedRoute,
+      private _location: Location,
+      private subject: SubjectService,
+      private dialog: MatDialog
+  ) {
+      this.params = this.route.snapshot?.queryParams?.plan;
+  }
 
   ngOnInit(): void {
+      this.filterPlan(this.params, this.planList);
+      this.subscriptions.push(this.subject.currentUserCards.subscribe(dt => {
+          this.userCards = dt;
+          console.log(this.userCards);
+      }));
   }
+
+  filterPlan(value, arr) {
+      arr.forEach((elem) => {
+          if (elem.title.includes(value)) {
+              this.plan = elem;
+          }
+      });
+  }
+
+    openModalPayment() {
+      this.dialog.open(PaymentPlanComponent, {
+          width: '70vw',
+          height: '70vh'
+      }).afterClosed().subscribe();
+    }
+
+    backPage() {
+      this._location.back();
+    }
 
 }

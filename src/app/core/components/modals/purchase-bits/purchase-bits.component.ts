@@ -48,6 +48,8 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
     }
 
     openPurchaseModal(purchase) {
+        console.log(this.bitProducts);
+        console.log(this.totals);
         this.subscriptions.push(this.dialog.open(CompletePurchaseModalComponent, {
             data: purchase,
             width: '800px'

@@ -1,1 +1,68 @@
-<p>plan-chanel works!</p>
+<div class="channelDiv">
+    <div class="channelSubscriptionDiv">
+        <div class="logoAndChannel">
+            <img src="../../assets/img/logoSubscriptionPart.png" alt="logo">
+            <div class="channelAndIcon">
+                <div class="channelSubscription"> Metl.tv Channel Subscribtion</div>
+                <img src="../../assets/img/rocket.png" alt="logo">
+            </div>
+        </div>
+    </div>
+    <div class="backAndDetailsDiv">
+        <div class="backDiv" (click)="backPage()">
+            <img src="../../assets/img/backSign.png" alt="backSign">
+            <div class="back">Back</div>
+        </div>
+        <div class="detailsDiv">Details</div>
+        <div></div>
+    </div>
+    <div class="cardDetailed">
+        <div class="CardDetailedTitleAndLogo">
+            <div class="CardDetailedLogo">
+                <img [src]=plan.img alt="goldFrame">
+            </div>
+            <div class="CardDetailedTitle">{{plan.title}}</div>
+        </div>
+        <div class="cardsTotal">
+            <div class="cardTotalDiv">
+                <div class="cardDiv1">Ad Free Viewing For This Channel</div>
+                <div class="cardDiv2">
+                    <img src="../../assets/img/freeGreenIcon.png" alt="freeIcon">
+                </div>
+                <div class="cardDiv3">User gets ad-free viewing for this specific streaming channel (not for others)</div>
+            </div>
+            <div class="cardTotalDiv">
+                <div class="cardDiv1">Chat Badge</div>
+                <div class="cardDiv2">
+                    <img [src]=plan.img alt="goldIcon">
+                </div>
+                <div class="cardDiv3">User gets gold custom diamond badge for the live stream chats</div>
+            </div>
+            <div class="cardTotalDiv" *ngIf="params === 'Silver' || params === 'Gold'">
+                <div class="cardDiv1">Custom Chat Username Colors</div>
+                <div class="cardDiv2">
+                    <img src="../../assets/img/colorCircle.png" alt="colorCircle">
+                </div>
+                <div class="cardDiv3">User can add color to their username "custom chat usernames" for the live stream chat</div>
+            </div>
+            <div class="cardTotalDiv" *ngIf="params === 'Gold'">
+                <div class="cardDiv1">Custom Chat Username Colors</div>
+                <div class="cardDiv2">
+                    <img src="../../assets/img/sadIcon.png" alt="sadIcon">
+                    <img class="coolImgClassName" src="../../assets/img/coolIcon.png" alt="coolIcon">
+                </div>
+                <div class="cardDiv3">User gets custom emojis that other users do not have access to for the live stream chat</div>
+            </div>
+        </div>
+        <div class="subscriptionDivs">
+            <div class="subscriptionLeftPart">
+                <div class="subscriptionLeftPart1">{{plan.title}}</div>
+                <div class="subscriptionLeftPart2">
+                    <div class=" subscriptionLeftDiv2">${{(plan.price / 100).toFixed(2)}} / Month</div>
+                </div>
+            </div>
+            <button class="subscribeBtn" (click)="openModalPayment()">Subscribe</button>
+        </div>
+    </div>
+    <div class="belowGreyDiv"></div>
+</div>

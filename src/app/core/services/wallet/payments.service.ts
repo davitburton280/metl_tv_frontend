@@ -16,6 +16,7 @@ export class PaymentsService {
     }
 
     createPaymentIntent(params) {
+        console.log('params payments service ', params);
         return this.httpClient.post<any>(`${API_URL}stripe/payments/create-payment-intent`, params);
     }
 
