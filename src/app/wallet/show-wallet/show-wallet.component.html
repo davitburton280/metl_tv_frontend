@@ -10,15 +10,15 @@
                 <app-wallet-content-tab [userCards]="userCards" [authUser]="authUser" [accountTransfers]="transfers"
                                         *ngIf="transfersLoaded" (changeTab)="getDefaultExtAccount($event)"></app-wallet-content-tab>
             </mat-tab>
-            <mat-tab label="Payments Purchase History">
+            <mat-tab label="Metl Coins Purchase History">
                 <app-payments-purchase-history-tab [userCards]="userCards"></app-payments-purchase-history-tab>
             </mat-tab>
-            <mat-tab label="Payments Received History">
+            <mat-tab label="Metl Coins Received History">
                 <app-payments-received-history-tab [userCards]="userCards" [accountTransfers]="transfers"
                                                    *ngIf="transfersLoaded"
                                                    [authUser]="authUser"></app-payments-received-history-tab>
             </mat-tab>
-            <mat-tab label="Metl Coins Payout Schedule">
+            <mat-tab label="Metl Coins Payout History">
                 <app-metl-coins-payout-schedule-tab [userCards]="userCards"></app-metl-coins-payout-schedule-tab>
             </mat-tab>
         </mat-tab-group>

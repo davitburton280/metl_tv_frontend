@@ -1,0 +1,375 @@
+.completePurchaseWholeDiv{
+    max-width: 1085px;
+    width: 100%;
+    height:938px;
+    box-sizing: border-box;
+}
+
+.completePurchaseWholeUpDiv{
+    padding: 17px 14px 36px 42px;
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+}
+
+.completePurchaseUpDiv{
+    display: flex;
+    flex-direction: column;
+}
+.closingPng{
+    width: 12px;
+    height: 12px;
+    display: flex;
+    justify-self: flex-end;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.completePurchase{
+    font-family: Muli-Bold, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 29px;
+    line-height: 36px;
+    color: #000000;
+    margin-top: 12px;
+}
+
+
+.purchaseSummary{
+    font-family: Muli-SemiBold, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 25px;
+    color: #18B587;
+    margin-top: 22px;
+    margin-bottom: 20px;
+}
+
+.purchaseBelowPart{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #C9C9C9;
+    margin-right: 32px;
+    padding-bottom: 18px;
+}
+
+.purchaseLeftUpPart{
+    display: flex;
+}
+
+.goldCoin{
+    margin-right: 11px;
+    width: 28px;
+    height: 28px;
+}
+
+.goldCoinRightPart{
+    display: flex;
+    flex-direction: column;
+}
+
+.coinsBundle{
+    font-family: Muli-SemiBold, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #545454;
+    margin-bottom: 2px;
+}
+
+.timeCharge{
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    color: #545454;
+}
+
+.purchaseRightUpPart{
+    display: flex;
+}
+
+.typeQuantityDiv{
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    color: #545454;
+    margin-right: 25px;
+    padding: 11px 29px 12px 6px;
+    border: 1px solid #707070;
+}
+
+.priceAndAmountDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+.priceDiv{
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    color: #545454;
+    margin-bottom: 6px;
+}
+
+
+.taxAndAmount{
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-end;
+    max-width: 170px;
+    width: 100%;
+    align-self: flex-end;
+    margin-top: 23px;
+    margin-right: 30px;
+}
+
+.taxDiv{
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    color: #545454;
+    margin-bottom: 11px;
+    margin-right: 22px;
+}
+
+.totalAmount{
+    display: flex;
+    justify-content: space-between;
+}
+
+.totalDiv{
+    font-family: Muli-Bold, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #545454;
+}
+
+.completePurchaseBelowDiv{
+    padding-left: 42px;
+    padding-right: 42px;
+    display: flex;
+    flex-direction: column;
+}
+
+.belowFirstDiv{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 26px;
+    margin-top: 23px;
+}
+
+
+.payWithDiv{
+    font-family: Muli-SemiBold, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 25px;
+    color: #000000;
+}
+
+.secureAndIcon{
+    display: flex;
+}
+
+.lockIcon{
+    width: 11px;
+    height: 15px;
+    margin-right: 12px;
+}
+
+.secureDiv{
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    color: #545454;
+}
+
+.belowSecondDiv{
+    display: flex;
+    margin-bottom: 42px;
+}
+
+.paypalDiv{
+    max-width: 306px;
+    width: 100%;
+    height: 49px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 14px;
+    background: #0D9EDB 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    opacity: 1;
+}
+.amazonDiv{
+    max-width: 306px;
+    width: 100%;
+    height: 49px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 14px;
+    background: #FAD47F 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    opacity: 1;
+}
+
+.orDiv{
+    font-family: Muli-SemiBold, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 25px;
+    color:#545454;
+    margin-bottom: 24px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.billingInformation{
+    font-family: Muli-SemiBold, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 16px;
+    line-height: 20px;
+    color: #18B587;
+    margin-top: 19px;
+    margin-bottom: 26px;
+}
+
+.orDivs{
+    display: flex;
+}
+
+.leftLine{
+    width: 470px;
+    height: 1px;
+    background-color: #C9C9C9;
+    margin-top: 12px;
+}
+
+.personalInfoInputsDiv{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.personalInfoInput{
+    max-width: 473px;
+    width: 100%;
+    height: 44px;
+    padding: 14px 0 12px 28px;
+    color: #CECECE;;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 6px #C9C9C961;
+    opacity: 1;
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 27px;
+}
+
+.personalInfoInput:first-child{
+    margin-right: 42px;
+}
+
+.creditCardInfo{
+    font-family: Muli-SemiBold, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 15px;
+    line-height: 19px;
+    color: #18B587;
+    margin-bottom: 13px;
+}
+
+.cardInfoDivs{
+    display: flex;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.monthYearInputs{
+    display: flex;
+}
+
+.cardInfo{
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    color: #545454;
+    margin-bottom: 7px;
+}
+
+.cardInput1{
+    width: 290px;
+    height:45px;
+    padding:13px 0 14px 27px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 6px #EEEEEE;
+    opacity: 1;
+    color: #CECECE;
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    margin-right: 17px;
+}
+
+.cardInput2{
+    width: 179px;
+    height:45px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 6px #EEEEEE;
+    opacity: 1;
+    padding:13px 0 14px 27px;
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 18px;
+    color: #CECECE;
+    margin-right: 19px;
+}
+
+.previewBtn{
+    display: flex;
+    align-self: flex-end;
+    justify-self: flex-end;
+    width: 139px;
+    padding: 7px 17px;
+    background-color: #18B587;
+    border: none;
+    opacity: 1;
+    font-family: Muli-Regular, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 13px;
+    line-height: 16px;
+    color: #FFFFFF !important;
+}
+
+
+
+
+

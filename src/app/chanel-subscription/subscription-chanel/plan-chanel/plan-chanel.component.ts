@@ -47,8 +47,8 @@ export class PlanChanelComponent implements OnInit {
 
     openModalPayment() {
       this.dialog.open(PaymentPlanComponent, {
-          width: '70vw',
-          height: '70vh'
+          width: '1085px',
+          height: '938px'
       }).afterClosed().subscribe();
     }
 

@@ -27,7 +27,7 @@ import {MatSort} from '@angular/material/sort';
 })
 export class WalletContentTabComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
-    displayedColumns = ['date', 'amount_submitted', 'payment_method', 'payment_group', 'status'];
+    displayedColumns = ['date', 'amount_submitted', 'payment_method', 'status'];
     payments = [];
     filteredPayments = [];
     filterApplied = false;
