@@ -3,13 +3,15 @@
     width: 100%;
     height:938px;
     box-sizing: border-box;
+    //padding: 17px 44px 25px 42px;
 }
 
 .completePurchaseWholeUpDiv{
-    padding: 17px 14px 36px 42px;
+    padding: 17px 44px 24px 42px;
     display: flex;
     flex-direction: column;
     background-color: #F5F5F5;
+    //padding-bottom: 24px;
 }
 
 .completePurchaseUpDiv{
@@ -141,6 +143,7 @@
     color: #545454;
     margin-bottom: 11px;
     margin-right: 22px;
+    width: 50%;
 }
 
 .totalAmount{
@@ -155,11 +158,13 @@
     font-size: 16px;
     line-height: 20px;
     color: #545454;
+    margin-right: 22px;
+    width: 50%;
 }
 
 .completePurchaseBelowDiv{
-    padding-left: 42px;
-    padding-right: 42px;
+    //padding-left: 42px;
+    //padding-right: 44px;
     display: flex;
     flex-direction: column;
 }
@@ -167,18 +172,126 @@
 .belowFirstDiv{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 26px;
-    margin-top: 23px;
+    margin-bottom: 12px;
+    margin-top: 10px;
+    padding-left: 42px;
+    padding-right: 44px;
 }
 
 
 .payWithDiv{
-    font-family: Muli-SemiBold, sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    font-size: 20px;
-    line-height: 25px;
+    display: flex;
+    align-items: center;
+    font: normal normal 600 20px/25px Muli;
+    letter-spacing: 0;
     color: #000000;
+    opacity: 1;
+    padding-left: 42px;
+    padding-right: 44px;
+
+
+    .payWithDiv_text {
+        font-size: 20px;
+        line-height: 25px;
+        margin-right: 22px;
+        font: normal normal bold 20px/25px Muli;
+        letter-spacing: 0;
+        color: #000000;
+        opacity: 1;
+    }
+
+    .payWithDiv_div {
+        margin-right: 10px;
+
+        .payWithDiv_div__img {
+            width: 43px;
+            height: 28px;
+        }
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
+
+.saved_card {
+    height: 81px;
+    background: #F5F5F5 0 0 no-repeat padding-box;
+    opacity: 1;
+    padding-top: 11px;
+    margin-top: 18px;
+    padding-left: 42px;
+    padding-right: 44px;
+
+     .saved_card__text {
+         margin-bottom: 20px;
+         font: normal normal 600 16px/20px Muli;
+         letter-spacing: 0;
+         color: #000000;
+     }
+
+    .saved_card__select {
+        display: flex;
+        align-items: center;
+
+        .saved_card__selectCard {
+            margin-right: 25px;
+            display: flex;
+            align-items: center;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            input {
+                width: 24px;
+                height: 24px;
+                margin-right: 13px;
+            }
+
+            img {
+                margin-right: 13px;
+            }
+
+            // ----------------------  Start Custom Checkbox   ------------------ //
+
+            input[type="checkbox"] {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 24px;
+                height: 24px;
+                border: 3px solid #C9C9C9;
+                border-radius: 5px;
+                display: grid;
+                place-content: center;
+            }
+
+            input[type="checkbox"]::before {
+                content: "";
+                width: 14px;
+                height: 14px;
+                transform: scale(0);
+                transform-origin: bottom left;
+                transition: 120ms transform ease-in-out;
+                background-color: #18b587;
+                border-radius: 3px;
+            }
+
+            input[type="checkbox"]:checked::before {
+                transform: scale(1);
+            }
+            input[type="checkbox"]:checked {
+                border: 3px solid #18b587;
+            }
+
+            // ----------------------  End Custom Checkbox   ------------------ //
+
+        }
+    }
+}
+
+.billingInfo {
+    padding-left: 42px;
+    padding-right: 44px;
 }
 
 .secureAndIcon{
@@ -203,9 +316,11 @@
 .belowSecondDiv{
     display: flex;
     margin-bottom: 42px;
+    padding-left: 42px;
+    padding-right: 44px;
 }
 
-.paypalDiv{
+.payWith{
     max-width: 306px;
     width: 100%;
     height: 49px;
@@ -213,21 +328,19 @@
     justify-content: center;
     align-items: center;
     margin-right: 14px;
-    background: #0D9EDB 0% 0% no-repeat padding-box;
     border-radius: 10px;
     opacity: 1;
+    cursor: pointer;
+}
+
+.paypalDiv {
+    background: #0D9EDB 0 0 no-repeat padding-box;
 }
 .amazonDiv{
-    max-width: 306px;
-    width: 100%;
-    height: 49px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 14px;
-    background: #FAD47F 0% 0% no-repeat padding-box;
-    border-radius: 10px;
-    opacity: 1;
+    background: #FAD47F 0 0 no-repeat padding-box;
+}
+.stripeDiv{
+    background: #F5F5F5 0 0 no-repeat padding-box;
 }
 
 .orDiv{
@@ -255,6 +368,8 @@
 
 .orDivs{
     display: flex;
+    padding-left: 42px;
+    padding-right: 44px;
 }
 
 .leftLine{
@@ -267,6 +382,17 @@
 .personalInfoInputsDiv{
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 24px;
+
+    .personalInfoInputsDiv_Div {
+        max-width: 473px;
+        width: 100%;
+        height: 44px;
+
+        &:first-child{
+            margin-right: 42px;
+        }
+    }
 }
 
 .personalInfoInput{
@@ -275,19 +401,14 @@
     height: 44px;
     padding: 14px 0 12px 28px;
     color: #CECECE;;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 0px 0px 6px #C9C9C961;
+    background: #FFFFFF 0 0 no-repeat padding-box;
+    box-shadow: 0 0 6px #C9C9C961;
     opacity: 1;
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 14px;
     line-height: 18px;
-    margin-bottom: 27px;
-}
-
-.personalInfoInput:first-child{
-    margin-right: 42px;
 }
 
 .creditCardInfo{
@@ -303,11 +424,25 @@
 .cardInfoDivs{
     display: flex;
     align-items: center;
-    margin-bottom: 35px;
+    margin-bottom: 22px;
 }
 
 .monthYearInputs{
     display: flex;
+}
+
+.cardNumberInputDiv {
+    width: 290px;
+    margin-right: 17px;
+}
+
+.cardExpiryInputDiv {
+    width: 358px;
+    margin-right: 17px;
+}
+
+.cardCvvInputDiv {
+    width: 290px;
 }
 
 .cardInfo{
@@ -322,10 +457,10 @@
 
 .cardInput1{
     width: 290px;
-    height:45px;
+    height:44px;
     padding:13px 0 14px 27px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 0px 0px 6px #EEEEEE;
+    background: #FFFFFF 0 0 no-repeat padding-box;
+    box-shadow: 0 0 6px #EEEEEE;
     opacity: 1;
     color: #CECECE;
     font-family: Muli-Regular, sans-serif;
@@ -338,9 +473,9 @@
 
 .cardInput2{
     width: 179px;
-    height:45px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 0px 0px 6px #EEEEEE;
+    height:44px;
+    background: #FFFFFF 0 0 no-repeat padding-box;
+    box-shadow: 0 0 6px #EEEEEE;
     opacity: 1;
     padding:13px 0 14px 27px;
     font-family: Muli-Regular, sans-serif;
@@ -352,24 +487,24 @@
     margin-right: 19px;
 }
 
-.previewBtn{
+.submitButton {
     display: flex;
-    align-self: flex-end;
-    justify-self: flex-end;
-    width: 139px;
-    padding: 7px 17px;
-    background-color: #18B587;
-    border: none;
-    opacity: 1;
-    font-family: Muli-Regular, sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 13px;
-    line-height: 16px;
-    color: #FFFFFF !important;
+    justify-content: flex-end;
+    .previewBtn{
+        width: 139px;
+        padding: 7px 17px;
+        background-color: #18B587;
+        border: none;
+        opacity: 1;
+        font-family: Muli-Regular, sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 13px;
+        line-height: 16px;
+        color: #FFFFFF !important;
+    }
 }
 
-
-
-
-
+::ng-deep .mat-menu-panel {
+    margin-top: 0!important;
+}

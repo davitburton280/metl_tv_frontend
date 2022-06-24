@@ -48,8 +48,14 @@ export class PlanChanelComponent implements OnInit {
     openModalPayment() {
       this.dialog.open(PaymentPlanComponent, {
           width: '1085px',
-          height: '938px'
-      }).afterClosed().subscribe();
+          height: '938px',
+          data: {
+              plan: this.plan,
+              cards: this.userCards,
+          }
+      }).afterClosed().subscribe(dt => {
+          console.log(dt);
+      });
     }
 
     backPage() {

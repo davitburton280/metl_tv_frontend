@@ -52,19 +52,22 @@ export const CHANEL_SUBSCRIPTIONS_LIST = [
         title: 'Bronze Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         img: '../../assets/img/bronzeFrame.png',
-        price: 1499
+        price: 1499,
+        discount: 0
     },
     {
         title: 'Silver Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         img: '../../assets/img/silverFrame.png',
-        price: 2999
+        price: 2999,
+        discount: 0
     },
     {
         title: 'Gold Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         img: '../../assets/img/goldFrame.png',
-        price: 4999
+        price: 4999,
+        discount: 0
     }
 ];
 
@@ -189,6 +192,23 @@ export const STRIPE_PUBLISHABLE_KEY = 'pk_test_51HdPckKqYIKd5fEInH0pL35DSdkG9Jfx
 export const STRIPE_CARD_OPTIONS: StripeCardElementOptions = {
     style: {
         base: {
+            iconColor: '#666EE8',
+            color: '#31325F',
+            fontWeight: '300',
+            fontFamily: '\'Helvetica Neue\', Helvetica, sans-serif',
+            fontSize: '18px',
+            '::placeholder': {
+                color: '#CFD7E0'
+            }
+        }
+    },
+    hidePostalCode: true
+};
+
+export const STRIPE_CARD_OPTIONS_Custom: StripeCardElementOptions = {
+    style: {
+        base: {
+            textAlign: 'center',
             iconColor: '#666EE8',
             color: '#31325F',
             fontWeight: '300',

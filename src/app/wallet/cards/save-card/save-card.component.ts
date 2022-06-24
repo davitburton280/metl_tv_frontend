@@ -84,6 +84,7 @@ export class SaveCardComponent implements OnInit, OnDestroy {
                     await this.router.navigate(['/wallet/show']);
                 }));
             } else {
+                console.log('save card ', this.card);
                 this.subscriptions.push(this.stripeService
                     .createToken(this.card.element, {name: this.authUser.first_name + ' ' + this.authUser.last_name})
                     .subscribe(result => {

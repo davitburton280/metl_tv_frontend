@@ -1,35 +1,43 @@
 <div class ="completePurchaseWholeDiv">
-<div class ="completePurchaseWholeUpDiv">
-    <div class ="completePurchaseUpDiv">
-        <img class="closingPng" src="../../assets/img/closeChat.png" alt="closeIcon">
-        <div class="completePurchase">Complete Purchase</div>
-        <div class="purchaseSummary">Purchase Summary</div>
-        <div class="purchaseBelowPart">
-            <div class="purchaseLeftUpPart">
-                <img class="goldCoin" src="../../assets/img/coin/gold.svg" alt="goldIcon">
-                <div class="goldCoinRightPart">
-                    <div class="coinsBundle">300 Metl Coins Bundle</div>
-                    <div class="timeCharge">One-time charge on Jun 2, 2021.</div>
+    <div class ="completePurchaseWholeUpDiv">
+        <div class ="completePurchaseUpDiv">
+            <img class="closingPng" src="../../assets/img/closeChat.png" alt="closeIcon" (click)="closedMathDialog()">
+            <div class="completePurchase">Complete Purchase</div>
+            <div class="purchaseSummary">Purchase Summary</div>
+            <div class="purchaseBelowPart">
+                <div class="purchaseLeftUpPart">
+                    <img class="goldCoin" [src]="plan.img" alt="goldIcon">
+                    <div class="goldCoinRightPart">
+                        <div class="coinsBundle">{{plan.title}}</div>
+                        <div class="timeCharge">One-time charge on Jun 2, 2021.</div>
+                    </div>
+                </div>
+                <div class="purchaseRightUpPart">
+                    <div class="typeQuantityDiv" [matMenuTriggerFor]="countMonth">Type quantity</div>
+                    <div>
+                        <mat-menu #countMonth>
+                            <p>xxxxxxx</p>
+                        </mat-menu>
+                    </div>
+                    <div class="priceAndAmountDiv">
+                        <div class="priceDiv">Price</div>
+                        <div class="priceDiv">${{(plan.price / 100).toFixed(2)}}</div>
+                    </div>
+                    <div class="lineDiv"></div>
                 </div>
             </div>
-            <div class="purchaseRightUpPart">
-                <div class="typeQuantityDiv">Type quantity</div>
-                <div class="priceAndAmountDiv">
-                    <div class="priceDiv">Price</div>
-                    <div class="priceDiv">$3.00</div>
+            <div class="taxAndAmount">
+                <div class="totalAmount">
+                    <div class="taxDiv">Tax</div>
+                    <div class="taxDiv">--</div>
                 </div>
-                <div class="lineDiv"></div>
-            </div>
-        </div>
-        <div class="taxAndAmount">
-            <div class="taxDiv">Tax</div>
-            <div class="totalAmount">
-                <div class="totalDiv">Total</div>
-                <div class="totalDiv">--</div>
+                <div class="totalAmount">
+                    <div class="totalDiv">Total</div>
+                    <div class="totalDiv">--</div>
+                </div>
             </div>
         </div>
     </div>
-</div>
     <div class ="completePurchaseBelowDiv">
         <div class="belowFirstDiv">
             <div class="payWithDiv">Pay With</div>
@@ -39,11 +47,14 @@
             </div>
         </div>
         <div class="belowSecondDiv">
-            <div class="paypalDiv">
-                <img  class="paypalIcon" src="../../assets/img/paypalIcon.png" alt="paypalIcon">
+            <div class="payWith paypalDiv">
+                <img  class="paypalIcon" src="../../assets/img/purchase-icons/paypal.svg" alt="paypalIcon">
             </div>
-            <div class="amazonDiv">
-                <img  class="payIcon" src="../../assets/img/payIcon.png" alt="payIcon">
+            <div class="payWith amazonDiv">
+                <img  class="payIcon" src="../../assets/img/purchase-icons/amazon-pay.png" alt="payIcon">
+            </div>
+            <div class="payWith stripeDiv">
+                <img  class="payIcon" src="../../assets/img/purchase-icons/stripe.png" alt="payIcon">
             </div>
         </div>
         <div class="orDivs">
@@ -51,32 +62,82 @@
             <div class="orDiv">Or</div>
             <div class="leftLine"></div>
         </div>
-        <div class="payWithDiv">Pay With Credit Card</div>
-        <div class="billingInformation">BILLING INFORMATION</div>
-        <div class="personalInfoInputsDiv">
-            <input class="personalInfoInput" placeholder="First Name">
-            <input class="personalInfoInput" placeholder="Last Name">
-            <input class="personalInfoInput" placeholder="Category">
-        </div>
-        <div class="creditCardInfo">CREDIT CARD INFORMATION</div>
-        <div class="cardInfoDivs">
-            <div class="cardInfoDiv">
-                <div class="cardInfo">Credit Card Number</div>
-                <input class="cardInput1" placeholder="Card Number">
-            </div>
-            <div class="cardInfoDiv">
-                <div class="cardInfo">Expiry Date</div>
-                <div class="monthYearInputs">
-                    <input class="cardInput2" placeholder="Month">
-                    <input class="cardInput2" placeholder="Year">
+            <div class="payWithDiv">
+                <div class="payWithDiv_text">Pay With Credit Card</div>
+                <div class="payWithDiv_div">
+                    <img src="../../assets/img/purchase-icons/954912.png" alt="" class="payWithDiv_div__img">
+                </div>
+                <div class="payWithDiv_div">
+                    <img src="../../assets/img/purchase-icons/discover-credit-card-icon.png" alt="" class="payWithDiv_div__img">
+                </div>
+                <div class="payWithDiv_div">
+                    <img src="../../assets/img/purchase-icons/visa-card.png" alt="" class="payWithDiv_div__img">
+                </div>
+                <div class="payWithDiv_div">
+                    <img src="../../assets/img/purchase-icons/master-card.png" alt="" class="payWithDiv_div__img">
                 </div>
             </div>
-            <div class="cardInfoDiv">
-                <div class="cardInfo">CVV</div>
-                <input class="cardInput1" placeholder="CVV">
+            <div class="saved_card">
+                <div class="saved_card__text">Saved Payment Methods</div>
+                <div class="saved_card__select">
+                    <div class="saved_card__selectCard" *ngFor="let card of cards; let i = index">
+                        <label class="checkboxCustomStyle">
+                            <input type="checkbox" [checked]="checkedCard[i]"
+                                   (change)="selectCard(card, $event, i)">
+                        </label>
+                        <img src="../../assets/img/credit-card.svg" alt="creditCard">
+                        <span>**** **** **** {{card.number_part}}</span>
+                    </div>
+                </div>
             </div>
-        </div>
-        <button class="previewBtn">Review Purchase</button>
+
+            <div class="billingInfo" ngxStripeCardGroup [formGroup]="cardForm" [elementsOptions]="elementsOptions">
+                <div class="billingInformation">BILLING INFORMATION</div>
+                <div class="personalInfoInputsDiv">
+                    <div class="personalInfoInputsDiv_Div">
+                        <input class="personalInfoInput" [ngClass]="{'inputError' : cardForm.get('firstName').hasError('required') && cardForm.get('firstName').touched}"
+                               placeholder="First Name" formControlName="firstName">
+                        <span *ngIf="cardForm.get('firstName').hasError('required') && cardForm.get('firstName').touched"
+                              class="error">First Name is <strong>required</strong></span>
+                    </div>
+                    <div class="personalInfoInputsDiv_Div">
+                        <input class="personalInfoInput" [ngClass]="{'inputError' : cardForm.get('lastName').hasError('required') && cardForm.get('lastName').touched}"
+                               placeholder="Last Name" formControlName="lastName">
+                        <span *ngIf="cardForm.get('lastName').hasError('required') && cardForm.get('lastName').touched"
+                              class="error">Last Name is <strong>required</strong></span>
+                    </div>
+                </div>
+                <div class="creditCardInfo">CREDIT CARD INFORMATION</div>
+                <div class="cardInfoDivs">
+                    <div class="cardInfoDiv">
+                        <div class="cardInfo">Credit Card Number</div>
+                        <input *ngIf="!typeCreditCardInput" class="cardInput1" (input)="maxLengthInput($event, 19)" type="text" placeholder="Card Number" formControlName="cardNumber">
+                        <div [hidden]="!typeCreditCardInput" class="cardNumberInputDiv">
+                            <ngx-stripe-card-number [options]="cardOptions"></ngx-stripe-card-number>
+                        </div>
+                    </div>
+                    <div class="cardInfoDiv">
+                        <div class="cardInfo">Expiry Date</div>
+                        <div class="monthYearInputs">
+                            <input *ngIf="!typeCreditCardInput" class="cardInput2" type="number" placeholder="Month" formControlName="cardMonth">
+                            <input *ngIf="!typeCreditCardInput" class="cardInput2" type="number" placeholder="Year" formControlName="cardYear">
+                            <div [hidden]="!typeCreditCardInput" class="cardExpiryInputDiv">
+                                <ngx-stripe-card-expiry [options]="cardOptions"></ngx-stripe-card-expiry>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cardInfoDiv">
+                        <div class="cardInfo">CVV</div>
+                        <input *ngIf="!typeCreditCardInput" class="cardInput1" type="text" placeholder="CVV" formControlName="cvv">
+                        <div [hidden]="!typeCreditCardInput" class="cardCvvInputDiv">
+                            <ngx-stripe-card-cvc [options]="cardOptions"></ngx-stripe-card-cvc>
+                        </div>
+                    </div>
+                </div>
+                <div class="submitButton">
+                    <button class="previewBtn" (click)="submitFormWolet()">Review Purchase</button>
+                </div>
+            </div>
     </div>
 </div>
 

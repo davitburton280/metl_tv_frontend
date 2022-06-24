@@ -9,7 +9,7 @@
 </ul>
 
 <mat-menu #menuSelectCategory="matMenu">
-    <ul>
+    <ul class="categories_items">
         <li [ngClass]="{'active': sortingOptions===stock.value}" *ngFor="let stock of category" (click)="selectCategory(stock)">{{stock.name}}</li>
     </ul>
 </mat-menu>

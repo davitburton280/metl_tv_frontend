@@ -324,6 +324,10 @@ li:not(.post-item li) {
     color: $red;
 }
 
+.inputError {
+    border: 2px solid $red;
+}
+
 .down-white {
     color: white;
     font-size: 12px;
