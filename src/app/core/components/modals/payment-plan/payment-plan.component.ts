@@ -1,20 +1,25 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { StripeElementsOptions } from '@stripe/stripe-js';
-import { STRIPE_CARD_OPTIONS_Custom } from '@core/constants/global';
+import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
+import { STRIPE_CARD_OPTIONS_Custom, STRIPE_PUBLISHABLE_KEY } from '@core/constants/global';
 import { StripeCardNumberComponent, StripeService } from 'ngx-stripe';
 import { generateStripeCardData } from '@core/helpers/generate-stripe-card-data';
 import { GetAuthUserPipe } from '@shared/pipes/get-auth-user.pipe';
 import { User } from '@shared/models/user';
 import { CustomersService } from '@core/services/wallet/customers.service';
+import { PaymentsService } from '@core/services/wallet/payments.service';
+import { CardsService } from '@core/services/cards.service';
+import { LoaderService } from '@core/services/loader.service';
 
 @Component({
   selector: 'app-payment-plan',
   templateUrl: './payment-plan.component.html',
   styleUrls: ['./payment-plan.component.scss']
 })
-export class PaymentPlanComponent implements OnInit {
+export class PaymentPlanComponent implements OnInit, OnDestroy {
+
+    castomCardParams = null;
 
     plan;
     cards;
@@ -22,12 +27,15 @@ export class PaymentPlanComponent implements OnInit {
     typeCreditCardInput = true;
     selectedCard = null;
     authUser: User;
+    completePurchase = false;
+    time = new Date();
 
     cardForm: FormGroup;
     @ViewChild('inputSelectCard') inputSelectCard;
     @ViewChild(StripeCardNumberComponent) card: StripeCardNumberComponent;
 
     cardOptions = STRIPE_CARD_OPTIONS_Custom;
+    stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
     elementsOptions: StripeElementsOptions = {
         locale: 'es',
@@ -39,7 +47,10 @@ export class PaymentPlanComponent implements OnInit {
       private fb: FormBuilder,
       private stripeService: StripeService,
       private getAuthUser: GetAuthUserPipe,
+      private paymentsService: PaymentsService,
       private customersService: CustomersService,
+      public loader: LoaderService,
+      private cardService: CardsService
   ) { }
 
   ngOnInit(): void {
@@ -128,8 +139,10 @@ export class PaymentPlanComponent implements OnInit {
         console.log(this.cardForm);
     }
 
-    submitFormWolet() {
+    async submitFormWolet() {
         console.log('submit ', this.cardForm);
+        console.log('valid ', this.cardForm.get('firstName').valid);
+        console.log('valid ', this.cardForm.get('lastName').valid);
         if (this.selectedCard) {
           console.log(this.selectedCard);
           return;
@@ -141,34 +154,19 @@ export class PaymentPlanComponent implements OnInit {
               .createToken(this.card.element, {name: fulName})
               .subscribe(result => {
                   console.log(result);
-                  // console.log(this.plan);
-                  const purchase = {
-                      price: this.plan.price,
-                      discount: this.plan.discount,
-                      name: this.plan.title
-                  };
-                  console.log(purchase);
                   // const cardData = generateStripeCardData(result, this.authUser, fulName);
-                  // console.log(cardData);
-                  // this.customersService.createStripeCustomerCard(cardData).subscribe(async (dt: any) => {
+                  // this.cardService.createStripeCard(cardData).subscribe(dt => {
                   //     console.log(dt);
-                  //     let card;
-                  //     dt.forEach((el) => {
-                  //         if (el.card_id === result.token.card.id) {
-                  //             card = el;
-                  //         }
-                  //     });
-                  //     console.log(card);
-                  //     const params = {
-                  //         card_id: card.id,
-                  //         stripe_customer_id: card.customer,
-                  //         stripe_account_id: card.stripe_account_id || '',
-                  //         user_id: this.authUser.id
-                  //     };
-                  //     this.customersService.removeStripeCard(params).subscribe((data: any) => {
-                  //         console.log(data);
-                  //     });
                   // });
+                  // return;
+                  const purchases = {
+                      unit_amount: 0,
+                      discount: this.plan.discount,
+                      name: this.plan.title,
+                  };
+                  console.log(purchases);
+                  console.log(this.plan.currency);
+
               });
       }
     }
@@ -178,8 +176,87 @@ export class PaymentPlanComponent implements OnInit {
         console.log(event.target.value);
     }
 
-    closedMathDialog() {
-      this.dialogRef.close();
+    completePurchaseWholeDivCompletePurchaseNextDiv() {
+      if (!this.selectedCard) {
+          this.loader.formProcessing = true;
+          const fulName = this.cardForm.value.firstName + ' ' + this.cardForm.value.lastName;
+          this.stripeService
+              .createToken(this.card.element, {name: fulName})
+              .subscribe(result => {
+                  console.log(result);
+                  const cardData = generateStripeCardData(result, this.authUser, fulName);
+                  this.customersService.createStripeCustomerCard(cardData).subscribe(async (dt: any) => {
+                      this.loader.formProcessing = false;
+                      this.nextMatDialog();
+                      this.selectedCard = dt.filter(el => el.card_id === result.token.card.id)[0];
+                      console.log(this.selectedCard);
+                      this.castomCardParams = {
+                          card_id: this.selectedCard.id,
+                          stripe_customer_id: this.selectedCard.customer,
+                          stripe_account_id: this.selectedCard.stripe_account_id || '',
+                          user_id: this.authUser.id
+                      };
+                  });
+              });
+      } else {
+          this.nextMatDialog();
+      }
+    }
+
+    createPaymentIntentPlan() {
+        this.loader.formProcessing = true;
+        this.paymentsService.createPaymentIntent({
+            user_id: this.authUser.id,
+            customer_id: this.selectedCard.stripe_customer_id,
+            account_id: this.selectedCard.stripe_account_id,
+            currency: this.plan.currency,
+            card: this.selectedCard,
+            isPlan: true,
+            purchase: {
+                unit_amount: this.plan.price,
+                discount: this.plan?.discount,
+                name: this.plan.title
+            }
+        }).subscribe(async (clientSecret) => {
+            console.log('createPayment ', clientSecret);
+            const stripe = await this.stripePromise;
+            await stripe.confirmCardPayment(clientSecret, {
+                payment_method: this.selectedCard.id
+            }).catch(e => {
+                console.log(e);
+            }).then((r) => {
+                console.log(r);
+                console.log(this.castomCardParams);
+                this.loader.formProcessing = false;
+                this.closedMathDialog(r);
+                // if (this.castomCardParams) {
+                //     this.customersService.removeStripeCard(this.castomCardParams).subscribe((d) => {
+                //         console.log(d);
+                //         this.castomCardParams = null;
+                //     });
+                // }
+            });
+        });
+    }
+
+    nextMatDialog() {
+        this.completePurchase = !this.completePurchase;
+    }
+
+    closedMathDialog(data?) {
+      this.dialogRef.close(data);
+    }
+
+    testConsole(e) {
+        console.log(e);
+    }
+
+    ngOnDestroy(): void {
+      if (this.castomCardParams) {
+          this.customersService.removeStripeCard(this.castomCardParams).subscribe((d) => {
+              console.log(d);
+          });
+      }
     }
 
 }

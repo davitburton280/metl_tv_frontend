@@ -32,6 +32,4 @@ export class PaymentsService {
         return this.httpClient.get<any>(`${API_URL}stripe/payments/get-payouts-history`, {params});
     }
 
-
-
 }

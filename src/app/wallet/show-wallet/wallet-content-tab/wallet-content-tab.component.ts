@@ -84,7 +84,8 @@ export class WalletContentTabComponent implements OnInit, OnDestroy {
     getPaymentsHistory(filters) {
         const params = {
             customer: this.userCards?.[0]?.stripe_customer_id,
-            user_id: this.authUser.id, ...filters
+            user_id: this.authUser.id,
+            ...filters
         };
         if (params.customer) {
             this.loader.dataLoading = true;

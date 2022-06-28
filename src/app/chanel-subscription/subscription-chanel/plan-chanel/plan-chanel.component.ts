@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { SubjectService } from '@core/services/subject.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PaymentPlanComponent } from '@core/components/modals/payment-plan/payment-plan.component';
+import { PaymentCompletedComponent } from "@core/components/modals/payment-completed/payment-completed.component";
 
 @Component({
   selector: 'app-plan-chanel',
@@ -48,13 +49,18 @@ export class PlanChanelComponent implements OnInit {
     openModalPayment() {
       this.dialog.open(PaymentPlanComponent, {
           width: '1085px',
-          height: '938px',
           data: {
               plan: this.plan,
               cards: this.userCards,
           }
       }).afterClosed().subscribe(dt => {
           console.log(dt);
+          if (dt.paymentIntent.status === 'succeeded') {
+              this.dialog.open(PaymentCompletedComponent, {
+                  width: '591px',
+                  height: '292px'
+              }).afterClosed().subscribe();
+          }
       });
     }
 

@@ -53,21 +53,24 @@ export const CHANEL_SUBSCRIPTIONS_LIST = [
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         img: '../../assets/img/bronzeFrame.png',
         price: 1499,
-        discount: 0
+        discount: 0,
+        currency: 'usd'
     },
     {
         title: 'Silver Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         img: '../../assets/img/silverFrame.png',
         price: 2999,
-        discount: 0
+        discount: 0,
+        currency: 'usd'
     },
     {
         title: 'Gold Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         img: '../../assets/img/goldFrame.png',
         price: 4999,
-        discount: 0
+        discount: 0,
+        currency: 'usd'
     }
 ];
 
@@ -189,6 +192,7 @@ export const VIDEOJS_PLAYER_OPTIONS = {
 };
 
 export const STRIPE_PUBLISHABLE_KEY = 'pk_test_51HdPckKqYIKd5fEInH0pL35DSdkG9JfxAiuT7K3JutO3zFseApoTCjdj72fK82tORdAjDIUOPQzSm62DIeUUmdpw00OhdcsU0p';
+export const STRIPE_TEST_PRIVATE_KEY = 'sk_test_51HdPckKqYIKd5fEI9MzHKsgnvhhqGmMiY9nQoIciNqRwdvPsjYnVmd1uh6pitQ0kaHLrVXWSeyXPliq8cPOakhty00XGXC9XsM';
 export const STRIPE_CARD_OPTIONS: StripeCardElementOptions = {
     style: {
         base: {

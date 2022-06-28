@@ -42,7 +42,6 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
 
     getStripeProducts(){
         this.subscriptions.push(this.productsService.getStripeProducts().subscribe(dt => {
-            console.log(dt);
             this.bitProducts = dt;
         }));
     }

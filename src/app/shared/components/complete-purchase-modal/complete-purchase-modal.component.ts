@@ -57,6 +57,7 @@ export class CompletePurchaseModalComponent implements OnInit, OnDestroy {
         public loader: LoaderService
     ) {
         this.purchase = data;
+        console.log(this.purchase);
         this.creditCardForm = fb.group({
             name: ['', [Validators.required]],
             price: data.unit_amount
@@ -101,8 +102,6 @@ export class CompletePurchaseModalComponent implements OnInit, OnDestroy {
                 this.toastr.success('The purchase has been completed successfully', 'Done!');
                 this.closeModal({customer: this.selectedCard.stripe_customer_id});
             });
-
-
         });
     }
 

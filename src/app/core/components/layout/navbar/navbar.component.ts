@@ -208,10 +208,14 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     getAllPaymentsHistory() {
-        const params = {customer: this.userCards?.[0]?.stripe_customer_id, user_id: this.authUser.id};
+        const params = {
+            customer: this.userCards?.[0]?.stripe_customer_id,
+            // email: this.authUser.email,
+            user_id: this.authUser.id
+        };
         if (params.customer) {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
-                // this.payments = dt;
+                console.log('navbar ', dt);
                 this.totals = dt.user_coins;
                 // this.subject.setAllPaymentsData(dt);
                 this.subject.changePaymentsData(dt);

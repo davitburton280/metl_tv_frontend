@@ -1,4 +1,4 @@
-<div class ="completePurchaseWholeDiv" style="display:none">
+<div class ="completePurchaseWholeDiv" *ngIf="!completePurchase">
     <div class ="completePurchaseWholeUpDiv">
         <div class ="completePurchaseUpDiv">
             <img class="closingPng" src="../../assets/img/closeChat.png" alt="closeIcon" (click)="closedMathDialog()">
@@ -9,7 +9,7 @@
                     <img class="goldCoin" [src]="plan.img" alt="goldIcon">
                     <div class="goldCoinRightPart">
                         <div class="coinsBundle">{{plan.title}}</div>
-                        <div class="timeCharge">One-time charge on Jun 2, 2021.</div>
+                        <div class="timeCharge">One-time charge on {{ time | date : 'mediumDate' }}.</div>
                     </div>
                 </div>
                 <div class="purchaseRightUpPart">
@@ -112,8 +112,8 @@
                     <div class="cardInfoDiv">
                         <div class="cardInfo">Credit Card Number</div>
                         <input *ngIf="!typeCreditCardInput" class="cardInput1" (input)="maxLengthInput($event, 19)" type="text" placeholder="Card Number" formControlName="cardNumber">
-                        <div [hidden]="!typeCreditCardInput" class="cardNumberInputDiv">
-                            <ngx-stripe-card-number [options]="cardOptions"></ngx-stripe-card-number>
+                        <div [hidden]="!typeCreditCardInput" class="cardNumberInputDiv" [ngClass]="{'cardNumberInputDivInvalid': false}">
+                            <ngx-stripe-card-number [options]="cardOptions" (change)="testConsole($event)"></ngx-stripe-card-number>
                         </div>
                     </div>
                     <div class="cardInfoDiv">
@@ -121,8 +121,8 @@
                         <div class="monthYearInputs">
                             <input *ngIf="!typeCreditCardInput" class="cardInput2" type="number" placeholder="Month" formControlName="cardMonth">
                             <input *ngIf="!typeCreditCardInput" class="cardInput2" type="number" placeholder="Year" formControlName="cardYear">
-                            <div [hidden]="!typeCreditCardInput" class="cardExpiryInputDiv">
-                                <ngx-stripe-card-expiry [options]="cardOptions"></ngx-stripe-card-expiry>
+                            <div [hidden]="!typeCreditCardInput" class="cardExpiryInputDiv " >
+                                <ngx-stripe-card-expiry [options]="cardOptions" (change)="testConsole($event)"></ngx-stripe-card-expiry>
                             </div>
                         </div>
                     </div>
@@ -135,16 +135,20 @@
                     </div>
                 </div>
                 <div class="submitButton">
-                    <button class="previewBtn" (click)="submitFormWolet()">Review Purchase</button>
+                    <button class="previewBtn"
+                            (click)="completePurchaseWholeDivCompletePurchaseNextDiv()"
+
+                    >Review Purchase</button>
+                    <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
                 </div>
             </div>
     </div>
 </div>
 
 
-<div class ="completePurchaseNextDiv">
+<div class ="completePurchaseNextDiv" *ngIf="completePurchase">
     <div class ="completePurchaseUpDiv">
-        <img class="closingPng" src="../../assets/img/closeChat.png" alt="closeIcon">
+        <img class="closingPng" src="../../assets/img/closeChat.png" alt="closeIcon" (click)="closedMathDialog()">
         <div class="completePurchase">Review Purchase</div>
         <div class="purchaseSummary">Purchase Summary</div>
     </div>
@@ -169,38 +173,33 @@
                 <div class="paymentViaCards">Payment Via Credit/Debit Cards</div>
                 <div class="paymentViaCardsBelowDiv">
                     <img src="../../assets/img/credit-card.svg" alt="creditCard">
-                    <div class="cardNumbers">**** **** **** 56 56</div>
+                    <div class="cardNumbers">**** **** **** {{selectedCard?.last4 || '****'}}</div>
                 </div>
             </div>
             <div class="changePaymentTotal">
                 <div class="changePayment">Change Payment Card  </div>
             </div>
-                <div class="cardsAndCheckboxes">
-                    <label class="containerLabel">
-                        <div class="paymentViaCardsBelowDiv">
-                            <img src="../../assets/img/credit-card.svg" alt="creditCard">
-                            <div class="cardNumbers">**** **** **** 56 56</div>
-                        </div>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="containerLabel">
-                        <div class="paymentViaCardsBelowDiv">
-                            <img src="../../assets/img/credit-card.svg" alt="creditCard">
-                            <div class="cardNumbers">**** **** **** 56 56</div>
-                        </div>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
+            <div class="saved_card reviewPurchase">
+                <div class="saved_card__select">
+                    <div class="saved_card__selectCard" *ngFor="let card of cards; let i = index">
+                        <label class="checkboxCustomStyle">
+                            <input type="checkbox" [checked]="checkedCard[i]"
+                                   (change)="selectCard(card, $event, i)">
+                        </label>
+                        <img src="../../assets/img/credit-card.svg" alt="creditCard">
+                        <span>**** **** **** {{card.number_part}}</span>
+                    </div>
                 </div>
+            </div>
                 <div class="textDiv">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electroni</div>
                 <div class="backToPaymentsAndButton">
-                    <div class="backToPaymentsAndButtonFirst">
+                    <div class="backToPaymentsAndButtonFirst" (click)="nextMatDialog()">
                         <img src="../../assets/img/chevron-left.png" alt="backSign">
                         <div class="backToPayments">Back to payment methods</div>
                     </div>
                     <div class="coinsBundle">Total US $ 6.00</div>
-                    <button class="payNow">Pay Now</button>
+                    <button class="payNow" (click)="createPaymentIntentPlan()">Pay Now</button>
+                    <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
                 </div>
             </div>
         <div class="paymentSummarySecondDiv">
@@ -226,6 +225,6 @@
         </div>
         </div>
 
-    </div>
+</div>
 
 

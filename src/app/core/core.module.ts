@@ -42,6 +42,7 @@ import { SocialShareDialogComponent } from './components/modals/social-share-dia
 import { UploadFileComponent } from './components/modals/upload-file/upload-file.component';
 import { ImgEditCropperComponent } from '@core/components/modals/img-edit-cropper/img-edit-cropper.component';
 import { PaymentPlanComponent } from './components/modals/payment-plan/payment-plan.component';
+import { PaymentCompletedComponent } from './components/modals/payment-completed/payment-completed.component';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { PaymentPlanComponent } from './components/modals/payment-plan/payment-p
         SocialShareDialogComponent,
         UploadFileComponent,
         ImgEditCropperComponent,
-        PaymentPlanComponent
+        PaymentPlanComponent,
+        PaymentCompletedComponent
         // ChatBottomBoxComponent
     ],
     imports: [
