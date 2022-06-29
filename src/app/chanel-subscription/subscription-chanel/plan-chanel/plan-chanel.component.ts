@@ -55,7 +55,7 @@ export class PlanChanelComponent implements OnInit {
           }
       }).afterClosed().subscribe(dt => {
           console.log(dt);
-          if (dt.paymentIntent.status === 'succeeded') {
+          if (dt?.paymentIntent.status === 'succeeded') {
               this.dialog.open(PaymentCompletedComponent, {
                   width: '591px',
                   height: '292px'

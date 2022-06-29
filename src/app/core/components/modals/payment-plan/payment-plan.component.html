@@ -1,4 +1,4 @@
-<div class ="completePurchaseWholeDiv" *ngIf="!completePurchase">
+<div class ="completePurchaseWholeDiv" [hidden]="completePurchase">
     <div class ="completePurchaseWholeUpDiv">
         <div class ="completePurchaseUpDiv">
             <img class="closingPng" src="../../assets/img/closeChat.png" alt="closeIcon" (click)="closedMathDialog()">
@@ -112,26 +112,32 @@
                     <div class="cardInfoDiv">
                         <div class="cardInfo">Credit Card Number</div>
                         <input *ngIf="!typeCreditCardInput" class="cardInput1" (input)="maxLengthInput($event, 19)" type="text" placeholder="Card Number" formControlName="cardNumber">
-                        <div [hidden]="!typeCreditCardInput" class="cardNumberInputDiv" [ngClass]="{'cardNumberInputDivInvalid': false}">
-                            <ngx-stripe-card-number [options]="cardOptions" (change)="testConsole($event)"></ngx-stripe-card-number>
+                        <div [hidden]="!typeCreditCardInput" class="cardNumberInputDiv" [ngClass]="{'inputError': !cardNumberValidation.empty && cardNumberValidation.error !== undefined || cardNumberValidation.empty && requireCardNumber}">
+                            <ngx-stripe-card-number [options]="cardOptions" (change)="changeCardNumber($event)"></ngx-stripe-card-number>
                         </div>
+                        <span class="error" *ngIf="!cardNumberValidation.empty && cardNumberValidation.error !== undefined">{{cardNumberValidation.errorMessage}}</span>
+                        <span class="error" *ngIf="cardNumberValidation.empty && requireCardNumber">{{cardNumberValidation.errorMessage}}</span>
                     </div>
                     <div class="cardInfoDiv">
                         <div class="cardInfo">Expiry Date</div>
                         <div class="monthYearInputs">
                             <input *ngIf="!typeCreditCardInput" class="cardInput2" type="number" placeholder="Month" formControlName="cardMonth">
                             <input *ngIf="!typeCreditCardInput" class="cardInput2" type="number" placeholder="Year" formControlName="cardYear">
-                            <div [hidden]="!typeCreditCardInput" class="cardExpiryInputDiv " >
-                                <ngx-stripe-card-expiry [options]="cardOptions" (change)="testConsole($event)"></ngx-stripe-card-expiry>
+                            <div [hidden]="!typeCreditCardInput" class="cardExpiryInputDiv" [ngClass]="{'inputError': !expiryValidation.empty && expiryValidation.error !== undefined || expiryValidation.empty && requireExpiry}">
+                                <ngx-stripe-card-expiry [options]="cardOptions" (change)="changeExpiry($event)"></ngx-stripe-card-expiry>
                             </div>
                         </div>
+                        <span class="error" *ngIf="!expiryValidation.empty && expiryValidation.error !== undefined">{{expiryValidation.errorMessage}}</span>
+                        <span class="error" *ngIf="expiryValidation.empty && requireExpiry">{{expiryValidation.errorMessage}}</span>
                     </div>
                     <div class="cardInfoDiv">
                         <div class="cardInfo">CVV</div>
                         <input *ngIf="!typeCreditCardInput" class="cardInput1" type="text" placeholder="CVV" formControlName="cvv">
-                        <div [hidden]="!typeCreditCardInput" class="cardCvvInputDiv">
-                            <ngx-stripe-card-cvc [options]="cardOptions"></ngx-stripe-card-cvc>
+                        <div [hidden]="!typeCreditCardInput" class="cardCvvInputDiv" [ngClass]="{'inputError': !cvvValidation.empty && cvvValidation.error !== undefined || cvvValidation.empty && requireCvv}">
+                            <ngx-stripe-card-cvc [options]="cardOptions" (change)="changeCvv($event)"></ngx-stripe-card-cvc>
                         </div>
+                        <span class="error" *ngIf="!cvvValidation.empty && cvvValidation.error !== undefined">{{cvvValidation.errorMessage}}</span>
+                        <span class="error" *ngIf="cvvValidation.empty && requireCvv">{{cvvValidation.errorMessage}}</span>
                     </div>
                 </div>
                 <div class="submitButton">
@@ -146,7 +152,7 @@
 </div>
 
 
-<div class ="completePurchaseNextDiv" *ngIf="completePurchase">
+<div class ="completePurchaseNextDiv" [hidden]="!completePurchase">
     <div class ="completePurchaseUpDiv">
         <img class="closingPng" src="../../assets/img/closeChat.png" alt="closeIcon" (click)="closedMathDialog()">
         <div class="completePurchase">Review Purchase</div>

@@ -20,6 +20,27 @@ import { LoaderService } from '@core/services/loader.service';
 export class PaymentPlanComponent implements OnInit, OnDestroy {
 
     castomCardParams = null;
+    requireCardNumber = false;
+    requireExpiry = false;
+    requireCvv = false;
+
+    cardNumberValidation = {
+        empty: true,
+        error: undefined,
+        errorMessage: 'Card Number Invalid'
+    };
+
+    expiryValidation = {
+        empty: true,
+        error: undefined,
+        errorMessage: 'Card Expiry Invalid'
+    };
+
+    cvvValidation = {
+        empty: true,
+        error: undefined,
+        errorMessage: 'Card CVV Invalid'
+    };
 
     plan;
     cards;
@@ -51,7 +72,9 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
       private customersService: CustomersService,
       public loader: LoaderService,
       private cardService: CardsService
-  ) { }
+  ) {
+      this.loader.formProcessing = false;
+  }
 
   ngOnInit(): void {
       this.authUser = this.getAuthUser.transform();
@@ -100,6 +123,7 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
 
     selectCard(card, event, index) {
         this.checkedCard = [];
+        this.cardForm.markAsUntouched();
         console.log(card);
         if (event.target.checked) {
             this.selectedCard = card;
@@ -139,45 +163,35 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
         console.log(this.cardForm);
     }
 
-    async submitFormWolet() {
-        console.log('submit ', this.cardForm);
-        console.log('valid ', this.cardForm.get('firstName').valid);
-        console.log('valid ', this.cardForm.get('lastName').valid);
-        if (this.selectedCard) {
-          console.log(this.selectedCard);
-          return;
-      } else {
-          const fulName = this.cardForm.value.firstName + ' ' + this.cardForm.value.lastName;
-          console.log(fulName);
-          console.log(this.card.getCardNumber());
-          this.stripeService
-              .createToken(this.card.element, {name: fulName})
-              .subscribe(result => {
-                  console.log(result);
-                  // const cardData = generateStripeCardData(result, this.authUser, fulName);
-                  // this.cardService.createStripeCard(cardData).subscribe(dt => {
-                  //     console.log(dt);
-                  // });
-                  // return;
-                  const purchases = {
-                      unit_amount: 0,
-                      discount: this.plan.discount,
-                      name: this.plan.title,
-                  };
-                  console.log(purchases);
-                  console.log(this.plan.currency);
-
-              });
-      }
-    }
-
     maxLengthInput(event, max) {
         event.target.value = event.target.value.slice(0, max);
         console.log(event.target.value);
     }
 
     completePurchaseWholeDivCompletePurchaseNextDiv() {
-      if (!this.selectedCard) {
+        if (!this.selectedCard) {
+          this.cardForm.markAllAsTouched();
+          if (!this.cardForm.get('firstName').valid && !this.cardForm.get('lastName').valid
+              || this.cardNumberValidation.empty || this.expiryValidation.empty || this.cvvValidation.empty
+              || this.cardNumberValidation.error !== undefined
+              || this.expiryValidation.error !== undefined
+              || this.cvvValidation.error !== undefined) {
+              if (this.cardNumberValidation.empty) {
+                  this.requireCardNumber = true;
+                  this.cardNumberValidation.errorMessage = 'Card Number Required';
+              }
+              if (this.expiryValidation.empty) {
+                  this.requireExpiry = true;
+                  this.expiryValidation.errorMessage = 'Card Expiry Required';
+              }
+              if (this.cvvValidation.empty) {
+                  this.requireCvv = true;
+                  this.cvvValidation.errorMessage = 'Card CVV Required';
+              }
+              return;
+          }
+          console.log(this.cardForm.get('firstName').valid);
+          console.log(this.cardForm.get('lastName').valid);
           this.loader.formProcessing = true;
           const fulName = this.cardForm.value.firstName + ' ' + this.cardForm.value.lastName;
           this.stripeService
@@ -199,7 +213,14 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
                   });
               });
       } else {
-          this.nextMatDialog();
+            this.nextMatDialog();
+            this.typeCreditCardInput = true;
+            if (this.castomCardParams) {
+                this.customersService.removeStripeCard(this.castomCardParams).subscribe((d) => {
+                    console.log(d);
+                    this.castomCardParams = null;
+                });
+            }
       }
     }
 
@@ -241,6 +262,34 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
 
     nextMatDialog() {
         this.completePurchase = !this.completePurchase;
+    }
+
+    changeCardNumber(e) {
+        console.log(e);
+        this.requireCardNumber = false;
+        this.cardNumberValidation.empty = e.empty;
+        this.cardNumberValidation.error = e.error;
+        if (!e.empty) {
+            this.cardNumberValidation.errorMessage = 'Card Number Invalid';
+        }
+    }
+
+    changeExpiry(e) {
+        this.requireExpiry = false;
+        this.expiryValidation.empty = e.empty;
+        this.expiryValidation.error = e.error;
+        if (!e.empty) {
+            this.expiryValidation.errorMessage = 'Card Expiry Invalid';
+        }
+    }
+
+    changeCvv(e) {
+        this.requireCvv = false;
+        this.cvvValidation.empty = e.empty;
+        this.cvvValidation.error = e.error;
+        if (!e.empty) {
+            this.cvvValidation.errorMessage = 'Card CVV Invalid';
+        }
     }
 
     closedMathDialog(data?) {
