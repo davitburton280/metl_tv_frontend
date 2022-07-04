@@ -52,27 +52,47 @@ export const CHANEL_SUBSCRIPTIONS_LIST = [
         title: 'Bronze Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         img: '../../assets/img/bronzeFrame.png',
-        price: 1499,
-        discount: 0,
-        currency: 'usd'
+        price: 499,
+        currency: 'usd',
+        monthArr: [1, 3, 6, 12],
+        monthDiscount: {
+            1: 0,
+            3: 3,
+            6: 7,
+            12: 11
+        }
     },
     {
         title: 'Silver Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         img: '../../assets/img/silverFrame.png',
-        price: 2999,
-        discount: 0,
-        currency: 'usd'
+        price: 999,
+        currency: 'usd',
+        monthArr: [1, 3, 6, 12],
+        monthDiscount: {
+            1: 0,
+            3: 3,
+            6: 7,
+            12: 11
+        }
     },
     {
         title: 'Gold Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         img: '../../assets/img/goldFrame.png',
-        price: 4999,
-        discount: 0,
-        currency: 'usd'
+        price: 1499,
+        currency: 'usd',
+        monthArr: [1, 3, 6, 12],
+        monthDiscount: {
+            1: 0,
+            3: 3,
+            6: 7,
+            12: 11
+        }
     }
 ];
+
+export const COIN_IMAGE_NAME = ['gold', 'silver', 'pink', 'green', 'blue'];
 
 export const VIDEO_CATEGORIES = ['Stock', 'Etf', 'Cryptocurrency'];
 

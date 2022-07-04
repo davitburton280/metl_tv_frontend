@@ -2,7 +2,7 @@ import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
-import { STRIPE_CARD_OPTIONS_Custom, STRIPE_PUBLISHABLE_KEY } from '@core/constants/global';
+import { COIN_IMAGE_NAME, STRIPE_CARD_OPTIONS_Custom, STRIPE_PUBLISHABLE_KEY } from '@core/constants/global';
 import { StripeCardNumberComponent, StripeService } from 'ngx-stripe';
 import { generateStripeCardData } from '@core/helpers/generate-stripe-card-data';
 import { GetAuthUserPipe } from '@shared/pipes/get-auth-user.pipe';
@@ -11,6 +11,9 @@ import { CustomersService } from '@core/services/wallet/customers.service';
 import { PaymentsService } from '@core/services/wallet/payments.service';
 import { CardsService } from '@core/services/cards.service';
 import { LoaderService } from '@core/services/loader.service';
+import { SubjectService } from '@core/services/subject.service';
+import { Subscription } from 'rxjs';
+import { ApplyDiscountToPricePipe } from '@shared/pipes/apply-discount-to-price.pipe';
 
 @Component({
   selector: 'app-payment-plan',
@@ -23,6 +26,15 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
     requireCardNumber = false;
     requireExpiry = false;
     requireCvv = false;
+
+    typeQuantity = 'Type quantity';
+
+    subscriptions: Subscription[] = [];
+
+    monthArr = [];
+    month = 1;
+    isPlan = true;
+    images = [];
 
     cardNumberValidation = {
         empty: true,
@@ -71,6 +83,8 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
       private paymentsService: PaymentsService,
       private customersService: CustomersService,
       public loader: LoaderService,
+      private subject: SubjectService,
+      private applyDiscount: ApplyDiscountToPricePipe,
       private cardService: CardsService
   ) {
       this.loader.formProcessing = false;
@@ -78,8 +92,29 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
       this.authUser = this.getAuthUser.transform();
-      console.log(this.data);
-      this.plan = this.data.plan;
+      if (this.data.coin) {
+          console.log(this.data);
+          this.isPlan = false;
+          this.images = this.data.coinImg;
+          const plan = {
+              title: this.data.purchase.name,
+              card_text: '',
+              img: '../../assets/img/bronzeFrame.png',
+              price: this.data.purchase.unit_amount,
+              currency: this.data.purchase.currency,
+              monthArr: [],
+              monthDiscount: {
+                  [this.month]: this.data.purchase?.metadata?.discount || 0,
+              }
+          };
+          const monthArr = [];
+          this.plan = plan;
+          this.monthArr = monthArr;
+      } else {
+          console.log(this.data);
+          this.plan = this.data.plan;
+          this.monthArr = this.data.plan.monthArr;
+      }
       this.cards = this.data.cards;
       this.formBuilderCard();
       this.cardForm.enable();
@@ -126,6 +161,9 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
         this.cardForm.markAsUntouched();
         console.log(card);
         if (event.target.checked) {
+            this.requireCardNumber = false;
+            this.requireExpiry = false;
+            this.requireCvv = false;
             this.selectedCard = card;
             this.typeCreditCardInput = false;
             this.cards.forEach(() => {
@@ -232,10 +270,10 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
             account_id: this.selectedCard.stripe_account_id,
             currency: this.plan.currency,
             card: this.selectedCard,
-            isPlan: true,
+            isPlan: this.isPlan,
             purchase: {
-                unit_amount: this.plan.price,
-                discount: this.plan?.discount,
+                unit_amount: this.totalPrice(),
+                discount: this.plan.monthDiscount[this.month],
                 name: this.plan.title
             }
         }).subscribe(async (clientSecret) => {
@@ -250,18 +288,19 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
                 console.log(this.castomCardParams);
                 this.loader.formProcessing = false;
                 this.closedMathDialog(r);
-                // if (this.castomCardParams) {
-                //     this.customersService.removeStripeCard(this.castomCardParams).subscribe((d) => {
-                //         console.log(d);
-                //         this.castomCardParams = null;
-                //     });
-                // }
+                this.subscriptions.push(this.paymentsService.getAllPaymentsHistory({user_id: this.authUser.id, ...r}).subscribe(ph => {
+                    this.subject.setAllPaymentsData(ph);
+                    this.subject.changePaymentsData(ph);
+                }));
             });
         });
     }
 
     nextMatDialog() {
         this.completePurchase = !this.completePurchase;
+        this.requireCardNumber = false;
+        this.requireExpiry = false;
+        this.requireCvv = false;
     }
 
     changeCardNumber(e) {
@@ -294,6 +333,25 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
 
     closedMathDialog(data?) {
       this.dialogRef.close(data);
+    }
+
+    monthCount(month) {
+      this.month = month;
+      this.typeQuantity = this.month + ' month';
+    }
+
+    totalPrice() {
+      return Number(((this.plan.price * this.month) / 100).toFixed(2));
+    }
+
+    // totalPricePrcent() {
+    //     const prc = Number(((this.plan.price * this.month) / 100).toFixed(2));
+    //     return Number((prc - ((prc * this.plan.monthDiscount[this.month]) / 100)).toFixed(2));
+    // }
+
+    getDiscountedPrice() {
+        return this.applyDiscount.transform(this.plan.price * this.month / 100, this.plan.monthDiscount[this.month])
+            .toFixed(6).slice(0, -4);
     }
 
     testConsole(e) {

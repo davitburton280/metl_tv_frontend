@@ -276,6 +276,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     checkIfUserHasCard() {
+        console.log(this.userCards);
         if (this.userCards?.length > 0) {
             this.showPurchaseBits = !this.showPurchaseBits;
         } else {

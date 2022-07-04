@@ -1,24 +1,23 @@
-.completePurchaseWholeDiv{
+.completePurchaseWholeDiv {
     max-width: 1085px;
     width: 100%;
-    height:938px;
+    height: 938px;
     box-sizing: border-box;
-    //padding: 17px 44px 25px 42px;
 }
 
-.completePurchaseWholeUpDiv{
+.completePurchaseWholeUpDiv {
     padding: 17px 44px 24px 42px;
     display: flex;
     flex-direction: column;
     background-color: #F5F5F5;
-    //padding-bottom: 24px;
 }
 
-.completePurchaseUpDiv{
+.completePurchaseUpDiv {
     display: flex;
     flex-direction: column;
 }
-.closingPng{
+
+.closingPng {
     width: 12px;
     height: 12px;
     display: flex;
@@ -27,7 +26,7 @@
     cursor: pointer;
 }
 
-.completePurchase{
+.completePurchase {
     font-family: Muli-Bold, sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -37,8 +36,7 @@
     margin-top: 12px;
 }
 
-
-.purchaseSummary{
+.purchaseSummary {
     font-family: Muli-SemiBold, sans-serif;
     font-weight: 600;
     font-style: normal;
@@ -49,7 +47,7 @@
     margin-bottom: 20px;
 }
 
-.purchaseBelowPart{
+.purchaseBelowPart {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #C9C9C9;
@@ -57,22 +55,22 @@
     padding-bottom: 18px;
 }
 
-.purchaseLeftUpPart{
+.purchaseLeftUpPart {
     display: flex;
 }
 
-.goldCoin{
+.goldCoin {
     margin-right: 11px;
     width: 28px;
     height: 28px;
 }
 
-.goldCoinRightPart{
+.goldCoinRightPart {
     display: flex;
     flex-direction: column;
 }
 
-.coinsBundle{
+.coinsBundle {
     font-family: Muli-SemiBold, sans-serif;
     font-weight: 600;
     font-style: normal;
@@ -82,7 +80,7 @@
     margin-bottom: 2px;
 }
 
-.timeCharge{
+.timeCharge {
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -91,11 +89,11 @@
     color: #545454;
 }
 
-.purchaseRightUpPart{
+.purchaseRightUpPart {
     display: flex;
 }
 
-.typeQuantityDiv{
+.typeQuantityDiv {
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -107,12 +105,12 @@
     border: 1px solid #707070;
 }
 
-.priceAndAmountDiv{
+.priceAndAmountDiv {
     display: flex;
     flex-direction: column;
 }
 
-.priceDiv{
+.priceDiv {
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -122,8 +120,7 @@
     margin-bottom: 6px;
 }
 
-
-.taxAndAmount{
+.taxAndAmount {
     display: flex;
     flex-direction: column;
     justify-self: flex-end;
@@ -134,7 +131,7 @@
     margin-right: 30px;
 }
 
-.taxDiv{
+.taxDiv {
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -146,12 +143,12 @@
     width: 50%;
 }
 
-.totalAmount{
+.totalAmount {
     display: flex;
     justify-content: space-between;
 }
 
-.totalDiv{
+.totalDiv {
     font-family: Muli-Bold, sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -162,14 +159,12 @@
     width: 50%;
 }
 
-.completePurchaseBelowDiv{
-    //padding-left: 42px;
-    //padding-right: 44px;
+.completePurchaseBelowDiv {
     display: flex;
     flex-direction: column;
 }
 
-.belowFirstDiv{
+.belowFirstDiv {
     display: flex;
     justify-content: space-between;
     margin-bottom: 12px;
@@ -178,8 +173,7 @@
     padding-right: 44px;
 }
 
-
-.payWithDiv{
+.payWithDiv {
     display: flex;
     align-items: center;
     font: normal normal 600 20px/25px Muli;
@@ -188,7 +182,6 @@
     opacity: 1;
     padding-left: 42px;
     padding-right: 44px;
-
 
     .payWithDiv_text {
         font-size: 20px;
@@ -207,6 +200,7 @@
             width: 43px;
             height: 28px;
         }
+
         &:last-child {
             margin-right: 0;
         }
@@ -222,12 +216,12 @@
     padding-left: 42px;
     padding-right: 44px;
 
-     .saved_card__text {
-         margin-bottom: 20px;
-         font: normal normal 600 16px/20px Muli;
-         letter-spacing: 0;
-         color: #000000;
-     }
+    .saved_card__text {
+        margin-bottom: 20px;
+        font: normal normal 600 16px/20px Muli;
+        letter-spacing: 0;
+        color: #000000;
+    }
 
     .saved_card__select {
         display: flex;
@@ -253,7 +247,6 @@
             }
 
             // ----------------------  Start Custom Checkbox   ------------------ //
-
             input[type="checkbox"] {
                 -webkit-appearance: none;
                 appearance: none;
@@ -279,12 +272,12 @@
             input[type="checkbox"]:checked::before {
                 transform: scale(1);
             }
+
             input[type="checkbox"]:checked {
                 border: 3px solid #18b587;
             }
 
             // ----------------------  End Custom Checkbox   ------------------ //
-
         }
     }
 }
@@ -294,17 +287,17 @@
     padding-right: 44px;
 }
 
-.secureAndIcon{
+.secureAndIcon {
     display: flex;
 }
 
-.lockIcon{
+.lockIcon {
     width: 11px;
     height: 15px;
     margin-right: 12px;
 }
 
-.secureDiv{
+.secureDiv {
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -313,14 +306,14 @@
     color: #545454;
 }
 
-.belowSecondDiv{
+.belowSecondDiv {
     display: flex;
     margin-bottom: 42px;
     padding-left: 42px;
     padding-right: 44px;
 }
 
-.payWith{
+.payWith {
     max-width: 306px;
     width: 100%;
     height: 49px;
@@ -336,26 +329,28 @@
 .paypalDiv {
     background: #0D9EDB 0 0 no-repeat padding-box;
 }
-.amazonDiv{
+
+.amazonDiv {
     background: #FAD47F 0 0 no-repeat padding-box;
 }
-.stripeDiv{
+
+.stripeDiv {
     background: #F5F5F5 0 0 no-repeat padding-box;
 }
 
-.orDiv{
+.orDiv {
     font-family: Muli-SemiBold, sans-serif;
     font-weight: 600;
     font-style: normal;
     font-size: 20px;
     line-height: 25px;
-    color:#545454;
+    color: #545454;
     margin-bottom: 24px;
     margin-left: 12px;
     margin-right: 12px;
 }
 
-.billingInformation{
+.billingInformation {
     font-family: Muli-SemiBold, sans-serif;
     font-weight: 600;
     font-style: normal;
@@ -366,20 +361,20 @@
     margin-bottom: 26px;
 }
 
-.orDivs{
+.orDivs {
     display: flex;
     padding-left: 42px;
     padding-right: 44px;
 }
 
-.leftLine{
+.leftLine {
     width: 470px;
     height: 1px;
     background-color: #C9C9C9;
     margin-top: 12px;
 }
 
-.personalInfoInputsDiv{
+.personalInfoInputsDiv {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 24px;
@@ -389,13 +384,13 @@
         width: 100%;
         height: 44px;
 
-        &:first-child{
+        &:first-child {
             margin-right: 42px;
         }
     }
 }
 
-.personalInfoInput{
+.personalInfoInput {
     max-width: 473px;
     width: 100%;
     height: 44px;
@@ -411,7 +406,7 @@
     line-height: 18px;
 }
 
-.creditCardInfo{
+.creditCardInfo {
     font-family: Muli-SemiBold, sans-serif;
     font-weight: 600;
     font-style: normal;
@@ -421,13 +416,13 @@
     margin-bottom: 13px;
 }
 
-.cardInfoDivs{
+.cardInfoDivs {
     display: flex;
     align-items: flex-start;
     margin-bottom: 22px;
 }
 
-.monthYearInputs{
+.monthYearInputs {
     display: flex;
 }
 
@@ -445,12 +440,11 @@
     margin-right: 17px;
 }
 
-
 .cardCvvInputDiv {
     width: 290px;
 }
 
-.cardInfo{
+.cardInfo {
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -460,10 +454,10 @@
     margin-bottom: 7px;
 }
 
-.cardInput1{
+.cardInput1 {
     width: 290px;
-    height:44px;
-    padding:13px 0 14px 27px;
+    height: 44px;
+    padding: 13px 0 14px 27px;
     background: #FFFFFF 0 0 no-repeat padding-box;
     box-shadow: 0 0 6px #EEEEEE;
     opacity: 1;
@@ -476,13 +470,13 @@
     margin-right: 17px;
 }
 
-.cardInput2{
+.cardInput2 {
     width: 179px;
-    height:44px;
+    height: 44px;
     background: #FFFFFF 0 0 no-repeat padding-box;
     box-shadow: 0 0 6px #EEEEEE;
     opacity: 1;
-    padding:13px 0 14px 27px;
+    padding: 13px 0 14px 27px;
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -495,7 +489,8 @@
 .submitButton {
     display: flex;
     justify-content: flex-end;
-    .previewBtn{
+
+    .previewBtn {
         width: 139px;
         padding: 7px 17px;
         background-color: #18B587;
@@ -511,17 +506,17 @@
 }
 
 ::ng-deep .mat-menu-panel {
-    margin-top: 0!important;
+    margin-top: 0 !important;
 }
 
-.completePurchaseNextDiv{
+.completePurchaseNextDiv {
     max-width: 1085px;
     width: 100%;
     box-sizing: border-box;
     padding: 17px 15px 25px 42px;
 }
 
-.checkoutWholeDiv{
+.checkoutWholeDiv {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -529,7 +524,7 @@
     margin-bottom: 27px;
 }
 
-.checkoutFirstDiv{
+.checkoutFirstDiv {
     display: flex;
     align-items: center;
 }
@@ -544,14 +539,13 @@
     margin-right: 33px;
 }
 
-.lockIcon2{
+.lockIcon2 {
     margin-right: 13px;
     width: 11px;
     height: 15px;
 }
 
-
-.checkoutSmallDivs{
+.checkoutSmallDivs {
     margin-right: 40px;
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
@@ -561,21 +555,21 @@
     color: #545454;
 }
 
-.secondChild{
+.secondChild {
     margin-right: 14px !important;
 }
 
-.checkoutSmallDivs:last-child{
+.checkoutSmallDivs:last-child {
     color: #F53C6F;
-    margin-right:31px;
+    margin-right: 31px;
 }
 
-.paymentSummaryWhole{
+.paymentSummaryWhole {
     display: flex;
     justify-content: space-between;
 }
 
-.paymentViaCards{
+.paymentViaCards {
     margin-bottom: 12px;
     font-family: Muli-SemiBold, sans-serif;
     font-weight: 600;
@@ -585,13 +579,13 @@
     color: #545454;
 }
 
-.paymentViaCardsBelowDiv{
+.paymentViaCardsBelowDiv {
     display: flex;
     align-items: center;
     margin-bottom: 49px;
 }
 
-.containerLabel{
+.containerLabel {
     display: block;
     position: relative;
     padding-left: 35px;
@@ -603,6 +597,7 @@
     -ms-user-select: none;
     user-select: none;
 }
+
 .containerLabel input {
     position: absolute;
     opacity: 0;
@@ -611,7 +606,7 @@
     width: 0;
 }
 
-.containerLabel input::before{
+.containerLabel input::before {
     content: "";
     width: 0.65em;
     height: 0.65em;
@@ -620,7 +615,7 @@
     //box-shadow: inset 0px 0px 0px 2px #f7f2f2;
 }
 
-.checkmark{
+.checkmark {
     position: absolute;
     top: 0;
     left: 0;
@@ -631,18 +626,17 @@
     border-radius: 3px;
 }
 
-
-.containerLabel input:checked ~ .checkmark{
+.containerLabel input:checked ~ .checkmark {
     background-color: #18B587;
     border-radius: 3px;
     border: 2px solid white;
     opacity: 1;
-    box-shadow:0 0 0 4px #18B587;
+    box-shadow: 0 0 0 4px #18B587;
     height: 19px;
-    width:  19px;
+    width: 19px;
 }
 
-.cardNumbers{
+.cardNumbers {
     font-family: Muli-SemiBold, sans-serif;
     font-weight: 600;
     font-style: normal;
@@ -652,8 +646,7 @@
     margin-left: 12px;
 }
 
-
-.changePayment{
+.changePayment {
     font-family: Muli-Bold, sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -663,19 +656,17 @@
     margin-bottom: 10px;
 }
 
-.cardsAndCheckboxes{
+.cardsAndCheckboxes {
     display: flex;
     align-items: center;
     margin-bottom: 46px;
 }
 
-.containerLabel:last-child{
-    margin-left:31px;
+.containerLabel:last-child {
+    margin-left: 31px;
 }
 
-
-
-.textDiv{
+.textDiv {
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -685,18 +676,18 @@
     max-width: 584px;
 }
 
-.backToPaymentsAndButton{
+.backToPaymentsAndButton {
     display: flex;
     align-items: center;
 }
 
-.backToPaymentsAndButtonFirst{
+.backToPaymentsAndButtonFirst {
     display: flex;
     margin-right: 85px;
     cursor: pointer;
 }
 
-.backToPayments{
+.backToPayments {
     font-family: Muli-Regular, sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -706,38 +697,37 @@
     color: #F53C6F;
 }
 
-
-.payNow{
+.payNow {
     width: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #18B587;
-    color:#FFFFFF;
+    color: #FFFFFF;
     padding-top: 8px;
     padding-bottom: 8px;
     margin-left: 52px;
 }
 
-.paymentSummarySecondDiv{
-     width: 276px;
-     margin-right: 40px;
+.paymentSummarySecondDiv {
+    width: 276px;
+    margin-right: 40px;
 }
 
-.orderSummary{
+.orderSummary {
     font-family: Muli-SemiBold, sans-serif;
     font-weight: 600;
     font-style: normal;
     font-size: 14px;
     line-height: 18px;
-    color:#545454;
+    color: #545454;
     padding-bottom: 15px;
     border-bottom: 1px solid #70707096;
     margin-bottom: 10px;
     padding-right: 15px;
 }
 
-.orderDetailsTotalDiv{
+.orderDetailsTotalDiv {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -747,18 +737,18 @@
     padding-right: 15px;
 }
 
-.orderDetailsFirstDiv{
+.orderDetailsFirstDiv {
     display: flex;
     align-items: center;
 }
 
-.goldIcon{
-    width:20px;
+.goldIcon {
+    width: 20px;
     height: 20px;
     margin-right: 4px;
 }
 
-.subTotal{
+.subTotal {
     font-family: Muli-SemiBold, sans-serif;
     font-weight: 600;
     font-style: normal;
@@ -766,7 +756,8 @@
     line-height: 18px;
     color: #545454;
 }
-.totalWholeDiv{
+
+.totalWholeDiv {
     margin-top: 18px;
     display: flex;
     justify-content: space-between;
@@ -774,11 +765,11 @@
     padding-right: 15px;
 }
 
-.green{
-    color:#18B587 ;
+.green {
+    color: #18B587;
 }
 
-.paymentSummaryFirstDiv{
+.paymentSummaryFirstDiv {
     margin-left: 73px;
 }
 

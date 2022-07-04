@@ -34,7 +34,7 @@
                     <a class="header-bit-btn nav-lin" data-toggle="dropdown" (click)="checkIfUserHasCard()">Buy
                         Coins</a>
                     <div class="dropdown-menu" [hidden]="!showPurchaseBits">
-                        <app-purchase-bits (closeDropDownMenu)="checkIfUserHasCard()" [totals]="totals"></app-purchase-bits>
+                        <app-purchase-bits (closeDropDownMenu)="checkIfUserHasCard()" [card]="userCards" [totals]="totals"></app-purchase-bits>
                     </div>
                 </div>
                 <div class="messages" (click)="messagesClicked()" [hidden]="isMessagesIconHidden()">

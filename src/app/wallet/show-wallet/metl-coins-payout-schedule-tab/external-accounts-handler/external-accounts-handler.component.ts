@@ -64,6 +64,7 @@ export class ExternalAccountsHandlerComponent implements OnInit, OnDestroy {
     }
 
     removeDebitCard(debitCard) {
+        console.log(debitCard);
         this.loader.dataLoading = true;
         const params = {account_id: debitCard.account, card_id: debitCard.id};
         this.subscriptions.push(this.accountsService.removeDebitCard(params).subscribe(dt => {

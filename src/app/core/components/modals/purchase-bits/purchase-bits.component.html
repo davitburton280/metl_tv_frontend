@@ -19,13 +19,9 @@
             <div>
                 <p class="bits-text-1 mb-0">{{product.name}}</p>
                 <div>
-                    <img src="assets/img/coin/{{coinImages[ind]}}.svg"
-                         *ngFor="let coin of coinImages;let ind = index" alt="" width="16"
+                    <img src="assets/img/coin/{{coin}}.svg"
+                         *ngFor="let coin of createArrayCoinImg(product.name); let ind = index" alt="" width="16"
                          height="16" class="mr-1">
-<!--                    <img src="assets/img/coin/silver.svg" alt=""  width="16" height="16" class="mr-1">-->
-<!--                    <img src="assets/img/coin/pink.svg" alt=""  width="16" height="16" class="mr-1">-->
-<!--                    <img src="assets/img/coin/green.svg" alt=""  width="16" height="16" class="mr-1">-->
-<!--                    <img src="assets/img/coin/blue.svg" alt=""  width="16" height="16" class="mr-1">-->
                 </div>
             </div>
             <p class="bits-text-2">{{product?.metadata?.discount || 0}}% discount</p>

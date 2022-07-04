@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {CompletePurchaseModalComponent} from '@shared/components/complete-purchase-modal/complete-purchase-modal.component';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {SubjectService} from '@core/services/subject.service';
-import {ProductsService} from '@core/services/wallet/products.service';
-import {PaymentsService} from '@core/services/wallet/payments.service';
-import {Subscription} from 'rxjs';
-import {ApplyDiscountToPricePipe} from '@shared/pipes/apply-discount-to-price.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { CompletePurchaseModalComponent } from '@shared/components/complete-purchase-modal/complete-purchase-modal.component';
+import { GetAuthUserPipe } from '@shared/pipes/get-auth-user.pipe';
+import { SubjectService } from '@core/services/subject.service';
+import { ProductsService } from '@core/services/wallet/products.service';
+import { PaymentsService } from '@core/services/wallet/payments.service';
+import { Subscription } from 'rxjs';
+import { ApplyDiscountToPricePipe } from '@shared/pipes/apply-discount-to-price.pipe';
+import { PaymentPlanComponent } from '@core/components/modals/payment-plan/payment-plan.component';
+import { COIN_IMAGE_NAME } from '@core/constants/global';
 
 @Component({
     selector: 'app-purchase-bits',
@@ -16,12 +18,14 @@ import {ApplyDiscountToPricePipe} from '@shared/pipes/apply-discount-to-price.pi
 export class PurchaseBitsComponent implements OnInit, OnDestroy {
 
     bitProducts = [];
+
     subscriptions: Subscription[] = [];
 
-    coinImages = ['gold', 'silver', 'pink', 'green', 'blue'];
+    coinImages = COIN_IMAGE_NAME;
     authUser;
 
     @Input() totals;
+    @Input() card;
     @Output('closeDropDownMenu') closeDropDownMenu = new EventEmitter();
 
     constructor(
@@ -40,7 +44,7 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
 
     }
 
-    getStripeProducts(){
+    getStripeProducts() {
         this.subscriptions.push(this.productsService.getStripeProducts().subscribe(dt => {
             this.bitProducts = dt;
         }));
@@ -49,12 +53,17 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
     openPurchaseModal(purchase) {
         console.log(this.bitProducts);
         console.log(this.totals);
-        this.subscriptions.push(this.dialog.open(CompletePurchaseModalComponent, {
-            data: purchase,
-            width: '800px'
+        this.subscriptions.push(this.dialog.open(PaymentPlanComponent, {
+            data: {
+                coin: true,
+                purchase,
+                cards: this.card,
+                coinImg: this.createArrayCoinImg(purchase.name)
+            },
+            width: '1085px'
         }).afterClosed().subscribe((dt) => {
             if (dt) {
-                this.subscriptions.push(this.paymentsService.getAllPaymentsHistory({user_id: this.authUser.id, ...dt}).subscribe(ph => {
+                this.subscriptions.push(this.paymentsService.getAllPaymentsHistory({ user_id: this.authUser.id, ...dt }).subscribe(ph => {
                     this.totals = ph.user_coins;
                     this.subject.setAllPaymentsData(ph);
                     this.subject.changePaymentsData(ph);
@@ -68,8 +77,26 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
             .toFixed(6).slice(0, -4);
     }
 
-    createArray(len) {
-        return new Array(len < 1 ? 1 : len);
+    createArrayCoinImg(name) {
+        let length = 0;
+        const arr = [];
+        switch (name) {
+            case '300 bits':
+                length = 3;
+                break;
+            case '800 bits':
+                length = 4;
+                break;
+            case '1500 bits':
+                length = 5;
+                break;
+            default:
+                length = 2;
+        }
+        for (let j = 0; j < length; j++) {
+            arr.push(this.coinImages[j]);
+        }
+        return arr;
     }
 
     closed() {

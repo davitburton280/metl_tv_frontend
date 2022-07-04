@@ -1,22 +1,27 @@
-<div class ="completePurchaseWholeDiv" [hidden]="completePurchase">
-    <div class ="completePurchaseWholeUpDiv">
-        <div class ="completePurchaseUpDiv">
+<div class="completePurchaseWholeDiv" [hidden]="completePurchase">
+    <div class="completePurchaseWholeUpDiv">
+        <div class="completePurchaseUpDiv">
             <img class="closingPng" src="../../assets/img/closeChat.png" alt="closeIcon" (click)="closedMathDialog()">
             <div class="completePurchase">Complete Purchase</div>
             <div class="purchaseSummary">Purchase Summary</div>
             <div class="purchaseBelowPart">
                 <div class="purchaseLeftUpPart">
-                    <img class="goldCoin" [src]="plan.img" alt="goldIcon">
+                    <img *ngIf="isPlan" class="goldCoin" [src]="plan.img" alt="goldIcon">
+                    <div *ngIf="!isPlan">
+                        <img *ngFor="let img of images; let ind=index" class="goldCoin"
+                             src="../../assets/img/coin/{{img}}.svg" alt="coin icon" width="16"
+                             height="16">
+                    </div>
                     <div class="goldCoinRightPart">
                         <div class="coinsBundle">{{plan.title}}</div>
                         <div class="timeCharge">One-time charge on {{ time | date : 'mediumDate' }}.</div>
                     </div>
                 </div>
                 <div class="purchaseRightUpPart">
-                    <div class="typeQuantityDiv" [matMenuTriggerFor]="countMonth">Type quantity</div>
+                    <div class="typeQuantityDiv" [matMenuTriggerFor]="countMonth">{{typeQuantity}}</div>
                     <div>
                         <mat-menu #countMonth>
-                            <p>xxxxxxx</p>
+                            <p *ngFor="let month of monthArr" (click)="monthCount(month)">{{month}} month</p>
                         </mat-menu>
                     </div>
                     <div class="priceAndAmountDiv">
@@ -33,12 +38,12 @@
                 </div>
                 <div class="totalAmount">
                     <div class="totalDiv">Total</div>
-                    <div class="totalDiv">--</div>
+                    <div class="totalDiv">${{totalPrice()}}</div>
                 </div>
             </div>
         </div>
     </div>
-    <div class ="completePurchaseBelowDiv">
+    <div class="completePurchaseBelowDiv">
         <div class="belowFirstDiv">
             <div class="payWithDiv">Pay With</div>
             <div class="secureAndIcon">
@@ -48,13 +53,13 @@
         </div>
         <div class="belowSecondDiv">
             <div class="payWith paypalDiv">
-                <img  class="paypalIcon" src="../../assets/img/purchase-icons/paypal.svg" alt="paypalIcon">
+                <img class="paypalIcon" src="../../assets/img/purchase-icons/paypal.svg" alt="paypalIcon">
             </div>
             <div class="payWith amazonDiv">
-                <img  class="payIcon" src="../../assets/img/purchase-icons/amazon-pay.png" alt="payIcon">
+                <img class="payIcon" src="../../assets/img/purchase-icons/amazon-pay.png" alt="payIcon">
             </div>
             <div class="payWith stripeDiv">
-                <img  class="payIcon" src="../../assets/img/purchase-icons/stripe.png" alt="payIcon">
+                <img class="payIcon" src="../../assets/img/purchase-icons/stripe.png" alt="payIcon">
             </div>
         </div>
         <div class="orDivs">
@@ -62,98 +67,116 @@
             <div class="orDiv">Or</div>
             <div class="leftLine"></div>
         </div>
-            <div class="payWithDiv">
-                <div class="payWithDiv_text">Pay With Credit Card</div>
-                <div class="payWithDiv_div">
-                    <img src="../../assets/img/purchase-icons/954912.png" alt="" class="payWithDiv_div__img">
-                </div>
-                <div class="payWithDiv_div">
-                    <img src="../../assets/img/purchase-icons/discover-credit-card-icon.png" alt="" class="payWithDiv_div__img">
-                </div>
-                <div class="payWithDiv_div">
-                    <img src="../../assets/img/purchase-icons/visa-card.png" alt="" class="payWithDiv_div__img">
-                </div>
-                <div class="payWithDiv_div">
-                    <img src="../../assets/img/purchase-icons/master-card.png" alt="" class="payWithDiv_div__img">
+        <div class="payWithDiv">
+            <div class="payWithDiv_text">Pay With Credit Card</div>
+            <div class="payWithDiv_div">
+                <img src="../../assets/img/purchase-icons/954912.png" alt="" class="payWithDiv_div__img">
+            </div>
+            <div class="payWithDiv_div">
+                <img src="../../assets/img/purchase-icons/discover-credit-card-icon.png" alt=""
+                     class="payWithDiv_div__img">
+            </div>
+            <div class="payWithDiv_div">
+                <img src="../../assets/img/purchase-icons/visa-card.png" alt="" class="payWithDiv_div__img">
+            </div>
+            <div class="payWithDiv_div">
+                <img src="../../assets/img/purchase-icons/master-card.png" alt="" class="payWithDiv_div__img">
+            </div>
+        </div>
+        <div class="saved_card">
+            <div class="saved_card__text">Saved Payment Methods</div>
+            <div class="saved_card__select">
+                <div class="saved_card__selectCard" *ngFor="let card of cards; let i = index">
+                    <label class="checkboxCustomStyle">
+                        <input type="checkbox" [checked]="checkedCard[i]"
+                               (change)="selectCard(card, $event, i)">
+                    </label>
+                    <img src="../../assets/img/credit-card.svg" alt="creditCard">
+                    <span>**** **** **** {{card.number_part}}</span>
                 </div>
             </div>
-            <div class="saved_card">
-                <div class="saved_card__text">Saved Payment Methods</div>
-                <div class="saved_card__select">
-                    <div class="saved_card__selectCard" *ngFor="let card of cards; let i = index">
-                        <label class="checkboxCustomStyle">
-                            <input type="checkbox" [checked]="checkedCard[i]"
-                                   (change)="selectCard(card, $event, i)">
-                        </label>
-                        <img src="../../assets/img/credit-card.svg" alt="creditCard">
-                        <span>**** **** **** {{card.number_part}}</span>
-                    </div>
-                </div>
-            </div>
+        </div>
 
-            <div class="billingInfo" ngxStripeCardGroup [formGroup]="cardForm" [elementsOptions]="elementsOptions">
-                <div class="billingInformation">BILLING INFORMATION</div>
-                <div class="personalInfoInputsDiv">
-                    <div class="personalInfoInputsDiv_Div">
-                        <input class="personalInfoInput" [ngClass]="{'inputError' : cardForm.get('firstName').hasError('required') && cardForm.get('firstName').touched}"
-                               placeholder="First Name" formControlName="firstName">
-                        <span *ngIf="cardForm.get('firstName').hasError('required') && cardForm.get('firstName').touched"
-                              class="error">First Name is <strong>required</strong></span>
-                    </div>
-                    <div class="personalInfoInputsDiv_Div">
-                        <input class="personalInfoInput" [ngClass]="{'inputError' : cardForm.get('lastName').hasError('required') && cardForm.get('lastName').touched}"
-                               placeholder="Last Name" formControlName="lastName">
-                        <span *ngIf="cardForm.get('lastName').hasError('required') && cardForm.get('lastName').touched"
-                              class="error">Last Name is <strong>required</strong></span>
-                    </div>
+        <div class="billingInfo" ngxStripeCardGroup [formGroup]="cardForm" [elementsOptions]="elementsOptions">
+            <div class="billingInformation">BILLING INFORMATION</div>
+            <div class="personalInfoInputsDiv">
+                <div class="personalInfoInputsDiv_Div">
+                    <input class="personalInfoInput"
+                           [ngClass]="{'inputError' : cardForm.get('firstName').hasError('required') && cardForm.get('firstName').touched}"
+                           placeholder="First Name" formControlName="firstName">
+                    <span *ngIf="cardForm.get('firstName').hasError('required') && cardForm.get('firstName').touched"
+                          class="error">First Name is <strong>required</strong></span>
                 </div>
-                <div class="creditCardInfo">CREDIT CARD INFORMATION</div>
-                <div class="cardInfoDivs">
-                    <div class="cardInfoDiv">
-                        <div class="cardInfo">Credit Card Number</div>
-                        <input *ngIf="!typeCreditCardInput" class="cardInput1" (input)="maxLengthInput($event, 19)" type="text" placeholder="Card Number" formControlName="cardNumber">
-                        <div [hidden]="!typeCreditCardInput" class="cardNumberInputDiv" [ngClass]="{'inputError': !cardNumberValidation.empty && cardNumberValidation.error !== undefined || cardNumberValidation.empty && requireCardNumber}">
-                            <ngx-stripe-card-number [options]="cardOptions" (change)="changeCardNumber($event)"></ngx-stripe-card-number>
-                        </div>
-                        <span class="error" *ngIf="!cardNumberValidation.empty && cardNumberValidation.error !== undefined">{{cardNumberValidation.errorMessage}}</span>
-                        <span class="error" *ngIf="cardNumberValidation.empty && requireCardNumber">{{cardNumberValidation.errorMessage}}</span>
-                    </div>
-                    <div class="cardInfoDiv">
-                        <div class="cardInfo">Expiry Date</div>
-                        <div class="monthYearInputs">
-                            <input *ngIf="!typeCreditCardInput" class="cardInput2" type="number" placeholder="Month" formControlName="cardMonth">
-                            <input *ngIf="!typeCreditCardInput" class="cardInput2" type="number" placeholder="Year" formControlName="cardYear">
-                            <div [hidden]="!typeCreditCardInput" class="cardExpiryInputDiv" [ngClass]="{'inputError': !expiryValidation.empty && expiryValidation.error !== undefined || expiryValidation.empty && requireExpiry}">
-                                <ngx-stripe-card-expiry [options]="cardOptions" (change)="changeExpiry($event)"></ngx-stripe-card-expiry>
-                            </div>
-                        </div>
-                        <span class="error" *ngIf="!expiryValidation.empty && expiryValidation.error !== undefined">{{expiryValidation.errorMessage}}</span>
-                        <span class="error" *ngIf="expiryValidation.empty && requireExpiry">{{expiryValidation.errorMessage}}</span>
-                    </div>
-                    <div class="cardInfoDiv">
-                        <div class="cardInfo">CVV</div>
-                        <input *ngIf="!typeCreditCardInput" class="cardInput1" type="text" placeholder="CVV" formControlName="cvv">
-                        <div [hidden]="!typeCreditCardInput" class="cardCvvInputDiv" [ngClass]="{'inputError': !cvvValidation.empty && cvvValidation.error !== undefined || cvvValidation.empty && requireCvv}">
-                            <ngx-stripe-card-cvc [options]="cardOptions" (change)="changeCvv($event)"></ngx-stripe-card-cvc>
-                        </div>
-                        <span class="error" *ngIf="!cvvValidation.empty && cvvValidation.error !== undefined">{{cvvValidation.errorMessage}}</span>
-                        <span class="error" *ngIf="cvvValidation.empty && requireCvv">{{cvvValidation.errorMessage}}</span>
-                    </div>
-                </div>
-                <div class="submitButton">
-                    <button class="previewBtn"
-                            (click)="completePurchaseWholeDivCompletePurchaseNextDiv()"
-
-                    >Review Purchase</button>
-                    <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
+                <div class="personalInfoInputsDiv_Div">
+                    <input class="personalInfoInput"
+                           [ngClass]="{'inputError' : cardForm.get('lastName').hasError('required') && cardForm.get('lastName').touched}"
+                           placeholder="Last Name" formControlName="lastName">
+                    <span *ngIf="cardForm.get('lastName').hasError('required') && cardForm.get('lastName').touched"
+                          class="error">Last Name is <strong>required</strong></span>
                 </div>
             </div>
+            <div class="creditCardInfo">CREDIT CARD INFORMATION</div>
+            <div class="cardInfoDivs">
+                <div class="cardInfoDiv">
+                    <div class="cardInfo">Credit Card Number</div>
+                    <input *ngIf="!typeCreditCardInput" class="cardInput1" (input)="maxLengthInput($event, 19)"
+                           type="text" placeholder="Card Number" formControlName="cardNumber">
+                    <div [hidden]="!typeCreditCardInput" class="cardNumberInputDiv"
+                         [ngClass]="{'inputError': !cardNumberValidation.empty && cardNumberValidation.error !== undefined || cardNumberValidation.empty && requireCardNumber}">
+                        <ngx-stripe-card-number [options]="cardOptions"
+                                                (change)="changeCardNumber($event)"></ngx-stripe-card-number>
+                    </div>
+                    <span class="error"
+                          *ngIf="!cardNumberValidation.empty && cardNumberValidation.error !== undefined">{{cardNumberValidation.errorMessage}}</span>
+                    <span class="error"
+                          *ngIf="cardNumberValidation.empty && requireCardNumber">{{cardNumberValidation.errorMessage}}</span>
+                </div>
+                <div class="cardInfoDiv">
+                    <div class="cardInfo">Expiry Date</div>
+                    <div class="monthYearInputs">
+                        <input *ngIf="!typeCreditCardInput" class="cardInput2" type="number" placeholder="Month"
+                               formControlName="cardMonth">
+                        <input *ngIf="!typeCreditCardInput" class="cardInput2" type="number" placeholder="Year"
+                               formControlName="cardYear">
+                        <div [hidden]="!typeCreditCardInput" class="cardExpiryInputDiv"
+                             [ngClass]="{'inputError': !expiryValidation.empty && expiryValidation.error !== undefined || expiryValidation.empty && requireExpiry}">
+                            <ngx-stripe-card-expiry [options]="cardOptions"
+                                                    (change)="changeExpiry($event)"></ngx-stripe-card-expiry>
+                        </div>
+                    </div>
+                    <span class="error"
+                          *ngIf="!expiryValidation.empty && expiryValidation.error !== undefined">{{expiryValidation.errorMessage}}</span>
+                    <span class="error"
+                          *ngIf="expiryValidation.empty && requireExpiry">{{expiryValidation.errorMessage}}</span>
+                </div>
+                <div class="cardInfoDiv">
+                    <div class="cardInfo">CVV</div>
+                    <input *ngIf="!typeCreditCardInput" class="cardInput1" type="text" placeholder="CVV"
+                           formControlName="cvv">
+                    <div [hidden]="!typeCreditCardInput" class="cardCvvInputDiv"
+                         [ngClass]="{'inputError': !cvvValidation.empty && cvvValidation.error !== undefined || cvvValidation.empty && requireCvv}">
+                        <ngx-stripe-card-cvc [options]="cardOptions" (change)="changeCvv($event)"></ngx-stripe-card-cvc>
+                    </div>
+                    <span class="error"
+                          *ngIf="!cvvValidation.empty && cvvValidation.error !== undefined">{{cvvValidation.errorMessage}}</span>
+                    <span class="error" *ngIf="cvvValidation.empty && requireCvv">{{cvvValidation.errorMessage}}</span>
+                </div>
+            </div>
+            <div class="submitButton">
+                <button class="previewBtn"
+                        (click)="completePurchaseWholeDivCompletePurchaseNextDiv()"
+
+                >Review Purchase
+                </button>
+                <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
+            </div>
+        </div>
     </div>
 </div>
 
 
-<div class ="completePurchaseNextDiv" [hidden]="!completePurchase">
-    <div class ="completePurchaseUpDiv">
+<div class="completePurchaseNextDiv" [hidden]="!completePurchase">
+    <div class="completePurchaseUpDiv">
         <img class="closingPng" src="../../assets/img/closeChat.png" alt="closeIcon" (click)="closedMathDialog()">
         <div class="completePurchase">Review Purchase</div>
         <div class="purchaseSummary">Purchase Summary</div>
@@ -183,7 +206,7 @@
                 </div>
             </div>
             <div class="changePaymentTotal">
-                <div class="changePayment">Change Payment Card  </div>
+                <div class="changePayment">Change Payment Card</div>
             </div>
             <div class="saved_card reviewPurchase">
                 <div class="saved_card__select">
@@ -197,39 +220,45 @@
                     </div>
                 </div>
             </div>
-                <div class="textDiv">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electroni</div>
-                <div class="backToPaymentsAndButton">
-                    <div class="backToPaymentsAndButtonFirst" (click)="nextMatDialog()">
-                        <img src="../../assets/img/chevron-left.png" alt="backSign">
-                        <div class="backToPayments">Back to payment methods</div>
-                    </div>
-                    <div class="coinsBundle">Total US $ 6.00</div>
-                    <button class="payNow" (click)="createPaymentIntentPlan()">Pay Now</button>
-                    <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
-                </div>
+            <div class="textDiv">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
+                of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also
+                the leap into electroni
             </div>
+            <div class="backToPaymentsAndButton">
+                <div class="backToPaymentsAndButtonFirst" (click)="nextMatDialog()">
+                    <img src="../../assets/img/chevron-left.png" alt="backSign">
+                    <div class="backToPayments">Back to payment methods</div>
+                </div>
+                <div class="coinsBundle">Total US $ {{getDiscountedPrice()}}</div>
+                <button class="payNow" (click)="createPaymentIntentPlan()">Pay Now</button>
+                <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
+            </div>
+        </div>
         <div class="paymentSummarySecondDiv">
             <div class="orderSummary">Order Summary</div>
             <div class="orderDetailsTotalDiv">
                 <div class="orderDetailsFirstDiv">
-                    <img src="../../assets/img/coin/gold.svg" class="goldIcon" alt="goldIcon">
-                    <div class="timeCharge">2 Bits(x 1)</div>
+                    <img [src]=plan.img class="goldIcon" alt="goldIcon">
+                    <div class="timeCharge">{{plan.title}}</div>
                 </div>
-                <div class="timeCharge">US $6.00</div>
+                <div class="timeCharge">US ${{(plan.price / 100).toFixed(2)}}</div>
             </div>
 
 
             <div class="orderDetailsTotalDiv">
-            <div class="subTotal">Sub Total</div>
-                <div class="timeCharge">US $6.00</div>
+                <div class="subTotal">Sub Total</div>
+                <div class="timeCharge">{{plan.monthDiscount[month]}}%</div>
             </div>
             <div class="totalWholeDiv">
                 <div class="subTotal green">Total</div>
-                <div class="timeCharge green">US $6.00</div>
+                <div class="timeCharge green">US ${{getDiscountedPrice()}}</div>
             </div>
-            <div class="textDiv">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</div>
+            <div class="textDiv">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                has been the industry's standard dummy text ever since the 1500s
+            </div>
         </div>
-        </div>
+    </div>
 
 </div>
 
