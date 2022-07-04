@@ -81,17 +81,17 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
         let length = 0;
         const arr = [];
         switch (name) {
-            case '300 bits':
+            case '100 bits':
+                length = 2;
+                break;
+                case '300 bits':
                 length = 3;
                 break;
             case '800 bits':
                 length = 4;
                 break;
-            case '1500 bits':
-                length = 5;
-                break;
             default:
-                length = 2;
+                length = 5;
         }
         for (let j = 0; j < length; j++) {
             arr.push(this.coinImages[j]);
