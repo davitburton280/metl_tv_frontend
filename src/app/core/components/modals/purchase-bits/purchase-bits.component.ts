@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { ApplyDiscountToPricePipe } from '@shared/pipes/apply-discount-to-price.pipe';
 import { PaymentPlanComponent } from '@core/components/modals/payment-plan/payment-plan.component';
 import { COIN_IMAGE_NAME } from '@core/constants/global';
+import { PaymentCompletedComponent } from '@core/components/modals/payment-completed/payment-completed.component';
 
 @Component({
     selector: 'app-purchase-bits',
@@ -62,8 +63,18 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
             },
             width: '1085px'
         }).afterClosed().subscribe((dt) => {
+            console.log(dt);
             if (dt) {
-                this.subscriptions.push(this.paymentsService.getAllPaymentsHistory({ user_id: this.authUser.id, ...dt }).subscribe(ph => {
+                if (dt?.payment.paymentIntent.status === 'succeeded') {
+                    this.dialog.open(PaymentCompletedComponent, {
+                        width: '591px',
+                        height: '292px'
+                    }).afterClosed().subscribe();
+                }
+                this.subscriptions.push(this.paymentsService.getAllPaymentsHistory({
+                    user_id: this.authUser.id,
+                    customer: dt.customer
+                }).subscribe(ph => {
                     this.totals = ph.user_coins;
                     this.subject.setAllPaymentsData(ph);
                     this.subject.changePaymentsData(ph);
@@ -82,12 +93,16 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
         const arr = [];
         switch (name) {
             case '100 bits':
+            case '300 bits':
+            case '800 bits':
                 length = 2;
                 break;
-                case '300 bits':
+                case '1500 bits':
+                case '2750 bits':
                 length = 3;
                 break;
-            case '800 bits':
+            case '7500 bits':
+            case '16000 bits':
                 length = 4;
                 break;
             default:

@@ -215,7 +215,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
         };
         if (params.customer) {
             this.subscriptions.push(this.paymentsService.getAllPaymentsHistory(params).subscribe(dt => {
-                console.log('navbar ', dt);
+                // console.log('navbar ', dt);
                 this.totals = dt.user_coins;
                 // this.subject.setAllPaymentsData(dt);
                 this.subject.changePaymentsData(dt);
@@ -276,7 +276,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     checkIfUserHasCard() {
-        console.log(this.userCards);
         if (this.userCards?.length > 0) {
             this.showPurchaseBits = !this.showPurchaseBits;
         } else {

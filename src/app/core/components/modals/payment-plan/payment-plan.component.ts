@@ -111,7 +111,6 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
           this.plan = plan;
           this.monthArr = monthArr;
       } else {
-          console.log(this.data);
           this.plan = this.data.plan;
           this.monthArr = this.data.plan.monthArr;
       }
@@ -272,7 +271,7 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
             card: this.selectedCard,
             isPlan: this.isPlan,
             purchase: {
-                unit_amount: (this.totalPrice() * 100),
+                unit_amount: this.plan.price,
                 discount: this.plan.monthDiscount[this.month],
                 name: this.plan.title
             }
@@ -287,7 +286,10 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
                 console.log(r);
                 console.log(this.castomCardParams);
                 this.loader.formProcessing = false;
-                this.closedMathDialog({customer: this.selectedCard.stripe_customer_id});
+                this.closedMathDialog({
+                    customer: this.selectedCard.stripe_customer_id,
+                    payment: r
+                });
             });
         });
     }

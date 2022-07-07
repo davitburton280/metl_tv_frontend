@@ -36,9 +36,10 @@
                                 <div class="greySmallDivLeftPart">
                                     <div class="iconDiv">
 <!--                                        <img  class="iconClass" src="../../assets/img/chatIcon1.png" alt="chatIcon">-->
-                                        <img  class="iconClass" [src]="file.name|getImgPath: 'message_files'">
+                                        <img *ngIf="file.type.includes('image')"  class="iconClass" [src]="file.name|getImgPath: 'message_files'">
+                                        <img *ngIf="file.type.includes('video')"  class="iconClass" src="../../assets/img/chatIcon1.png">
 <!--                                        <img  class="iconClass" src="../../assets/img/chatIcon2.png" alt="chatIcon">-->
-<!--                                        <img  class="iconClass" src="../../assets/img/chatIcon3.png" alt="chatIcon">-->
+                                        <img *ngIf="!file.type.includes('video') && !file.type.includes('image')"  class="iconClass" src="../../assets/img/chatIcon3.png" alt="chatIcon">
                                     </div>
                                     <div class="fileName">{{file.originName}}</div>
                                 </div>

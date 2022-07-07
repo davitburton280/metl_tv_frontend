@@ -38,7 +38,8 @@
                         <img src="assets/img/coin/gold.svg" alt="" height="16" width="16" class="mr-1">
                         <img src="assets/img/coin/silver.svg" alt="" height="16" width="16" class="mr-1">
                         <img src="assets/img/coin/pink.svg" alt="" height="16" width="16" class="mr-1">
-                        <img src="assets/img/coin/green.svg" alt="" width="16" height="16">
+                        <img src="assets/img/coin/green.svg" alt="" width="16" height="16" class="mr-1">
+                        <!--                        <img src="assets/img/coin/blue.svg" alt="" height="16" width="16" class="mr-1">-->
                     </div>
                 </div>
                 <div class="total-class">
@@ -57,7 +58,9 @@
 <div class="d-flex justify-content-between flex-wrap paymentHistoryAndBtns">
     <div class="sub-titles mb-3 paymentHistoryDiv">Payment History</div>
     <div id="external-accounts">
-        <div role="button" class="btn-green mr-2 p-3 paymentPartBtn" (click)="changeTabToPayouts()">Link bank account</div>
+        <div role="button" class="btn-green mr-2 p-3 paymentPartBtn" (click)="changeTabToPayouts()">
+            Link bank account
+        </div>
         <div role="button" class="btn-red paymentPartBtn"
              (click)="tellChild()">Export to Excel
         </div>

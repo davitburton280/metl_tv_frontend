@@ -117,8 +117,9 @@ export class ImgEditCropperComponent implements OnInit, AfterViewInit {
            maxHeight: 400,
        }).toBlob((blob) => {
            console.log(blob);
+           blob['name'] = Date.now() + '.png';
            this.dialogRef.close({ blob, shape: 'circle' });
-       });
+       }, 'image/png');
     }
 
 

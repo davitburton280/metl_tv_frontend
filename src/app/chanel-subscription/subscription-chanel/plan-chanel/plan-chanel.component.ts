@@ -6,7 +6,9 @@ import { Subscription } from 'rxjs';
 import { SubjectService } from '@core/services/subject.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PaymentPlanComponent } from '@core/components/modals/payment-plan/payment-plan.component';
-import { PaymentCompletedComponent } from "@core/components/modals/payment-completed/payment-completed.component";
+import { PaymentCompletedComponent } from '@core/components/modals/payment-completed/payment-completed.component';
+import { PaymentsService } from '@core/services/wallet/payments.service';
+import { GetAuthUserPipe } from "@shared/pipes/get-auth-user.pipe";
 
 @Component({
   selector: 'app-plan-chanel',
@@ -20,21 +22,24 @@ export class PlanChanelComponent implements OnInit {
     plan;
     userCards;
     subscriptions: Subscription[] = [];
+    authUser;
 
   constructor(
       private route: ActivatedRoute,
       private _location: Location,
       private subject: SubjectService,
-      private dialog: MatDialog
+      private dialog: MatDialog,
+      private paymentsService: PaymentsService,
+      private getAuthUser: GetAuthUserPipe,
   ) {
       this.params = this.route.snapshot?.queryParams?.plan;
   }
 
   ngOnInit(): void {
+      this.authUser = this.getAuthUser.transform();
       this.filterPlan(this.params, this.planList);
       this.subscriptions.push(this.subject.currentUserCards.subscribe(dt => {
           this.userCards = dt;
-          console.log(this.userCards);
       }));
   }
 
@@ -55,12 +60,19 @@ export class PlanChanelComponent implements OnInit {
           }
       }).afterClosed().subscribe(dt => {
           console.log(dt);
-          if (dt?.paymentIntent.status === 'succeeded') {
+          if (dt?.payment.paymentIntent.status === 'succeeded') {
               this.dialog.open(PaymentCompletedComponent, {
                   width: '591px',
                   height: '292px'
               }).afterClosed().subscribe();
           }
+          this.subscriptions.push(this.paymentsService.getAllPaymentsHistory({
+              user_id: this.authUser.id,
+              customer: dt.customer
+          }).subscribe(ph => {
+              this.subject.setAllPaymentsData(ph);
+              this.subject.changePaymentsData(ph);
+          }));
       });
     }
 

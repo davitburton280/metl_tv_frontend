@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="purchaseRightUpPart">
-                    <div class="typeQuantityDiv" [matMenuTriggerFor]="countMonth">{{typeQuantity}}</div>
+                    <div class="typeQuantityDiv" *ngIf="!data?.coin" [matMenuTriggerFor]="countMonth">{{typeQuantity}}</div>
                     <div>
                         <mat-menu #countMonth>
                             <p *ngFor="let month of monthArr" (click)="monthCount(month)">{{month}} month</p>
@@ -239,7 +239,8 @@
             <div class="orderSummary">Order Summary</div>
             <div class="orderDetailsTotalDiv">
                 <div class="orderDetailsFirstDiv">
-                    <img [src]=plan.img class="goldIcon" alt="goldIcon">
+                    <img *ngIf="!data.coin" [src]=plan.img class="goldIcon" alt="goldIcon">
+                    <img *ngIf="data.coin" src="../../assets/img/coin/gold.svg" class="goldIcon" alt="gold coin">
                     <div class="timeCharge">{{plan.title}}</div>
                 </div>
                 <div class="timeCharge">US ${{(plan.price / 100).toFixed(2)}}</div>
