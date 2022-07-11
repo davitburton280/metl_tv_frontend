@@ -2,14 +2,13 @@ import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { loadStripe, StripeElementsOptions } from '@stripe/stripe-js';
-import { COIN_IMAGE_NAME, STRIPE_CARD_OPTIONS_Custom, STRIPE_PUBLISHABLE_KEY } from '@core/constants/global';
+import {  STRIPE_CARD_OPTIONS_Custom, STRIPE_PUBLISHABLE_KEY } from '@core/constants/global';
 import { StripeCardNumberComponent, StripeService } from 'ngx-stripe';
 import { generateStripeCardData } from '@core/helpers/generate-stripe-card-data';
 import { GetAuthUserPipe } from '@shared/pipes/get-auth-user.pipe';
 import { User } from '@shared/models/user';
 import { CustomersService } from '@core/services/wallet/customers.service';
 import { PaymentsService } from '@core/services/wallet/payments.service';
-import { CardsService } from '@core/services/cards.service';
 import { LoaderService } from '@core/services/loader.service';
 import { SubjectService } from '@core/services/subject.service';
 import { Subscription } from 'rxjs';
@@ -26,6 +25,7 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
     requireCardNumber = false;
     requireExpiry = false;
     requireCvv = false;
+    paymentName = 'Stripe';
 
     typeQuantity = 'Type quantity';
 
@@ -84,8 +84,7 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
       private customersService: CustomersService,
       public loader: LoaderService,
       private subject: SubjectService,
-      private applyDiscount: ApplyDiscountToPricePipe,
-      private cardService: CardsService
+      private applyDiscount: ApplyDiscountToPricePipe
   ) {
       this.loader.formProcessing = false;
   }
@@ -352,8 +351,8 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
             .toFixed(6).slice(0, -4);
     }
 
-    testConsole(e) {
-        console.log(e);
+    payWith(str) {
+      this.paymentName = str;
     }
 
     ngOnDestroy(): void {

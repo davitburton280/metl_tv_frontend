@@ -303,7 +303,7 @@ export class SocketIoService {
     removeFromPageGroupNotify() {
         return new Observable(observer => {
             this.socket.on('removeFromPageGroupNotify', msg => {
-                console.log('remove from group')
+                console.log('remove from group');
                 observer.next(msg);
             });
         });
@@ -316,7 +316,7 @@ export class SocketIoService {
     removeFromChatGroupNotify() {
         return new Observable(observer => {
             this.socket.on('removeFromChatGroupNotify', msg => {
-                console.log('remove from group')
+                console.log('remove from group');
                 observer.next(msg);
             });
         });

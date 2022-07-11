@@ -40,7 +40,7 @@ export class PostItemComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.commentsField = !!this.route.snapshot?.params?.id;
-        console.log(this.route.snapshot?.params?.id);
+        // console.log(this.route.snapshot?.params?.id);
         this.authUser = this.userStore.authUser;
         this.postsStore.allPosts$.subscribe((data: any) => {
             this.allPosts = data.posts;

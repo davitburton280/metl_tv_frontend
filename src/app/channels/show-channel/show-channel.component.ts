@@ -120,6 +120,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
                 username: this.passedUsername,
                 own_channel: viewingOwnChannel
             }).subscribe(dt => {
+                console.log(dt);
                 if (dt) {
                     this.channelUser = dt;
                 }

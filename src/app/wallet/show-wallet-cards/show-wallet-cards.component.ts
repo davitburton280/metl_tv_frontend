@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {CustomersService} from '@core/services/wallet/customers.service';
 import {AuthService} from '@core/services/auth.service';
-import {SubjectService} from "@core/services/subject.service";
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-show-wallet-cards',
