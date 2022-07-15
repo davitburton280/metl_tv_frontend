@@ -1,16 +1,13 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
 import {API_URL} from '@core/constants/global';
-import * as moment from 'moment';
-import {ActivatedRoute, ActivationEnd, Data, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {ChannelsService} from '@core/services/channels.service';
-import {filter, map, tap} from 'rxjs/operators';
-import {checkIfObjectEmpty} from '@core/helpers/check-if-object-empty';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {Subscription} from 'rxjs';
-import {buildPlayVideoRoute} from '@core/helpers/build-play-video-route';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-show-videos',
@@ -23,7 +20,7 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     apiUrl = API_URL;
     search;
     selectedTag;
-    authUser;
+    authUser: CurrentUserData;
     showTrending = false;
     showFilters = false;
     filters = {video_type: 'videos'};
@@ -37,10 +34,12 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
         private subject: SubjectService,
         private channelsService: ChannelsService,
         private route: ActivatedRoute,
-        private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
+        // private getAuthUser: GetAuthUserPipe,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
-        this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
+        // this.authUser = this.getAuthUser.transform();
 
         this.subscriptions.push(
             this.route.queryParams.subscribe(d => {
@@ -60,6 +59,13 @@ export class ShowVideosComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
 
 
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Show videos  AUTHUSER DATA');
+        });
     }
 
     getFilteredList(filters = {video_type: 'videos'}) {

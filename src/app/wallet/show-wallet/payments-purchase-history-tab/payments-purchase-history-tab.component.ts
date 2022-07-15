@@ -1,11 +1,10 @@
-import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Subscription} from 'rxjs';
 import {SubjectService} from '@core/services/subject.service';
 import {PaymentsService} from '@core/services/wallet/payments.service';
-import {MatSort, Sort} from '@angular/material/sort';
-import {sortTableData} from '@core/helpers/sort-table-data-by-column';
+import {MatSort} from '@angular/material/sort';
 import {filter} from 'rxjs/operators';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 

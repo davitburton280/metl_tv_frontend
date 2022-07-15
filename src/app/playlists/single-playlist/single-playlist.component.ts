@@ -2,13 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {MatDialog} from '@angular/material/dialog';
-import {AddVideoToPlaylistDialogComponent} from '@core/components/modals/add-video-to-playlist-dialog/add-video-to-playlist-dialog.component';
 import {API_URL} from '@core/constants/global';
-import {moveItemInArray} from '@core/helpers/move-item-in-array';
-import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AddVideoToAnotherPlaylistComponent} from '@core/components/modals/add-video-to-another-playlist/add-video-to-another-playlist.component';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-single-playlist',
@@ -18,23 +14,30 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 export class SinglePlaylistComponent implements OnInit {
     playlist;
     apiUrl = API_URL;
-    authUser;
+    authUser: CurrentUserData;
 
     constructor(
         public router: Router,
         private route: ActivatedRoute,
         private playlistsService: PlaylistsService,
         private dialog: MatDialog,
-        private getAuthUser: GetAuthUserPipe
+        private _userInfoService: UserInfoService
+        // private getAuthUser: GetAuthUserPipe
     ) {
-        this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
+        // this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
         this.getPlaylistDetails();
     }
 
-
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Single playlist AUTHUSER DATA');
+        });
+    }
 
 
     getPlaylistDetails() {
@@ -47,7 +50,6 @@ export class SinglePlaylistComponent implements OnInit {
             });
         }
     }
-
 
 
 }

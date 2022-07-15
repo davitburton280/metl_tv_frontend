@@ -1,11 +1,10 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {AuthService} from '@core/services/auth.service';
 import {CardsService} from '@core/services/cards.service';
 import {UsersService} from '@core/services/users.service';
 
 import {Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
 import {Subject, Subscription} from 'rxjs';
 
 import {Card} from '@shared/models/card';

@@ -3,12 +3,11 @@ import {API_URL} from '@core/constants/global';
 import {VideoService} from '@core/services/video.service';
 import {Router} from '@angular/router';
 import {AuthService} from '@core/services/auth.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
-import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
-import {ChatService} from '@core/services/chat.service';
 import {Subscription} from 'rxjs';
-import { FilterOutFalsyValuesFromObjectPipe } from "@shared/pipes/filter-out-falsy-values-from-object.pipe";
+import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-home',
@@ -20,7 +19,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     videosStreams = [];
     videosClipz = [];
     apiUrl = API_URL;
-    authUser;
+    authUser: CurrentUserData;
 
     subscriptions: Subscription[] = [];
 
@@ -28,15 +27,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         private videoService: VideoService,
         public router: Router,
         public auth: AuthService,
-        private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         private socketService: SocketIoService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
         this.getVideo();
-        this.authUser = this.getAuthUser.transform();
         this.videoService.liveVideoRefresh.subscribe(() => {
             this.getVideo();
         });
@@ -55,6 +54,14 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.videosStreams = dt.videos;
         });
     }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Home Page  AUTHUSER DATA');
+        });
+    }
+
     getVideo() {
         this.subscriptions.push(this.videoService.get({}).subscribe(dt => {
             this.videos = dt.videos;

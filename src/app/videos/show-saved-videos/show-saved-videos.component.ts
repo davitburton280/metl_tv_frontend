@@ -3,9 +3,10 @@ import {VideoService} from '@core/services/video.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {ChannelsService} from '@core/services/channels.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {API_URL} from '@core/constants/global';
 import {buildPlayVideoRoute} from '@core/helpers/build-play-video-route';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-show-saved-videos',
@@ -18,7 +19,7 @@ export class ShowSavedVideosComponent implements OnInit {
     channelsVideos = [];
     apiUrl = API_URL;
     search;
-    authUser;
+    authUser: CurrentUserData;
     showSaved = false;
 
     constructor(
@@ -27,17 +28,26 @@ export class ShowSavedVideosComponent implements OnInit {
         private subject: SubjectService,
         private channelsService: ChannelsService,
         private route: ActivatedRoute,
-        private getAuthUser: GetAuthUserPipe
+        private _userInfoService: UserInfoService
+        // private getAuthUser: GetAuthUserPipe
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
 
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
 
         this.videoService.getUserSavedVideos({user_id: this.authUser.id}).subscribe(dt => {
             this.userVideos = dt;
             this.showSaved = true;
+        });
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Show saved videos  AUTHUSER DATA');
         });
     }
 

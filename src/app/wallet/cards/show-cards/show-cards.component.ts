@@ -1,6 +1,5 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Card} from '@shared/models/card';
-import {User} from '@shared/models/user';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
 import {SubjectService} from '@core/services/subject.service';
@@ -8,7 +7,8 @@ import {Router} from '@angular/router';
 import * as moment from 'moment';
 import {CustomersService} from '@core/services/wallet/customers.service';
 import {MAX_CARDS_PER_USER} from '@core/constants/global';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-show-cards',
@@ -18,7 +18,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 export class ShowCardsComponent implements OnInit, OnDestroy {
     userCards: Card[] = [];
     selectedCard: Card;
-    authUser: User;
+    authUser: CurrentUserData;
     subscriptions: Subscription[] = [];
 
     showActions = false;
@@ -32,14 +32,23 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
         public router: Router,
         private subject: SubjectService,
         private customersService: CustomersService,
-        private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService
+        // private getAuthUser: GetAuthUserPipe,
         // private changeDetection: ChangeDetectionStrategy.OnPush
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         this.getCustomerCards();
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'WALLET SHOW CARD AUTHUSER DATA');
+        });
     }
 
     getCustomerCards() {
@@ -47,8 +56,9 @@ export class ShowCardsComponent implements OnInit, OnDestroy {
             this.userCards = dt;
         }));
         this.loader.dataLoading = true;
-        this.customersService.getUserCards({user_id: this.authUser.id}).subscribe(dt => {
+        this.customersService.getUserCards({user_id: this.authUser?.id}).subscribe(dt => {
             this.userCards = dt;
+            console.log(1232123221321321121231123123);
             this.subject.changeUserCards(dt);
             this.loader.dataLoading = false;
         });

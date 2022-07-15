@@ -8,6 +8,8 @@ import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {Router} from '@angular/router';
 import {IsStockFollowedPipe} from '@shared/pipes/is-stock-followed.pipe';
 import trackByElement from '@core/helpers/track-by-element';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-stock-tiles',
@@ -18,7 +20,7 @@ import trackByElement from '@core/helpers/track-by-element';
 export class StockTilesComponent implements OnInit {
 
     stockChartSettings = STOCK_TILE_CHART_SETTINGS;
-    authUser;
+    authUser: CurrentUserData;
     trackByElement = trackByElement;
 
     @Input('stocks') passedStocks: Stock[] = [];
@@ -34,14 +36,23 @@ export class StockTilesComponent implements OnInit {
     constructor(
         private subject: SubjectService,
         private updateStocks: UpdateUserStocksPipe,
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         private isStockFollowed: IsStockFollowedPipe,
         public router: Router
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Stock Tiles  AUTHUSER DATA');
+        });
     }
 
     updateFollowedStocksList(stock) {

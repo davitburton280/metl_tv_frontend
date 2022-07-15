@@ -1,5 +1,4 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {User} from '@shared/models/user';
 import {Subscription} from 'rxjs';

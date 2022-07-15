@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-join-streaming-form',
@@ -17,19 +18,28 @@ export class JoinStreamingFormComponent implements OnInit {
 
     sessionName = 'SessionA';
 
-    authUser;
+    authUser: CurrentUserData;
 
     @Output() formReady = new EventEmitter();
 
     constructor(
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         private fb: FormBuilder,
     ) {
-        this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
+        // this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
         this.initForm();
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Join streaming  AUTHUSER DATA');
+        });
     }
 
     initForm() {

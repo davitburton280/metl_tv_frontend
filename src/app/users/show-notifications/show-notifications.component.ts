@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 import {UserStoreService} from '@core/services/stores/user-store.service';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-show-notifications',
@@ -8,14 +9,24 @@ import {UserStoreService} from '@core/services/stores/user-store.service';
     styleUrls: ['./show-notifications.component.scss']
 })
 export class ShowNotificationsComponent implements OnInit {
-    authUser;
+    authUser: CurrentUserData;
 
-    constructor(private userStore: UserStoreService) {
+    constructor(
+        private _userInfoService: UserInfoService,
+        private userStore: UserStoreService) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.userStore.authUser$.subscribe(user => {
-            this.authUser = user;
+        // this.userStore.authUser$.subscribe(user => {
+        //     this.authUser = user;
+        // });
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Show Notifications  AUTHUSER DATA');
         });
     }
 

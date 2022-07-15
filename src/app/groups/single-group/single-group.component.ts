@@ -12,6 +12,8 @@ import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-single-group',
@@ -19,7 +21,7 @@ import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-
     styleUrls: ['./single-group.component.scss']
 })
 export class SingleGroupComponent implements OnInit, OnDestroy {
-    authUser: User;
+    authUser: CurrentUserData;
     subscriptions: Subscription[] = [];
 
 
@@ -35,17 +37,19 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         private groupsStore: GroupsStoreService,
         private groupsService: GroupsService,
         private route: ActivatedRoute,
-        private userStore: UserStoreService,
+        // private userStore: UserStoreService,
         private dialog: MatDialog,
         private lowerCaseRemoveSpaces: LowercaseRemoveSpacesPipe,
         private isEmptyObj: CheckForEmptyObjectPipe,
         private socketService: SocketIoService,
+        private _userInfoService: UserInfoService
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
         this.trackSelectedGroup();
-        this.getAuthUser();
+        // this.getAuthUser();
         this.getSelectedGroup();
         this.getAcceptedJoinPageGroup();
         this.getConfirmedJoinGroup();
@@ -55,10 +59,17 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.getLeftGroup();
     }
 
-    getAuthUser() {
-        this.subscriptions.push(this.userStore.authUser$.subscribe(user => {
-            this.authUser = user;
-        }));
+    // getAuthUser() {
+    //     this.subscriptions.push(this.userStore.authUser$.subscribe(user => {
+    //         this.authUser = user;
+    //     }));
+    // }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Single group AUTHUSER DATA');
+        });
     }
 
     trackSelectedGroup() {

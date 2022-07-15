@@ -1,17 +1,18 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { GetAuthUserPipe } from '@shared/pipes/get-auth-user.pipe';
-import { VideoService } from '@core/services/video.service';
-import { FilterOutFalsyValuesFromObjectPipe } from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
-import { ChannelsService } from '@core/services/channels.service';
-import { API_URL } from '@core/constants/global';
-import { Subscription } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SubjectService } from '@core/services/subject.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {VideoService} from '@core/services/video.service';
+import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
+import {ChannelsService} from '@core/services/channels.service';
+import {API_URL} from '@core/constants/global';
+import {Subscription} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {SubjectService} from '@core/services/subject.service';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
-  selector: 'app-clipz-video',
-  templateUrl: './clipz-video.component.html',
-  styleUrls: ['./clipz-video.component.scss']
+    selector: 'app-clipz-video',
+    templateUrl: './clipz-video.component.html',
+    styleUrls: ['./clipz-video.component.scss']
 })
 export class ClipzVideoComponent implements OnInit, OnDestroy {
 
@@ -20,7 +21,7 @@ export class ClipzVideoComponent implements OnInit, OnDestroy {
     apiUrl = API_URL;
     search;
     selectedTag;
-    authUser;
+    authUser: CurrentUserData;
     showTrending = false;
     showFilters = false;
     filters = {video_type: 'clipz'};
@@ -34,11 +35,12 @@ export class ClipzVideoComponent implements OnInit, OnDestroy {
         private subject: SubjectService,
         private channelsService: ChannelsService,
         private route: ActivatedRoute,
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe
     ) {
-        this.authUser = this.getAuthUser.transform();
-
+        // this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
         this.subscriptions.push(
             this.route.queryParams.subscribe(d => {
                 this.search = this.route.snapshot.queryParams?.search;
@@ -55,6 +57,13 @@ export class ClipzVideoComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Clipz-video  AUTHUSER DATA');
+        });
     }
 
     getFilteredList(filters = {video_type: 'clipz'}) {

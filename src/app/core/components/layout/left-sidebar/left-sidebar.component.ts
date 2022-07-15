@@ -1,15 +1,12 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {ChannelsService} from '@core/services/channels.service';
-import {API_URL, MAIN_SECTIONS} from '@core/constants/global';
-import {moveItemInArray} from '@core/helpers/move-item-in-array';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {API_URL} from '@core/constants/global';
 import {SubjectService} from '@core/services/subject.service';
 import {AuthService} from '@core/services/auth.service';
 import {environment} from '@env';
-import {StocksService} from '@core/services/stocks.service';
 import IsResponsive from '@core/helpers/is-responsive';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-left-sidebar',
@@ -30,15 +27,16 @@ export class LeftSidebarComponent implements OnInit {
     constructor(
         public router: Router,
         private channelsService: ChannelsService,
-        private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
         private subject: SubjectService,
+        private _userInfoService: UserInfoService
     ) {
         this.envName = environment.envName;
-        this.authUser = this.getAuthUser.transform();
+        this._getUserInfo();
     }
 
     ngOnInit(): void {
+        // this._getUserInfo();
         this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;
@@ -55,5 +53,13 @@ export class LeftSidebarComponent implements OnInit {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
             await this.router.navigate([route], {queryParams: params})
         );
+    }
+
+    private _getUserInfo() {
+        // this._userInfoService._getCurrentUserInfo();
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser);
+        });
     }
 }

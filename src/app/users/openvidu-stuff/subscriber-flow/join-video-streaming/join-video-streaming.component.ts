@@ -9,9 +9,11 @@ import {VideoService} from '@core/services/video.service';
 import {ChatService} from '@core/services/chat.service';
 import {ChatBoxComponent} from '@shared/components/chat-box/chat-box.component';
 import {ToastrService} from 'ngx-toastr';
-import { SocialShareDialogComponent } from '@core/components/modals/social-share-dialog/social-share-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { GetUriPartsPipe } from '@shared/pipes/get-uri-parts.pipe';
+import {SocialShareDialogComponent} from '@core/components/modals/social-share-dialog/social-share-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {GetUriPartsPipe} from '@shared/pipes/get-uri-parts.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-join-video-streaming',
@@ -32,7 +34,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     streamDestroyed = false;
     publisher: Publisher;
 
-    authUser;
+    authUser: CurrentUserData;
     participants = [];
     subscribers = [];
     tags = [];
@@ -46,7 +48,8 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     @ViewChild(ChatBoxComponent) chatBox: ChatBoxComponent;
 
     constructor(
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         private route: ActivatedRoute,
         private openViduService: OpenviduService,
         private videoService: VideoService,
@@ -58,10 +61,11 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         private elRef: ElementRef,
         private getUrlParts: GetUriPartsPipe
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         this.getSessionData();
         this.getRecordingState();
         this.joinSession();
@@ -70,6 +74,13 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
         this.subject.publish.subscribe((ev) => {
             console.log(ev);
             this.publisher.publishAudio(ev);
+        });
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Join video streaming  AUTHUSER DATA');
         });
     }
 
@@ -111,7 +122,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
                 this.videoFound = dt?.status === 'live';
                 this.videoSettings = dt;
                 this.channelInfo = dt?.channel;
-                console.log('video!!!', dt)
+                console.log('video!!!', dt);
             });
         }
     }
@@ -147,7 +158,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
                 .then(() => {
                     this.loader.dataLoading = false;
                 }).catch((err) => {
-                this.toastr.error('There was a problem white loading streaming session')
+                this.toastr.error('There was a problem white loading streaming session');
                 // console.log(err)
             });
         });
@@ -229,7 +240,7 @@ export class JoinVideoStreamingComponent implements OnInit, OnDestroy {
     }
 
     sendMessage(e) {
-        console.log(e)
+        console.log(e);
         this.session.signal({
             data: e.message,  // Any string (optional)
             to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)

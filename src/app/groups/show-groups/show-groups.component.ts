@@ -7,6 +7,8 @@ import {ChatService} from '@core/services/chat.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {Router} from '@angular/router';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-show-groups',
@@ -14,7 +16,7 @@ import {GroupsStoreService} from '@core/services/stores/groups-store.service';
     styleUrls: ['./show-groups.component.scss']
 })
 export class ShowGroupsComponent implements OnInit {
-    authUser;
+    authUser: CurrentUserData;
     groups = [];
 
     subscriptions: Subscription[] = [];
@@ -25,12 +27,14 @@ export class ShowGroupsComponent implements OnInit {
         private userStore: UserStoreService,
         private socketService: SocketIoService,
         public router: Router,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private _userInfoService: UserInfoService,
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.getAuthUser();
+        // this.getAuthUser();
         this.trackGroups();
     }
 
@@ -40,11 +44,18 @@ export class ShowGroupsComponent implements OnInit {
         }));
     }
 
-    getAuthUser() {
-        this.userStore.authUser$.subscribe(user => {
-            this.authUser = user;
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Show Group  AUTHUSER DATA');
         });
     }
+
+    // getAuthUser() {
+    //     this.userStore.authUser$.subscribe(user => {
+    //         this.authUser = user;
+    //     });
+    // }
 
     filterGroups(type) {
         return this.groups.filter(g => {

@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { CompletePurchaseModalComponent } from '@shared/components/complete-purchase-modal/complete-purchase-modal.component';
-import { GetAuthUserPipe } from '@shared/pipes/get-auth-user.pipe';
-import { SubjectService } from '@core/services/subject.service';
-import { ProductsService } from '@core/services/wallet/products.service';
-import { PaymentsService } from '@core/services/wallet/payments.service';
-import { Subscription } from 'rxjs';
-import { ApplyDiscountToPricePipe } from '@shared/pipes/apply-discount-to-price.pipe';
-import { PaymentPlanComponent } from '@core/components/modals/payment-plan/payment-plan.component';
-import { COIN_IMAGE_NAME } from '@core/constants/global';
-import { PaymentCompletedComponent } from '@core/components/modals/payment-completed/payment-completed.component';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {SubjectService} from '@core/services/subject.service';
+import {ProductsService} from '@core/services/wallet/products.service';
+import {PaymentsService} from '@core/services/wallet/payments.service';
+import {Subscription} from 'rxjs';
+import {ApplyDiscountToPricePipe} from '@shared/pipes/apply-discount-to-price.pipe';
+import {PaymentPlanComponent} from '@core/components/modals/payment-plan/payment-plan.component';
+import {COIN_IMAGE_NAME} from '@core/constants/global';
+import {PaymentCompletedComponent} from '@core/components/modals/payment-completed/payment-completed.component';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-purchase-bits',
@@ -23,7 +23,7 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
     subscriptions: Subscription[] = [];
 
     coinImages = COIN_IMAGE_NAME;
-    authUser;
+    authUser: CurrentUserData;
 
     @Input() totals;
     @Input() card;
@@ -33,17 +33,27 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private productsService: ProductsService,
         private paymentsService: PaymentsService,
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
-        private applyDiscount: ApplyDiscountToPricePipe
+        private applyDiscount: ApplyDiscountToPricePipe,
+        private _userInfoService: UserInfoService
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         this.getStripeProducts();
 
     }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Stock Tiles  AUTHUSER DATA');
+        });
+    }
+
 
     getStripeProducts() {
         this.subscriptions.push(this.productsService.getStripeProducts().subscribe(dt => {
@@ -97,8 +107,8 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
             case '800 bits':
                 length = 2;
                 break;
-                case '1500 bits':
-                case '2750 bits':
+            case '1500 bits':
+            case '2750 bits':
                 length = 3;
                 break;
             case '7500 bits':

@@ -1,8 +1,9 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {Router} from '@angular/router';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-check-requirements',
@@ -17,7 +18,7 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
     defaultVideoDevice;
     defaultAudioDevice;
 
-    authUser;
+    authUser: CurrentUserData;
     deviceStatus = 'idle';
 
     @Output('checked') checked = new EventEmitter();
@@ -25,14 +26,23 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
     constructor(
         private toastr: ToastrService,
         private fb: FormBuilder,
-        private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
+        // private getAuthUser: GetAuthUserPipe,
         public router: Router
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         this.initForm();
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Check streaming requirements  AUTHUSER DATA');
+        });
     }
 
     initForm(): void {
@@ -74,13 +84,13 @@ export class CheckStreamingRequirementsComponent implements OnInit, AfterViewIni
                     this.toastr.error(err.message);
                 });
         }).catch((err) => {
-            console.log(err)
+            console.log(err);
             this.deviceStatus = 'failed';
             this.deviceRecognitionForm.patchValue({
                 audio_device: '',
                 video_device: '',
             });
-            console.log(this.deviceRecognitionForm.value)
+            console.log(this.deviceRecognitionForm.value);
             this.toastr.error(err.message);
         });
 

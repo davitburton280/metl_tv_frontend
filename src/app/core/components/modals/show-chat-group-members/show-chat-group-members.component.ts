@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-show-chat-group-members',
@@ -9,19 +10,28 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 })
 export class ShowChatGroupMembersComponent implements OnInit {
     selectedGroup;
-    authUser;
+    authUser: CurrentUserData;
 
     activeTab = 'All members';
 
     constructor(
         private groupsMessagesStore: GroupsMessagesSubjectService,
-        private getAuthUser: GetAuthUserPipe
+        // private getAuthUser: GetAuthUserPipe
+        private _userInfoService: UserInfoService
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         this.getGroupMembers();
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Show Chat Group members  AUTHUSER DATA');
+        });
     }
 
     getGroupMembers() {

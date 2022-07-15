@@ -3,9 +3,10 @@ import {AuthService} from '@core/services/auth.service';
 import {ChannelsService} from '@core/services/channels.service';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {moveItemInArray} from '@core/helpers/move-item-in-array';
-import {ActivationEnd, NavigationEnd, Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import trackByElement from '@core/helpers/track-by-element';
+import {CurrentUserData} from '@core/interfaces';
 
 @Component({
     selector: 'app-channel-subscriptions',
@@ -18,7 +19,7 @@ export class ChannelSubscriptionsComponent implements OnInit {
     routerUrl;
     trackByElement = trackByElement;
 
-    @Input('authUser') authUser;
+    @Input() authUser: CurrentUserData;
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 
     constructor(
@@ -30,7 +31,6 @@ export class ChannelSubscriptionsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
         this.router.events.subscribe(ev => {
             if (ev instanceof NavigationEnd) {
                 this.routerUrl = ev.url;

@@ -8,6 +8,7 @@ import {UsersService} from '@core/services/users.service';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {StocksService} from '@core/services/stocks.service';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-show-profile',
@@ -36,6 +37,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
     profileUserStocks;
 
     constructor(
+        private _userInfoService: UserInfoService,
         private userStore: UserStoreService,
         private usersConnectionsStore: UsersMessagesSubjectService,
         private groupsMessagesStore: GroupsMessagesSubjectService,
@@ -49,7 +51,8 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.passedUsername = this.route.snapshot.params.username;
-        this.trackAuthUserChanges();
+        // this.trackAuthUserChanges();
+        this._getAuthInfo();
         this.getUserInfo();
         if (this.ownProfile) {
             this.trackUserConnections();
@@ -60,6 +63,14 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.userStore.authUser$.subscribe(user => {
             this.authUser = user;
         }));
+    }
+
+    private _getAuthInfo() {
+        // this._userInfoService._getCurrentUserInfo();
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'dsadsadas');
+        });
     }
 
     getUserInfo() {
@@ -82,7 +93,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
                     if (!this.ownProfile) {
                         this.getProfileUserStocks();
                         this.connectionsCount = this.profileUser.users_connections.filter(uc => uc.confirmed).length;
-                        console.log(this.profileUser)
+                        console.log(this.profileUser);
                     } else {
                         this.profileUserStocks = [];
                     }
@@ -165,7 +176,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
     }
 
     cancelUsersConnecting(connection) {
-        console.log(connection)
+        console.log(connection);
         this.socketService.cancelUsersConnecting({
             authUser: this.authUser,
             channelUser: this.profileUser,
@@ -181,7 +192,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
     }
 
     disconnectUser() {
-        console.log(this.usersConnection)
+        console.log(this.usersConnection);
         this.socketService.disconnectUsers({
             to_user: this.profileUser,
             from_user: this.authUser,
@@ -194,7 +205,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
     getDisconnectUsers() {
         this.subscriptions.push(this.socketService.getDisconnectUsers().subscribe((dt: any) => {
             const {to_user, profile_user_contacts} = dt;
-            console.log(to_user.users_connections)
+            console.log(to_user.users_connections);
             this.connectionsCount = profile_user_contacts.length;
             this.usersConnectionStatus = 'idle';
         }));
@@ -202,7 +213,7 @@ export class ShowProfileComponent implements OnInit, OnDestroy {
 
     getBlockUnblockUser() {
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
-            console.log('get block/unblock', dt)
+            console.log('get block/unblock', dt);
             this.isBlocked = true;
         }));
     }

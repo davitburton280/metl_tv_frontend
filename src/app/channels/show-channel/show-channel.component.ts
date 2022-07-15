@@ -23,6 +23,8 @@ import {ToastrService} from 'ngx-toastr';
 import trackByElement from '@core/helpers/track-by-element';
 import {ChatService} from '@core/services/chat.service';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-show-channel',
@@ -31,7 +33,7 @@ import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-
 })
 export class ShowChannelComponent implements OnInit, OnDestroy {
 
-    authUser;
+    authUser: CurrentUserData;
 
     activeTab;
     allTabs = CHANNEL_PAGE_TABS;
@@ -68,7 +70,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     constructor(
         private videoService: VideoService,
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
         public router: Router,
         private usersService: UsersService,
         private base64ToFile: Base64ToFilePipe,
@@ -86,9 +88,11 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         public usersMessagesStore: UsersMessagesSubjectService,
         private toastr: ToastrService,
         private chatService: ChatService,
-        private cdr: ChangeDetectorRef
+        private cdr: ChangeDetectorRef,
+        private _userInfoService: UserInfoService
     ) {
-        this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
+        // this.authUser = this.getAuthUser.transform();
         // console.log(this.route.snapshot)
         this.passedUsername = this.route.snapshot.params.username;
         this.passedTab = this.route.snapshot.params.tab;
@@ -104,6 +108,13 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         this.subject.currentUserStocks.subscribe((dt: any) => {
             this.userStocks = dt.stocks;
             this.filteredStocks = this.userStocks;
+        });
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Show CHannel  AUTHUSER DATA');
         });
     }
 

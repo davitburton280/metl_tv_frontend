@@ -20,6 +20,7 @@ import {Subscription} from 'rxjs';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UnreadMessagesCounter} from '@core/helpers/get-unread-messages-count';
+import {CurrentUserData} from '@core/interfaces';
 
 @Component({
     selector: 'app-section-links',
@@ -34,7 +35,7 @@ export class SectionLinksComponent implements OnInit, OnDestroy, AfterViewChecke
     subscriptions: Subscription[] = [];
     trackByElement = trackByElement;
 
-    @Input() authUser;
+    @Input() authUser: CurrentUserData;
     // tslint:disable-next-line:no-output-rename
     @Output('closeSidenav') closeSidenav = new EventEmitter();
 

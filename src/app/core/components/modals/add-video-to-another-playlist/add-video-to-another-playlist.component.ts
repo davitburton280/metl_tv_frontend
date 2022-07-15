@@ -3,6 +3,8 @@ import {PlaylistsService} from '@core/services/playlists.service';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-add-video-to-another-playlist',
@@ -14,18 +16,20 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
     saveToPlaylistsForm: FormGroup;
     addPlaylistForm: FormGroup;
     videoId;
-    authUser;
+    authUser: CurrentUserData;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
         private playlistsService: PlaylistsService,
         private fb: FormBuilder,
+        private _userInfoService: UserInfoService,
         private dialog: MatDialogRef<AddVideoToAnotherPlaylistComponent>,
-        private getAuthUser: GetAuthUserPipe
+        // private getAuthUser: GetAuthUserPipe
     ) {
         this.videoId = data.video_id;
         this.playlists = data.playlists;
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
         this.saveToPlaylistsForm = this.fb.group({
             video_id: [this.videoId, Validators.required],
             playlists: this.fb.array(
@@ -43,13 +47,20 @@ export class AddVideoToAnotherPlaylistComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Add video another playlist  AUTHUSER DATA');
+        });
+    }
+
     getPlaylistsFormGroup(playlists) {
         const ret = [];
         playlists.map(p => {
             const found = p.videos.find(v => v.id === this.videoId);
             ret.push(this.fb.group({id: p.id, name: p.name, privacy: p.privacy, checked: !!found}));
         });
-        console.log(ret)
+        console.log(ret);
         return ret;
     }
 

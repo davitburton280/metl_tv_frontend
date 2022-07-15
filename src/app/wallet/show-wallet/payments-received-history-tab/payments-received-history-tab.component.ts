@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {SubjectService} from '@core/services/subject.service';
 import {Card} from '@shared/models/card';
-import {CardsService} from '@core/services/cards.service';
 import {Subscription} from 'rxjs';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';

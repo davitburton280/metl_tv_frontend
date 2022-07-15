@@ -9,8 +9,10 @@ import {MatChipInputEvent, MatChipList} from '@angular/material/chips';
 import {LoaderService} from '@core/services/loader.service';
 import {Observable} from 'rxjs';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import { UploadFileComponent } from '@core/components/modals/upload-file/upload-file.component';
-import { MatDialog } from '@angular/material/dialog';
+import {UploadFileComponent} from '@core/components/modals/upload-file/upload-file.component';
+import {MatDialog} from '@angular/material/dialog';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-stream-details-form',
@@ -27,7 +29,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
     apiUrl = API_URL;
     tags = [];
     videoCategories;
-    authUser;
+    authUser: CurrentUserData;
 
     sessionName = 'SessionA';
     readonly separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -50,15 +52,17 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         private videoService: VideoService,
         private toastr: ToastrService,
         private fb: FormBuilder,
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
         public loader: LoaderService,
         private dialog: MatDialog,
         private uploadFile: VideoService,
+        private _userInfoService: UserInfoService
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         this.selectedPrivacy = this.privacyTypes[0];
         this.initForm();
         this.getVideoCategories();
@@ -68,6 +72,14 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
         //     status => this.tagList.errorState = this.tags.length > 3
         // );
     }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Collect steaming details  AUTHUSER DATA');
+        });
+    }
+
 
     initForm(): void {
         this.startStreamingForm = this.fb.group({
@@ -120,6 +132,7 @@ export class CollectStreamingDetailsFormComponent implements OnInit {
             input.value = '';
         }
     }
+
     resetValue(event) {
         if (event.target.value && this.tags.length >= 3) {
             event.target.value = '';

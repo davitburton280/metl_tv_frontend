@@ -6,13 +6,13 @@ import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 import {StripeElementsOptions} from '@stripe/stripe-js';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Card} from '@shared/models/card';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {User} from '@shared/models/user';
 import {CustomersService} from '@core/services/wallet/customers.service';
 import {ToastrService} from 'ngx-toastr';
 import {generateStripeCardData} from '@core/helpers/generate-stripe-card-data';
 import {StripeCardComponent, StripeService} from 'ngx-stripe';
 import {SubjectService} from '@core/services/subject.service';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-save-card',
@@ -41,12 +41,13 @@ export class SaveCardComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         public loader: LoaderService,
         private fb: FormBuilder,
-        private getAuthUser: GetAuthUserPipe,
         private customersService: CustomersService,
         private stripeService: StripeService,
         private toastr: ToastrService,
-        private subject: SubjectService
+        private subject: SubjectService,
+        private _userInfoService: UserInfoService
     ) {
+        this._getAuthInfo();
         this.saveCardForm = this.fb.group({
             name: ['', Validators.required],
             primary: [0]
@@ -54,12 +55,20 @@ export class SaveCardComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         this.cardId = this.route.snapshot.params?.id;
         this.editCase = !!this.cardId;
         if (this.editCase) {
             this.getCardDetails();
         }
+    }
+
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'WALLET SAVE CARD AUTHUSER DATA');
+        });
     }
 
     getCardDetails() {

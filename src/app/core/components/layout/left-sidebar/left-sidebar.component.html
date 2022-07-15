@@ -9,7 +9,7 @@
         <app-section-links (closeSidenav)="closeSidenav.emit($event)" [authUser]="authUser"></app-section-links>
     </div>
 
-    <ng-container *ngIf="auth.loggedIn()">
+    <ng-container *ngIf="auth.loggedIn() && authUser">
         <div id="channel-subscriptions">
             <app-channel-subscriptions [authUser]="authUser"></app-channel-subscriptions>
         </div>

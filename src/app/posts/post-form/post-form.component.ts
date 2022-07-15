@@ -1,17 +1,19 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserStoreService} from '@core/services/stores/user-store.service';
-import { ActivatedRoute, ActivationEnd, NavigationEnd, Router } from '@angular/router';
+import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {PostsService} from '@core/services/posts.service';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 import {Location} from '@angular/common';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { ChangeEvent } from '@ckeditor/ckeditor5-angular/ckeditor.component';
+import {ChangeEvent} from '@ckeditor/ckeditor5-angular/ckeditor.component';
 import {CK_EDITOR_CONFIG} from '@core/constants/global';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {PostsStoreService} from '@core/services/stores/posts-store.service';
-import { VideoService } from '@core/services/video.service';
-import { API_URL } from '@core/constants/global';
+import {VideoService} from '@core/services/video.service';
+import {API_URL} from '@core/constants/global';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-post-form',
@@ -20,7 +22,7 @@ import { API_URL } from '@core/constants/global';
 })
 export class PostFormComponent implements OnInit, OnDestroy {
     public postForm: FormGroup;
-    authUser;
+    authUser: CurrentUserData;
     public Editor = ClassicEditor;
 
     @Input() selectedGroup;
@@ -46,13 +48,15 @@ export class PostFormComponent implements OnInit, OnDestroy {
         private router: Router,
         private postsService: PostsService,
         private _location: Location,
-        private uploadFile: VideoService
+        private uploadFile: VideoService,
+        private _userInfoService: UserInfoService
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
         const queryParams = this.route.snapshot.queryParams;
-        this.authUser = this.userStore.authUser;
+        // this.authUser = this.userStore.authUser;
         this.Editor.defaultConfig = CK_EDITOR_CONFIG;
 
         // console.log(queryParams.group_id)
@@ -76,6 +80,13 @@ export class PostFormComponent implements OnInit, OnDestroy {
         this.postsStore.fileImg$.subscribe((file) => {
             this.fileEditor = file;
             console.log(this.fileEditor);
+        });
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Post form   AUTHUSER DATA');
         });
     }
 
@@ -183,9 +194,9 @@ export class PostFormComponent implements OnInit, OnDestroy {
                         group_id: this.postForm.value.group_id[0]
                     };
                     this.postsService.editPosts(obj).subscribe((dt) => {
-                        console.log(dt);
-                        this._location.back();
-                    },
+                            console.log(dt);
+                            this._location.back();
+                        },
                         error => {
                             console.log(error);
                             this.uploadFile.deleteFile(file.path, 'image').subscribe(res => console.log(res));
@@ -213,7 +224,7 @@ export class PostFormComponent implements OnInit, OnDestroy {
             editor.ui.getEditableElement()
         );
         // editor.removePlugins.get('html5upload,flashupload').create();
-        editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
             return new UploadAdapter(loader, editor.t, this.postsStore);
         };
     }
@@ -274,6 +285,7 @@ export class UploadAdapter {
     private loader;
     private t;
     private postsStore;
+
     constructor(loader, t, postsStore) {
         this.loader = loader;
         this.t = t;
@@ -288,7 +300,7 @@ export class UploadAdapter {
 
             // tslint:disable-next-line:only-arrow-functions
             reader.onload = function(): void {
-                resolve({ default: reader.result });
+                resolve({default: reader.result});
             };
 
             // tslint:disable-next-line:only-arrow-functions

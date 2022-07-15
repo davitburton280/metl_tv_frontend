@@ -1,30 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {VideoService} from '@core/services/video.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {UsersService} from '@core/services/users.service';
-import {Base64ToFilePipe} from '@shared/pipes/base64-to-file.pipe';
-import {User} from '@shared/models/user';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { of, Subscription } from "rxjs";
+import {Subscription} from 'rxjs';
 import {patternValidator} from '@core/helpers/pattern-validator';
-import {
-    EMAIL_PATTERN,
-    NO_SPACE_PATTERN,
-    NUMBER_AFTER_TEXT_PATTERN,
-    TEXT_ONLY_PATTERN_WITHOUT_SPECIALS
-} from '@core/constants/patterns';
+import {EMAIL_PATTERN, NUMBER_AFTER_TEXT_PATTERN, TEXT_ONLY_PATTERN_WITHOUT_SPECIALS} from '@core/constants/patterns';
 import {LoaderService} from '@core/services/loader.service';
 import {DROPZONE_CONFIG} from 'ngx-dropzone-wrapper';
 import {AuthService} from '@core/services/auth.service';
 import * as  moment from 'moment';
 import {ToastrService} from 'ngx-toastr';
-import {SubjectService} from '@core/services/subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
-import { UploadFileComponent } from '@core/components/modals/upload-file/upload-file.component';
-import { MatDialog } from '@angular/material/dialog';
-import { ImgEditCropperComponent } from '@core/components/modals/img-edit-cropper/img-edit-cropper.component';
-import { concatAll, map } from "rxjs/operators";
+import {MatDialog} from '@angular/material/dialog';
+import {ImgEditCropperComponent} from '@core/components/modals/img-edit-cropper/img-edit-cropper.component';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-profile',
@@ -59,25 +49,23 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
         public loader: LoaderService,
         public auth: AuthService,
         private usersService: UsersService,
-        private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         private toastr: ToastrService,
         private userStore: UserStoreService,
         public router: Router,
         private dialog: MatDialog,
         private uploadFile: VideoService
     ) {
-        this.initForm();
-        this.authUser = this.getAuthUser.transform();
-        console.log(this.authUser);
-        this.profileForm.patchValue({...this.authUser, birthday: moment(this.authUser.birthday).format('MM/DD/YYYY')});
 
+        this._getUserInfo();
+        //TODO this.getAuthUser func changed to usersService func
     }
 
     initForm() {
         this.profileForm = this.fb.group({
             id: [''],
-            first_name: [{ value: '', disabled: true }, [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
-            last_name: [{ value: '', disabled: true }, [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
+            first_name: [{value: '', disabled: true}, [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
+            last_name: [{value: '', disabled: true}, [Validators.required, patternValidator(TEXT_ONLY_PATTERN_WITHOUT_SPECIALS)]],
             username: ['', [Validators.required, patternValidator(NUMBER_AFTER_TEXT_PATTERN)]],
             email: ['', [Validators.required, patternValidator(EMAIL_PATTERN)]],
             birthday: [''],
@@ -87,10 +75,20 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
 
 
     ngOnInit(): void {
+        this.initForm();
+        this.profileForm.patchValue({...this.authUser, birthday: moment(this.authUser.birthday).format('MM/DD/YYYY')});
     }
 
     dateChanged(e) {
 
+    }
+
+    private _getUserInfo() {
+        // this._userInfoService._getCurrentUserInfo();
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser);
+        });
     }
 
     editImage(event, shape) {
@@ -267,6 +265,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
     get profileImg(): any {
         return this.authUser ? this.authUser.avatar : false;
     }
+
     get coverImg(): any {
         return this.authUser ? this.authUser.cover : false;
     }

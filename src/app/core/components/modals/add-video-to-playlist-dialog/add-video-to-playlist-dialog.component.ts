@@ -4,6 +4,8 @@ import {VideoService} from '@core/services/video.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {ToastrService} from 'ngx-toastr';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-add-video-to-playlist-dialog',
@@ -12,7 +14,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class AddVideoToPlaylistDialogComponent implements OnInit {
     activeTab = 'yours';
-    authUser;
+    authUser: CurrentUserData;
     currentUser;
     selectedVideos = [];
     playlist;
@@ -24,15 +26,24 @@ export class AddVideoToPlaylistDialogComponent implements OnInit {
         private modal: MatDialogRef<AddVideoToPlaylistDialogComponent>,
         private videoService: VideoService,
         private playlistsService: PlaylistsService,
-        private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
+        // private getAuthUser: GetAuthUserPipe,
         private toastr: ToastrService,
         @Inject(MAT_DIALOG_DATA) public data: any,
     ) {
         this.playlist = data.playlist;
-        this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
+        // this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Add video to playlist AUTHUSER DATA');
+        });
     }
 
     selectVideo(videos) {

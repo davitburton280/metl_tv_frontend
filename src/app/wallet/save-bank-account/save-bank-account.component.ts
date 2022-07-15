@@ -16,6 +16,8 @@ import {StripeCardComponent, StripeService} from 'ngx-stripe';
 import {AccountsService} from '@core/services/wallet/accounts.service';
 import {LoaderService} from '@core/services/loader.service';
 import {SubjectService} from '@core/services/subject.service';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-save-bank-account',
@@ -27,7 +29,7 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
     stripeBankAccountForm: FormGroup;
     isSubmitted = false;
     subscriptions: Subscription[] = [];
-    authUser;
+    authUser: CurrentUserData;
     UsStates = UsStates;
     MccCodes = MccCodes;
     maxBirthDate: Date;
@@ -51,16 +53,18 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
 
     constructor(
         private fb: FormBuilder,
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
         private usersService: UsersService,
         private accountsService: AccountsService,
         private toastr: ToastrService,
         private stripeService: StripeService,
         private subject: SubjectService,
         public loader: LoaderService,
-        public router: Router
+        public router: Router,
+        private _userInfoService: UserInfoService
     ) {
-        this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
+        // this.authUser = this.getAuthUser.transform();
 
         // Age-restriction of 18
         this.maxBirthDate = new Date(this.currentDate.setFullYear(this.currentDate.getFullYear() - 18));
@@ -73,6 +77,13 @@ export class SaveBankAccountComponent implements OnInit, OnDestroy {
         this.initForm();
         this.checkIfUserHasStripeAccount();
 
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'WALLET SAVE CARD AUTHUSER DATA');
+        });
     }
 
     checkIfUserHasStripeAccount() {

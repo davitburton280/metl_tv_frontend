@@ -1,19 +1,10 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewChild
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {VideoService} from '@core/services/video.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-video-comments-form',
@@ -24,7 +15,7 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     @Input() videoData;
     videoCommentsForm: FormGroup;
     inputFocused = false;
-    authUser;
+    authUser: CurrentUserData;
     isSubmitted = false;
     replyUsername;
     originalFormattedComment = '';
@@ -47,16 +38,18 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
     constructor(
         private fb: FormBuilder,
         private videoService: VideoService,
-        private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
+        // private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         private cdr: ChangeDetectorRef,
         private fixLineBreaks: FixTextLineBreaksPipe
     ) {
+        this._getAuthInfo();
     }
 
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         this.placeholderText = this.getPlaceholderText();
 
         this.videoCommentsForm = this.fb.group({
@@ -73,9 +66,16 @@ export class VideoCommentsFormComponent implements OnInit, AfterViewInit {
         if (this.reply2Reply) {
             if (this.authUser.id !== this.selectedReply.from_id) {
                 this.replyUsername = '@' + this.selectedReply?.user.username + ' ';
-                this.videoCommentsForm.patchValue({ comment: this.replyUsername });
+                this.videoCommentsForm.patchValue({comment: this.replyUsername});
             }
         }
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Vido-comments-form  AUTHUSER DATA');
+        });
     }
 
     saveComment() {

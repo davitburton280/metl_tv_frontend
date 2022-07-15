@@ -14,7 +14,8 @@ import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-
 import {Router} from '@angular/router';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
-import { VideoService } from "@core/services/video.service";
+import {VideoService} from '@core/services/video.service';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-channel-profile',
@@ -50,7 +51,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
     fdAvatar = new FormData();
 
 
-
     @Input() channelUser;
     @Input() authUser;
 
@@ -58,7 +58,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private userStore: UserStoreService,
         private base64ToFile: Base64ToFilePipe,
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
         private channelService: ChannelsService,
         private subject: SubjectService,
         private usersConnectionsStore: UsersMessagesSubjectService,
@@ -67,9 +67,10 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private socketService: SocketIoService,
         public loader: LoaderService,
         private fb: FormBuilder,
-        private uploadFile: VideoService
+        private uploadFile: VideoService,
+        private _userInfoService: UserInfoService
     ) {
-
+        this._getAuthInfo();
 
     }
 
@@ -83,6 +84,13 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         }
         this.socketService.getSubscribeChanel().subscribe(dt => {
             console.log(dt);
+        });
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Chanel Profile  AUTHUSER DATA');
         });
     }
 
@@ -202,7 +210,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         this.socketService.subscribeChanel({
             from_user: this.authUser,
             to_user: user,
-            msg: `<strong>${this.authUser.username }</strong>
+            msg: `<strong>${this.authUser.username}</strong>
                 just subscribed to your Gold Subscription tier!`
         });
         const notifications = this.notificationsStore.allNotifications.filter(n => n._id !== user.id);
@@ -263,7 +271,7 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
 
     changeAuthUserInfo(dt) {
         localStorage.setItem('token', dt.token);
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         this.channelUser = this.authUser;
         this.changingImage = false;
 

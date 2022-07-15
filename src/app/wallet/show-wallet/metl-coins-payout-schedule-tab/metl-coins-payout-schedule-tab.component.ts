@@ -3,7 +3,6 @@ import {Subscription} from 'rxjs';
 import {MatPaginator} from '@angular/material/paginator';
 import {Card} from '@shared/models/card';
 import {PaymentsService} from '@core/services/wallet/payments.service';
-import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
 
 @Component({

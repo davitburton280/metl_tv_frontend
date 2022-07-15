@@ -6,7 +6,6 @@ import {patternValidator} from '@core/helpers/pattern-validator';
 import {FOUR_DIGIT_NUMBERS_ONLY, NUMBERS_ONLY} from '@core/constants/patterns';
 import {LoaderService} from '@core/services/loader.service';
 import {Router} from '@angular/router';
-import {PASSWORD_MIN_LENGTH} from '@core/constants/global';
 
 @Component({
     selector: 'app-verify-email',

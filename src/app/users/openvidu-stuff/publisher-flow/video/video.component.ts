@@ -1,21 +1,11 @@
-import {
-    AfterViewInit,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    HostListener,
-    OnDestroy,
-    OnInit,
-    ViewChild
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {ConnectionEvent, OpenVidu, Publisher, Session, StreamEvent, StreamManager, Subscriber} from 'openvidu-browser';
-import {FormBuilder} from '@angular/forms';
 import {OpenviduService} from '@core/services/openvidu.service';
 import {SubjectService} from '@core/services/subject.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {VideoService} from '@core/services/video.service';
-import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {API_URL} from '@core/constants/global';
 import {MatDialog} from '@angular/material/dialog';
 import {LoaderService} from '@core/services/loader.service';
@@ -26,6 +16,8 @@ import {UsersService} from '@core/services/users.service';
 import {Subscription} from 'rxjs';
 import {SocialShareDialogComponent} from '@core/components/modals/social-share-dialog/social-share-dialog.component';
 import {GetUriPartsPipe} from '@shared/pipes/get-uri-parts.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-video',
@@ -64,7 +56,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     // updated by click event in UserVideoComponent children
     mainStreamManager: StreamManager;
 
-    authUser;
+    authUser: CurrentUserData;
     openViduToken;
 
     recordingState = 'idle';
@@ -97,7 +89,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private elRef: ElementRef,
         private openViduService: OpenviduService,
         private subject: SubjectService,
-        private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         private videoService: VideoService,
         private chatService: ChatService,
         private videoChatService: VideoChatService,
@@ -109,11 +101,10 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         private usersService: UsersService,
         private getUrlParts: GetUriPartsPipe
     ) {
+        this._getUserInfo();
     }
 
     ngOnInit(): void {
-
-        this.authUser = this.getAuthUser.transform();
         this.getUserChannel();
 
         this.getVideoSessionData();
@@ -140,6 +131,12 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     }
 
+    private _getUserInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Video');
+        });
+    }
 
     @HostListener('window:beforeunload')
     beforeunloadHandler() {
@@ -168,7 +165,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
         const videoSettings = localStorage.getItem('video_settings');
         this.sessionData = savedSession ? JSON.parse(savedSession) : null;
         this.videoSettings = videoSettings ? JSON.parse(videoSettings) : null;
-        console.log(this.videoSettings, this.sessionData)
+        console.log(this.videoSettings, this.sessionData);
     }
 
 
@@ -223,8 +220,8 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
                     }
                 }).catch((err) => {
-                this.toastr.error('There was a problem white loading streaming session')
-                console.log(err)
+                this.toastr.error('There was a problem white loading streaming session');
+                console.log(err);
             });
 
         }));
@@ -291,7 +288,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
     deleteSubscriber(streamManager: StreamManager) {
-        console.log(this.subscribers)
+        console.log(this.subscribers);
     }
 
     getRecordedVideoId(video) {
@@ -331,7 +328,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     sendMessage(e) {
-        console.log(e)
+        console.log(e);
         this.session.signal({
             data: e.message,  // Any string (optional)
             to: [],                     // Array of Connection objects (optional. Broadcast to everyone if empty)

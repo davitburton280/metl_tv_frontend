@@ -3,12 +3,12 @@ import {MatDialog} from '@angular/material/dialog';
 import {CompletePurchaseModalComponent} from '@shared/components/complete-purchase-modal/complete-purchase-modal.component';
 import {Subscription} from 'rxjs';
 import {CardsService} from '@core/services/cards.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
-import {filter} from 'rxjs/operators';
 import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy-values-from-object.pipe';
 import {PaymentsService} from '@core/services/wallet/payments.service';
+import {UserInfoService} from '@core/services/user-info.service';
+import {CurrentUserData} from '@core/interfaces';
 
 @Component({
     selector: 'app-show-wallet',
@@ -18,7 +18,7 @@ import {PaymentsService} from '@core/services/wallet/payments.service';
 export class ShowWalletComponent implements OnInit, OnDestroy, AfterViewInit {
     subscriptions: Subscription[] = [];
     userCards = [];
-    authUser;
+    authUser: CurrentUserData;
     activeTab;
     transfers = [];
     transfersLoaded = false;
@@ -32,16 +32,16 @@ export class ShowWalletComponent implements OnInit, OnDestroy, AfterViewInit {
         private dialog: MatDialog,
         private cardsService: CardsService,
         private paymentsService: PaymentsService,
-        private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         public router: Router,
         private subject: SubjectService,
         private getExactParams: FilterOutFalsyValuesFromObjectPipe,
         private cdr: ChangeDetectorRef
     ) {
+        this._getUserInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
         this.getUserCards();
         this.getTransfersHistory({});
         this.getSavedActiveTab();
@@ -55,6 +55,14 @@ export class ShowWalletComponent implements OnInit, OnDestroy, AfterViewInit {
                     this.userCards = dt;
                 })
         );
+    }
+
+    private _getUserInfo() {
+        // this._userInfoService._getCurrentUserInfo();
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'WALLET');
+        });
     }
 
     getTransfersHistory(filters) {

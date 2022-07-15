@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {CustomersService} from '@core/services/wallet/customers.service';
 import {AuthService} from '@core/services/auth.service';
-import {SubjectService} from "@core/services/subject.service";
+import {SubjectService} from '@core/services/subject.service';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-show-wallet-cards',
@@ -10,22 +11,31 @@ import {SubjectService} from "@core/services/subject.service";
     styleUrls: ['./show-wallet-cards.component.scss']
 })
 export class ShowWalletCardsComponent implements OnInit {
-    authUser;
+    authUser: CurrentUserData;
     userCards;
 
     constructor(
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         private customersService: CustomersService,
         private subject: SubjectService,
         public auth: AuthService
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         if (this.auth.loggedIn()) {
             this.getCards();
         }
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'WALLET Show wallet CARDS AUTHUSER DATA');
+        });
     }
 
     getCards() {

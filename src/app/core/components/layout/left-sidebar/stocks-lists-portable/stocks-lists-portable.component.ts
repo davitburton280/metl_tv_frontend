@@ -3,7 +3,7 @@ import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {AuthService} from '@core/services/auth.service';
 import {SubjectService} from '@core/services/subject.service';
 import {StocksService} from '@core/services/stocks.service';
-import {ActivatedRoute, NavigationEnd, Router, RoutesRecognized} from '@angular/router';
+import {ActivatedRoute, Router, RoutesRecognized} from '@angular/router';
 import IsResponsive from '@core/helpers/is-responsive';
 import {Subscription} from 'rxjs';
 import {LoaderService} from '@core/services/loader.service';
@@ -12,6 +12,8 @@ import {MINI_GRAPHS_TABS} from '@core/constants/global';
 import {StocksListsModalComponent} from '@shared/components/stocks-lists-modal/stocks-lists-modal.component';
 import {MatDialog} from '@angular/material/dialog';
 import {StocksStoreService} from '@core/services/stores/stocks-store.service';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-stocks-lists-portable',
@@ -23,7 +25,7 @@ import {StocksStoreService} from '@core/services/stores/stocks-store.service';
 })
 export class StocksListsPortableComponent implements OnInit, OnDestroy {
 
-    @Input() authUser;
+    @Input() authUser: CurrentUserData;
     routerUrl;
     userStocks;
 
@@ -49,21 +51,19 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
     constructor(
         public router: Router,
         private route: ActivatedRoute,
-        private getAuthUser: GetAuthUserPipe,
         public auth: AuthService,
         private subject: SubjectService,
         private stocksService: StocksService,
         private stocksStore: StocksStoreService,
         private cdr: ChangeDetectorRef,
         public loader: LoaderService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private _userInfoService: UserInfoService
     ) {
+        this._getUserInfo();
     }
 
     ngOnInit(): void {
-
-
-        this.authUser = this.getAuthUser.transform();
         this.selectedSortType = this.authUser.stocks_order_type;
         this.subscriptions.push(this.router.events.subscribe(ev => {
             if (ev instanceof RoutesRecognized) {
@@ -105,6 +105,13 @@ export class StocksListsPortableComponent implements OnInit, OnDestroy {
         }));
 
 
+    }
+
+    private _getUserInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Stock lists portable');
+        });
     }
 
     getActiveTab(e) {

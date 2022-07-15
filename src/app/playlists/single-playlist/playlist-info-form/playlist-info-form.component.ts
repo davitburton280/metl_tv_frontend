@@ -7,6 +7,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-playlist-info-form',
@@ -17,7 +19,7 @@ export class PlaylistInfoFormComponent implements OnInit {
     playlistInfoForm: FormGroup;
     apiUrl = API_URL;
     editMode = false;
-    authUser;
+    authUser: CurrentUserData;
 
     @Input('playlist') playlist;
     @Output('refreshPlaylist') refreshPlaylist = new EventEmitter();
@@ -28,7 +30,8 @@ export class PlaylistInfoFormComponent implements OnInit {
         private dialog: MatDialog,
         private toastr: ToastrService,
         public router: Router,
-        private getAuthUser: GetAuthUserPipe
+        private _userInfoService: UserInfoService
+        // private getAuthUser: GetAuthUserPipe
     ) {
         this.playlistInfoForm = this.fb.group({
             id: [''],
@@ -36,10 +39,18 @@ export class PlaylistInfoFormComponent implements OnInit {
             description: [''],
             privacy: ['']
         });
-        this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
+        // this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Playlist info form AUTHUSER DATA');
+        });
     }
 
     openVideosModal() {
@@ -49,7 +60,7 @@ export class PlaylistInfoFormComponent implements OnInit {
     }
 
     updatePrivacy(value, playlist) {
-        console.log(+value)
+        console.log(+value);
         playlist.privacy = +value;
         this.playlistInfoForm.patchValue({privacy: +value});
         this.playlistsService.updatePrivacy({privacy: value, id: playlist.id}).subscribe(dt => {

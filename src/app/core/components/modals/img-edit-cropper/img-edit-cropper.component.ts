@@ -1,14 +1,14 @@
-import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { API_URL } from '@core/constants/global';
+import {AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import Cropper from 'cropperjs';
-import { GetAuthUserPipe } from '@shared/pipes/get-auth-user.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
-  selector: 'app-img-edit-cropper',
-  templateUrl: './img-edit-cropper.component.html',
-  styleUrls: ['./img-edit-cropper.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-img-edit-cropper',
+    templateUrl: './img-edit-cropper.component.html',
+    styleUrls: ['./img-edit-cropper.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class ImgEditCropperComponent implements OnInit, AfterViewInit {
 
@@ -16,7 +16,7 @@ export class ImgEditCropperComponent implements OnInit, AfterViewInit {
 
     imageSrc = '';
     cropperImage;
-    authUser;
+    authUser: CurrentUserData;
     @ViewChild('image', {static: false})
     public imageElement: ElementRef;
     private cropper: Cropper;
@@ -24,21 +24,28 @@ export class ImgEditCropperComponent implements OnInit, AfterViewInit {
     shape;
 
 
-
     public constructor(
         public dialogRef: MatDialogRef<ImgEditCropperComponent>,
+        private _userInfoService: UserInfoService,
         @Inject(MAT_DIALOG_DATA) public data: any,
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
     ) {
-
+        this._getAuthInfo();
     }
 
     public ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         this.title = this.data.title;
         this.shape = this.data.shape;
         this.file = this.data.file;
         this.imgSrcFile(this.file);
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Img Edit cropper  AUTHUSER DATA');
+        });
     }
 
     imgSrcFile(file) {
@@ -98,30 +105,29 @@ export class ImgEditCropperComponent implements OnInit, AfterViewInit {
     }
 
     saveCropperImg() {
-       this.cropper.getCroppedCanvas({
-           minWidth: 720,
-           minHeight: 300,
-           maxWidth: 720,
-           maxHeight: 300,
-       }).toBlob((blob) => {
-           console.log(blob);
-           this.dialogRef.close({ blob, shape: 'square' });
-       });
+        this.cropper.getCroppedCanvas({
+            minWidth: 720,
+            minHeight: 300,
+            maxWidth: 720,
+            maxHeight: 300,
+        }).toBlob((blob) => {
+            console.log(blob);
+            this.dialogRef.close({blob, shape: 'square'});
+        });
     }
 
     saveAvatarImg() {
-       this.cropper.getCroppedCanvas({
-           minWidth: 400,
-           minHeight: 400,
-           maxWidth: 400,
-           maxHeight: 400,
-       }).toBlob((blob) => {
-           console.log(blob);
-           blob['name'] = Date.now() + '.png';
-           this.dialogRef.close({ blob, shape: 'circle' });
-       }, 'image/png');
+        this.cropper.getCroppedCanvas({
+            minWidth: 400,
+            minHeight: 400,
+            maxWidth: 400,
+            maxHeight: 400,
+        }).toBlob((blob) => {
+            console.log(blob);
+            blob['name'] = Date.now() + '.png';
+            this.dialogRef.close({blob, shape: 'circle'});
+        }, 'image/png');
     }
-
 
 
     closedModal() {

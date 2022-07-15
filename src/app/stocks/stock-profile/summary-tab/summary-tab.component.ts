@@ -3,12 +3,12 @@ import {MatTableDataSource} from '@angular/material/table';
 import {StocksService} from '@core/services/stocks.service';
 import {normalizeColName} from '@core/helpers/normalizeTableColumnName';
 import {LoaderService} from '@core/services/loader.service';
-import {XAxisTicksComponent} from '@swimlane/ngx-charts';
 import * as moment from 'moment';
 import {SubjectService} from '@core/services/subject.service';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
 import {Subscription} from 'rxjs';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-summary-tab',
@@ -33,7 +33,7 @@ export class SummaryTabComponent implements OnInit {
     addedToWatchlist = false;
     subscriptions: Subscription[] = [];
 
-    authUser;
+    authUser: CurrentUserData;
     stocksUpdatedHere = false;
     processingStock = false;
 
@@ -44,15 +44,22 @@ export class SummaryTabComponent implements OnInit {
         public loader: LoaderService,
         private subject: SubjectService,
         private updateStocks: UpdateUserStocksPipe,
-        private getAuthUser: GetAuthUserPipe
+        private _userInfoService: UserInfoService
     ) {
+        this._getUserInfo();
     }
 
 
     ngOnInit(): void {
         this.getUserStocks();
         this.getStockInfo();
-        this.authUser = this.getAuthUser.transform();
+    }
+
+    private _getUserInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser);
+        });
     }
 
     getUserStocks() {

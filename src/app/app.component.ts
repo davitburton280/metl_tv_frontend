@@ -8,13 +8,13 @@ import {map} from 'rxjs/operators';
 import IsResponsive from '@core/helpers/is-responsive';
 import {StocksService} from '@core/services/stocks.service';
 import {environment} from '@env';
-import {STRIPE_CARD_OPTIONS} from '@core/constants/global';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
-import {ChatService} from '@core/services/chat.service';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {DOCUMENT} from '@angular/common';
 import {AuthService} from '@core/services/auth.service';
+import {UserInfoService} from '@core/services/user-info.service';
+import {CurrentUserData} from '@core/interfaces';
 
 @Component({
     selector: 'app-root',
@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     subscriptions: Subscription[] = [];
     pageTitle;
 
-    authUser;
+    authUser: CurrentUserData;
     rightSidenavOpened = false;
     rightSidenavFor;
 
@@ -51,18 +51,29 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
         private getAuthUser: GetAuthUserPipe,
         public groupChatStore: GroupsMessagesSubjectService,
         public usersMessagesStore: UsersMessagesSubjectService,
+        private _userInfoService: UserInfoService,
         @Inject(DOCUMENT) private document: Document,
         private renderer: Renderer2
     ) {
-
+        // console.log(this._userInfoService.user);
     }
 
     ngOnInit() {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
+        this._getUserInfo();
         this.logInProduction();
         this.setPageTitle();
         this.getStockTypes();
         this.renderer.setAttribute(this.document.body, 'class', this.themeMode);
+    }
+
+
+    private _getUserInfo() {
+        // this._userInfoService._getCurrentUserInfo();
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser);
+        });
     }
 
     logInProduction() {

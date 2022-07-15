@@ -7,8 +7,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PlaylistsService} from '@core/services/playlists.service';
 import {MatDialog} from '@angular/material/dialog';
 import {API_URL} from '@core/constants/global';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {VideoService} from '@core/services/video.service';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-playlist-videos',
@@ -18,7 +19,7 @@ import {VideoService} from '@core/services/video.service';
 export class PlaylistVideosComponent implements OnInit {
 
     apiUrl = API_URL;
-    authUser;
+    authUser: CurrentUserData;
     trackByElement = trackByElement;
 
     @Input('playlist') playlist;
@@ -30,12 +31,21 @@ export class PlaylistVideosComponent implements OnInit {
         private playlistsService: PlaylistsService,
         private videoService: VideoService,
         private dialog: MatDialog,
-        private getAuthUser: GetAuthUserPipe
+        private _userInfoService: UserInfoService
+        // private getAuthUser: GetAuthUserPipe
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Playlist Video AUTHUSER DATA');
+        });
     }
 
     openPlaylistPage(video, playlist) {

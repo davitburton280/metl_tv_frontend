@@ -4,6 +4,8 @@ import {ChannelsService} from '@core/services/channels.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {DESCRIPTION_CHARACTERS_LIMIT} from '@core/constants/global';
 import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-about-tab',
@@ -13,16 +15,18 @@ import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 export class AboutTabComponent implements OnInit, AfterViewInit {
     aboutForm: FormGroup;
     editMode = false;
-    authUser;
+    authUser: CurrentUserData;
     @Input('channelUser') channelUser;
 
     constructor(
         private fb: FormBuilder,
         private channelService: ChannelsService,
-        private getAuthUser: GetAuthUserPipe,
-        private fixLineBreaks: FixTextLineBreaksPipe
+        // private getAuthUser: GetAuthUserPipe,
+        private fixLineBreaks: FixTextLineBreaksPipe,
+        private _userInfoService: UserInfoService
     ) {
-        this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
+        // this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
@@ -39,6 +43,13 @@ export class AboutTabComponent implements OnInit, AfterViewInit {
             // ...this.channelUser.channel
         });
 
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'About Tab  AUTHUSER DATA');
+        });
     }
 
     editModeOn() {

@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ChatService} from '@core/services/chat.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SocketIoService} from '@core/services/socket-io.service';
 
 import {DatePipe} from '@angular/common';
@@ -10,6 +9,8 @@ import {SubjectService} from '@core/services/subject.service';
 import {MobileResponsiveHelper} from '@core/helpers/mobile-responsive-helper';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ import {GroupsMessagesSubjectService} from '@core/services/stores/groups-message
 })
 export class ShowMessagesComponent implements OnInit {
     activeTab = 'direct';
-    authUser;
+    authUser: CurrentUserData;
 
     groupsMessages = [];
     groupsLoaded = false;
@@ -30,7 +31,8 @@ export class ShowMessagesComponent implements OnInit {
 
     constructor(
         private chatService: ChatService,
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         private socketService: SocketIoService,
         public usersMessagesStore: UsersMessagesSubjectService,
         public groupsMessagesStore: GroupsMessagesSubjectService,
@@ -39,11 +41,19 @@ export class ShowMessagesComponent implements OnInit {
         private groupBy: GroupByPipe,
         public mobileHelper: MobileResponsiveHelper,
     ) {
+        this._getAuthInfo();
     }
 
     ngOnInit(): void {
-        this.authUser = this.getAuthUser.transform();
+        // this.authUser = this.getAuthUser.transform();
         // this.getGroupsMessages();
+    }
+
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Show Messages  AUTHUSER DATA');
+        });
     }
 
 

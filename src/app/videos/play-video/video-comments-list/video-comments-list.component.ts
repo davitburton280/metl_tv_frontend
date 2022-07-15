@@ -1,11 +1,12 @@
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {SubjectService} from '@core/services/subject.service';
 import {VideoService} from '@core/services/video.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
 import {Subscription} from 'rxjs';
 import trackByElement from '@core/helpers/track-by-element';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-video-comments-list',
@@ -15,7 +16,7 @@ import trackByElement from '@core/helpers/track-by-element';
 })
 export class VideoCommentsListComponent implements OnInit, OnDestroy {
 
-    authUser;
+    authUser: CurrentUserData;
     selectedComment;
     subscriptions: Subscription[] = [];
     showReplyForm = false;
@@ -32,15 +33,23 @@ export class VideoCommentsListComponent implements OnInit, OnDestroy {
     constructor(
         private subject: SubjectService,
         private videoService: VideoService,
-        private getAuthUser: GetAuthUserPipe,
+        // private getAuthUser: GetAuthUserPipe,
+        private _userInfoService: UserInfoService,
         private dialog: MatDialog
     ) {
-        this.authUser = this.getAuthUser.transform();
+        this._getAuthInfo();
+        // this.authUser = this.getAuthUser.transform();
     }
 
     ngOnInit(): void {
     }
 
+    private _getAuthInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'Video-comments-list  AUTHUSER DATA');
+        });
+    }
 
     isAuthor(c) {
         return c.user.id === this.videoData.author_id;
