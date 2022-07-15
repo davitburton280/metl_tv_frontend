@@ -4,6 +4,7 @@ import {AuthService} from '@core/services/auth.service';
 import {SubjectService} from '@core/services/subject.service';
 import {CurrentUserData} from '@core/interfaces';
 import {UserInfoService} from '@core/services/user-info.service';
+import {SubjectService} from '@core/services/subject.service';
 
 @Component({
     selector: 'app-show-wallet-cards',

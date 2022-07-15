@@ -7,9 +7,8 @@ import {ChatService} from '@core/services/chat.service';
 import {SubjectService} from '@core/services/subject.service';
 import {SharedChatHelper} from '@core/helpers/shared-chat-helper';
 import { API_URL } from '@core/constants/global';
-import { HttpClient } from "@angular/common/http";
-import { GetAuthUserPipe } from "@shared/pipes/get-auth-user.pipe";
-import { VideoService } from "@core/services/video.service";
+import { HttpClient } from '@angular/common/http';
+import { VideoService } from '@core/services/video.service';
 
 @Component({
     selector: 'app-direct-chat-messages',

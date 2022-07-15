@@ -5,7 +5,7 @@
 
                 <div class="thumbnail">
                     <!--                    <img class=src="assets/img/iconTV.png" alt="">-->
-                    <img class="channel-avatar" [src]="channel.avatar|getImgPath:'avatars'">
+                    <img class="channel-avatar" [src]="channel.avatar|getImgPath:'images'">
                 </div>
                 <div class="info">
                     <p class="name" [routerLink]="'/channels/'+channel?.user?.username">{{channel.name}}</p>

@@ -46,7 +46,6 @@ export class ShowPostsComponent implements OnInit {
         this.postsStore.allPosts$.subscribe((data: any) => {
             this.allPost = data.posts;
             this.paginatorLength = data.totalCount;
-            // console.log(this.allPost);
         });
         // this.authUser = this.userStore.authUser;
         this.getAllPosts().then();
@@ -62,8 +61,6 @@ export class ShowPostsComponent implements OnInit {
     pagination(e) {
         this.perPage = e.pageIndex + 1;
         this.paginatorPageSize = e.pageSize;
-        this.paginatorLength = e.length;
-        this.paginatorLength = this.postsService.pageSize;
         this.getAllPosts().then();
     }
 

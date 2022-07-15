@@ -60,7 +60,6 @@ export class ChatFormComponent implements OnInit, OnDestroy {
         } else {
             this.getSelectedGroupChanges();
         }
-
     }
 
     chatFile(event) {
@@ -153,14 +152,12 @@ export class ChatFormComponent implements OnInit, OnDestroy {
 
 
     initForm() {
-        console.log(this.inputDisabled);
-
         const mainFields = {
             from_username: [this.authUser.username],
             from_id: [this.authUser.id],
 
             // to_user: [null],
-            message: [ {value: '', disabled: this.inputDisabled}],
+            message: [''],
             files: [[]],
             // message: ['', Validators.required],
 
