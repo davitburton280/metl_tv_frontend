@@ -26,7 +26,7 @@ export class UserInfoService {
         });
 
         const requestOptions = {headers};
-        this._httpClient.get<CurrentUserResponseInterface>(`https://1a28-37-252-95-252.ngrok.io/users/detail`, requestOptions)
+        this._httpClient.get<CurrentUserResponseInterface>(`https://22e8-37-252-80-33.ngrok.io/users/detail`, requestOptions)
             .subscribe((data: CurrentUserResponseInterface) => {
                 this._userInfo.next(data.data);
             });

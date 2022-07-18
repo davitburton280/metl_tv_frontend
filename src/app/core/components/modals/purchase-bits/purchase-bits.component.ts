@@ -3,13 +3,14 @@ import {MatDialog} from '@angular/material/dialog';
 import {SubjectService} from '@core/services/subject.service';
 import {ProductsService} from '@core/services/wallet/products.service';
 import {PaymentsService} from '@core/services/wallet/payments.service';
-import {Subscription} from 'rxjs';
+import {Subject} from 'rxjs';
 import {ApplyDiscountToPricePipe} from '@shared/pipes/apply-discount-to-price.pipe';
 import {PaymentPlanComponent} from '@core/components/modals/payment-plan/payment-plan.component';
 import {COIN_IMAGE_NAME} from '@core/constants/global';
 import {PaymentCompletedComponent} from '@core/components/modals/payment-completed/payment-completed.component';
 import {CurrentUserData} from '@core/interfaces';
 import {UserInfoService} from '@core/services/user-info.service';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
     selector: 'app-purchase-bits',
@@ -20,7 +21,7 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
 
     bitProducts = [];
 
-    subscriptions: Subscription[] = [];
+    private _unsubscribe$ = new Subject<void>();
 
     coinImages = COIN_IMAGE_NAME;
     authUser: CurrentUserData;
@@ -33,7 +34,6 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private productsService: ProductsService,
         private paymentsService: PaymentsService,
-        // private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         private applyDiscount: ApplyDiscountToPricePipe,
         private _userInfoService: UserInfoService
@@ -42,7 +42,6 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // this.authUser = this.getAuthUser.transform();
         this.getStripeProducts();
 
     }
@@ -56,15 +55,20 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
 
 
     getStripeProducts() {
-        this.subscriptions.push(this.productsService.getStripeProducts().subscribe(dt => {
-            this.bitProducts = dt;
-        }));
+        this.productsService.getStripeProducts()
+            .pipe(
+                takeUntil(this._unsubscribe$),
+            )
+            .subscribe(dt => {
+                this.bitProducts = dt;
+            });
     }
 
     openPurchaseModal(purchase) {
+        console.log(purchase, 'purchase');
         console.log(this.bitProducts);
         console.log(this.totals);
-        this.subscriptions.push(this.dialog.open(PaymentPlanComponent, {
+        this.dialog.open(PaymentPlanComponent, {
             data: {
                 coin: true,
                 purchase,
@@ -72,25 +76,32 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
                 coinImg: this.createArrayCoinImg(purchase.name)
             },
             width: '1085px'
-        }).afterClosed().subscribe((dt) => {
-            console.log(dt);
-            if (dt) {
-                if (dt?.payment.paymentIntent.status === 'succeeded') {
-                    this.dialog.open(PaymentCompletedComponent, {
-                        width: '591px',
-                        height: '292px'
-                    }).afterClosed().subscribe();
+        }).afterClosed()
+            .pipe(
+                takeUntil(this._unsubscribe$),
+            )
+            .subscribe((dt) => {
+                console.log(dt);
+                if (dt) {
+                    if (dt?.payment.paymentIntent.status === 'succeeded') {
+                        this.dialog.open(PaymentCompletedComponent, {
+                            width: '591px',
+                            height: '292px'
+                        }).afterClosed().subscribe();
+                    }
+                    this.paymentsService.getAllPaymentsHistory({
+                        user_id: this.authUser.id,
+                        customer: dt.customer
+                    }).pipe(
+                        takeUntil(this._unsubscribe$),
+                    )
+                        .subscribe(ph => {
+                            this.totals = ph.user_coins;
+                            this.subject.setAllPaymentsData(ph);
+                            this.subject.changePaymentsData(ph);
+                        });
                 }
-                this.subscriptions.push(this.paymentsService.getAllPaymentsHistory({
-                    user_id: this.authUser.id,
-                    customer: dt.customer
-                }).subscribe(ph => {
-                    this.totals = ph.user_coins;
-                    this.subject.setAllPaymentsData(ph);
-                    this.subject.changePaymentsData(ph);
-                }));
-            }
-        }));
+            });
     }
 
     getDiscountedPrice(product) {
@@ -129,7 +140,8 @@ export class PurchaseBitsComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this.subscriptions.forEach(s => s.unsubscribe());
+        this._unsubscribe$.next();
+        this._unsubscribe$.complete();
     }
 
 }

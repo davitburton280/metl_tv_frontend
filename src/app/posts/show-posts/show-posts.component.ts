@@ -66,7 +66,7 @@ export class ShowPostsComponent implements OnInit {
 
     async getAllPosts() {
         const params = {
-            user_id: this.authUser.id,
+            user_id: this.authUser?.id,
             offset: this.perPage,
             limit: this.paginatorPageSize,
             sorting_keyword: this.sortingOptions,

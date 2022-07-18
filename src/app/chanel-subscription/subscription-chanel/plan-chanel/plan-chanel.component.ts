@@ -33,14 +33,12 @@ export class PlanChanelComponent implements OnInit {
         private dialog: MatDialog,
         private paymentsService: PaymentsService,
         private _userInfoService: UserInfoService
-        // private getAuthUser: GetAuthUserPipe,
     ) {
         this._getAuthInfo();
         this.params = this.route.snapshot?.queryParams?.plan;
     }
 
     ngOnInit(): void {
-        // this.authUser = this.getAuthUser.transform();
         this.filterPlan(this.params, this.planList);
         this.subscriptions.push(this.subject.currentUserCards.subscribe(dt => {
             this.userCards = dt;

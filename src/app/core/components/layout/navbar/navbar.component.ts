@@ -1,7 +1,6 @@
-import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output, TemplateRef} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, ActivationEnd, NavigationEnd, Router} from '@angular/router';
 import {AuthService} from '@core/services/auth.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {SubjectService} from '@core/services/subject.service';
 import {NAVBAR_ADDITIONAL_LINKS} from '@core/constants/global';
 import {environment} from '@env';
@@ -9,7 +8,7 @@ import {StocksService} from '@core/services/stocks.service';
 import {MatDialog} from '@angular/material/dialog';
 import IsResponsive from '@core/helpers/is-responsive';
 import trackByElement from '@core/helpers/track-by-element';
-import {from, Subscription, zip} from 'rxjs';
+import {forkJoin, Subscription} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {Card} from '@shared/models/card';
 import {CardsService} from '@core/services/cards.service';
@@ -24,13 +23,11 @@ import {ChatService} from '@core/services/chat.service';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UnreadMessagesCounter} from '@core/helpers/get-unread-messages-count';
 import {UserStoreService} from '@core/services/stores/user-store.service';
-import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 import {GroupsService} from '@core/services/groups.service';
-
-import {Observable, forkJoin} from 'rxjs';
-import {combineLatest} from 'rxjs/operators';
 import {PostsService} from '@core/services/posts.service';
+import {CurrentUserData} from '@core/interfaces';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-navbar',
@@ -38,7 +35,7 @@ import {PostsService} from '@core/services/posts.service';
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
-    authUser;
+    authUser: CurrentUserData;
     routerUrl;
     isSmallScreen = IsResponsive.isSmallScreen();
     trackByElement = trackByElement;
@@ -69,7 +66,6 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
         private userStore: UserStoreService,
         public router: Router,
         public auth: AuthService,
-        private getAuthUser: GetAuthUserPipe,
         private subject: SubjectService,
         private stocksService: StocksService,
         private paymentsService: PaymentsService,
@@ -88,9 +84,10 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
         private postsService: PostsService,
         private notificationsStore: NotificationsSubjectStoreService,
         private chatService: ChatService,
-        private unreadMessagesHelper: UnreadMessagesCounter
+        private unreadMessagesHelper: UnreadMessagesCounter,
+        private _userInfoService: UserInfoService,
     ) {
-
+        this._getUserInfo();
     }
 
     ngOnInit(): void {
@@ -106,6 +103,13 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
             this.getUserPosts();
             this.getAllGroupsLoaded();
         }
+    }
+
+    private _getUserInfo() {
+        this._userInfoService._userInfo.subscribe((data) => {
+            this.authUser = data;
+            console.log(this.authUser, 'NavBar');
+        });
     }
 
     getUsersMessages() {
@@ -161,7 +165,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     getBlockUnblockUser() {
         this.subscriptions.push(this.socketService.getBlockUnblockUser().subscribe((dt: any) => {
-            console.log('get block/unblock', dt)
+            console.log('get block/unblock', dt);
             if (dt.from_user.id !== this.authUser.id) {
                 this.notificationsStore.updateNotifications(dt);
             }
@@ -305,7 +309,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.usersMessagesStore.changeOneUserMessages(from_id, direct_messages);
                 }
             } else if (group_messages) {
-                console.log('message received')
+                console.log('message received');
                 this.groupsMessagesStore.changeGroupMessages(group_id, group_messages);
             }
         }));
