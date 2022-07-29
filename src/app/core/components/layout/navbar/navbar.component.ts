@@ -239,6 +239,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
             localStorage.removeItem('token');
             await this.router.navigate(['/']);
             this.socketService.disconnect({...this.authUser, leavingGroup: true});
+            this._userInfoService._userInfo.next(null);
         }));
     }
 

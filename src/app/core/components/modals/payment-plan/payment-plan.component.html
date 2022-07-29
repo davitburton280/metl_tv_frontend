@@ -6,19 +6,25 @@
             <div class="purchaseSummary">Purchase Summary</div>
             <div class="purchaseBelowPart">
                 <div class="purchaseLeftUpPart">
-                    <img *ngIf="isPlan" class="goldCoin" [src]="plan.img" alt="goldIcon">
+                    <div *ngIf="isPlan">
+                        <img class="goldCoin" [src]="planIcon" alt="goldIcon">
+                    </div>
+
                     <div *ngIf="!isPlan">
                         <img *ngFor="let img of images; let ind=index" class="goldCoin"
                              src="../../assets/img/coin/{{img}}.svg" alt="coin icon" width="16"
                              height="16">
                     </div>
                     <div class="goldCoinRightPart">
-                        <div class="coinsBundle">{{plan.title}}</div>
+                        <div class="coinsBundle" *ngIf="data.coin">{{plan.title}}</div>
+                        <div class="coinsBundle"
+                             *ngIf="!data.coin">{{planName | capitalizeAddSpaces}}</div>
                         <div class="timeCharge">One-time charge on {{ time | date : 'mediumDate' }}.</div>
                     </div>
                 </div>
                 <div class="purchaseRightUpPart">
-                    <div class="typeQuantityDiv" *ngIf="!data?.coin" [matMenuTriggerFor]="countMonth">{{typeQuantity}}</div>
+                    <div class="typeQuantityDiv" *ngIf="!data?.coin"
+                         [matMenuTriggerFor]="countMonth">{{typeQuantity}}</div>
                     <div>
                         <mat-menu #countMonth>
                             <p *ngFor="let month of monthArr" (click)="monthCount(month)">{{month}} month</p>
@@ -26,7 +32,8 @@
                     </div>
                     <div class="priceAndAmountDiv">
                         <div class="priceDiv">Price</div>
-                        <div class="priceDiv">${{(plan.price / 100).toFixed(2)}}</div>
+                        <div class="priceDiv" *ngIf="data.coin">${{(plan.price / 100).toFixed(2)}}</div>
+                        <div class="priceDiv" *ngIf="!data.coin">$ {{data?.cost}}</div>
                     </div>
                     <div class="lineDiv"></div>
                 </div>
@@ -38,7 +45,8 @@
                 </div>
                 <div class="totalAmount">
                     <div class="totalDiv">Total</div>
-                    <div class="totalDiv">${{totalPrice()}}</div>
+                    <div class="totalDiv" *ngIf="data.coin">${{totalPrice()}}</div>
+                    <div class="totalDiv" *ngIf="!data.coin">$ {{data?.cost}}</div>
                 </div>
             </div>
         </div>
@@ -52,12 +60,12 @@
             </div>
         </div>
         <div class="belowSecondDiv">
-            <div class="payWith paypalDiv" (click)="payWith('PayPal')">
-                <img class="paypalIcon" src="../../assets/img/purchase-icons/paypal.svg" alt="paypalIcon">
-            </div>
-            <div class="payWith amazonDiv" (click)="payWith('Amazon Pay')">
-                <img class="payIcon" src="../../assets/img/purchase-icons/amazon-pay.png" alt="payIcon">
-            </div>
+            <!--            <div class="payWith paypalDiv" (click)="payWith('PayPal')">-->
+            <!--                <img class="paypalIcon" src="../../assets/img/purchase-icons/paypal.svg" alt="paypalIcon">-->
+            <!--            </div>-->
+            <!--            <div class="payWith amazonDiv" (click)="payWith('Amazon Pay')">-->
+            <!--                <img class="payIcon" src="../../assets/img/purchase-icons/amazon-pay.png" alt="payIcon">-->
+            <!--            </div>-->
             <div class="payWith stripeDiv" (click)="payWith('Stripe')">
                 <img class="payIcon" src="../../assets/img/purchase-icons/stripe.png" alt="payIcon">
             </div>
@@ -239,21 +247,24 @@
             <div class="orderSummary">Order Summary</div>
             <div class="orderDetailsTotalDiv">
                 <div class="orderDetailsFirstDiv">
-                    <img *ngIf="!data.coin" [src]=plan.img class="goldIcon" alt="goldIcon">
+                    <img *ngIf="!data.coin" [src]='planIcon' class="goldIcon" alt="goldIcon">
                     <img *ngIf="data.coin" src="../../assets/img/coin/gold.svg" class="goldIcon" alt="gold coin">
                     <div class="timeCharge">{{plan.title}}</div>
                 </div>
-                <div class="timeCharge">US ${{(plan.price / 100).toFixed(2)}}</div>
+                <div class="timeCharge" *ngIf="data.coin">US ${{(plan.price / 100).toFixed(2)}}</div>
+                <div class="timeCharge" *ngIf="!data.coin">US {{data.cost}}</div>
             </div>
 
 
             <div class="orderDetailsTotalDiv">
                 <div class="subTotal">Sub Total</div>
-                <div class="timeCharge">{{plan.monthDiscount[month]}}%</div>
+                <div class="timeCharge" *ngIf="data.coin">{{plan.monthDiscount[month]}}%</div>
+                <div class="priceDiv" *ngIf="!data.coin">$ {{data?.cost}}</div>
             </div>
             <div class="totalWholeDiv">
                 <div class="subTotal green">Total</div>
-                <div class="timeCharge green">US ${{getDiscountedPrice()}}</div>
+                <div class="timeCharge green"  *ngIf="data.coin">US ${{getDiscountedPrice()}}</div>
+                <div class="timeCharge green"  *ngIf="!data.coin">US {{data?.cost}}</div>
             </div>
             <div class="textDiv">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
                 has been the industry's standard dummy text ever since the 1500s

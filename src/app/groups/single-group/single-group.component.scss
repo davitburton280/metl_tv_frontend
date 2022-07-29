@@ -135,6 +135,22 @@
 }
 
 
+#edit-profile {
+    @include regularButton;
+    width: 170px;
+    white-space: nowrap;
+    margin: 0 5px;
+    @media (max-width: 425px){
+        max-width: 170px !important;
+        width: 100% !important;
+        padding: 15px 15px;
+        white-space: nowrap;
+        @media (max-width: 390px){
+            padding: 15px 8px;
+        }
+    }
+}
+
 @media only screen  and (max-width: 420px) {
  .row{
      flex-direction: column;

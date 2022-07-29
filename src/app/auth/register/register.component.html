@@ -61,7 +61,7 @@
                 <span class="error" *ngIf="isSubmitted && birthday.hasError('required')">Birth day is required</span>
 
                 <div class="actions">
-                    <a class="register-submit" (click)="openModal()">Sign Up</a>
+                    <a class="register-submit" (click)="register()">Sign Up</a>
                     <mat-spinner [diameter]="15" *ngIf="loader.formProcessing"></mat-spinner>
                 </div>
             </form>

@@ -24,9 +24,14 @@ export class SubscriptionChanelComponent implements OnInit {
         this._getSubscriptionPlan();
     }
 
-    goToPlanChanel(plan) {
-        const str = plan.title.slice(0, -6);
-        this.router.navigate(['turbo-plan/plan-chanel'], {queryParams: {plan: str}});
+    goToPlanChanel(permission, cost, plan_id) {
+        this.router.navigate(['turbo-plan/plan-chanel'], {
+            queryParams: {
+                plan: JSON.stringify(permission),
+                cost: JSON.stringify(cost),
+                plan_id: JSON.stringify(plan_id)
+            }
+        });
     }
 
     private _getSubscriptionPlan() {

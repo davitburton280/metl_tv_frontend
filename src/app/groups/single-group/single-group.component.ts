@@ -74,6 +74,7 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     trackSelectedGroup() {
         this.subscriptions.push(this.groupsStore.selectedGroup$.subscribe((dt: any) => {
+            console.log(dt,"Group INfo");
             this.selectedGroup = dt;
             this.groupPrivacy = dt.privacy === 1 ? 'private' : 'public';
             // console.log(this.selectedGroup, this.groupPrivacy);

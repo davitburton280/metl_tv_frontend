@@ -19,6 +19,7 @@ import {LoaderService} from '@core/services/loader.service';
 import {SubjectService} from '@core/services/subject.service';
 import moment from 'moment';
 import {UserStoreService} from '@core/services/stores/user-store.service';
+import {UserInfoService} from '@core/services/user-info.service';
 
 @Component({
     selector: 'app-register',
@@ -40,7 +41,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         public loader: LoaderService,
         private subject: SubjectService,
-        private userStore: UserStoreService
+        private userStore: UserStoreService,
+        private _userInfoService: UserInfoService
     ) {
 
         // Age-restriction of 18
@@ -78,6 +80,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 this.loader.formProcessing = false;
                 localStorage.setItem('token', (dt.hasOwnProperty('token') ? dt.token : ''));
                 this.userStore.setAuthUser((dt.hasOwnProperty('token') ? dt.token : ''));
+                const token = dt?.token;
+                if (token) {
+                    localStorage.setItem('token', token);
+                    this.userStore.setAuthUser(token);
+                    this._userInfoService._getCurrentUserInfo();
+                }
                 await this.router.navigate(['/']);
             }));
         }

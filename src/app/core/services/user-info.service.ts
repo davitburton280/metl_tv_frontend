@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CurrentUserResponseInterface} from '@core/interfaces';
 import {BehaviorSubject} from 'rxjs';
+import {API_URL} from '@core/constants/global';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +27,7 @@ export class UserInfoService {
         });
 
         const requestOptions = {headers};
-        this._httpClient.get<CurrentUserResponseInterface>(`https://22e8-37-252-80-33.ngrok.io/users/detail`, requestOptions)
+        this._httpClient.get<CurrentUserResponseInterface>(`${API_URL}users/detail`, requestOptions)
             .subscribe((data: CurrentUserResponseInterface) => {
                 this._userInfo.next(data.data);
             });

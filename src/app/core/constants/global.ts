@@ -51,7 +51,7 @@ export const CHANEL_SUBSCRIPTIONS_LIST = [
     {
         title: 'Bronze Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        img: '../../assets/img/bronzeFrame.png',
+        img: 'assets/img/bronzeFrame.png',
         price: 499,
         currency: 'usd',
         monthArr: [1, 3, 6, 12],
@@ -65,7 +65,7 @@ export const CHANEL_SUBSCRIPTIONS_LIST = [
     {
         title: 'Silver Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        img: '../../assets/img/silverFrame.png',
+        img: 'assets/img/silverFrame.png',
         price: 999,
         currency: 'usd',
         monthArr: [1, 3, 6, 12],
@@ -79,7 +79,7 @@ export const CHANEL_SUBSCRIPTIONS_LIST = [
     {
         title: 'Gold Trier',
         card_text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        img: '../../assets/img/goldFrame.png',
+        img: 'assets/img/goldFrame.png',
         price: 1499,
         currency: 'usd',
         monthArr: [1, 3, 6, 12],

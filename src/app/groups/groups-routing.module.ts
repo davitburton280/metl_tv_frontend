@@ -6,6 +6,7 @@ import {PeopleTabComponent} from '@app/groups/single-group/people-tab/people-tab
 import {AboutTabComponent} from '@app/groups/single-group/about-tab/about-tab.component';
 import {MediaTabComponent} from '@app/groups/single-group/media-tab/media-tab.component';
 import {PostsTabComponent} from '@app/groups/single-group/posts-tab/posts-tab.component';
+import {EditGroupComponent} from '@app/groups/single-group/edit-group';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
             title: 'Groups'
         },
     },
+    {path: 'edit/:id', component:  EditGroupComponent, data: {title: 'Group page | People tab'}},
     {
         path: ':name',
         component: SingleGroupComponent,

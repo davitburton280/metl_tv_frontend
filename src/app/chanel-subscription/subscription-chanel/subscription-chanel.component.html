@@ -25,7 +25,8 @@
                         <div class="cardLeftPart1">{{plan.name}}</div>
                         <div class="cardLeftPart2">${{plan.cost}} / Month</div>
                     </div>
-                    <button class="cardRightPartBtn" (click)="goToPlanChanel(plan)">View</button>
+                    <button class="cardRightPartBtn" (click)="goToPlanChanel(plan.permissions,plan.cost,plan.id)">View
+                    </button>
                 </div>
             </div>
         </div>

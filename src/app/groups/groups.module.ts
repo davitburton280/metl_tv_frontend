@@ -14,10 +14,24 @@ import { AdminsListComponent } from './single-group/people-tab/admins-list/admin
 import { GroupMembersListComponent } from './single-group/people-tab/group-members-list/group-members-list.component';
 import { MemberRequestsListComponent } from './single-group/people-tab/member-requests-list/member-requests-list.component';
 import { GroupMembersActionsMenuComponent } from './single-group/people-tab/group-members-actions-menu/group-members-actions-menu.component';
+import {EditGroupComponent} from '@app/groups/single-group/edit-group';
 
 
 @NgModule({
-  declarations: [ShowGroupsComponent, SingleGroupComponent, GroupItemComponent, AboutTabComponent, PeopleTabComponent, MediaTabComponent, PostsTabComponent, AdminsListComponent, GroupMembersListComponent, MemberRequestsListComponent, GroupMembersActionsMenuComponent],
+  declarations: [
+      ShowGroupsComponent,
+      SingleGroupComponent,
+      GroupItemComponent,
+      AboutTabComponent,
+      PeopleTabComponent,
+      MediaTabComponent,
+      PostsTabComponent,
+      AdminsListComponent,
+      GroupMembersListComponent,
+      MemberRequestsListComponent,
+      EditGroupComponent,
+      GroupMembersActionsMenuComponent
+  ],
   imports: [
     CommonModule,
     GroupsRoutingModule,

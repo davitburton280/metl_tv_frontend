@@ -56,7 +56,6 @@ export class LeftSidebarComponent implements OnInit {
     }
 
     private _getUserInfo() {
-        // this._userInfoService._getCurrentUserInfo();
         this._userInfoService._userInfo.subscribe((data) => {
             this.authUser = data;
             console.log(this.authUser);

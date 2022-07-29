@@ -45,8 +45,10 @@
                         <img class="avatar" [src]="video?.user?.avatar|getImgPath: 'images'">
                         <div>
                             <p class="video-name">{{video.name}}</p>
-                            <p class="channel-sub-name" [routerLink]="'/channels/'+d.username"
-                            >{{d?.channel?.name}}</p>
+                            <p class="channel-sub-name" [routerLink]="'/channels/'+video?.user?.username"
+                            >{{video?.user?.username}}</p>
+<!--                            <p class="channel-sub-name"-->
+<!--                            >Hrach</p>-->
                             <div class="shortened-details">
                                     <span class="watchers-count">
                                         {{video.status === 'live' ? (video.participants| kMFormatter) + ' watching' : video.views + ' view' + (video.views === 1 ? '' : 's')}}

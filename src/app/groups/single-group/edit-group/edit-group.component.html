@@ -1,0 +1,8 @@
+<div id="profile-cover-image" class="editCoverDiv" >
+    <img class="editCover" *ngIf="!coverShowImg" [src]="coverImg|getImgPath:'images'" alt="">
+    <img class="editCover" *ngIf="coverShowImg" [src]="coverImgSrc" alt="">
+    <div class="coverImgEditDiv">
+        <img class="remove-profile-img" src="assets/img/edit.svg" alt="" (click)="coverChangeImg.click()">
+    </div>
+    <input type="file" #coverChangeImg hidden (change)="editImage($event, 'square')">
+</div>

@@ -5,7 +5,7 @@ import {CurrentUserData} from '@core/interfaces';
 import {UserInfoService} from '@core/services/user-info.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {loadStripe, StripeElementsOptions} from '@stripe/stripe-js';
-import {STRIPE_CARD_OPTIONS_Custom, STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
+import {CHANEL_SUBSCRIPTIONS_LIST, STRIPE_CARD_OPTIONS_Custom, STRIPE_PUBLISHABLE_KEY} from '@core/constants/global';
 import {StripeCardNumberComponent, StripeService} from 'ngx-stripe';
 import {CustomersService} from '@core/services/wallet/customers.service';
 import {PaymentsService} from '@core/services/wallet/payments.service';
@@ -20,7 +20,9 @@ import {CardsService} from '@core/services/cards.service';
     styleUrls: ['./payment-plan.component.scss']
 })
 export class PaymentPlanComponent implements OnInit, OnDestroy {
-
+    public planIcon: string;
+    public planName: string;
+    private planList = CHANEL_SUBSCRIPTIONS_LIST;
     castomCardParams = null;
     requireCardNumber = false;
     requireExpiry = false;
@@ -59,7 +61,6 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
     authUser: CurrentUserData;
     completePurchase = false;
     time = new Date();
-
     cardForm: FormGroup;
     @ViewChild('inputSelectCard') inputSelectCard;
     @ViewChild(StripeCardNumberComponent) card: StripeCardNumberComponent;
@@ -77,7 +78,6 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: any,
         private fb: FormBuilder,
         private stripeService: StripeService,
-        // private getAuthUser: GetAuthUserPipe,
         private paymentsService: PaymentsService,
         private customersService: CustomersService,
         public loader: LoaderService,
@@ -91,31 +91,9 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // this.authUser = this.getAuthUser.transform();
-        if (this.data.coin) {
-            console.log(this.data);
-            this.isPlan = false;
-            this.images = this.data.coinImg;
-            const plan = {
-                title: this.data.purchase.name,
-                card_text: '',
-                img: '../../assets/img/bronzeFrame.png',
-                price: this.data.purchase.unit_amount,
-                currency: this.data.purchase.currency,
-                monthArr: [],
-                monthDiscount: {
-                    [this.month]: this.data.purchase?.metadata?.discount || 0,
-                }
-            };
-            const monthArr = [];
-            this.plan = plan;
-            this.monthArr = monthArr;
-        } else {
-            this.plan = this.data.plan;
-            this.monthArr = this.data.plan.monthArr;
-        }
-        this.cards = this.data.cards;
         this.formBuilderCard();
+        this._checkCoinOrSubscription();
+        this.cards = this.data.cards;
         this.cardForm.enable();
         this.cards.forEach((elem) => {
             if (elem.is_primary === 1) {
@@ -142,11 +120,47 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
     private _getAuthInfo() {
         this._userInfoService._userInfo.subscribe((data) => {
             this.authUser = data;
-            console.log(this.authUser, 'Payment-plan  AUTHUSER DATA');
         });
     }
 
-    formBuilderCard() {
+    private _getImg() {
+        this.planList.forEach((elem) => {
+            this.plan.forEach((element: any) => {
+                if (elem.title.toLowerCase().includes(element.custom_fields.badgeColor)) {
+                    this.planIcon = elem.img;
+                    this.planName = element.custom_fields.badgeColor;
+                }
+            });
+
+        });
+    }
+
+    private _checkCoinOrSubscription() {
+        if (this.data.coin) {
+            this.isPlan = false;
+            this.images = this.data.coinImg;
+            const plan = {
+                title: this.data.purchase.name,
+                card_text: '',
+                img: '../../assets/img/bronzeFrame.png',
+                price: this.data.purchase.unit_amount,
+                currency: this.data.purchase.currency,
+                monthArr: [],
+                monthDiscount: {
+                    [this.month]: this.data.purchase?.metadata?.discount || 0,
+                }
+            };
+            const monthArr = [];
+            this.plan = plan;
+            this.monthArr = monthArr;
+        } else {
+            this.plan = this.data.plan;
+            this._getImg();
+            this.monthArr = this.data.plan.monthArr;
+        }
+    }
+
+    private formBuilderCard() {
         this.cardForm = new FormGroup({
             firstName: new FormControl('', [Validators.required]),
             lastName: new FormControl('', [Validators.required]),
@@ -162,7 +176,7 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
         });
     }
 
-    selectCard(card, event, index) {
+    public selectCard(card, event, index) {
         this.checkedCard = [];
         this.cardForm.markAsUntouched();
         console.log(card);
@@ -207,12 +221,12 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
         console.log(this.cardForm);
     }
 
-    maxLengthInput(event, max) {
+    public maxLengthInput(event, max) {
         event.target.value = event.target.value.slice(0, max);
         console.log(event.target.value);
     }
 
-    completePurchaseWholeDivCompletePurchaseNextDiv() {
+    public completePurchaseWholeDivCompletePurchaseNextDiv() {
         if (!this.selectedCard) {
             this.cardForm.markAllAsTouched();
             if (!this.cardForm.get('firstName').valid && !this.cardForm.get('lastName').valid
@@ -270,35 +284,71 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
 
     createPaymentIntentPlan() {
         this.loader.formProcessing = true;
-        this.paymentsService.createPaymentIntent({
-            user_id: this.authUser.id,
-            customer_id: this.selectedCard.stripe_customer_id,
-            account_id: this.selectedCard.stripe_account_id,
-            currency: this.plan.currency,
-            card: this.selectedCard,
-            isPlan: this.isPlan,
-            purchase: {
-                unit_amount: this.plan.price,
-                discount: this.plan.monthDiscount[this.month],
-                name: this.plan.title
-            }
-        }).subscribe(async (clientSecret) => {
-            console.log('createPayment ', clientSecret);
-            const stripe = await this.stripePromise;
-            await stripe.confirmCardPayment(clientSecret, {
-                payment_method: this.selectedCard.id
-            }).catch(e => {
-                console.log(e);
-            }).then((r) => {
-                console.log(r);
-                console.log(this.castomCardParams);
-                this.loader.formProcessing = false;
-                this.closedMathDialog({
-                    customer: this.selectedCard.stripe_customer_id,
-                    payment: r
+        if (this.data.coin) {
+            this.paymentsService.createPaymentIntent({
+                user_id: this.authUser.id,
+                customer_id: this.selectedCard.stripe_customer_id,
+                account_id: this.selectedCard.stripe_account_id,
+                currency: this.plan.currency,
+                card: this.selectedCard,
+                isPlan: this.isPlan,
+                purchase: {
+                    unit_amount: this.plan.price,
+                    discount: this.plan.monthDiscount[this.month],
+                    name: this.plan.title
+                }
+            }).subscribe(async (clientSecret) => {
+                console.log('createPayment ', clientSecret);
+                const stripe = await this.stripePromise;
+                await stripe.confirmCardPayment(clientSecret, {
+                    payment_method: this.selectedCard.id
+                }).catch(e => {
+                    console.log(e);
+                }).then((r) => {
+                    console.log(r);
+                    console.log(this.castomCardParams);
+                    this.loader.formProcessing = false;
+                    this.closedMathDialog({
+                        customer: this.selectedCard.stripe_customer_id,
+                        payment: r
+                    });
                 });
             });
-        });
+        } else {
+            const CUSTOMER_PAYMENT_DATA = {
+                user_id: this.authUser.id,
+                customer_id: this.selectedCard.stripe_customer_id,
+                account_id: this.selectedCard.stripe_account_id,
+                currency: 'usd',
+                card: this.selectedCard,
+                isPlan: this.isPlan,
+                purchase: {
+                    unit_amount: +this.data.cost * 100,
+                    discount: this.data.discount,
+                    name: this.planName
+                }
+            };
+            this.paymentsService.createPaymentIntent(CUSTOMER_PAYMENT_DATA).subscribe(async (clientSecret) => {
+                console.log('createPayment ', clientSecret);
+                const stripe = await this.stripePromise;
+                await stripe.confirmCardPayment(clientSecret, {
+                    payment_method: this.selectedCard.id
+                }).catch(e => {
+                    console.log(e);
+                }).then((r) => {
+                    console.log(r);
+                    console.log(this.castomCardParams);
+                    this.loader.formProcessing = false;
+                    this.closedMathDialog({
+                        customer: this.selectedCard.stripe_customer_id,
+                        payment: r,
+                        discount: this.data.discount,
+                    });
+                });
+            });
+            console.log('Hrach', CUSTOMER_PAYMENT_DATA);
+        }
+
     }
 
     nextMatDialog() {
@@ -346,7 +396,10 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
     }
 
     totalPrice() {
-        return Number(((this.plan.price * this.month) / 100).toFixed(2));
+        if (this.data.coin) {
+            return Number(((this.plan.price * this.month) / 100).toFixed(2));
+        }
+        return Number(((this.data.cost * this.month) / 100).toFixed(2));
     }
 
     // totalPricePrcent() {
@@ -355,8 +408,16 @@ export class PaymentPlanComponent implements OnInit, OnDestroy {
     // }
 
     getDiscountedPrice() {
-        return this.applyDiscount.transform(this.plan.price * this.month / 100, this.plan.monthDiscount[this.month])
-            .toFixed(6).slice(0, -4);
+        if (this.data.coin) {
+            return this.applyDiscount.transform(this.plan.cost * this.month / 100, this.plan.monthDiscount[this.month])
+                .toFixed(6).slice(0, -4);
+        } else {
+
+            return 1;
+            // return this.applyDiscount.transform(this.plan.cost * this.month / 100, this.plan.monthDiscount[this.month])
+            //     .toFixed(6).slice(0, -4);
+        }
+
     }
 
     payWith(str) {

@@ -30,21 +30,20 @@ export class ImgEditCropperComponent implements OnInit, AfterViewInit {
         @Inject(MAT_DIALOG_DATA) public data: any,
         // private getAuthUser: GetAuthUserPipe,
     ) {
+        this.title = this.data.title;
+        this.shape = this.data.shape;
+        this.file = this.data.file;
         this._getAuthInfo();
     }
 
     public ngOnInit(): void {
-        // this.authUser = this.getAuthUser.transform();
-        this.title = this.data.title;
-        this.shape = this.data.shape;
-        this.file = this.data.file;
         this.imgSrcFile(this.file);
     }
 
     private _getAuthInfo() {
         this._userInfoService._userInfo.subscribe((data) => {
             this.authUser = data;
-            console.log(this.authUser, 'Img Edit cropper  AUTHUSER DATA');
+            console.log(this.authUser, 'Img Edit cropper');
         });
     }
 

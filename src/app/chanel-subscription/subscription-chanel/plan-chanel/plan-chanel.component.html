@@ -16,49 +16,80 @@
         <div class="detailsDiv">Details</div>
         <div></div>
     </div>
-    <div class="cardDetailed">
+    <div class="cardDetailed" *ngIf="plan">
         <div class="CardDetailedTitleAndLogo">
             <div class="CardDetailedLogo">
-                <img [src]=plan.img alt="goldFrame">
+                <img [src]='planIcon' alt="goldFrame">
             </div>
-            <div class="CardDetailedTitle">{{plan.title}}</div>
+            <div class="CardDetailedTitle">
+                {{plan[0]?.custom_fields?.badgeColor | capitalizeAddSpaces}} Trier
+            </div>
         </div>
         <div class="cardsTotal">
-            <div class="cardTotalDiv">
-                <div class="cardDiv1">Ad Free Viewing For This Channel</div>
+            <div class="cardTotalDiv" *ngFor="let item of plan;let i = index">
+                <div class="cardDiv1">{{item.name}}</div>
                 <div class="cardDiv2">
-                    <img src="../../assets/img/freeGreenIcon.png" alt="freeIcon">
+                    <img *ngIf="i === 0"
+                         src="../../assets/img/freeGreenIcon.png" alt="freeIcon">
+                    <img *ngIf="i === 1"
+                         [src]='planIcon' alt="goldIcon">
+                    <img *ngIf="(planName === 'silver' || planName === 'gold') && i === 2"
+                         src="../../assets/img/colorCircle.png" alt="colorCircle">
+                    <img *ngIf="(planName === 'gold') && i === 3"
+                         src="../../assets/img/sadIcon.png" alt="sadIcon">
+                    <img *ngIf="(planName === 'gold') && i === 3"
+                         class="coolImgClassName"
+                         src="../../assets/img/coolIcon.png" alt="coolIcon">
                 </div>
-                <div class="cardDiv3">User gets ad-free viewing for this specific streaming channel (not for others)</div>
+                <div class="cardDiv3">{{item.description}}</div>
             </div>
-            <div class="cardTotalDiv">
-                <div class="cardDiv1">Chat Badge</div>
-                <div class="cardDiv2">
-                    <img [src]=plan.img alt="goldIcon">
-                </div>
-                <div class="cardDiv3">User gets gold custom diamond badge for the live stream chats</div>
-            </div>
-            <div class="cardTotalDiv" *ngIf="params === 'Silver' || params === 'Gold'">
-                <div class="cardDiv1">Custom Chat Username Colors</div>
-                <div class="cardDiv2">
-                    <img src="../../assets/img/colorCircle.png" alt="colorCircle">
-                </div>
-                <div class="cardDiv3">User can add color to their username "custom chat usernames" for the live stream chat</div>
-            </div>
-            <div class="cardTotalDiv" *ngIf="params === 'Gold'">
-                <div class="cardDiv1">Custom Chat Username Colors</div>
-                <div class="cardDiv2">
-                    <img src="../../assets/img/sadIcon.png" alt="sadIcon">
-                    <img class="coolImgClassName" src="../../assets/img/coolIcon.png" alt="coolIcon">
-                </div>
-                <div class="cardDiv3">User gets custom emojis that other users do not have access to for the live stream chat</div>
-            </div>
+            <!--            <div class="cardTotalDiv">-->
+            <!--                <div class="cardDiv1">{{plan[0].name}}</div>-->
+            <!--                <div class="cardDiv2">-->
+            <!--                    <img [src]='planIcon' alt="goldIcon">-->
+            <!--                </div>-->
+            <!--                <div class="cardDiv3">{{plan[0].description}}</div>-->
+            <!--            </div>-->
+            <!--            <div class="cardTotalDiv" *ngIf="planName === 'silver' || planName === 'gold'">-->
+            <!--                <div class="cardDiv1">Custom Chat Username Colors</div>-->
+            <!--                <div class="cardDiv2">-->
+            <!--                    <img src="../../assets/img/colorCircle.png" alt="colorCircle">-->
+            <!--                </div>-->
+            <!--                <div class="cardDiv3">{{plan[0].description}}-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--            <div class="cardTotalDiv" *ngIf="planName === 'gold'">-->
+            <!--                <div class="cardDiv1">Custom Chat Username Colors</div>-->
+            <!--                <div class="cardDiv2">-->
+            <!--                    <img src="../../assets/img/sadIcon.png" alt="sadIcon">-->
+            <!--                    <img class="coolImgClassName" src="../../assets/img/coolIcon.png" alt="coolIcon">-->
+            <!--                </div>-->
+            <!--                <div class="cardDiv3">User gets custom emojis that other users do not have access to for the live stream-->
+            <!--                    chat-->
+            <!--                </div>-->
+            <!--            </div>-->
         </div>
         <div class="subscriptionDivs">
             <div class="subscriptionLeftPart">
-                <div class="subscriptionLeftPart1">{{plan.title}}</div>
+                <div class="subscriptionLeftPart1" *ngIf="plan">
+                    {{plan[0]?.custom_fields?.badgeColor | capitalizeAddSpaces}}
+                </div>
+                <div class="select">
+                    <select (change)="onChange($event.target)" class="custom_select">
+                        <option value="" class="custom_select_option">Select for sale</option>
+                        <option value="3" class="custom_select_option">3% off for 3 months subscription</option>
+                        <option value="7" class="custom_select_option">7% off for 6 months. subscription</option>
+                        <option value="11" class="custom_select_option"> 11% off for a year. subscriptions</option>
+                    </select>
+                </div>
                 <div class="subscriptionLeftPart2">
-                    <div class=" subscriptionLeftDiv2">${{(plan.price / 100).toFixed(2)}} / Month</div>
+                    <div class="sale_cost" *ngIf="totalCost">
+                        <sub class="sale">For {{discountMonths}} {{discountMonths === 1 ? 'Year ' : 'Months ' }}</sub>
+                        <p class="sale_cost_text">
+                            ${{totalCost}}
+                        </p>
+                    </div>
+                    <div class=" subscriptionLeftDiv2">$ {{constantCost}} {{totalCost ? ' ' : ' / Month'}}</div>
                 </div>
             </div>
             <button class="subscribeBtn" (click)="openModalPayment()">Subscribe</button>
