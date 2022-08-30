@@ -1,0 +1,110 @@
+.delete-group_dialog{
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .delete-group_dialog-title{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    mat-radio-group{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin: 20px 0;
+        mat-radio-button{
+            margin: 10px 0;
+            span{
+                white-space: pre-wrap;
+            }
+        }
+    }
+    .btn-section{
+        display: flex;
+        justify-content: center;
+        .remuve-btn{
+            width: 119px;
+            height: 36px;
+            padding: 15px 32px;
+            color: #ffffff !important;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s ease-in-out;
+            background: #ff2b1b;
+        }
+
+        .cancel-btn{
+            margin-left: 10px;
+            width: 119px;
+            height: 36px;
+            padding: 15px 32px;
+            color: #ffffff !important;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s ease-in-out;
+            background: rgb(0 0 0 / 17%);
+        }
+    }
+    .submit_form{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .submit_form-desc{
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            .submit_form-title{
+                span{
+                    text-align: left;
+                    font: normal normal bold 20px/19px Muli;
+                    letter-spacing: 0px;
+                    color: #5B5B5B;
+                    opacity: 1;
+                }
+            }
+            .submit_form-subtitle{
+                margin-top: 10px;
+                span{
+                    text-align: left;
+                    font: normal normal normal 18px/19px Muli;
+                    letter-spacing: 0px;
+                    color: #5B5B5B;
+                    opacity: 1;
+                }
+            }
+        }
+        .submit-button{
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+            .no-btn{
+                width: 100px;
+                height: 36px;
+                background-color: transparent;
+                border: 1px solid #5B5B5B;
+                opacity: 1;
+                outline: none;
+            }
+            .yes-btn{
+                width: 100px;
+                height: 36px;
+                outline: none;
+                background-color: #0aa06e;
+                border:none;
+                color: white;
+                opacity: 1;
+                margin-left: 10px;
+            }
+        }
+    }
+}

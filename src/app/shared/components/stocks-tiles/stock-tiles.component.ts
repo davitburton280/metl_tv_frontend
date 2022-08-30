@@ -3,7 +3,6 @@ import {Stock} from '@shared/models/stock';
 import {SubjectService} from '@core/services/subject.service';
 import {STOCK_TILE_CHART_SETTINGS} from '@core/constants/charts';
 import {UpdateUserStocksPipe} from '@shared/pipes/update-user-stocks.pipe';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {CdkDragDrop} from '@angular/cdk/drag-drop';
 import {Router} from '@angular/router';
 import {IsStockFollowedPipe} from '@shared/pipes/is-stock-followed.pipe';
@@ -18,11 +17,6 @@ import {UserInfoService} from '@core/services/user-info.service';
     // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StockTilesComponent implements OnInit {
-
-    stockChartSettings = STOCK_TILE_CHART_SETTINGS;
-    authUser: CurrentUserData;
-    trackByElement = trackByElement;
-
     @Input('stocks') passedStocks: Stock[] = [];
     @Input('userStocks') userStocks: Stock[] = [];
     @Input('type') selectedStockType: Stock | null = null;
@@ -32,7 +26,9 @@ export class StockTilesComponent implements OnInit {
     @Input('stockProfileAllowed') stockProfileAllowed = false;
     @Output('updatedStocksList') updatedStocksList = new EventEmitter();
     @Output('updatedStocksPriority') updatedStocksPriority = new EventEmitter();
-
+    stockChartSettings = STOCK_TILE_CHART_SETTINGS;
+    authUser: CurrentUserData;
+    trackByElement = trackByElement;
     constructor(
         private subject: SubjectService,
         private updateStocks: UpdateUserStocksPipe,

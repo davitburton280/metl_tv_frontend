@@ -9,8 +9,15 @@
     <!--    <app-categories></app-categories>-->
     <ng-container *ngIf="channelUser">
         <app-user-tags *ngIf="auth.loggedIn()" (tagSelected)="getVideosByTag($event)"></app-user-tags>
-        <app-channel-profile [channelUser]="channelUser" [authUser]="authUser"
-                             *ngIf="channelUser"></app-channel-profile>
+        <div class="m-40">
+            <app-channel-profile
+                *ngIf="channelUser"
+                [channelUser]="channelUser"
+                [authUser]="authUser"
+               >
+            </app-channel-profile>
+        </div>
+
         <div class="stocks-watchlist pWatchlist">
             <div class="profile-list user-profile-block">
                 <ul class="nav nav-tabs" id="channel-tabs-list" role="tablist">
@@ -61,7 +68,6 @@
                                                     [whiteForm]="true" [returnSearchText]="true"
                                                     (search)="searchInUserStocks($event)">
                             </app-search-stocks-form>
-
                         </div>
 
 

@@ -1,31 +1,72 @@
 import {Injectable} from '@angular/core';
 import {API_URL} from '@core/constants/global';
 import {HttpClient} from '@angular/common/http';
+import {GroupState} from '@core/services/state/group.state';
+import {GroupInterface, GroupItemInterface} from '@core/interfaces/group.interface';
+import {SocketIoService} from '@core/services/socket-io.service';
+import {GroupsStoreService} from '@core/services/stores/groups-store.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class GroupsService {
+    public groupsState$: GroupState = new GroupState();
 
     constructor(
-        private httpClient: HttpClient
+        private httpClient: HttpClient,
+        private socketService: SocketIoService,
+        private groupsStore: GroupsStoreService,
     ) {
     }
 
     getGroupByCustomName(params) {
+
         return this.httpClient.get<any>(`${API_URL}groups/get-group-by-name`, {params});
     }
 
+    public getGroupById(id) {
+
+        return this.httpClient.get<any>(`${API_URL}groups/${id}`);
+    }
+
+    public getGroupList(params) {
+        this.groupsState$.setLoading(true);
+        this.httpClient.post<GroupInterface>(`${API_URL}groups/getList`, params)
+            .subscribe((data: GroupInterface) => {
+                this.groupsState$.setGroups(data.data);
+                this.groupsState$.setLoading(false);
+            });
+    }
+
     get(params) {
+
         return this.httpClient.get<any>(`${API_URL}groups/get-regular-groups`, {params});
     }
 
     addGroup(params) {
-        return this.httpClient.post<any>(`${API_URL}groups/create-group`, params);
+        this.groupsState$.setLoading(true);
+        this.httpClient.post<any>(`${API_URL}groups/create-group`, params)
+            .subscribe((data: GroupItemInterface[]) => {
+                this.groupsState$.setGroups(data);
+                const selectedGroup = data.find(d => params.name === d.name);
+                this.groupsStore.setGroups(data);
+                this.groupsStore.selectGroup(selectedGroup);
+                this.socketService.setNewPageGroup(params);
+                this.groupsState$.setLoading(false);
+            });
     }
 
-    getGroupMembers(params) {
-        return this.httpClient.get<any>(`${API_URL}groups/get-group-members`, {params});
+    public remuveGroupByTypeAndGroupId(remuveData) {
+        this.groupsState$.setLoading(true);
+        this.httpClient.delete(`${API_URL}groups/${remuveData.id}/${remuveData.type}`)
+            .subscribe((data) => {
+                console.log(data);
+                this.groupsState$.setLoading(false);
+            });
+    }
+
+    getGroupMembers() {
+        return this.httpClient.get<any>(`${API_URL}groups/get-group-members`);
     }
 
     addGroupMembers(params) {
@@ -78,6 +119,11 @@ export class GroupsService {
 
     removeAdminPrivileges(params) {
         return this.httpClient.put<any>(`${API_URL}groups/remove-admin-privileges`, params);
+    }
+
+    public updateGroup(id, params) {
+
+        return this.httpClient.put(`${API_URL}groups/update-group/${id}`, params);
     }
 
 

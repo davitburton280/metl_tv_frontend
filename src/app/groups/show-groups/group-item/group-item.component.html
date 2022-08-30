@@ -1,8 +1,34 @@
-<div appNavigateToFixedGroupUrl [name]="group.name" class="groupMessageDiv">
+<!-- Group list item start-->
+<div  class="groupMessageDiv">
+    <!-- Group list item avatar start-->
     <div class="img-wrap">
-        <img class="groupMessageImg" [src]="group.avatar|getImgPath:'group_avatars'">
+        <img class="groupMessageImg" *ngIf="!group.avatar" [src]="group.avatar|getImgPath:'group_avatars'">
+        <img class="groupMessageImg" *ngIf="group.avatar" [src]="group.avatar|getImgPath:'images'">
+
+        <!--Group action start-->
+        <div class="group-action">
+            <mat-icon appNavigateToFixedGroupUrl [name]="group.id" >remove_red_eye</mat-icon>
+            <mat-icon [routerLink]="'/groups/edit/'+group?.id">edit</mat-icon>
+            <mat-icon (click)="openDeleteDialog()">delete</mat-icon>
+        </div>
+        <!--Group action end-->
     </div>
+    <!-- Group list item avatar end-->
+
+    <!-- Group list item name start-->
     <div class="group-name-wrap">
+
+        <!-- Group name start-->
         <strong>{{group.name}}</strong>
+        <!-- Group name end-->
+
+        <!-- Group privacy start-->
+        <mat-icon *ngIf="group.privacy === 1">enhanced_encryption</mat-icon>
+        <!-- Group privacy end-->
     </div>
+    <!-- Group list item name end-->
 </div>
+<!-- Group list item end-->
+
+
+

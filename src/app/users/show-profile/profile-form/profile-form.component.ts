@@ -222,6 +222,7 @@ export class ProfileFormComponent implements OnInit, OnDestroy {
         if (key && value) {
             formData.append(key, value);
         }
+        console.log(formData);
         this.usersService.saveProfileChanges(formData).subscribe(async (dt) => {
             console.log(dt);
             const token = dt.hasOwnProperty('token') ? dt?.token : '';

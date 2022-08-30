@@ -6,6 +6,7 @@ import {VideosTabComponent} from '@app/channels/show-channel/videos-tab/videos-t
 import {PlaylistsTabComponent} from '@app/channels/show-channel/playlists-tab/playlists-tab.component';
 import {PeopleTabComponent} from '@app/channels/show-channel/people-tab/people-tab.component';
 import {AboutTabComponent} from '@app/channels/show-channel/about-tab/about-tab.component';
+import {EditChannelProfileComponent} from '@app/channels/show-channel/edit-channel-profile/edit-channel-profile.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
                 children: [
                     {path: '', component: WatchlistTabComponent},
                 ]
+            },
+            {
+                path: ':id',
+                component: EditChannelProfileComponent
             },
             {
                 path: 'tab',

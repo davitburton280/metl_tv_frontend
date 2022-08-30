@@ -5,24 +5,114 @@
     <div class="dialog-header">
         <h3>Create a new group</h3>
     </div>
-    <div id="admin-info">
-        <img class="avatar" [src]="authUser.avatar|getImgPath: 'user_avatars'">
-        <strong>{{authUser.first_name + ' ' + authUser.last_name}}</strong>
-    </div>
+    <!--    <div id="admin-info">-->
+    <!--        <img class="avatar" [src]="authUser.avatar|getImgPath: 'user_avatars'">-->
+    <!--        <strong>{{authUser.first_name + ' ' + authUser.last_name}}</strong>-->
+    <!--    </div>-->
     <form [formGroup]="groupForm">
-        <div class="field-row">
-            <label for="group-name-input">Group name</label>
-            <input id="group-name-input" formControlName="name">
+        <div class="step" *ngIf="step === 1">
+            <div class="field-row">
+                <input
+                    id="group-name-input"
+                    formControlName="name"
+                    placeholder="Group name">
+            </div>
+            <div class="add-description-action" (click)="addDescriptionHideShow()">
+                <mat-icon [ngClass]="{'grey': addDescriptionSectionShow}">
+                    {{!addDescriptionSectionShow ? 'add' : 'close'}}
+                </mat-icon>
+                <span [ngClass]="{'grey': addDescriptionSectionShow}">
+                    ADD DESCRIPTION
+                </span>
+            </div>
+            <div class="field-row" *ngIf="addDescriptionSectionShow">
+
+                <textarea
+                    #text
+                    (keydown)="_validatorDescription()"
+                    formControlName="description"
+                    placeholder="Type Text here..."
+                    class="form-group-textarea"></textarea>
+            </div>
+            <div class="border"></div>
+            <div class="field-row">
+                <label>Please choose Mode of Group</label>
+                <mat-radio-group
+                    aria-label="Select an option"
+                    formControlName="privacy">
+
+                    <mat-radio-button [value]="0"
+                                      name="privacy"
+                    >Public
+                    </mat-radio-button>
+                    <mat-radio-button [value]="1"
+                                      name="privacy"
+                    >Private
+                    </mat-radio-button>
+                </mat-radio-group>
+
+            </div>
         </div>
-        <div class="field-row">
-            <label for="privacy-types">Choose privacy</label>
-            <select id="privacy-types" formControlName="privacy">
-                <option class="backOption" value="0">Public</option>
-                <option class="backOption" value="1">Private</option>
-            </select>
+        <div class="add-cover-avatar" *ngIf="step === 2">
+            <div class="add-cover-avatar-title">
+                <h2>Please choose cover images for your group</h2>
+            </div>
+            <div class="images-box">
+                <div class="images-cover">
+<!--                    {{_imgCoverSuccess}}-->
+                    <img class="images-cover-create c1" *ngIf="!coverShowImg" [src]="_imgCoverSuccess|getImgPath:'images'" alt="">
+                    <img class="images-cover-create c2" *ngIf="coverShowImg" [src]="coverImgSrc" alt="">
+                    <input type="file" #coverChangeImg hidden (change)="createImage($event, 'square')">
+                    <button (click)="coverChangeImg.click()" class="position-btn">
+                        <mat-icon>
+                            create
+                        </mat-icon>
+                    </button>
+                </div>
+                <div class="images-avatar">
+                    <img *ngIf="avatarImgSrc" [src]="avatarImgSrc" alt="">
+                    <mat-icon *ngIf="!avatarImgSrc">add_a_photo</mat-icon>
+                    <input type="file" #avatarChangeImg hidden (change)="createImage($event, 'circle')">
+                    <button (click)="avatarChangeImg.click()" class="position-btn">
+                        <mat-icon>
+                            create
+                        </mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="images-save-btn-box" *ngIf="(avatarImgSrc && discardORSave) || (coverImgSrc && discardORSave)">
+                <button class="save-btn" (click)="saveAvatarImage(avatarImgSrc,coverImgSrc)">Save</button>
+                <button class="discard-btn" (click)="remuveAvatarImage('','')">DISCARD</button>
+            </div>
+<!--            <div class="invite-group" [ngClass]="{'m-60':!avatarImgSrc}">-->
+<!--                <div class="invite-group-section-title">-->
+<!--                    <h3 style="font-size: 14px;">Please invite members for your group</h3>-->
+<!--                </div>-->
+<!--                <div class="images-members_and-invite-members-action">-->
+<!--                    <div class="images-members">-->
+<!--                        <div class="images-members-img">-->
+<!--                            <img src="assets/img/chatUser1.png" alt="">-->
+<!--                            <mat-icon>-->
+<!--                                add-->
+<!--                            </mat-icon>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="invite-members-action">-->
+<!--                        <button class="invite-members-btn" (click)="inviteChanelMembersDialog()">-->
+<!--                            <mat-icon>-->
+<!--                                plus-->
+<!--                            </mat-icon>-->
+<!--                            <span>-->
+<!--                                Invite-->
+<!--                            </span>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
         <div class="button-wrap">
-            <button (click)="submitForm()">Create</button>
+            <button class="back" (click)="backStep()" *ngIf="step === 2">Back</button>
+            <button class="submit" (click)="submitForm()">Create</button>
         </div>
     </form>
 </div>

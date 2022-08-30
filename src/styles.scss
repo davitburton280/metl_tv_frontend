@@ -50,4 +50,15 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #18b587;
+}
+
+.mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color: #18b587;
+}
+
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+    background-color: #18b587;
+}
 

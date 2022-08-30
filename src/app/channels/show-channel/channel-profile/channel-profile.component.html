@@ -1,28 +1,33 @@
 <form [formGroup]="channelForm">
-    <div class="profile-block">
-        <div [hidden]="true" *ngIf="editMode">
-            <input type="file" id="cover-image-input" (change)="coverChangeEvent($event)"/>
-            <input type="hidden" formControlName="cover">
-<!--            <ngx-photo-editor-->
-<!--                [imageChanedEvent]="coverChangedEvent"-->
-<!--                (imageCropped)="coverCropped($event)"-->
-<!--                [autoCrop]="false"-->
-<!--                [viewMode]="3"></ngx-photo-editor>-->
-        </div>
+<!--    <div class="profile-block">-->
+<!--        <div [hidden]="true" *ngIf="editMode">-->
+<!--            <input type="file" id="cover-image-input" (change)="coverChangeEvent($event)"/>-->
+<!--            <input type="hidden" formControlName="cover">-->
+<!--        </div>-->
 
-        <div class="cover-image-container">
-            <label for="cover-image-input">
-                <img id="cover-image" *ngIf="!showHidEditCoverImg" [src]="srcCoverImg|getImgPath: 'images'"
-                     (load)="detectImageChange()">
-                <img class="editImg" *ngIf="showHidEditCoverImg" [src]="srcEditCoverImg" alt="">
-            </label>
-            <button mat-icon-button type="button" class="remove-cover-btn" (click)="removeCover()"
-                    *ngIf="editMode && srcCoverImg">
-                <mat-icon>clear</mat-icon>
-            </button>
+<!--        <div class="cover-image-container">-->
+<!--            <label for="cover-image-input">-->
+<!--                <img id="cover-image" *ngIf="!showHidEditCoverImg" [src]="srcCoverImg|getImgPath: 'images'"-->
+<!--                     (load)="detectImageChange()">-->
+<!--                <img class="editImg" *ngIf="showHidEditCoverImg" [src]="srcEditCoverImg" alt="">-->
+<!--            </label>-->
+<!--            <button mat-icon-button type="button" class="remove-cover-btn" (click)="removeCover()"-->
+<!--                    *ngIf="editMode && srcCoverImg">-->
+<!--                <mat-icon>clear</mat-icon>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="images-box">
+        <div class="images-cover">
+                                {{srcCoverImg}}
+            <img class="images-cover-create c1"  [src]="srcCoverImg|getImgPath:'images'" alt="">
+        </div>
+        <div class="images-avatar">
+            {{srcAvatarImg}}
+            <img *ngIf="avatarImgSrc" [src]="srcAvatarImg|getImgPath:'images'" alt="">
+            <mat-icon *ngIf="!avatarImgSrc">add_a_photo</mat-icon>
         </div>
     </div>
-
     <div class="sub-block">
         <div id="channel-name-avatar">
             <div class="avatar-container">

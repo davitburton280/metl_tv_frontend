@@ -1,15 +1,89 @@
+<!--create group button start-->
 <div class="row">
     <button id="create-group-btn" (click)="openModal()">Create new group</button>
 </div>
-<h3 class="groups-type-title bottomClass">Groups you manage</h3>
-<ul class="ulBorderBottom">
-    <li class="group-item-wrap" *ngFor="let group of filterGroups('managed')">
-        <app-group-item [group]="group"></app-group-item>
-    </li>
-</ul>
-<h3 class="groups-type-title bottomClass">Groups you've joined</h3>
-<ul>
-    <li class="group-item-wrap" *ngFor="let group of filterGroups('joined')">
-        <app-group-item [group]="group"></app-group-item>
-    </li>
-</ul>
+<!--create group button end-->
+<form [formGroup]="filterGroup">
+    <!--radio button filter start-->
+    <div class="filter-groups-section">
+
+        <div class="filter-groups-section-radio_button">
+            <!--   Filter Radio  value  all start-->
+            <input
+                type="radio"
+
+                formControlName="radioButton"
+                (change)="myGroupFilter($event.target)"
+                value=""
+                id="all">
+            <label for="all">All</label>
+            <!--   Filter Radio  value  all start-->
+
+            <!--   Filter Radio  value  my_group start-->
+            <input
+                type="radio"
+                (change)="myGroupFilter($event.target)"
+                value="true"
+
+                formControlName="radioButton"
+                id="my_group">
+            <label for="my_group">My groups</label>
+            <!--   Filter Radio  value  my_group start-->
+
+            <!--   Filter checkbox  value  privat_group start-->
+            <input
+                type="checkbox"
+                formControlName="checkboxButton"
+                (change)="handleChange($event.target)"
+                value="false"
+                id="privat_groups">
+            <label for="privat_groups">{{!isPrivate ? 'Public' : 'Private'}} groups</label>
+            <!--   Filter checkbox  value  privat_group start-->
+        </div>
+
+
+    </div>
+    <!--radio button filter end-->
+
+    <!--Search filter start-->
+    <div class="filter-groups-section_search">
+        <input type="text"
+               placeholder="Search"
+               (keyup)="_filterSearchKey($event.target)"
+               formControlName="searchKey">
+        <mat-icon>
+            search
+        </mat-icon>
+    </div>
+    <!--Search filter end-->
+</form>
+<!--Group List start-->
+<ng-container *ngIf="( dataSource$ | async) as state">
+    <ul class="ulBorderBottom" *ngIf="state.groups.length && !state.loading">
+
+        <li class="group-item-wrap" *ngFor="let group of state.groups">
+            <app-group-item [group]="group"></app-group-item>
+        </li>
+
+    </ul>
+    <div class="no_result" *ngIf="state.groups.length == 0 && !state.loading">
+        <div class="no_result-img">
+            <img src="assets/img/Error-amico.svg" alt="amico">
+        </div>
+        <div class="no_result-title">
+            <h2>No Result Found</h2>
+        </div>
+        <div class="no_result-desc">
+            <span>
+                We can`t find any item matching
+            </span>
+            <span>
+                your search
+            </span>
+        </div>
+    </div>
+    <div *ngIf="( state.loading)" style="height: 400px;position: relative;">
+        <app-loading></app-loading>
+    </div>
+</ng-container>
+<!--Group List end-->

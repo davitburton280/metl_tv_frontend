@@ -15,11 +15,11 @@ export class AdminsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // console.log(this.authUserGroupConnection)
+        console.log(this.selectedGroup,"HRach");
     }
 
     isGroupCreator(admin) {
-        return admin.id === this.selectedGroup.creator_id;
+        return admin.id === this.selectedGroup?.creator_id;
     }
 
     isGroupAdmin(admin) {
@@ -30,7 +30,7 @@ export class AdminsListComponent implements OnInit {
     getUserGroupConnection(user) {
         let connection;
         this.admins.map(a => {
-            if (a.id === user.id) {
+            if (a.id === user?.id) {
                 connection = a.groups_members.is_admin ? 'Admin' : 'Moderator';
 
                 if (this.isGroupCreator(user)) {

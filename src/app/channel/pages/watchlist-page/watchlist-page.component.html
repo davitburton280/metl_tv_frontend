@@ -1,0 +1,25 @@
+<div class="search-add-content-stock">
+    <div class="watchlist-search d- w-30"
+         [class.bordered]="userStocks?.length > 0">
+        <app-search-stocks-form class="d-block search-stocks-component"
+                                *ngIf="userStocks?.length > 0"
+                                [whiteForm]="true" [returnSearchText]="true"
+                                (search)="searchInUserStocks($event)">
+        </app-search-stocks-form>
+    </div>
+    <div class="open-add-stock-modal" (click)="openModal()">
+        <button type="button">
+            <mat-icon>add_circle_outline</mat-icon>
+        </button>
+    </div>
+</div>
+
+
+<div *ngIf="filteredStocks && authUser?.channel?.name === authUser?.username">
+    <small class="error" *ngIf="userStocks?.length === 0">
+        No stocks added to watchlist</small>
+    <app-stock-tiles [stocks]="filteredStocks" [userStocks]="userStocks" *ngIf="userStocks?.length > 0"
+                     (updatedStocksList)="saveUpdatedStocksList($event)" [followingAllowed]="true"
+                     (updatedStocksPriority)="updateStocksPriority($event)"
+    ></app-stock-tiles>
+</div>

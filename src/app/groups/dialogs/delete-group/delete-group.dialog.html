@@ -1,0 +1,53 @@
+<form class="delete-group_dialog" [formGroup]='deleteGroupForm'>
+    <div class="delete-group_dialog-title">
+        <img src="assets/img/question_mark.svg" alt="">
+    </div>
+
+    <mat-radio-group
+        *ngIf="!nextStep"
+        aria-label="Select an option"
+        formControlName="deleteOption">
+        <mat-radio-button [value]="1">
+            <span class="radio-btn_desc">
+                 You are about to delete this group permanently.
+                You will not be able to get your group back after deletion.
+            </span>
+        </mat-radio-button>
+        <mat-radio-button [value]="2">
+              <span class="radio-btn_desc">
+                  Many people within the community are interacting with this group.
+                  Are you sure you want to delete?
+            </span>
+        </mat-radio-button>
+        <!--        <mat-radio-button [value]="3" >-->
+        <!--              <span class="radio-btn_desc">-->
+        <!--                  You are about to delete a group permanently.-->
+        <!--                  Would you like to let an admin take over the group instead?-->
+        <!--            </span>-->
+        <!--        </mat-radio-button>-->
+    </mat-radio-group>
+
+
+    <div class="btn-section"
+         *ngIf="!nextStep">
+
+        <button class="remuve-btn" (click)="nextStepTrue()">Remove</button>
+        <button class="cancel-btn" (click)="closeDialog()">Cancel</button>
+    </div>
+
+    <div class="submit_form"  *ngIf="nextStep">
+        <div class="submit_form-desc">
+            <div class="submit_form-title">
+                <span>Are you sure you want to delete this group?</span>
+            </div>
+            <div class="submit_form-subtitle">
+               <span>{{textChangeType}}</span>
+            </div>
+        </div>
+        <div class="submit-button">
+            <button class="no-btn" (click)="prevStepFalse()">NO</button>
+            <button class="yes-btn" (click)="remuveGroupByType()">YES</button>
+        </div>
+
+    </div>
+</form>

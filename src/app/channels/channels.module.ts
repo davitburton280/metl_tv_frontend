@@ -12,6 +12,7 @@ import {AboutTabComponent} from './show-channel/about-tab/about-tab.component';
 import {PeopleTabComponent} from './show-channel/people-tab/people-tab.component';
 import {SubscriptionsTabComponent} from '@app/channels/show-channel/people-tab/subscriptions-tab/subscriptions-tab.component';
 import {SubscribersTabComponent} from '@app/channels/show-channel/people-tab/subscribers-tab/subscribers-tab.component';
+import {EditChannelProfileComponent} from '@app/channels/show-channel/edit-channel-profile/edit-channel-profile.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {SubscribersTabComponent} from '@app/channels/show-channel/people-tab/sub
         AboutTabComponent,
         PeopleTabComponent,
         SubscriptionsTabComponent,
-        SubscribersTabComponent
+        SubscribersTabComponent,
+        EditChannelProfileComponent
     ],
     imports: [
         CommonModule,

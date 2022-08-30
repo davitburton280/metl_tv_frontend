@@ -1,8 +1,13 @@
-<ng-container *ngIf="selectedGroup">
+<ng-container *ngIf="selectedGroup && !loading">
     <app-user-tags></app-user-tags>
     <div id="group-wrap">
-        <div id="group-cover-image">
-            <img [src]="selectedGroup?.cover|getImgPath:'images'">
+        <div class="images-box">
+            <div class="images-cover">
+                <img class="images-cover-create" [src]="selectedGroup?.cover|getImgPath:'images'" alt="">
+            </div>
+            <div class="images-avatar">
+                <img [src]="selectedGroup?.avatar|getImgPath:'images'" alt="">
+            </div>
         </div>
 
         <div class="row groupsRow">
@@ -59,7 +64,7 @@
                 </button>
 
                 <button type="button" id="edit-profile"
-                        [routerLink]="'/groups//edit/1'">
+                        [routerLink]="'/groups/edit/'+selectedGroup?.id">
                     <mat-icon>edit</mat-icon>
                     Edit profile
                 </button>
@@ -83,4 +88,9 @@
         </div>
     </div>
 </ng-container>
+
+<div style="height: 400px;position: relative;" *ngIf="loading">
+        <app-loading></app-loading>
+</div>
+
 <span *ngIf="!selectedGroup">The group is not found</span>

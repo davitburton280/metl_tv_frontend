@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {API_URL} from '@core/constants/global';
 import {UsersService} from '@core/services/users.service';
 import {Base64ToFilePipe} from '@shared/pipes/base64-to-file.pipe';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ChannelsService} from '@core/services/channels.service';
 import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
@@ -11,7 +10,6 @@ import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
 import {NotificationsSubjectStoreService} from '@core/services/stores/notifications-subject-store.service';
 import {UsersMessagesSubjectService} from '@core/services/stores/users-messages-subject.service';
-import {Router} from '@angular/router';
 import {GroupsMessagesSubjectService} from '@core/services/stores/groups-messages-subject.service';
 import {UserStoreService} from '@core/services/stores/user-store.service';
 import {VideoService} from '@core/services/video.service';
@@ -23,6 +21,9 @@ import {UserInfoService} from '@core/services/user-info.service';
     styleUrls: ['./channel-profile.component.scss']
 })
 export class ChannelProfileComponent implements OnInit, OnDestroy {
+    public coverImgSrc;
+    public avatarImgSrc;
+    public _imgCoverSuccess: string;
     apiUrl = API_URL;
 
     profileChangedEvent: any;
@@ -58,7 +59,6 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private userStore: UserStoreService,
         private base64ToFile: Base64ToFilePipe,
-        // private getAuthUser: GetAuthUserPipe,
         private channelService: ChannelsService,
         private subject: SubjectService,
         private usersConnectionsStore: UsersMessagesSubjectService,
@@ -71,12 +71,17 @@ export class ChannelProfileComponent implements OnInit, OnDestroy {
         private _userInfoService: UserInfoService
     ) {
         this._getAuthInfo();
+        console.log(this.channelUser);
+    }
 
+    // tslint:disable-next-line:ban-types
+    get coverImg(): Boolean {
+        return false;
     }
 
     ngOnInit(): void {
-        // console.log(this.authUser);
         if (this.channelUser) {
+            console.log(this.channelUser.channel,159357);
             this.initChannelForm();
             this.checkChannelSubscription();
             this.srcCoverImg = this.channelUser.channel.cover;

@@ -1,0 +1,37 @@
+<div class="images-box">
+    <div class="images-cover">
+        <img class="images-cover-create c1" [src]="channelData?.cover|getImgPath:'images'" alt="">
+    </div>
+    <div class="images-avatar">
+        <img *ngIf="channelData?.avatar" [src]="channelData?.avatar|getImgPath:'images'" alt="">
+        <mat-icon *ngIf="!channelData?.avatar">add_a_photo</mat-icon>
+    </div>
+</div>
+
+<div class="channel-desc">
+    <div class="box">
+        <div class="group-title">
+            <p class="title">
+                {{channelData?.name}}
+            </p>
+        </div>
+        <div class="channel-status-members">
+            <div class="channel-status-img">
+                <mat-icon>public</mat-icon>
+                <span class="channel-status">public channel</span>
+            </div>
+            <div class="members-count">
+                <span>{{channelData?.subscribers_count}} members</span>
+            </div>
+        </div>
+    </div>
+    <div class="edit-btn-content">
+        <a [routerLink]="channelData?.id"
+           class="edit-channel-btn"
+           type="button">
+
+            <mat-icon>edit</mat-icon>
+            Edit channel
+        </a>
+    </div>
+</div>

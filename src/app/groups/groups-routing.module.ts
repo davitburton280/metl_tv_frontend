@@ -19,7 +19,7 @@ const routes: Routes = [
     },
     {path: 'edit/:id', component:  EditGroupComponent, data: {title: 'Group page | People tab'}},
     {
-        path: ':name',
+        path: ':id',
         component: SingleGroupComponent,
         children: [
             {path: 'people', component: PeopleTabComponent, data: {title: 'Group page | People tab'}},

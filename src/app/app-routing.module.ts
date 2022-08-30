@@ -30,6 +30,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'channel',
+        loadChildren: () => import('./channel/channel.module').then(it => it.ChannelModule),
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'auth',
         loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),
         canActivate: [NonAuthGuard]

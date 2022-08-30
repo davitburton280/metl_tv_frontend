@@ -2,8 +2,6 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {GroupsService} from '@core/services/groups.service';
 import {Subscription} from 'rxjs';
 import {SocketIoService} from '@core/services/socket-io.service';
-import {ConfirmationDialogComponent} from '@core/components/modals/confirmation-dialog/confirmation-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
 import {ChatService} from '@core/services/chat.service';
 import {CheckForEmptyObjectPipe} from '@shared/pipes/check-for-empty-object.pipe';
 import {GroupsStoreService} from '@core/services/stores/groups-store.service';

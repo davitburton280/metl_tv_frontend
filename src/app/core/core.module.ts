@@ -43,6 +43,7 @@ import { UploadFileComponent } from './components/modals/upload-file/upload-file
 import { ImgEditCropperComponent } from '@core/components/modals/img-edit-cropper/img-edit-cropper.component';
 import { PaymentPlanComponent } from './components/modals/payment-plan/payment-plan.component';
 import { PaymentCompletedComponent } from './components/modals/payment-completed/payment-completed.component';
+import {InviteChannelComponent} from '@core/components/modals/create-new-group-dialog/invite-chanel';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { PaymentCompletedComponent } from './components/modals/payment-completed
         UploadFileComponent,
         ImgEditCropperComponent,
         PaymentPlanComponent,
-        PaymentCompletedComponent
+        PaymentCompletedComponent,
+        InviteChannelComponent
         // ChatBottomBoxComponent
     ],
     imports: [
@@ -100,9 +102,12 @@ import { PaymentCompletedComponent } from './components/modals/payment-completed
         PurchaseBitsComponent,
         StocksListsPortableComponent,
         RightSidebarComponent,
+        InviteChannelComponent
         // ChatBottomBoxComponent,
     ],
-    entryComponents: [],
+    entryComponents: [
+        InviteChannelComponent
+    ],
     providers: [
         GetAuthUserPipe
     ]

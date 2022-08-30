@@ -1,8 +1,6 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {API_URL, CHANNEL_PAGE_TABS} from '@core/constants/global';
-import {User} from '@shared/models/user';
 import {VideoService} from '@core/services/video.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UsersService} from '@core/services/users.service';
 import {Base64ToFilePipe} from '@shared/pipes/base64-to-file.pipe';
@@ -70,7 +68,6 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     constructor(
         private videoService: VideoService,
-        // private getAuthUser: GetAuthUserPipe,
         public router: Router,
         private usersService: UsersService,
         private base64ToFile: Base64ToFilePipe,
@@ -92,16 +89,12 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
         private _userInfoService: UserInfoService
     ) {
         this._getAuthInfo();
-        // this.authUser = this.getAuthUser.transform();
-        // console.log(this.route.snapshot)
         this.passedUsername = this.route.snapshot.params.username;
         this.passedTab = this.route.snapshot.params.tab;
-        // console.log(this.passedUsername)
         this.searchVideosForm = this.fb.group({search: ['', Validators.required]});
     }
 
     ngOnInit(): void {
-        // localStorage.setItem('search', '');
         this.activeTab = CHANNEL_PAGE_TABS.filter(tabs => tabs.name.toLowerCase() === this.passedTab)?.[0] || CHANNEL_PAGE_TABS[0];
         this.getUserInfo();
 
@@ -114,7 +107,6 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
     private _getAuthInfo() {
         this._userInfoService._userInfo.subscribe((data) => {
             this.authUser = data;
-            console.log(this.authUser, 'Show CHannel  AUTHUSER DATA');
         });
     }
 
@@ -125,7 +117,7 @@ export class ShowChannelComponent implements OnInit, OnDestroy {
 
     getUserInfo() {
         this.loader.channelLoading.status = 'loading';
-        const viewingOwnChannel = +(this.authUser.username === this.passedUsername);
+        const viewingOwnChannel = +(this.authUser?.username === this.passedUsername);
         if (this.passedUsername) {
             this.usersService.getUserInfo({
                 username: this.passedUsername,

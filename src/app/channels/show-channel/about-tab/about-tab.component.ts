@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChannelsService} from '@core/services/channels.service';
-import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {DESCRIPTION_CHARACTERS_LIMIT} from '@core/constants/global';
 import {FixTextLineBreaksPipe} from '@shared/pipes/fix-text-line-breaks.pipe';
 import {CurrentUserData} from '@core/interfaces';

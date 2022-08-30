@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, HostBinding, Inject, OnDestroy, OnInit, Renderer2} from '@angular/core';
+import {Component, HostBinding, Inject, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SubjectService} from '@core/services/subject.service';
 import {LoaderService} from '@core/services/loader.service';
@@ -21,7 +21,7 @@ import {CurrentUserData} from '@core/interfaces';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class AppComponent implements OnInit, OnDestroy {
     title = '';
     subscriptions: Subscription[] = [];
     pageTitle;
@@ -55,11 +55,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
         @Inject(DOCUMENT) private document: Document,
         private renderer: Renderer2
     ) {
-        // console.log(this._userInfoService.user);
     }
 
     ngOnInit() {
-        // this.authUser = this.getAuthUser.transform();
         this._getUserInfo();
         this.logInProduction();
         this.setPageTitle();
@@ -69,15 +67,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
 
 
     private _getUserInfo() {
-        // this._userInfoService._getCurrentUserInfo();
         this._userInfoService._userInfo.subscribe((data) => {
             this.authUser = data;
-            console.log(this.authUser);
         });
     }
 
     logInProduction() {
-        // console.log(this.getAuthUser.transform())
         // const player = new Plyr('video', {
         //     captions: {active: true},
         //     quality: {default: 576, options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]}
@@ -186,9 +181,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
         });
     }
 
-    ngAfterViewChecked() {
-        // console.log('after view checked', this.usersMessagesStore.showBottomChatBox)
-    }
 
     ngOnDestroy(): void {
         this.subscriptions.forEach(s => s.unsubscribe());

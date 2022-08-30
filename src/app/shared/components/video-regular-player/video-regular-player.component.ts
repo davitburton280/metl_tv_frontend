@@ -1,8 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {API_URL} from '@core/constants/global';
-import watermark from 'videojs-watermark';
 import 'videojs-watermark/dist/videojs-watermark.css';
-import videojs from 'video.js';
 
 @Component({
     selector: 'app-video-regular-player',

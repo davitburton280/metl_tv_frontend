@@ -43,13 +43,11 @@ export class VideosListHolderComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.videoLoading = 'loading';
         if (this.videos?.length > 0) {
-            console.log(this.videos,'zzzzzzzzzzz');
             this.videoLoading = 'finished';
         }
     }
 
     private _getUserInfo() {
-        // this._userInfoService._getCurrentUserInfo();
         this._userInfoService._userInfo.subscribe((data) => {
             this.authUser = data;
         });

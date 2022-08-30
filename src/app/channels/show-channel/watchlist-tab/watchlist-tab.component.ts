@@ -8,9 +8,6 @@ import {FilterOutFalsyValuesFromObjectPipe} from '@shared/pipes/filter-out-falsy
 import {StocksService} from '@core/services/stocks.service';
 import {GetAuthUserPipe} from '@shared/pipes/get-auth-user.pipe';
 import {User} from '@shared/models/user';
-import {updateStockDetails} from '@core/helpers/update-stock-details';
-import {LoaderService} from '@core/services/loader.service';
-import {PageEvent} from '@angular/material/paginator';
 import {filter} from 'rxjs/operators';
 import {Stock} from '@shared/models/stock';
 
@@ -48,11 +45,9 @@ export class WatchlistTabComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.authUser = this.getAuthUser.transform();
         this.stocksLoading = 'loading';
-
         this.subscriptions.push(this.subjectService.getStocksSearch().subscribe(s => {
             this.getSearchResults(s);
         }));
-
         this.subscriptions.push(
             this.subject.currentUserStocks
                 .pipe(filter(d => !d.initial))

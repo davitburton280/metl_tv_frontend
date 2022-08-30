@@ -1,0 +1,39 @@
+<div class="channel-info-img">
+    <app-channel-info [channelData]="channelData"></app-channel-info>
+</div>
+
+<div class="router-block">
+    <ul class="router-list">
+        <li class="router-list-item"
+            [routerLinkActiveOptions]="{exact:true}"
+            #rla="routerLinkActive"
+            [routerLinkActive]="'active'">
+            <a [routerLink]="['watchlist']">Watchlist</a>
+        </li>
+
+        <li class="router-list-item"
+            [routerLinkActiveOptions]="{exact:true}"
+            #rla="routerLinkActive"
+            [routerLinkActive]="'active'">
+            <a [routerLink]="['channel-videos',channelData?.id]">Videos</a>
+        </li>
+
+        <li class="router-list-item">
+            <a>Playlist</a>
+        </li>
+
+        <li class="router-list-item">
+            <a>Contacts</a>
+        </li>
+
+        <li class="router-list-item">
+            <a href="">Contacts</a>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <router-outlet></router-outlet>
+</div>
+
+

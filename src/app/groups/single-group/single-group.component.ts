@@ -1,8 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
-import {UserStoreService} from '@core/services/stores/user-store.service';
 import {Subscription} from 'rxjs';
-import {User} from '@shared/models/user';
 import {GROUP_PAGE_TABS} from '@core/constants/global';
 import {MatDialog} from '@angular/material/dialog';
 import {LowercaseRemoveSpacesPipe} from '@shared/pipes/lowercase-remove-spaces.pipe';
@@ -22,6 +20,7 @@ import {UserInfoService} from '@core/services/user-info.service';
 })
 export class SingleGroupComponent implements OnInit, OnDestroy {
     authUser: CurrentUserData;
+    public loading = false;
     subscriptions: Subscription[] = [];
 
 
@@ -37,7 +36,6 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         private groupsStore: GroupsStoreService,
         private groupsService: GroupsService,
         private route: ActivatedRoute,
-        // private userStore: UserStoreService,
         private dialog: MatDialog,
         private lowerCaseRemoveSpaces: LowercaseRemoveSpacesPipe,
         private isEmptyObj: CheckForEmptyObjectPipe,
@@ -49,7 +47,6 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.trackSelectedGroup();
-        // this.getAuthUser();
         this.getSelectedGroup();
         this.getAcceptedJoinPageGroup();
         this.getConfirmedJoinGroup();
@@ -59,25 +56,18 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
         this.getLeftGroup();
     }
 
-    // getAuthUser() {
-    //     this.subscriptions.push(this.userStore.authUser$.subscribe(user => {
-    //         this.authUser = user;
-    //     }));
-    // }
 
     private _getAuthInfo() {
         this._userInfoService._userInfo.subscribe((data) => {
             this.authUser = data;
-            console.log(this.authUser, 'Single group AUTHUSER DATA');
         });
     }
 
     trackSelectedGroup() {
         this.subscriptions.push(this.groupsStore.selectedGroup$.subscribe((dt: any) => {
-            console.log(dt,"Group INfo");
+            console.log(dt, 159357);
             this.selectedGroup = dt;
-            this.groupPrivacy = dt.privacy === 1 ? 'private' : 'public';
-            // console.log(this.selectedGroup, this.groupPrivacy);
+            // this.groupPrivacy = dt.privacy === 1 ? 'private' : 'public';
             if (!this.isEmptyObj.transform(dt) && this.authUser) {
                 this.getUserGroupConnStatus();
             }
@@ -86,30 +76,30 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
 
     getSelectedGroup() {
         this.route.params.subscribe((params: Params) => {
-            this.passedGroupName = params.name;
-
-            if (!this.getGroupFromStore()) {
+            this.passedGroupName = params.id;
+            if (!this._getGroupById()) {
                 this.getGroupFromServer();
             }
         });
     }
 
-    getGroupFromStore() {
-        this.selectedGroup = this.groupsStore.groups.find(g => {
-            const groupName = this.lowerCaseRemoveSpaces.transform(g.name);
-            return groupName === this.passedGroupName;
-        });
-        if (this.selectedGroup) {
-            this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
-            this.groupsStore.selectGroup(this.selectedGroup);
-        }
+    private _getGroupById() {
+        this.groupsService.getGroupById(+this.passedGroupName)
+            .subscribe((data: any) => {
+                this.selectedGroup = data;
+                this.groupsStore.selectGroup(this.selectedGroup);
+            });
         return !!this.selectedGroup;
     }
 
     getGroupFromServer() {
-        this.groupsService.getGroupByCustomName({custom_name: this.passedGroupName}).subscribe(dt => {
-            this.selectedGroup = dt;
+        this.loading = true;
+        this.groupsService.getGroupById(+this.passedGroupName)
+            .subscribe(data => {
+            this.selectedGroup = data;
             this.isOwnGroup = this.selectedGroup.creator_id === this.authUser.id;
+            this.groupPrivacy = data.privacy === 1 ? 'private' : 'public';
+            this.loading = false;
             this.groupsStore.selectGroup(this.selectedGroup);
         });
     }
@@ -164,11 +154,8 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
     getLeftGroup() {
         this.subscriptions.push(this.socketService.leavePageGroupNotify().subscribe((data: any) => {
             const {group} = data;
-
             if (data.from_user.id === this.authUser.id) {
                 this.userGroupConnStatus = 'not connected';
-                // console.log(this.selectedGroup);
-                // this.groupsStore.selectGroup({});
             }
             this.groupsStore.changeGroup(group);
         }));
@@ -216,13 +203,10 @@ export class SingleGroupComponent implements OnInit, OnDestroy {
             if (member.id === this.authUser.id) {
                 this.userGroupConnStatus = 'not connected';
             }
-            // console.log(this.groupsMessagesStore.selectedGroupMessages)
-            // console.log(this.groupsMessagesStore.groupsMessages)
-            // }
         }));
     }
 
-    getUserGroupConnStatus() {
+    private getUserGroupConnStatus() {
         this.selectedGroup.group_members?.map(m => {
             if (m.id === this.authUser.id) {
                 if (m.groups_members.confirmed === 1) {
