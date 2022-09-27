@@ -1,0 +1,90 @@
+/*video-playlist-wrapper style start*/
+
+.video-playlist-wrapper {
+    display: flex;
+    /*video-player-content style*/
+    .video-content {
+        width: 70%;
+    }
+
+    .video-playlist {
+        width: 30%;
+        position: relative;
+        .playlist-desc {
+            padding: 14px 18px;
+            background: #18B587;
+
+            .playlist-desc-name {
+                margin: 10px 0;
+
+                h3 {
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 18px;
+                    line-height: 23px;
+                    color: #FFFFFF;
+                }
+            }
+
+            .playlist-privacy {
+                width: 93px;
+                height: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #FFFFFF;
+                border-radius: 8px;
+
+                span {
+                    color: #545454;
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .video-list {
+            height: 400px;
+            background: #FFFFFF;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            overflow-y: scroll;
+
+            .video-list-item {
+                input[type="radio"]{
+                    display: none;
+                }
+                input[type="radio"]:checked + label {
+                    border-lft: 3px solid  #0aa06e;
+                }
+                label{
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px;
+                    .video-cover {
+                        width: 111px;
+                        height: 77px;
+                        border-radius: 8px;
+
+                        img {
+                            border-radius: 8px;
+                            object-fit: cover;
+                            width: 100%;
+                        }
+                    }
+
+                    .video-name {
+                        .video-name-text {
+                            font-family: 'Mulish';
+                            font-style: normal;
+                            font-weight: 400;
+                            font-size: 18px;
+                            line-height: 23px;
+                            color: #18B587;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+
+
+
+<!--channel-videos-list start-->
+<div class="channel-videos-list">
+
+    <!--    channel-videos-list-item start-->
+    <div class="channel-videos-list-item-component" *ngFor="let video of videosList">
+        <app-channel-videos-list-item
+            [videosItem]="video">
+        </app-channel-videos-list-item>
+    </div>
+    <!--    channel-videos-list-item end-->
+
+</div>
+<!--channel-videos-list end-->

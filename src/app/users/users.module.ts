@@ -26,6 +26,8 @@ import {ShowNotificationsComponent} from '@app/users/show-notifications/show-not
 import { ShowProfileComponent } from './show-profile/show-profile.component';
 import { WatchlistTabComponent } from './show-profile/watchlist-tab/watchlist-tab.component';
 import { CardsTabComponent } from './show-profile/cards-tab/cards-tab.component';
+import { NewVideoListModule } from '@shared/components/new-video-list';
+import { NewHomeComponent } from '@app/users/new-home/new-home.component';
 
 @NgModule({
     declarations: [
@@ -51,12 +53,14 @@ import { CardsTabComponent } from './show-profile/cards-tab/cards-tab.component'
         ShowProfileComponent,
         WatchlistTabComponent,
         CardsTabComponent,
+        NewHomeComponent
     ],
     imports: [
         CommonModule,
         UsersRoutingModule,
         OpenviduSessionModule,
-        SharedModule
+        SharedModule,
+        NewVideoListModule
     ],
     exports: []
 })

@@ -1,1 +1,37 @@
-dsadsada
+<div class="search-component">
+    <app-channel-sorting></app-channel-sorting>
+</div>
+
+<div *ngIf="( channelVideosStateData$ | async) as state">
+    <div class="table-container" *ngIf="state.channelVideo">
+
+        <app-channel-videos-list [videosList]="state.channelVideo">
+
+        </app-channel-videos-list>
+
+
+    </div>
+    <div class="no_result"
+         *ngIf="(!state.channelVideo?.length  && !state.loading)">
+        <div class="no_result-img">
+            <img src="assets/img/Error-amico.svg" alt="amico">
+        </div>
+        <div class="no_result-title">
+            <h2>No Result Found</h2>
+        </div>
+        <div class="no_result-desc">
+            <span>
+                We can`t find any item matching
+            </span>
+            <span>
+                your search
+            </span>
+        </div>
+    </div>
+    <div *ngIf="( state.loading)" style="height: 400px;position: relative;">
+        <app-loading></app-loading>
+    </div>
+</div>
+
+
+

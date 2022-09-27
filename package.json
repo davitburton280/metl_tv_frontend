@@ -54,6 +54,7 @@
         "rxjs": "~6.5.4",
         "socket.io-client": "^4.2.0",
         "source-map-explorer": "^2.5.2",
+        "swiper": "^8.4.2",
         "tslib": "^1.10.0",
         "video.js": "^7.8.4",
         "videojs-record": "^4.1.0",

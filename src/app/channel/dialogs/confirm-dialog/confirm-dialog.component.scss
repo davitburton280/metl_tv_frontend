@@ -1,0 +1,52 @@
+.confirm_dialog{
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .confirm_dialog-title{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+    }
+    .confirm-question{
+        margin: 10px;
+         p{
+             font-size: 18px;
+             color: black;
+             font-weight: 500;
+         }
+    }
+    .btn-section{
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        .remuve-btn{
+            width: 119px;
+            height: 36px;
+            padding: 15px 32px;
+            color: #ffffff !important;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s ease-in-out;
+            background: #ff2b1b;
+        }
+
+        .cancel-btn{
+            margin-left: 10px;
+            width: 119px;
+            height: 36px;
+            padding: 15px 32px;
+            color: #ffffff !important;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.3s ease-in-out;
+            background: rgb(0 0 0 / 17%);
+        }
+    }
+}

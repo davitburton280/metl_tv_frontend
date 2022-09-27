@@ -1,0 +1,26 @@
+<div class="playlist-create-btn">
+    <app-create-playlist-btn></app-create-playlist-btn>
+</div>
+<ng-container *ngIf="(dataSourcePlayListState$ | async) as state">
+    <div class="video-group">
+        <a *ngFor="let playList of state.playLists"
+           [routerLink]="['/channel/channel-playlist/1/playList',playList.id]">
+            <div class="video-group-list">
+                <div class="video-group-list-cover">
+                    <img class="images-cover-create c1"
+                         *ngIf="playList?.videos[0]"
+                         [src]="playList?.videos[0]?.thumbnail|getImgPath:'images'"
+                         alt="">
+
+                    <img class="images-cover-create c1"
+                         *ngIf="!playList?.videos[0]"
+                         src="assets/img/playList.png"
+                         alt="">
+                </div>
+                <div class="hover-shadow"></div>
+                <p class="playlist-name">Playlist {{playList.name}}</p>
+            </div>
+        </a>
+    </div>
+</ng-container>
+

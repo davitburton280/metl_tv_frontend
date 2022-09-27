@@ -18,16 +18,26 @@
             <a [routerLink]="['channel-videos',channelData?.id]">Videos</a>
         </li>
 
-        <li class="router-list-item">
-            <a>Playlist</a>
+        <li class="router-list-item"
+            [routerLinkActiveOptions]="{exact:true}"
+            #rla="routerLinkActive"
+            [routerLinkActive]="'active'"
+        >
+            <a [routerLink]="['channel-playlist',channelData?.id]">Playlist</a>
         </li>
 
-        <li class="router-list-item">
-            <a>Contacts</a>
+        <li class="router-list-item"
+            [routerLinkActiveOptions]="{exact:true}"
+            #rla="routerLinkActive"
+            [routerLinkActive]="'active'">
+            <a [routerLink]="['channel-subscriptions',channelData?.id]">Contacts</a>
         </li>
 
-        <li class="router-list-item">
-            <a href="">Contacts</a>
+        <li class="router-list-item"
+            [routerLinkActiveOptions]="{exact:true}"
+            #rla="routerLinkActive"
+            [routerLinkActive]="'active'">
+            <a [routerLink]="['channel-about',channelData?.id]">About Us</a>
         </li>
     </ul>
 </div>

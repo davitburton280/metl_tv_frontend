@@ -14,12 +14,20 @@ import {ContactUsComponent} from '@core/components/docs/contact-us/contact-us.co
 import {PageLoadingComponent} from '@core/components/docs/page-loading/page-loading.component';
 import {PaymentSuccessComponent} from '@app/users/payment-success/payment-success.component';
 import {PaymentCancelComponent} from '@app/users/payment-cancel/payment-cancel.component';
+import { NewHomeComponent } from '@app/users/new-home/new-home.component';
 
 
 const routes: Routes = [
+    // {
+    //     path: '',
+    //     component: HomeComponent,
+    //     data: {
+    //         title: 'Metl TV',
+    //     }
+    // },
     {
         path: '',
-        component: HomeComponent,
+        component: NewHomeComponent,
         data: {
             title: 'Metl TV',
         }

@@ -1,4 +1,4 @@
-import {StocksOrderTypeInterface} from '@core/interfaces/stocks-order-type.interface';
+import { StocksOrderTypeInterface } from '@core/interfaces/stocks-order-type.interface';
 
 export interface CurrentUserResponseInterface {
     data: CurrentUserData;
@@ -40,3 +40,4 @@ export interface ChanelInterface {
     updated_at: string;
     user_id: number;
 }
+

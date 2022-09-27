@@ -1,0 +1,63 @@
+<!--    channel-videos-list-item start-->
+<!--var channel-videos-list-item= @-->
+<div class="channel-videos-list-item">
+    <!--    @-item start-->
+    <div class="channel-videos-list-item-img">
+        <!--    @-item-img start-->
+        <img [src]="videosItem.thumbnail|getImgPath:'images'" alt="">
+        <!--    @-item-img end-->
+
+        <!--    @-item-videos-action start-->
+        <div class="videos-action">
+            <mat-icon (click)="show()">more_horiz</mat-icon>
+
+            <!--    @-item-videos-action-list-box start-->
+            <div class="action-list-box" *ngIf="menuShow">
+
+                <!--    @-item-videos-action-list start-->
+                <ul class="action-list">
+                    <li >
+                        <mat-icon (click)="openConfirmDialogPrivicy()">
+                            {{ videosItem.privacy_id === 1 ? 'visibility_on': 'visibility_off' }}</mat-icon>
+
+                    </li>
+                    <li >
+                        <mat-icon
+                            (click)="openConfirmDialogRemuve()"
+                        >delete_forever</mat-icon>
+                    </li>
+                </ul>
+                <!--    @-item-videos-action-list end-->
+
+            </div>
+            <!--    @-item-videos-action-list-box end-->
+
+        </div>
+        <!--    @-item-videos-action end-->
+
+        <!--    @-item-videos-duration start-->
+        <div class="video-duration">
+            <span>{{videosItem.duration}}</span>
+        </div>
+        <!--    @-item-videos-duration end-->
+
+    </div>
+    <!--    @-item end-->
+
+    <div class="videos-desc">
+        <div class="videos-desc-img">
+            <img [src]="''|getImgPath:'images'" alt="">
+        </div>
+        <div class="videos-desc-text">
+            <p class="videos-name">{{videosItem.name}}</p>
+            <p class="videos-create-name"></p>
+            <p class="videos-views-date">
+                <span class="views">{{videosItem.views}} views</span>
+                <span class="date"></span>
+            </p>
+        </div>
+    </div>
+</div>
+<!--    channel-videos-list-item end-->
+<div class="divdir" *ngIf="menuShow" (click)="show()"></div>
+

@@ -1,0 +1,33 @@
+<div class="item-video" *ngIf="!loading && data">
+    <div class="item-video-img">
+        <img [src]="data?.thumbnail|getImgPath:'images'" alt="videoCaverHomeTest">
+    </div>
+    <div class="item-video-desc">
+        <div class="item-video-channel">
+            <div class="item-video-channel-img">
+                <img [src]="data?.user?.avatar|getImgPath:'images'" alt="">
+            </div>
+
+            <div class="item-video-name_tag">
+                <div class="item-video-name">
+                    <p class="video-name">{{data?.name}}</p>
+                    <p class="channel-name">{{data?.channel?.name}}</p>
+                    <p class="view_date">
+                        <span class="view">{{data?.views}} views</span>
+                        <span class="date">10 days ago</span>
+                    </p>
+                </div>
+                <div class="video_tag" *ngIf="data?.tags">
+                    <span class="tag" *ngFor="let tag of data?.tags">
+                        {{tag?.name}}
+                    </span>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="loading && !data">
+    <app-new-video-list-skeleton></app-new-video-list-skeleton>
+</div>

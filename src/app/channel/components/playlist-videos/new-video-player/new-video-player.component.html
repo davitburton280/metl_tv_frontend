@@ -1,0 +1,45 @@
+<div class="video-player-content">
+    <!--        Video Taag or Ifrem-->
+    <div class="video">
+        <video (canplay)="pauseVideo(videoplayer)"
+               [src]="videoPath.filename|getImgPath: 'videos'"
+               controls
+               #videoPlayer>
+        </video>
+    </div>
+
+    <div class="videos-desc">
+        <div class="select-video">
+            <h2>{{videoPath.name}}</h2>
+        </div>
+        <ul class="videos-desc-list">
+            <li class="videos-desc-list-item">
+                        <span class="material-symbols-outlined">
+                            visibility
+                        </span>
+                <span class="like">
+                            {{videoPath.views}}
+                        </span>
+            </li>
+            <li class="videos-desc-list-item">
+                        <span class="material-symbols-outlined">
+                            thumb_up
+                        </span>
+                <span class="like">
+                            {{videoPath.likes}}
+                        </span>
+            </li>
+            <li class="videos-desc-list-item">
+                        <span class="material-symbols-outlined">
+                             thumb_down
+                        </span>
+                <span class="dislike">
+                            {{videoPath.dislikes}}
+                        </span>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+

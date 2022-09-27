@@ -1,0 +1,22 @@
+/*create-playList styleSheet start */
+.create-playList{
+    /*create-playList button styleSheet start */
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    button{
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        border-radius: 8px;
+        border: 1px dashed #0aa06e;
+        padding: 10px 20px;
+        cursor: pointer;
+        span{
+            font-size: 16px;
+            color:#0aa06e;
+            font-weight: bolder;
+            margin-left: 5px;
+        }
+    }
+}

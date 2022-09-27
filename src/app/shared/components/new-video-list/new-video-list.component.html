@@ -1,0 +1,70 @@
+<ng-container *ngIf="( newVideoDataSource$ | async) as state">
+    <div class="videos-wrapper">
+        <div class="video-wrapper-title">
+            <h1>New Videos {{this.totalPageCount}}</h1>
+        </div>
+        <div class="video-list-wrapper">
+            <div class="video-list-item-content" *ngFor="let item of state.videos">
+                <app-new-video-list-item
+                    [data]="item"
+                    [loading]="state.loading"
+                ></app-new-video-list-item>
+            </div>
+        </div>
+        <div>
+            <mat-paginator [length]="state.count"
+                           [pageSize]="state.count/4"
+                           (page)="onPageNewChanged($event)"
+                           aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="( tradingVideoDataSource$ | async) as state">
+    <div class="videos-wrapper">
+        <div class="video-wrapper-title">
+            <h1>Trending streams</h1>
+        </div>
+        <div class="video-list-wrapper">
+            <div class="video-list-item-content" *ngFor="let item of state.videos">
+                <app-new-video-list-item
+                    [data]="item"
+                    [loading]="state.loading"
+                ></app-new-video-list-item>
+            </div>
+        </div>
+        <div>
+            <mat-paginator [length]="state.count"
+                           [pageSize]="state.count/4"
+                           (page)="onPageChanged($event)"
+                           aria-label="Select page">
+            </mat-paginator>
+        </div>
+
+    </div>
+</ng-container>
+
+<ng-container *ngIf="( clipsDataSource$ | async) as state">
+<div class="videos-wrapper">
+    <div class="video-wrapper-title">
+        <h1>Trending CLIPZ</h1>
+    </div>
+    <div class="video-list-wrapper">
+        <div class="video-list-item-content" *ngFor="let item of state.clip">
+            <app-new-video-list-item
+                [data]="item"
+                [loading]="state.loading">
+            </app-new-video-list-item>
+        </div>
+    </div>
+    <div>
+        <mat-paginator [length]="state.count"
+                       [pageSize]="state.count/4"
+                       (page)="onPageClipChanged($event)"
+                       aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>
+
+</ng-container>

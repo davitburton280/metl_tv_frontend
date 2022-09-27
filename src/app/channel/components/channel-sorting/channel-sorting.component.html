@@ -1,0 +1,43 @@
+<div class="sorting-block">
+    <div class="sorting-search">
+        <input type="text"
+               (keyup)="doSomething($event)"
+               placeholder="Search...">
+        <mat-icon>search</mat-icon>
+    </div>
+    <div class="contenier">
+
+        <button
+            mat-raised-button
+            style="margin-left: 20px"
+            mat-button (click)="show()">Filter</button>
+
+        <div class="sorting_date-type" *ngIf="menuShow">
+            <div class="category_stock-list">
+                <section class="example-section">
+                    <mat-checkbox
+                        *ngFor="let category of channelCategory"
+                        class="example-margin"
+                        (change)="setValueCategory($event,category.id)"
+                    >
+                        {{category.name}}
+                    </mat-checkbox>
+                </section>
+                <mat-form-field appearance="outline">
+                    <mat-label>Select upload Date</mat-label>
+                    <mat-select (valueChange)="uploadDataFunc($event)">
+                        <mat-option value="1">LastHour</mat-option>
+                        <mat-option value="2">Today</mat-option>
+                        <mat-option value="3">This Week</mat-option>
+                        <mat-option value="4">This Mount</mat-option>
+                        <mat-option value="5">This year</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divdir" *ngIf="menuShow" (click)="show()" (click)="show()"></div>

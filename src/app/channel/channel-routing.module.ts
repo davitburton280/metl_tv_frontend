@@ -1,7 +1,15 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {EditChannelProfileComponent, MainChannelPageComponent, WatchlistPageComponent} from '@app/channel/pages';
-import {ChannelVideosComponent} from '@app/channel/pages/channel-vidoes';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import {
+    EditChannelProfileComponent,
+    MainChannelPageComponent,
+    PlaylistChannelComponent,
+    WatchlistPageComponent
+} from '@app/channel/pages';
+import { ChannelVideosComponent } from '@app/channel/pages/channel-vidoes';
+import { SubPageComponent } from '@app/channel/pages/sub-page';
+import { AboutChannelComponent } from '@app/channel/pages/about-channel';
+import { AppPlaylistVideosComponent } from '@app/channel/components';
 
 
 const routes: Routes = [
@@ -12,7 +20,7 @@ const routes: Routes = [
             title: 'Channel page'
         },
         children: [
-            {path: '', redirectTo: 'watchlist', pathMatch: 'full'},
+            { path: '', redirectTo: 'watchlist', pathMatch: 'full' },
             {
                 path: 'watchlist',
                 component: WatchlistPageComponent
@@ -20,6 +28,22 @@ const routes: Routes = [
             {
                 path: 'channel-videos/:id',
                 component: ChannelVideosComponent
+            },
+            {
+                path: 'channel-subscriptions/:id',
+                component: SubPageComponent
+            },
+            {
+                path: 'channel-about/:id',
+                component: AboutChannelComponent
+            },
+            {
+                path: 'channel-playlist/:id',
+                component: PlaylistChannelComponent
+            },
+            {
+                path: 'channel-playlist/:id/playList/:id',
+                component: AppPlaylistVideosComponent
             }
         ]
     },

@@ -1,0 +1,13 @@
+/*channel-videos-list style start*/
+.channel-videos-list {
+    display: flex;
+    flex-wrap: wrap;
+    .channel-videos-list-item-component {
+        width: 50%;
+        margin: 20px 0;
+    }
+}
+
+/*channel-videos-list style end*/
+
+

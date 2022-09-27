@@ -1,0 +1,65 @@
+.sorting-block {
+    display: flex;
+    padding: 20px;
+    .sorting-search {
+        width: 30%;
+        position: relative;
+
+        input {
+            border: 1px solid #f2f4fb;
+            width: 100%;
+            border-radius: 2px;
+            box-shadow: 0 1px 19px 0 rgb(46 61 73 / 19%);
+            padding: 10px;
+            background: white;
+        }
+
+        mat-icon {
+            position: absolute;
+            color: #6A6A6A;
+            right: 11px;
+            top: 10px;
+            z-index: 333;
+            cursor: pointer;
+        }
+    }
+    .contenier{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 9999;
+        position: relative;
+        .sorting_date-type {
+            position: absolute;
+            left: 16%;
+            top: 100%;
+            border: 1px solid #f2f4fb;
+            border-radius: 2px;
+            background-color: #fff;
+            box-shadow: 0 1px 19px 0 rgb(46 61 73 / 19%);
+            padding: 10px;
+            .category_stock-list {
+                display: flex;
+                align-items: center;
+                .example-section {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+
+
+        }
+    }
+
+
+}
+
+.divdir {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    left: 0;
+    top: 0;
+}

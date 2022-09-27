@@ -1,0 +1,49 @@
+<ng-container *ngIf="(dataSourcePlayListVideosState$ | async) as state">
+    <div class="video-playlist-wrapper">
+        <div class="video-content" *ngIf="videoPath">
+            <app-new-video-player [videoPath]="videoPath"></app-new-video-player>
+        </div>
+
+        <div class="video-playlist">
+            <div class="playlist-desc">
+                <div class="playlist-desc-name">
+                    <h3>
+                        <span class="naem">{{state.videos.name}}</span>
+                        <span class="playlist-video-count">1/30</span>
+                    </h3>
+                </div>
+                <div class="playlist-privacy">
+                <span>
+
+                </span>
+                    <span>
+                    Private
+                </span>
+                </div>
+            </div>
+            <div class="video-list">
+                <div class="video-list-item" *ngFor="let video of state.videos.videos">
+                    <input
+                        type="radio"
+                        name="videos"
+                        (change)="getPLayVideoData(video)"
+                        [id]="video.id">
+                    <label [for]="video.id">
+                        <div class="video-cover">
+
+                            <img [src]="video?.thumbnail|getImgPath:'images'" alt="">
+                        </div>
+                        <div class="video-name">
+                            <p class="video-name-text"> {{video.name}}</p>
+                        </div>
+                    </label>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</ng-container>
+
+
+

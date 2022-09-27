@@ -1,0 +1,128 @@
+/*channel-videos-list-item style start */
+.channel-videos-list-item {
+    overflow: hidden;
+    position: relative;
+    z-index: 99;
+    /*channel-videos-list-item-img style start */
+    .channel-videos-list-item-img {
+        position: relative;
+        width: 100%;
+        height: 225px;
+        max-width: 400px;
+        cursor: pointer;
+        overflow: hidden;
+        border: 1px solid #f2f4fb;
+        border-radius: 10px;
+        box-shadow: 0 1px 4px 0 rgb(46 61 73 / 10%);
+        background: white;
+        /*img style start */
+        img {
+            -o-object-fit: cover;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        /*img style end */
+
+        /*videos-action style start */
+        .videos-action {
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 99;
+
+            mat-icon {
+                color: white;
+            }
+
+            .action-list {
+                border: 1px solid #f2f4fb;
+                border-radius: 20px;
+                box-shadow: 0 1px 4px 0 rgb(46 61 73 / 10%);
+                padding: 10px;
+                background: white;
+
+                mat-icon {
+                    color: black;
+                }
+            }
+        }
+
+        /*videos-action style end */
+
+        /*video-duration style start */
+        .video-duration {
+            position: absolute;
+            right: 1%;
+            bottom: 2%;
+            padding: 3px 15px;
+            border-radius: 5px;
+            background-color: rgb(0 0 0 / 54%);
+
+            span {
+                color: white;
+            }
+        }
+
+        /*video-duration style end */
+    }
+    .videos-desc{
+        display: flex;
+        margin: 20px 0;
+        .videos-desc-img{
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            img{
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+            }
+        }
+        .videos-desc-text{
+            margin-left: 20px;
+            .videos-name{
+                color: #545454;
+                font-size: 16px;
+                margin-bottom: 4px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+            }
+
+            .videos-create-name{
+                color: #545454;
+                font-size: 12px;
+                cursor: pointer;
+            }
+            .videos-views-date{
+                .views{
+                    color: #545454;
+                    font-size: 10px;
+                    white-space: nowrap;
+                }
+                .date{
+                    color: #545454;
+                    font-size: 10px;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+    /*channel-videos-list-item-img style end */
+}
+
+/*channel-videos-list-item style end */
+
+/*divdir style start */
+.divdir {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    left: 0;
+    top: 0;
+}
+
+/*divdir style end */

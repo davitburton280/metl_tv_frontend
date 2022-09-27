@@ -1,0 +1,45 @@
+
+.no_result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 20px 0;
+    .no_result-img {
+        width: 332px;
+        height: 313px;
+        opacity: 1;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .no_result-title {
+        margin-top: 20px;
+
+        h2 {
+            text-align: left;
+            font-size: 23px;
+            letter-spacing: 0px;
+            color: #545454;
+            opacity: 1;
+        }
+    }
+
+    .no_result-desc {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        span {
+            text-align: center;
+            font: normal normal normal 24px/30px Muli;
+            letter-spacing: 0px;
+            color: #545454;
+            opacity: 1;
+        }
+    }
+}

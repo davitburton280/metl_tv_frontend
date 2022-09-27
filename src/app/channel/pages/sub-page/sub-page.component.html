@@ -1,0 +1,49 @@
+
+<!--Subscribers-content start--!-->
+<!--let Subscribers-content == @-->
+<div class="subscribers-content">
+
+    <!--@title start--!-->
+    <div class="subscribers-content-title">
+
+        <!--@title-text start--!-->
+        <h1 class="subscribers-content-title-text">
+            Subscribers
+        </h1>
+        <!--@title-text end--!-->
+
+    </div>
+    <!--@title end--!-->
+
+    <!--@list start--!-->
+    <div class="subscribers-content-list">
+
+        <!--@list-item start--!-->
+        <div class="subscribers-content-list-item"
+             *ngFor="let sub of subscribers">
+
+            <!--@list-item-img start--!-->
+            <div class="subscribers-content-list-item-img">
+                <img [src]="sub.avatar|getImgPath:'images'" alt="">
+            </div>
+            <!--@list-item-img start--!-->
+
+            <!--@list-item-desc start--!-->
+            <div class="subscribers-content-list-item-desc">
+
+                <!--@list-item-full-name start--!-->
+                <p class="subscribers-content-list-item-full-name">
+                    {{sub.first_name}} {{sub.last_name}}
+                </p>
+                <!--@list-item-full-name end--!-->
+            </div>
+            <!--@list-item-desc end--!-->
+
+        </div>
+        <!--@list-item end--!-->
+
+    </div>
+    <!--@list end--!-->
+
+</div>
+<!--Subscribers-content end--!-->

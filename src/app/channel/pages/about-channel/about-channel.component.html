@@ -1,0 +1,26 @@
+<section class="about-channel">
+    <header class="about-channel-title">
+        <h1 class="about-channel-title-text">Description</h1>
+        <button class="update-show"
+                (click)="showForm()"
+                >Update Description</button>
+    </header>
+    <main class="about-channel-desc" *ngIf="!show">
+            <p class="about-channel-desc">
+                dsadasdasdasdsadasdasdasdadadasda
+            </p>
+    </main>
+    <form class="about-channel-form"
+          *ngIf="show"
+          [formGroup]="updateDescGroup">
+        <div class="form-group">
+            <textarea  formControlName="desc" placeholder="Description">
+
+            </textarea>
+        </div>
+        <div style="display: flex;
+    justify-content: flex-end;">
+            <button class="submit-btn">Save</button>
+        </div>
+    </form>
+</section>
