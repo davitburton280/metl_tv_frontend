@@ -1,20 +1,20 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
-import {HomeComponent} from './users/home/home.component';
-import {AuthGuard} from '@core/guards/auth.guard';
-import {NonAuthGuard} from '@core/guards/non-auth.guard';
-import {NotFoundComponent} from '@core/components/docs/not-found/not-found.component';
-import {AccessibilityStatementComponent} from '@app/core/components/docs/accessibility-statement/accessibility-statement.component';
-import {AboutComponent} from '@core/components/docs/about/about.component';
-import {CookiePolicyComponent} from '@core/components/docs/cookie-policy/cookie-policy.component';
-import {PrivacyPolicyComponent} from '@core/components/docs/privacy-policy/privacy-policy.component';
-import {SecurityComponent} from '@core/components/docs/security/security.component';
-import {HelpComponent} from '@core/components/docs/help/help.component';
-import {ContactUsComponent} from '@core/components/docs/contact-us/contact-us.component';
-import {PageLoadingComponent} from '@core/components/docs/page-loading/page-loading.component';
-import {PaymentSuccessComponent} from '@app/users/payment-success/payment-success.component';
-import {PaymentCancelComponent} from '@app/users/payment-cancel/payment-cancel.component';
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '@core/guards/auth.guard';
+import { NonAuthGuard } from '@core/guards/non-auth.guard';
+import { NotFoundComponent } from '@core/components/docs/not-found/not-found.component';
+import { AccessibilityStatementComponent } from '@app/core/components/docs/accessibility-statement/accessibility-statement.component';
+import { AboutComponent } from '@core/components/docs/about/about.component';
+import { CookiePolicyComponent } from '@core/components/docs/cookie-policy/cookie-policy.component';
+import { PrivacyPolicyComponent } from '@core/components/docs/privacy-policy/privacy-policy.component';
+import { SecurityComponent } from '@core/components/docs/security/security.component';
+import { HelpComponent } from '@core/components/docs/help/help.component';
+import { ContactUsComponent } from '@core/components/docs/contact-us/contact-us.component';
+import { PageLoadingComponent } from '@core/components/docs/page-loading/page-loading.component';
+import { PaymentSuccessComponent } from '@app/users/payment-success/payment-success.component';
+import { PaymentCancelComponent } from '@app/users/payment-cancel/payment-cancel.component';
 import { NewHomeComponent } from '@app/users/new-home/new-home.component';
+import { NewVideosListPlayerComponent } from '@app/users/new-videos-list-player/new-videos-list-player.component';
 
 
 const routes: Routes = [
@@ -27,18 +27,19 @@ const routes: Routes = [
     // },
     {
         path: '',
-        component: NewHomeComponent,
-        data: {
-            title: 'Metl TV',
-        }
+        component: NewHomeComponent
     },
+    {
+        path: 'player/:id',
+        component: NewVideosListPlayerComponent
+    },
+    // {
+    //     path: 'channels',
+    //     loadChildren: () => import('./channels/channels.module').then(m => m.ChannelsModule),
+    //     canActivate: [AuthGuard]
+    // },
     {
         path: 'channels',
-        loadChildren: () => import('./channels/channels.module').then(m => m.ChannelsModule),
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'channel',
         loadChildren: () => import('./channel/channel.module').then(it => it.ChannelModule),
         canActivate: [AuthGuard]
     },
@@ -59,11 +60,11 @@ const routes: Routes = [
     },
     {
         path: 'videos',
-        loadChildren: () => import('./videos/videos.module').then(m => m.VideosModule),
+        loadChildren: () => import('./videos/videos.module').then(m => m.VideosModule)
     },
     {
         path: 'trending',
-        loadChildren: () => import('./videos/videos.module').then(m => m.VideosModule),
+        loadChildren: () => import('./videos/videos.module').then(m => m.VideosModule)
     },
     {
         path: 'chat',
@@ -77,7 +78,7 @@ const routes: Routes = [
     },
     {
         path: 'playlists',
-        loadChildren: () => import('./playlists/playlists.module').then(m => m.PlaylistsModule),
+        loadChildren: () => import('./playlists/playlists.module').then(m => m.PlaylistsModule)
     },
     {
         path: 'wallet',
@@ -93,56 +94,56 @@ const routes: Routes = [
         path: 'about-us',
         component: AboutComponent,
         data: {
-            title: 'About',
+            title: 'About'
         }
     },
     {
         path: 'help',
         component: HelpComponent,
         data: {
-            title: 'Help',
+            title: 'Help'
         }
     },
     {
         path: 'cookie-policy',
         component: CookiePolicyComponent,
         data: {
-            title: 'Cookie policy',
+            title: 'Cookie policy'
         }
     },
     {
         path: 'accessibility-assessment',
         component: AccessibilityStatementComponent,
         data: {
-            title: 'Accessibility statement',
+            title: 'Accessibility statement'
         }
     },
     {
         path: 'contact-us',
         component: ContactUsComponent,
         data: {
-            title: 'Contact us',
+            title: 'Contact us'
         }
     },
     {
         path: 'privacy-policy',
         component: PrivacyPolicyComponent,
         data: {
-            title: 'Privacy policy',
+            title: 'Privacy policy'
         }
     },
     {
         path: 'security',
         component: SecurityComponent,
         data: {
-            title: 'Security',
+            title: 'Security'
         }
     },
     {
         path: 'test',
         component: PageLoadingComponent,
         data: {
-            title: 'Security',
+            title: 'Security'
         }
     },
     {
@@ -159,11 +160,11 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
 
-    {path: '**', component: NotFoundComponent},
+    { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
+    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

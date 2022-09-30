@@ -25,7 +25,7 @@ export class AppNewVideoListComponent implements OnInit, OnDestroy {
     public totalPageCount;
 
     constructor(
-        private _newVideosService: NewVideosService
+        private _newVideosService: NewVideosService,
     ) {
         this.newVideoDataSource$ = this._newVideosService.newVideosState$.state$;
         this.tradingVideoDataSource$ = this._newVideosService.tradingVideosState$.state$;
@@ -118,6 +118,7 @@ export class AppNewVideoListComponent implements OnInit, OnDestroy {
             });
 
     }
+
 
     ngOnDestroy() {
     }

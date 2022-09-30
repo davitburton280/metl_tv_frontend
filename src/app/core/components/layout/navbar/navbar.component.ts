@@ -276,7 +276,7 @@ export class NavbarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     goToChannelPage() {
         this.router.navigateByUrl('/test', {skipLocationChange: true}).then(async () =>
-            this.router.navigate([`channels/${this.authUser.username}`])
+            this.router.navigate([`channels`])
         );
     }
 

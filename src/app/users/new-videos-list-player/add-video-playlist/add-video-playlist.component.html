@@ -1,0 +1,79 @@
+<div class="playlist-dialog">
+    <header class="playlist-dialog-header">
+        <h2>Create PlayList</h2>
+        <span class="material-symbols-outlined" (click)="close()">
+            close
+        </span>
+    </header>
+    <ng-container  *ngIf="(dataSourcePlayList$ | async) as state ">
+        <div class="list">
+            <div class="list-item" *ngFor="let playList of state.playLists">
+                <mat-checkbox
+                    (change)="setVideoPlayList(playList.id)"
+                    [value]="playList.id"
+                    class="example-margin">
+                    {{playList.name}}
+                </mat-checkbox>
+                <span class="material-symbols-outlined">
+                    lock
+                </span>
+            </div>
+        </div>
+    </ng-container>
+
+
+    <!--create-playList start-->
+    <div class="create-playList">
+        <!--create-playList button start-->
+        <!--        (click)="showForm()"-->
+        <button>
+
+            <!--create-playList button icon start-->
+            <span class="material-symbols-outlined">
+            queue_music
+        </span>
+            <!--create-playList button icon end-->
+
+            <!--create-playList button text start-->
+            <span>
+            Create playlist
+       </span>
+            <!--create-playList button text end-->
+
+        </button>
+
+    </div>
+    <!--create-playList end-->
+    <form [formGroup]="createPlayListFormGroup">
+        <div class="form-group">
+            <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" formControlName="name">
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="outline">
+                <mat-label>Privacy</mat-label>
+                <mat-select formControlName="privacy">
+                    <mat-option [value]="1">
+                        <span>Private</span>
+                        <span>only you can view</span>
+                    </mat-option>
+                    <mat-option [value]="0">
+                        <span>Public</span>
+                        <span>Anyone can search for and view</span>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+    </form>
+
+    <div class="submit-btn">
+        <button (click)="create()">
+            Create Playlist
+        </button>
+    </div>
+</div>

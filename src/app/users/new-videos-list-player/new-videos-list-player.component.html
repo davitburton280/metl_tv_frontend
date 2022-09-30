@@ -1,0 +1,89 @@
+<ng-container *ngIf="(newVideoDataSource$ | async) as state">
+    <div class="player-list">
+        <div class="current-video-content">
+            <div class="video">
+                <video
+                    *ngIf="videoPath"
+                    (canplay)="pauseVideo(videoplayer)"
+                    [src]="videoPath.filename|getImgPath: 'videos'"
+                    controls
+                    #videoPlayer>
+                </video>
+                <video
+                    *ngIf="!videoPath && state.videos"
+                    (canplay)="pauseVideo(videoplayer)"
+                    [src]="state.videos[0]?.filename|getImgPath: 'videos'"
+                    controls
+                    #videoPlayer>
+                </video>
+            </div>
+            <div class="videoSave" *ngIf="isAuth">
+                <!--create-playList start-->
+
+                <div class="create-playList" *ngIf="state.videos || videoPath">
+                    <!--create-playList button start-->
+                    <button (click)="openCreatePlayListDialog(state.videos[0],videoPath)">
+                        <!--create-playList button icon start-->
+                        <span class="material-symbols-outlined">
+            queue_music
+        </span>
+                        <!--create-playList button icon end-->
+
+                        <!--create-playList button text start-->
+                        <span>
+            Create playlist
+       </span>
+                        <!--create-playList button text end-->
+
+                    </button>
+                </div>
+                <!--create-playList end-->
+            </div>
+        </div>
+
+        <div class="video-playlist">
+            <div class="playlist-desc">
+                <div class="playlist-desc-name">
+                    <h3>
+                        <span class="naem">{{videosType | uppercase}}</span>
+                        <span class="playlist-video-count">1/30</span>
+                    </h3>
+                </div>
+                <div class="playlist-privacy">
+                <span>
+
+                </span>
+                    <span>
+                    Private
+                </span>
+                </div>
+            </div>
+            <form class="video-list">
+                <div class="video-list-item"
+
+                     *ngFor="let video  of state.videos;let i = index">
+                    <input
+                        type="radio"
+                        name="videos"
+                        [defaultChecked]="(i === 0)"
+                        (change)="getPLayVideoData(video)"
+                        [id]="video.id">
+                    <label [for]="video.id">
+                        <div class="video-cover">
+
+                            <!--                            <img src="assets/testVideo.png" alt="">-->
+                            <img [src]="video?.thumbnail|getImgPath:'images'" alt="">
+                        </div>
+
+                        <div class="video-name">
+                            <p class="video-name-text">{{video.name}}</p>
+                        </div>
+                    </label>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</ng-container>
+

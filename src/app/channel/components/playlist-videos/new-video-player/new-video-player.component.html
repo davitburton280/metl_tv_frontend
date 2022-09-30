@@ -2,7 +2,7 @@
     <!--        Video Taag or Ifrem-->
     <div class="video">
         <video (canplay)="pauseVideo(videoplayer)"
-               [src]="videoPath.filename|getImgPath: 'videos'"
+               [src]="videoPath?.filename|getImgPath: 'videos'"
                controls
                #videoPlayer>
         </video>
@@ -10,7 +10,7 @@
 
     <div class="videos-desc">
         <div class="select-video">
-            <h2>{{videoPath.name}}</h2>
+            <h2>{{videoPath?.name}}</h2>
         </div>
         <ul class="videos-desc-list">
             <li class="videos-desc-list-item">
@@ -18,7 +18,7 @@
                             visibility
                         </span>
                 <span class="like">
-                            {{videoPath.views}}
+                            {{videoPath?.views}}
                         </span>
             </li>
             <li class="videos-desc-list-item">
@@ -26,7 +26,7 @@
                             thumb_up
                         </span>
                 <span class="like">
-                            {{videoPath.likes}}
+                            {{videoPath?.likes}}
                         </span>
             </li>
             <li class="videos-desc-list-item">
@@ -34,7 +34,7 @@
                              thumb_down
                         </span>
                 <span class="dislike">
-                            {{videoPath.dislikes}}
+                            {{videoPath?.dislikes}}
                         </span>
             </li>
         </ul>

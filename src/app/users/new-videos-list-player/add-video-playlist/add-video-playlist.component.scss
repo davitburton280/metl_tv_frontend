@@ -1,0 +1,90 @@
+.playlist-dialog{
+    padding: 10px;
+    .playlist-dialog-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        h2{
+            font-size: 16px;
+        }
+
+        span{
+            font-size: 16px;
+        }
+    }
+
+    .list{
+        .list-item{
+            width: 100%;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            mat-checkbox{
+                width: 100%;
+
+                font-size: 18px;
+            }
+            span{
+                font-size: 16px;
+            }
+        }
+    }
+    /*create-playList styleSheet start */
+    .create-playList{
+        /*create-playList button styleSheet start */
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        button{
+            display: flex;
+            align-items: center;
+            background-color: transparent;
+            border-radius: 8px;
+            border: 1px dashed transparent;
+            padding: 10px 20px;
+            cursor: pointer;
+            span{
+                font-size: 14px;
+                color:#0aa06e;
+                font-weight: bolder;
+                margin-left: 5px;
+            }
+        }
+    }
+    form{
+        width: 100%;
+        .form-group{
+            width: 100%;
+            mat-form-field{
+                width: 100%;
+                mat-select{
+                    width: 100%;
+                    mat-option{
+                        display: flex;
+                        flex-direction: column;
+                    }
+                }
+            }
+        }
+
+    }
+    .submit-btn{
+        width: 100%;
+        button{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            border-radius: 8px;
+            border: 1px dashed #0aa06e;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            color:#0aa06e;
+            font-weight: bolder;
+            margin-left: 5px;
+        }
+    }
+}

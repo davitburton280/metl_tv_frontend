@@ -1,10 +1,11 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NewPlaylistService } from '@core/services/new-playlist.service';
 
 @Component({
     selector: 'app-new-video-player',
     templateUrl: 'new-video-player.component.html',
-    styleUrls: ['new-video-player.component.scss']
+    styleUrls: ['new-video-player.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
@@ -20,6 +21,7 @@ export class NewVideoPlayerComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        console.log(this.videoPath, "Dsadsadsadas");
     }
 
     public pauseVideo(videoplayer) {

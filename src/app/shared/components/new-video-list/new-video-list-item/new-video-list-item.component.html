@@ -1,4 +1,4 @@
-<div class="item-video" *ngIf="!loading && data">
+<div class="item-video" *ngIf="!loading && data" [routerLink]="['player',type]">
     <div class="item-video-img">
         <img [src]="data?.thumbnail|getImgPath:'images'" alt="videoCaverHomeTest">
     </div>

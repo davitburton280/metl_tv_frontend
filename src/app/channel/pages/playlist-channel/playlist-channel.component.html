@@ -4,7 +4,7 @@
 <ng-container *ngIf="(dataSourcePlayListState$ | async) as state">
     <div class="video-group">
         <a *ngFor="let playList of state.playLists"
-           [routerLink]="['/channel/channel-playlist/1/playList',playList.id]">
+           [routerLink]="['/channels/channel-playlist/1/playList',playList.id]">
             <div class="video-group-list">
                 <div class="video-group-list-cover">
                     <img class="images-cover-create c1"

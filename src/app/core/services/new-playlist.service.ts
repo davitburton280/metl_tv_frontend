@@ -57,4 +57,10 @@ export class NewPlaylistService {
     }
 
 
+    public setVideoPlayList(formData) {
+
+        return this._httpClient.post(`${API_URL}playlists/add-videos`, formData);
+    }
+
+
 }

@@ -1,8 +1,16 @@
 <ng-container *ngIf="(dataSourcePlayListVideosState$ | async) as state">
     <div class="video-playlist-wrapper">
-        <div class="video-content" *ngIf="videoPath">
-            <app-new-video-player [videoPath]="videoPath"></app-new-video-player>
+        <div class="video-content" >
+            <app-new-video-player
+                *ngIf="videoPath"
+                [videoPath]="videoPath"></app-new-video-player>
+
+            <app-new-video-player
+                *ngIf="!videoPath && state.videos.videos"
+                [videoPath]="state.videos.videos[0]">
+            </app-new-video-player>
         </div>
+
 
         <div class="video-playlist">
             <div class="playlist-desc">
@@ -22,10 +30,11 @@
                 </div>
             </div>
             <div class="video-list">
-                <div class="video-list-item" *ngFor="let video of state.videos.videos">
+                <div class="video-list-item" *ngFor="let video of state.videos.videos;let i = index">
                     <input
                         type="radio"
                         name="videos"
+                        [defaultChecked]="(i === 0)"
                         (change)="getPLayVideoData(video)"
                         [id]="video.id">
                     <label [for]="video.id">

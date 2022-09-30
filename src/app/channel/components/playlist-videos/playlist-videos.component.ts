@@ -13,7 +13,7 @@ import { NewPlayListVideosInitialState } from '@core/interfaces/new-playlist.int
 export class AppPlaylistVideosComponent implements OnInit, OnDestroy {
     private _ids: number | undefined;
     public dataSourcePlayListVideosState$: Observable<NewPlayListVideosInitialState> | undefined;
-    public videoPath: string;
+    public videoPath: any;
 
     constructor(
         private _route: ActivatedRoute,
